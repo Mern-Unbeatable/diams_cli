@@ -1,5 +1,5 @@
-import { PLANS } from "../../config/plans";
-import PlanCard from "./PlanCard";
+import { PLANS } from "@/config/plans";
+import PlanCard from "@/Components/public/PlanCard";
 
 const PricingPlans = ({ plans = PLANS }) => {
   return (

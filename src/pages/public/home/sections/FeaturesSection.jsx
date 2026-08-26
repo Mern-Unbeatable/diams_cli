@@ -37,7 +37,7 @@ const FeatureHighlight = ({ feature }) => {
       <h3 className="mt-4 text-base font-semibold text-white lg:text-lg">
         {feature.title}
       </h3>
-      <p className="mt-2 text-sm leading-relaxed text-white">{feature.description}</p>
+      <p className="mt-2 text-sm xl:text-base leading-relaxed text-white">{feature.description}</p>
     </div>
   );
 };
@@ -51,8 +51,8 @@ const FeatureCard = ({ feature }) => {
         <Icon size={26} className="text-textAccent" strokeWidth={1.75} />
       </div>
 
-      <h3 className="mt-3 text-lg font-semibold text-white">{feature.title}</h3>
-      <p className="mt-2 text-left text-sm text-white">{feature.description}</p>
+      <h3 className="mt-3 text-lg xl:text-xl font-semibold text-white">{feature.title}</h3>
+      <p className="mt-2 text-left text-sm xl:text-base text-white">{feature.description}</p>
 
       <Link
         to={feature.cta.path}
