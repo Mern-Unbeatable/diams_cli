@@ -36,7 +36,7 @@ const PlanPriceCard = ({ plan, className = "" }) => {
 
       <div className="mt-7 flex flex-col gap-3">
         <Link
-          to={plan.cta.path}
+          to={`/plans/${plan.id}/configure`}
           className="flex w-full items-center justify-center rounded-lg bg-btnPrimary px-5 py-3 text-sm font-semibold text-white transition-opacity duration-200 hover:opacity-90"
         >
           {plan.chooseLabel}

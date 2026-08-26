@@ -94,7 +94,7 @@ export const PLAN_DETAILS = {
       },
       {
         id: "commitment",
-        icon: "ban",
+        icon: "wifi",
         title: "No commitment",
         description: "No contract. Cancel anytime you want",
       },
@@ -106,7 +106,7 @@ export const PLAN_DETAILS = {
       },
       {
         id: "hotspot",
-        icon: "shield",
+        icon: "check",
         title: "Hotspot Included",
         description: "Share your connection wherever you go",
       },

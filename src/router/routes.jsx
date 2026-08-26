@@ -3,6 +3,7 @@ import RootLayout from "@/layout/RootLayout";
 import HomeView from "@/pages/public/home/HomeView";
 import PlansView from "@/pages/public/plans/PlansView";
 import PlanDetailsView from "@/pages/public/plans/PlanDetailsView";
+import ConfigureView from "@/pages/public/configure/ConfigureView";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: "plans",
         element: <PlansView />,
+      },
+      {
+        path: "plans/:planId/configure",
+        element: <ConfigureView />,
       },
       {
         path: "plans/:planId",
