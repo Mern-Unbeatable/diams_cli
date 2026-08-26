@@ -1,4 +1,4 @@
-import Footer from "../Components/footer/Footer";
+import Footer from "@/Components/common/Footer";
 
 const FooterLayout = () => {
   return <Footer />;

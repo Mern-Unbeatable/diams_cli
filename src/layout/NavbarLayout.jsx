@@ -1,4 +1,4 @@
-import Navbar from "../Components/navbar/Navbar";
+import Navbar from "@/Components/common/Navbar";
 
 const NavbarLayout = () => {
   return <Navbar />;

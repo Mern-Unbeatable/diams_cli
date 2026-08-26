@@ -2,6 +2,7 @@
 
 @theme {
   --color-primary: #00183c;
+  --color-forfooter:#021735;
   --color-secondary: #0d2548;
   --color-btnPrimary: #39a1fd;
   --color-textAccent: #3fd0fc;
@@ -23,4 +24,19 @@ body {
 
 button {
   @apply cursor-pointer rounded-md;
+}
+
+.hero-haze-overlay {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 10%;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgb(0 24 60 / 0) 0%,
+    rgb(0 24 60 / 0.55) 55%,
+    #00183c 100%
+  );
 }

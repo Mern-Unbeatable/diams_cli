@@ -5,7 +5,7 @@ import {
   ACCOUNT_PATH,
   BRAND,
   MAIN_NAV_LINKS,
-} from "../../config/navigation";
+} from "@/config/navigation";
 
 const navLinkClass = ({ isActive }) =>
   [
@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed inset-x-0 top-0 z-50 bg-primary">
-      <div className="relative mx-auto flex h-20 max-w-7xl items-center px-6 lg:px-10">
+      <div className="relative mx-auto flex h-20 container items-center px-6 lg:px-10">
         <Link to={BRAND.homePath} className="shrink-0" onClick={closeMenu}>
           <img
             src={BRAND.logo}
