@@ -55,3 +55,5 @@ export const PLANS = [
     detailsPath: "/plans/max",
   },
 ];
+
+export const getPlanById = (id) => PLANS.find((plan) => plan.id === id);
