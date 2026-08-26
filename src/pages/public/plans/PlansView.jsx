@@ -1,4 +1,5 @@
 import PlansHeroSection from "./sections/PlansHeroSection";
+import ComparePlansSection from "./sections/ComparePlansSection";
 import PricingPlans from "@/Components/public/PricingPlans";
 
 const PlansView = () => {
@@ -6,6 +7,7 @@ const PlansView = () => {
     <>
       <PlansHeroSection />
       <PricingPlans />
+      <ComparePlansSection />
     </>
   );
 };
