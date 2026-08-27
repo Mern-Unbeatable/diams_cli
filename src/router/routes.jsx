@@ -6,6 +6,11 @@ import PlanDetailsView from "@/pages/public/plans/PlanDetailsView";
 import ConfigureView from "@/pages/public/configure/ConfigureView";
 import PersonalInfoView from "@/pages/public/personal-info/PersonalInfoView";
 import VerificationView from "@/pages/public/verification/VerificationView";
+import PaymentView from "@/pages/public/payment/PaymentView";
+import ConfirmationView from "@/pages/public/confirmation/ConfirmationView";
+import ActivationView from "@/pages/public/activation/ActivationView";
+import AccountView from "@/pages/public/account/AccountView";
+import NotFound from "@/pages/error/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -33,8 +38,28 @@ export const router = createBrowserRouter([
         element: <VerificationView />,
       },
       {
+        path: "plans/:planId/payment",
+        element: <PaymentView />,
+      },
+      {
+        path: "plans/:planId/confirmation",
+        element: <ConfirmationView />,
+      },
+      {
+        path: "plans/:planId/activation",
+        element: <ActivationView />,
+      },
+      {
+        path: "account",
+        element: <AccountView />,
+      },
+      {
         path: "plans/:planId",
         element: <PlanDetailsView />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },

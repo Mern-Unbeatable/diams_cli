@@ -40,7 +40,7 @@ const PersonalAccountForm = () => {
           <div className="flex gap-2">
             <div className="relative shrink-0">
               <select
-                className={`${inputClass} w-[108px] appearance-none pr-8`}
+                className={`${inputClass} w-27 appearance-none pr-8`}
                 defaultValue="+41"
                 aria-label="Country code"
               >
