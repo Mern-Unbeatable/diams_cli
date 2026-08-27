@@ -61,7 +61,7 @@ const ConfigureFormSection = ({
       </p>
 
       <section className="mt-8">
-        <h2 className="text-sm font-bold text-white">
+        <h2 className="text-sm sm:text-base xl:text-lg font-bold text-white">
           1. Choose your SIM type.
         </h2>
         <div className="mt-4">
@@ -70,7 +70,7 @@ const ConfigureFormSection = ({
       </section>
 
       <section className="mt-8">
-        <h2 className="text-sm font-bold text-white">
+        <h2 className="text-sm sm:text-base xl:text-lg font-bold text-white">
           2. Get a new number or keep your current number?
         </h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -88,7 +88,7 @@ const ConfigureFormSection = ({
       </section>
 
       <section className="mt-8">
-        <h2 className="text-sm font-bold text-white">
+        <h2 className="text-sm sm:text-base xl:text-lg font-bold text-white">
           3. Choose your activation date
         </h2>
         <div className="relative mt-4">
@@ -147,13 +147,13 @@ const ConfigureFormSection = ({
       </div>
 
       <div className="mt-8 flex flex-col items-center">
-        <button
-          type="button"
+        <Link
+          to={`/plans/${planId}/personal-info`}
           className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-btnPrimary px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:max-w-[320px] sm:text-base"
         >
           Continue
           <ArrowRight size={18} />
-        </button>
+        </Link>
 
         <div className="mt-4">
           <Link
