@@ -10,6 +10,9 @@ import PaymentView from "@/pages/public/payment/PaymentView";
 import ConfirmationView from "@/pages/public/confirmation/ConfirmationView";
 import ActivationView from "@/pages/public/activation/ActivationView";
 import AccountView from "@/pages/public/account/AccountView";
+import BusinessView from "@/pages/public/business/BusinessView";
+import CoverageView from "@/pages/public/coverage/CoverageView";
+import HelpView from "@/pages/public/help/HelpView";
 import NotFound from "@/pages/error/NotFound";
 
 export const router = createBrowserRouter([
@@ -24,6 +27,18 @@ export const router = createBrowserRouter([
       {
         path: "plans",
         element: <PlansView />,
+      },
+      {
+        path: "business",
+        element: <BusinessView />,
+      },
+      {
+        path: "coverage",
+        element: <CoverageView />,
+      },
+      {
+        path: "help",
+        element: <HelpView />,
       },
       {
         path: "plans/:planId/configure",

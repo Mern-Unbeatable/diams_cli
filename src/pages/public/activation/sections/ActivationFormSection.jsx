@@ -165,7 +165,7 @@ const ActivationFormSection = ({ planId }) => {
                     </div>
                   </div>
                   {id === "scan" && (
-                    <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:max-w-[280px]">
+                    <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:max-w-70">
                       <img
                         src={qrCodeImage}
                         alt="eSIM activation QR code"
@@ -219,7 +219,7 @@ const ActivationFormSection = ({ planId }) => {
 
         <Link
           to={ACCOUNT_PATH}
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-btnPrimary px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:min-w-[200px]"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-btnPrimary px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:min-w-50"
         >
           Continue
           <ArrowRight size={18} />

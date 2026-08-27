@@ -2,30 +2,50 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FAQ_SECTION } from "@/config/faq";
 
-const FaqItem = ({ item, isOpen, onToggle }) => {
+const FaqItem = ({ item, isOpen, onToggle, variant }) => {
+  const isLight = variant === "light";
+
   return (
-    <article className="rounded-lg border border-btnPrimary/25 bg-primary">
+    <article
+      className={
+        isLight
+          ? "overflow-hidden rounded-xl border border-gray-200 bg-[#f8fafc]"
+          : "rounded-lg border border-btnPrimary/25 bg-primary"
+      }
+    >
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
         className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-[18px]"
       >
-        <span className="text-sm font-medium text-white sm:text-base">
+        <span
+          className={`text-sm font-medium sm:text-base ${
+            isLight ? "text-primary" : "text-white"
+          }`}
+        >
           {item.question}
         </span>
         <ChevronDown
           size={18}
           strokeWidth={2}
-          className={`shrink-0 text-textsecondary transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`shrink-0 transition-transform duration-200 ${
+            isLight ? "text-primary/50" : "text-textsecondary"
+          } ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
       {isOpen && (
-        <div className="border-t border-white/10 px-5 pb-4 pt-3 sm:px-6 sm:pb-5 sm:pt-4">
-          <p className="text-sm leading-relaxed text-white/85 sm:text-base">
+        <div
+          className={`px-5 pb-4 pt-3 sm:px-6 sm:pb-5 sm:pt-4 ${
+            isLight ? "border-t border-gray-200" : "border-t border-white/10"
+          }`}
+        >
+          <p
+            className={`text-sm leading-relaxed sm:text-base ${
+              isLight ? "text-primary/70" : "text-white/85"
+            }`}
+          >
             {item.answer}
           </p>
         </div>
@@ -38,29 +58,23 @@ const FaqSection = ({
   title = FAQ_SECTION.title,
   items = FAQ_SECTION.items,
   align = "center",
-  columns = 2,
+  variant = "dark",
 }) => {
   const [openId, setOpenId] = useState(null);
-
-  const handleToggle = (id) => {
-    setOpenId((current) => (current === id ? null : id));
-  };
-
+  const isLight = variant === "light";
   const isCentered = align === "center";
-  const gridClass =
-    columns === 1
-      ? "grid gap-3"
-      : "grid gap-4 sm:grid-cols-2";
 
   return (
-    <section className="bg-primary">
+    <section className={isLight ? "page-section bg-white" : "bg-primary"}>
       <div
-        className={`mx-auto px-5 sm:px-6 lg:px-10 ${
-          columns === 1 ? "" : "py-14 sm:py-16"
-        } ${columns === 1 ? "container" : "max-w-5xl"}`}
+        className={`mx-auto max-w-5xl px-5 sm:px-6 lg:px-10 ${
+          isLight ? "" : "py-14 sm:py-16 lg:py-20"
+        }`}
       >
         <h2
-          className={`text-xl font-bold text-white lg:text-2xl ${
+          className={`text-xl font-bold lg:text-2xl ${
+            isLight ? "text-primary" : "text-white"
+          } ${
             isCentered
               ? "text-center sm:text-3xl lg:text-4xl"
               : ""
@@ -74,8 +88,11 @@ const FaqSection = ({
             <FaqItem
               key={item.id}
               item={item}
+              variant={variant}
               isOpen={openId === item.id}
-              onToggle={() => handleToggle(item.id)}
+              onToggle={() =>
+                setOpenId((current) => (current === item.id ? null : item.id))
+              }
             />
           ))}
         </div>

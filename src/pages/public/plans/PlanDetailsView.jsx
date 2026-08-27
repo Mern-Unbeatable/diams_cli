@@ -26,7 +26,6 @@ const PlanDetailsView = () => {
           title={PLAN_FAQ_SECTION.title}
           items={PLAN_FAQ_SECTION.items}
           align="left"
-          columns={1}
         />
         <CtaSection
           button={{ label: "Choose your plan", path: `/plans/${plan.id}/configure` }}

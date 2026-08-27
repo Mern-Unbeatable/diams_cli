@@ -7,6 +7,11 @@
   --color-btnPrimary: #39a1fd;
   --color-textAccent: #3fd0fc;
   --color-textsecondary: #3493E6;
+
+  /* Shared vertical padding for /help, /coverage, /business sections (not heroes) */
+  --page-section-py: 3.5rem;
+  --page-section-py-sm: 4rem;
+  --page-section-py-lg: 5rem;
 }
 
 *,
@@ -40,4 +45,29 @@ button {
     rgb(0 24 60 / 0.55) 55%,
     #00183c 100%
   );
+}
+
+.business-feature-bar {
+  border: 1px solid rgb(255 255 255 / 0.1);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.06),
+    0 4px 24px rgb(255 255 255 / 0.12),
+    0 8px 32px rgb(57 161 253 / 0.08),
+    0 20px 48px rgb(0 24 60 / 0.4);
+}
+
+.page-section {
+  padding-block: var(--page-section-py);
+}
+
+@media (width >= 40rem) {
+  .page-section {
+    padding-block: var(--page-section-py-sm);
+  }
+}
+
+@media (width >= 64rem) {
+  .page-section {
+    padding-block: var(--page-section-py-lg);
+  }
 }

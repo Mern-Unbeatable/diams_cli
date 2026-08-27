@@ -139,7 +139,7 @@ const ConfirmationContentSection = ({ planId }) => {
 
         <Link
           to={`/plans/${planId}/activation`}
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-btnPrimary px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:min-w-[200px]"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-btnPrimary px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:min-w-50"
         >
           Continue
           <ArrowRight size={18} />
