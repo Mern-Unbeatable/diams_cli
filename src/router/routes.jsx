@@ -13,9 +13,14 @@ import AccountView from "@/pages/public/account/AccountView";
 import BusinessView from "@/pages/public/business/BusinessView";
 import CoverageView from "@/pages/public/coverage/CoverageView";
 import HelpView from "@/pages/public/help/HelpView";
+import AuthView from "@/pages/auth/AuthView";
 import NotFound from "@/pages/error/NotFound";
 
 export const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <AuthView />,
+  },
   {
     path: "/",
     element: <RootLayout />,

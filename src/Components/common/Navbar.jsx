@@ -2,8 +2,9 @@ import { useState } from "react";
 import { NavLink, Link } from "react-router";
 import { Menu, User, X } from "lucide-react";
 import {
-  ACCOUNT_PATH,
   BRAND,
+  LOGIN_PATH,
+  LOGO_CLASS,
   MAIN_NAV_LINKS,
 } from "@/config/navigation";
 
@@ -25,7 +26,7 @@ const Navbar = () => {
           <img
             src={BRAND.logo}
             alt={BRAND.name}
-            className="h-12 w-auto lg:h-14"
+            className={LOGO_CLASS}
           />
         </Link>
 
@@ -41,7 +42,7 @@ const Navbar = () => {
 
         <div className="ml-auto hidden lg:block">
           <Link
-            to={ACCOUNT_PATH}
+            to={LOGIN_PATH}
             className="inline-flex items-center gap-2 rounded-md bg-btnPrimary px-5 py-2.5 text-sm font-semibold text-white transition-opacity duration-200 hover:opacity-90"
           >
             My Account
@@ -78,7 +79,7 @@ const Navbar = () => {
           </ul>
 
           <Link
-            to={ACCOUNT_PATH}
+            to={LOGIN_PATH}
             className="mt-6 inline-flex w-full items-center justify-center rounded-md gap-2 bg-btnPrimary px-5 py-3 text-sm font-semibold text-white"
             onClick={closeMenu}
           >
