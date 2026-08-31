@@ -38,13 +38,17 @@ import CollaboratorIdentityView from "@/pages/dashboard/collaborator/Collaborato
 import CollaboratorPlansView from "@/pages/dashboard/collaborator/CollaboratorPlansView";
 import CollaboratorSupportView from "@/pages/dashboard/collaborator/CollaboratorSupportView";
 import CollaboratorNotificationsView from "@/pages/dashboard/collaborator/CollaboratorNotificationsView";
-import UserOverview from "@/pages/dashboard/user/UserOverview";
-import UserMyPlanView from "@/pages/dashboard/user/UserMyPlanView";
-import UserEsimView from "@/pages/dashboard/user/UserEsimView";
-import UserUsageView from "@/pages/dashboard/user/UserUsageView";
-import UserBillingView from "@/pages/dashboard/user/UserBillingView";
-import UserSupportView from "@/pages/dashboard/user/UserSupportView";
-import UserNotificationsView from "@/pages/dashboard/user/UserNotificationsView";
+import OverviewView from "@/pages/dashboard/user/overview/OverviewView";
+import MyLineView from "@/pages/dashboard/user/my-line/MyLineView";
+import PlansOptionsView from "@/pages/dashboard/user/plans-options/PlansOptionsView";
+import UsageView from "@/pages/dashboard/user/usage/UsageView";
+import BillsView from "@/pages/dashboard/user/bills/BillsView";
+import PaymentsView from "@/pages/dashboard/user/payments/PaymentsView";
+import EsimView from "@/pages/dashboard/user/esim/EsimView";
+import MyInformationView from "@/pages/dashboard/user/my-information/MyInformationView";
+import SecurityView from "@/pages/dashboard/user/security/SecurityView";
+import SupportView from "@/pages/dashboard/user/support/SupportView";
+import NotificationsView from "@/pages/dashboard/user/notifications/NotificationsView";
 import {
   GuestRoute,
   ProtectedRoute,
@@ -119,13 +123,17 @@ export const router = createBrowserRouter([
           {
             element: <DashboardLayout />,
             children: [
-              { index: true, element: <UserOverview /> },
-              { path: "my-plan", element: <UserMyPlanView /> },
-              { path: "esim", element: <UserEsimView /> },
-              { path: "usage", element: <UserUsageView /> },
-              { path: "billing", element: <UserBillingView /> },
-              { path: "support", element: <UserSupportView /> },
-              { path: "notifications", element: <UserNotificationsView /> },
+              { index: true, element: <OverviewView /> },
+              { path: "my-line", element: <MyLineView /> },
+              { path: "plans-options", element: <PlansOptionsView /> },
+              { path: "usage", element: <UsageView /> },
+              { path: "bills", element: <BillsView /> },
+              { path: "payments", element: <PaymentsView /> },
+              { path: "esim", element: <EsimView /> },
+              { path: "my-information", element: <MyInformationView /> },
+              { path: "security", element: <SecurityView /> },
+              { path: "support", element: <SupportView /> },
+              { path: "notifications", element: <NotificationsView /> },
             ],
           },
         ],

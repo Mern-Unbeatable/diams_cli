@@ -43,12 +43,15 @@ export const DASHBOARD_NAV = {
   ],
   [ROLES.USER]: [
     { id: "overview", label: "Overview", path: userPath(), icon: "layout" },
-    { id: "my-plan", label: "Plans", path: userPath("my-plan"), icon: "card" },
-    { id: "esim", label: "eSIM Management", path: userPath("esim"), icon: "sim" },
-    { id: "usage", label: "Usage", path: userPath("usage"), icon: "chart" },
-    { id: "billing", label: "Billing & Payment", path: userPath("billing"), icon: "receipt" },
-    { id: "support", label: "Support Center", path: userPath("support"), icon: "headset" },
-    { id: "notifications", label: "Notifications", path: userPath("notifications"), icon: "bell" },
+    { id: "my-line", label: "My line", path: userPath("my-line"), icon: "link" },
+    { id: "plans-options", label: "Plans & options", path: userPath("plans-options"), icon: "package" },
+    { id: "usage", label: "Usage", path: userPath("usage"), icon: "barChart" },
+    { id: "bills", label: "Bills", path: userPath("bills"), icon: "receipt" },
+    { id: "payments", label: "Payments", path: userPath("payments"), icon: "card" },
+    { id: "esim", label: "eSIM", path: userPath("esim"), icon: "sim" },
+    { id: "my-information", label: "My information", path: userPath("my-information"), icon: "user" },
+    { id: "security", label: "Security", path: userPath("security"), icon: "lock" },
+    { id: "support", label: "Support", path: userPath("support"), icon: "headset" },
   ],
 };
 

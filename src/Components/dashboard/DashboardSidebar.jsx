@@ -1,10 +1,13 @@
 import { Link, NavLink, useNavigate } from "react-router";
 import {
+  BarChart3,
   Bell,
   CircleCheck,
   CreditCard,
   Headset,
   LayoutGrid,
+  Link2,
+  Lock,
   LogOut,
   Package,
   Plus,
@@ -33,6 +36,9 @@ const NAV_ICONS = {
   headset: Headset,
   bell: Bell,
   chart: TrendingUp,
+  link: Link2,
+  lock: Lock,
+  barChart: BarChart3,
   userCog: UserCog,
   settings: Settings,
   check: CircleCheck,
