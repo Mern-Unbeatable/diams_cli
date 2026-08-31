@@ -97,6 +97,13 @@ export const USER_PLANS_OPTIONS = {
       price: "6.90",
       icon: "wifi",
     },
+    {
+      id: "roaming",
+      title: "Europe Roaming 1GB",
+      description: "Valid for 30 days",
+      price: "12.90",
+      icon: "globe",
+    },
   ],
   whyUpgrade: [
     {
@@ -138,4 +145,170 @@ export const USER_PLANS_OPTIONS = {
       icon: "chat",
     },
   ],
+  roamingTable: [
+    {
+      id: "europe",
+      dataAmount: "Europe Roaming",
+      price: "5.00",
+      validity: "30 Days",
+      description: "5G High-Speed",
+    },
+    {
+      id: "asia",
+      dataAmount: "Asia Roaming",
+      price: "9.00",
+      validity: "30 Days",
+      description: "5G Ultra Speed",
+      isPopular: true,
+    },
+    {
+      id: "indonesia",
+      dataAmount: "Indonesia Roaming",
+      price: "16.00",
+      validity: "30 Days",
+      description: "5G Max Speed",
+    },
+    {
+      id: "uk",
+      dataAmount: "UK Roaming",
+      price: "30.00",
+      validity: "30 Days",
+      description: "5G Hyper Speed",
+    },
+  ],
+  dataBoostersStatus: {
+    statusLabel: "ACTIVE ACCOUNT STATUS",
+    planBadge: "Swiss Unlimited Flex",
+    renewsHint: "Renews in 4 days",
+    availableData: "0.8 GB",
+    availableDataLabel: "Total Available Data",
+    usedText: "Used: 14.2 GB of 15 GB",
+    usedPercent: "95%",
+  },
+  dataBoostersTable: [
+    {
+      id: "5gb",
+      dataAmount: "+5 GB",
+      price: "5.00",
+      validity: "30 Days",
+      speed: "5G High-Speed",
+    },
+    {
+      id: "10gb",
+      dataAmount: "+10 GB",
+      price: "9.00",
+      validity: "30 Days",
+      speed: "5G Ultra Speed",
+      isPopular: true,
+    },
+    {
+      id: "20gb",
+      dataAmount: "+20 GB",
+      price: "16.00",
+      validity: "30 Days",
+      speed: "5G Max Speed",
+    },
+    {
+      id: "50gb",
+      dataAmount: "+50 GB",
+      price: "30.00",
+      validity: "30 Days",
+      speed: "5G Hyper Speed",
+    },
+  ],
+  intlCalls: {
+    banner: {
+      tag: "International Calling",
+      title: "International Calls",
+      description:
+        "Explore our additional international calling packages. Choose your preferred plan with transparent pricing, 30 day validity, and instant activation.",
+      features: [
+        "Transparent CHF Pricing",
+        "30-Day Fixed Validity",
+        "HD Clear Voice Quality",
+      ],
+    },
+    activePackage: {
+      title: "300 Minutes International",
+      price: "14.90",
+      expiresOn: "2026-08-31",
+      usedText: "226 / 300 Mins",
+      usedMins: 74,
+      totalMins: 300,
+      autoRenew: true,
+    },
+    packages: [
+      {
+        id: "100-mins",
+        tag: "BASIC PACK",
+        title: "100 Minutes",
+        price: "7.90",
+        description:
+          "Ideal starter package for calling top destinations in Asia & Europe.",
+        validity: "30 days",
+        included: ["Bangladesh", "India", "Pakistan"],
+        moreCount: 4,
+        features: ["100 minutes of HD voice", "Landline & mobile"],
+        isCurrent: false,
+      },
+      {
+        id: "300-mins",
+        tag: "MOST POPULAR",
+        isPopular: true,
+        title: "300 Minutes",
+        price: "14.90",
+        description:
+          "Best value for frequent callers. 300 talk minutes at discount rates.",
+        validity: "30 days",
+        included: ["Bangladesh", "India", "Pakistan"],
+        moreCount: 4,
+        features: ["300 minutes premium calling", "Great cost per minute"],
+        isCurrent: true,
+      },
+      {
+        id: "unlimited",
+        tag: "UNLIMITED",
+        title: "Unlimited Selected Countries",
+        price: "24.90",
+        description:
+          "Unlimited talk time to selected high-frequency destinations.",
+        validity: "30 days",
+        included: ["Bangladesh", "India", "Pakistan"],
+        moreCount: 4,
+        features: ["Unlimited calling to 25+ countries", "No minute cap"],
+        isCurrent: false,
+      },
+    ],
+    popularCountries: [
+      { code: "BD", name: "Bangladesh" },
+      { code: "IN", name: "India" },
+      { code: "PK", name: "Pakistan" },
+    ],
+    faqs: [
+      {
+        id: "faq-1",
+        question: "What is the validity of the international calling packages?",
+        answer:
+          "All international calling packages are valid for exactly 30 days from the date of activation. Any unused minutes will expire after 30 days.",
+      },
+      {
+        id: "faq-2",
+        question: "Can I add multiple international calling packages at once?",
+        answer:
+          "Yes, you can activate multiple packages concurrently. They will run alongside each other with their respective expiration dates.",
+      },
+      {
+        id: "faq-3",
+        question: "Does the package cover both landline and mobile numbers?",
+        answer:
+          "Yes, all our international calling packages include calls to both standard landline and mobile numbers in supported countries.",
+      },
+      {
+        id: "faq-4",
+        question: "How can I cancel the auto-renewal feature?",
+        answer:
+          "You can turn off auto-renewal anytime directly from your active package card by clicking the Remove button.",
+      },
+    ],
+  },
 };

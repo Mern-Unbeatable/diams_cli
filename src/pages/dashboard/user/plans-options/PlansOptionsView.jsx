@@ -1,13 +1,12 @@
 import { useState } from "react";
-import {
-  CurrentPlanCard,
-  NeedHelpWidget,
-  PlanComparisonGrid,
-  PlanSummaryWidget,
-  PlansTabs,
-  QuickAddOptions,
-  WhyUpgradeWidget,
-} from "./sections/PlansOptionsSections";
+import PlansTabs from "./sections/PlansTabs";
+import ChangePlanTab from "./sections/ChangePlanTab";
+import AddOptionsTab from "./sections/AddOptionsTab";
+import RoamingTab from "./sections/RoamingTab";
+import DataBoostersTab from "./sections/DataBoostersTab";
+import IntlCallsTab from "./sections/IntlCallsTab";
+import ServicesTab from "./sections/ServicesTab";
+import PlansSidebar from "./sections/PlansSidebar";
 
 const PlansOptionsView = () => {
   const [activeTab, setActiveTab] = useState("change-plan");
@@ -18,27 +17,18 @@ const PlansOptionsView = () => {
         {/* Left Column (2/3 width) */}
         <div className="lg:col-span-2 space-y-6">
           <PlansTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-          
-          {activeTab === "change-plan" && (
-            <>
-              <CurrentPlanCard />
-              <PlanComparisonGrid />
-              <QuickAddOptions />
-            </>
-          )}
 
-          {activeTab !== "change-plan" && (
-            <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center text-primary/50">
-              This section is coming soon. Please use the Change Plan tab for now.
-            </div>
-          )}
+          {activeTab === "change-plan" && <ChangePlanTab />}
+          {activeTab === "add-options" && <AddOptionsTab />}
+          {activeTab === "roaming" && <RoamingTab />}
+          {activeTab === "data-boosters" && <DataBoostersTab />}
+          {activeTab === "intl-calls" && <IntlCallsTab />}
+          {activeTab === "services" && <ServicesTab />}
         </div>
 
         {/* Right Column (1/3 width) */}
         <div className="space-y-6">
-          <PlanSummaryWidget />
-          <WhyUpgradeWidget />
-          <NeedHelpWidget />
+          <PlansSidebar />
         </div>
       </div>
     </div>
