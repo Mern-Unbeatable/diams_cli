@@ -75,7 +75,7 @@ const DashboardSidebar = ({ navItems, isOpen, onClose }) => {
 
       <aside
         className={[
-          "fixed inset-y-0 left-0 z-50 flex w-[248px] shrink-0 flex-col bg-[#000b1f] transition-transform duration-200 lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex w-[248px] shrink-0 flex-col bg-[#000b1f] transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full",
         ].join(" ")}
       >
