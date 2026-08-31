@@ -1,5 +1,5 @@
 import { Bell, ChevronDown, Menu, MessageCircle } from "lucide-react";
-import { Link, useLocation } from "react-router";
+import { Link } from "react-router";
 import { ROLE_DASHBOARD_PATHS, ROLES, getRoleDashboardPath } from "@/config/dummyAuth";
 import { useAuth } from "@/context/AuthContext";
 
@@ -60,48 +60,12 @@ const StaffHeaderActions = ({ user, roleLabel, initials }) => (
 
 const DashboardHeader = ({ title, onMenuClick }) => {
   const { user, roleLabel } = useAuth();
-  const location = useLocation();
   const initials = user.name
     .split(" ")
     .map((part) => part[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
-
-  const isMyLine = location.pathname === "/dashboard/user/my-line";
-  const isPlansOptions = location.pathname === "/dashboard/user/plans-options";
-
-  if (isMyLine || isPlansOptions) {
-    const pageTitle = isMyLine ? "My Line" : "Plans & Options";
-    const pageSubtitle = isMyLine
-      ? "Manage your NovaSky line and services."
-      : "Change your plan or add options and services to customize your experience.";
-
-    return (
-      <header className="flex flex-col gap-4 bg-transparent px-4 py-6 sm:px-6 lg:px-8 sm:flex-row sm:items-center sm:justify-between sm:h-auto">
-        <div className="flex min-w-0 items-center gap-3">
-          <button
-            type="button"
-            className="rounded-md p-2 text-primary lg:hidden"
-            aria-label="Open sidebar"
-            onClick={onMenuClick}
-          >
-            <Menu size={22} />
-          </button>
-          <div>
-            <h2 className="text-2xl font-bold text-primary sm:text-[1.75rem]">{pageTitle}</h2>
-            <p className="mt-1 text-sm text-primary/60">{pageSubtitle}</p>
-          </div>
-        </div>
-
-        {user.role === ROLES.USER ? (
-          <UserHeaderActions user={user} initials={initials} />
-        ) : (
-          <StaffHeaderActions user={user} roleLabel={roleLabel} initials={initials} />
-        )}
-      </header>
-    );
-  }
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-gray-200 bg-white px-4 sm:px-6 lg:px-8">

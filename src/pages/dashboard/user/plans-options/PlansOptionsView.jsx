@@ -13,6 +13,15 @@ const PlansOptionsView = () => {
 
   return (
     <div className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-bold text-primary sm:text-[1.75rem]">
+          Plans & Options
+        </h2>
+        <p className="mt-1 text-sm text-primary/60">
+          Change your plan or add options and services to customize your experience.
+        </p>
+      </div>
+
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Left Column (2/3 width) */}
         <div className="lg:col-span-2 space-y-6">
