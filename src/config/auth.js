@@ -33,7 +33,7 @@ export const AUTH_PAGE = {
   ],
   form: {
     title: "Welcome back",
-    subtitle: "Sign in to your NovaSky account",
+    subtitle: "Sign in with a demo admin, collaborator, or user account",
     emailLabel: "Email address",
     emailPlaceholder: "Enter your email address",
     passwordLabel: "Password",

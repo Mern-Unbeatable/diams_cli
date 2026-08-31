@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { NavLink, Link } from "react-router";
-import { Menu, User, X } from "lucide-react";
+import { LayoutDashboard, Menu, User, X } from "lucide-react";
 import {
   BRAND,
   LOGIN_PATH,
   LOGO_CLASS,
   MAIN_NAV_LINKS,
 } from "@/config/navigation";
+import { getRoleDashboardPath } from "@/config/dummyAuth";
+import { useAuth } from "@/context/AuthContext";
 
 const navLinkClass = ({ isActive }) =>
   [
@@ -16,6 +18,12 @@ const navLinkClass = ({ isActive }) =>
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, user } = useAuth();
+  const accountPath = isAuthenticated
+    ? getRoleDashboardPath(user.role)
+    : LOGIN_PATH;
+  const accountLabel = isAuthenticated ? "Dashboard" : "My Account";
+  const AccountIcon = isAuthenticated ? LayoutDashboard : User;
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -42,11 +50,11 @@ const Navbar = () => {
 
         <div className="ml-auto hidden lg:block">
           <Link
-            to={LOGIN_PATH}
+            to={accountPath}
             className="inline-flex items-center gap-2 rounded-md bg-btnPrimary px-5 py-2.5 text-sm font-semibold text-white transition-opacity duration-200 hover:opacity-90"
           >
-            My Account
-            <User size={18} strokeWidth={2.25} />
+            {accountLabel}
+            <AccountIcon size={18} strokeWidth={2.25} />
           </Link>
         </div>
 
@@ -79,12 +87,12 @@ const Navbar = () => {
           </ul>
 
           <Link
-            to={LOGIN_PATH}
+            to={accountPath}
             className="mt-6 inline-flex w-full items-center justify-center rounded-md gap-2 bg-btnPrimary px-5 py-3 text-sm font-semibold text-white"
             onClick={closeMenu}
           >
-            My Account
-            <User size={18} strokeWidth={2.25} />
+            {accountLabel}
+            <AccountIcon size={18} strokeWidth={2.25} />
           </Link>
         </div>
       )}

@@ -15,11 +15,122 @@ import CoverageView from "@/pages/public/coverage/CoverageView";
 import HelpView from "@/pages/public/help/HelpView";
 import AuthView from "@/pages/auth/AuthView";
 import NotFound from "@/pages/error/NotFound";
+import DashboardLayout from "@/layout/DashboardLayout";
+import RoleDashboardRedirect from "@/pages/dashboard/RoleDashboardRedirect";
+import AdminOverview from "@/pages/dashboard/admin/AdminOverview";
+import AdminCustomerView from "@/pages/dashboard/admin/AdminCustomerView";
+import AdminOrdersView from "@/pages/dashboard/admin/AdminOrdersView";
+import AdminIdentityView from "@/pages/dashboard/admin/AdminIdentityView";
+import AdminPlansView from "@/pages/dashboard/admin/AdminPlansView";
+import AdminAddOnsView from "@/pages/dashboard/admin/AdminAddOnsView";
+import AdminEsimView from "@/pages/dashboard/admin/AdminEsimView";
+import AdminBillingView from "@/pages/dashboard/admin/AdminBillingView";
+import AdminSupportView from "@/pages/dashboard/admin/AdminSupportView";
+import AdminNotificationsView from "@/pages/dashboard/admin/AdminNotificationsView";
+import AdminReportsView from "@/pages/dashboard/admin/AdminReportsView";
+import AdminUsersView from "@/pages/dashboard/admin/AdminUsersView";
+import AdminSettingsView from "@/pages/dashboard/admin/AdminSettingsView";
+import AdminAuditLogsView from "@/pages/dashboard/admin/AdminAuditLogsView";
+import CollaboratorOverview from "@/pages/dashboard/collaborator/CollaboratorOverview";
+import CollaboratorCustomersView from "@/pages/dashboard/collaborator/CollaboratorCustomersView";
+import CollaboratorOrdersView from "@/pages/dashboard/collaborator/CollaboratorOrdersView";
+import CollaboratorIdentityView from "@/pages/dashboard/collaborator/CollaboratorIdentityView";
+import CollaboratorPlansView from "@/pages/dashboard/collaborator/CollaboratorPlansView";
+import CollaboratorSupportView from "@/pages/dashboard/collaborator/CollaboratorSupportView";
+import CollaboratorNotificationsView from "@/pages/dashboard/collaborator/CollaboratorNotificationsView";
+import UserOverview from "@/pages/dashboard/user/UserOverview";
+import UserMyPlanView from "@/pages/dashboard/user/UserMyPlanView";
+import UserEsimView from "@/pages/dashboard/user/UserEsimView";
+import UserUsageView from "@/pages/dashboard/user/UserUsageView";
+import UserBillingView from "@/pages/dashboard/user/UserBillingView";
+import UserSupportView from "@/pages/dashboard/user/UserSupportView";
+import UserNotificationsView from "@/pages/dashboard/user/UserNotificationsView";
+import {
+  GuestRoute,
+  ProtectedRoute,
+  RoleRoute,
+} from "@/Components/dashboard/ProtectedRoute";
+import { ROLES } from "@/config/dummyAuth";
 
 export const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <AuthView />,
+    element: <GuestRoute />,
+    children: [
+      {
+        path: "/login",
+        element: <AuthView />,
+      },
+    ],
+  },
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <RoleDashboardRedirect />,
+      },
+      {
+        path: "/dashboard/admin",
+        element: <RoleRoute role={ROLES.ADMIN} />,
+        children: [
+          {
+            element: <DashboardLayout />,
+            children: [
+              { index: true, element: <AdminOverview /> },
+              { path: "customer", element: <AdminCustomerView /> },
+              { path: "orders", element: <AdminOrdersView /> },
+              { path: "identity", element: <AdminIdentityView /> },
+              { path: "plans", element: <AdminPlansView /> },
+              { path: "add-ons", element: <AdminAddOnsView /> },
+              { path: "esim", element: <AdminEsimView /> },
+              { path: "billing", element: <AdminBillingView /> },
+              { path: "support", element: <AdminSupportView /> },
+              { path: "notifications", element: <AdminNotificationsView /> },
+              { path: "reports", element: <AdminReportsView /> },
+              { path: "users", element: <AdminUsersView /> },
+              { path: "settings", element: <AdminSettingsView /> },
+              { path: "audit-logs", element: <AdminAuditLogsView /> },
+            ],
+          },
+        ],
+      },
+      {
+        path: "/dashboard/collaborator",
+        element: <RoleRoute role={ROLES.COLLABORATOR} />,
+        children: [
+          {
+            element: <DashboardLayout />,
+            children: [
+              { index: true, element: <CollaboratorOverview /> },
+              { path: "customers", element: <CollaboratorCustomersView /> },
+              { path: "orders", element: <CollaboratorOrdersView /> },
+              { path: "identity", element: <CollaboratorIdentityView /> },
+              { path: "plans", element: <CollaboratorPlansView /> },
+              { path: "support", element: <CollaboratorSupportView /> },
+              { path: "notifications", element: <CollaboratorNotificationsView /> },
+            ],
+          },
+        ],
+      },
+      {
+        path: "/dashboard/user",
+        element: <RoleRoute role={ROLES.USER} />,
+        children: [
+          {
+            element: <DashboardLayout />,
+            children: [
+              { index: true, element: <UserOverview /> },
+              { path: "my-plan", element: <UserMyPlanView /> },
+              { path: "esim", element: <UserEsimView /> },
+              { path: "usage", element: <UserUsageView /> },
+              { path: "billing", element: <UserBillingView /> },
+              { path: "support", element: <UserSupportView /> },
+              { path: "notifications", element: <UserNotificationsView /> },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     path: "/",
