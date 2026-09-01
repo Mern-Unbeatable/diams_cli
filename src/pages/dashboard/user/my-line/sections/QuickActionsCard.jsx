@@ -12,28 +12,37 @@ export const QuickActionsCard = () => {
   const { quickActions } = USER_MY_LINE;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
-      <h3 className="text-base font-bold text-primary">Quick Actions</h3>
-      <ul className="mt-3 divide-y divide-gray-100">
+    <section className="rounded-xl border border-gray-100 bg-white p-6 shadow-xs">
+      <h3 className="text-xl font-bold tracking-tight text-[#0b1736]">
+        Quick Actions
+      </h3>
+      <div className="mt-6 flex flex-col gap-4">
         {quickActions.map(({ id, label, icon, path }) => {
           const Icon = QUICK_ACTION_ICONS[icon] ?? BarChart3;
 
           return (
-            <li key={id}>
-              <Link
-                to={path}
-                className="flex items-center gap-3 py-3 transition-colors hover:opacity-80"
-              >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#eef7ff]">
-                  <Icon size={17} className="text-btnPrimary" />
+            <Link
+              key={id}
+              to={path}
+              className="group flex items-center justify-between gap-3 transition-colors"
+            >
+              <div className="flex items-center gap-3.5">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#eaf3ff]">
+                  <Icon size={18} className="text-[#258bf5]" strokeWidth={2} />
                 </span>
-                <span className="flex-1 text-sm font-medium text-primary">{label}</span>
-                <ChevronRight size={16} className="text-primary/35" />
-              </Link>
-            </li>
+                <span className="text-sm font-semibold text-[#0b1736] transition-colors group-hover:text-[#258bf5]">
+                  {label}
+                </span>
+              </div>
+              <ChevronRight
+                size={18}
+                className="shrink-0 text-gray-300 transition-transform group-hover:translate-x-0.5"
+                strokeWidth={1.8}
+              />
+            </Link>
           );
         })}
-      </ul>
+      </div>
     </section>
   );
 };

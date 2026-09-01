@@ -2,18 +2,18 @@ import { Copy } from "lucide-react";
 import { USER_MY_LINE } from "@/config/userMyLine";
 
 const DetailRow = ({ label, value, highlight, copy, onCopy }) => (
-  <div className="flex items-center justify-between gap-4 border-b border-gray-100 py-3 last:border-b-0">
-    <span className="text-sm text-primary/55">{label}</span>
-    <span className="flex items-center gap-2 text-sm font-semibold text-primary">
-      <span className={highlight ?? ""}>{value}</span>
+  <div className="flex items-center justify-between gap-4 border-b border-gray-100/80 py-3.5 first:pt-4 last:border-b-0 last:pb-0">
+    <span className="text-sm font-normal text-gray-400">{label}</span>
+    <span className="flex items-center gap-2 text-sm font-bold text-[#0b1736]">
+      <span className={highlight ? "text-[#16a34a]" : ""}>{value}</span>
       {copy ? (
         <button
           type="button"
           onClick={onCopy}
-          className="text-primary/40 transition-colors hover:text-btnPrimary"
+          className="text-gray-400 transition-colors hover:text-[#258bf5]"
           aria-label={`Copy ${label}`}
         >
-          <Copy size={14} />
+          <Copy size={15} strokeWidth={2} />
         </button>
       ) : null}
     </span>
@@ -28,8 +28,10 @@ export const LineInformationCard = () => {
   };
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
-      <h3 className="text-base font-bold text-primary">Line Information</h3>
+    <section className="rounded-xl border border-gray-100 bg-white p-6 sm:p-7 shadow-xs">
+      <h3 className="text-xl font-bold tracking-tight text-[#0b1736]">
+        Line Information
+      </h3>
       <div className="mt-2">
         {lineInfo.map((item) => (
           <DetailRow
