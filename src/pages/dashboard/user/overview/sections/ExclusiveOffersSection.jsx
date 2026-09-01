@@ -60,31 +60,31 @@ const ExclusiveOffersSection = () => {
           return (
             <article
               key={offer.id}
-              className={`flex min-h-[145px] flex-col justify-between rounded-2xl p-5 ${theme.cardBg} transition-all`}
+              className={`flex min-h-[170px] flex-col justify-between rounded-2xl p-6 ${theme.cardBg} transition-all hover:shadow-xs`}
             >
               <div className="flex items-start gap-3.5">
                 <Icon
-                  size={22}
+                  size={24}
                   className={`mt-0.5 shrink-0 ${theme.iconColor}`}
                   strokeWidth={2}
                 />
                 <div>
-                  <p className="text-[15px] font-bold text-[#0b1736] leading-tight sm:text-base">
+                  <p className="text-base font-bold text-[#0b1736] leading-tight sm:text-[17px]">
                     {offer.title}
                   </p>
-                  <p className="mt-0.5 text-xs text-gray-400 font-normal sm:text-[13px]">
+                  <p className="mt-1 text-xs text-gray-400 font-normal sm:text-sm">
                     {offer.subtitle}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-6 flex items-center justify-between">
-                <span className="text-sm font-bold text-[#0b1736] sm:text-[15px]">
+              <div className="mt-8 flex items-center justify-between">
+                <span className="text-base font-bold text-[#0b1736] sm:text-[17px]">
                   {offer.price}
                 </span>
                 <button
                   type="button"
-                  className={`rounded-lg px-3.5 py-1 text-xs font-semibold sm:text-[13px] ${theme.btnBg} ${theme.btnColor} transition-opacity hover:opacity-80 active:scale-95`}
+                  className={`rounded-xl px-4 py-1.5 text-xs font-semibold sm:text-sm ${theme.btnBg} ${theme.btnColor} transition-opacity hover:opacity-80 active:scale-95`}
                 >
                   Add
                 </button>
