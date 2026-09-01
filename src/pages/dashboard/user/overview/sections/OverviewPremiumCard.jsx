@@ -1,24 +1,24 @@
-import { ArrowRight, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { Link } from "react-router";
 
 export const OverviewPremiumCard = ({ premium }) => {
   if (!premium) return null;
 
   return (
-    <section className="rounded-xl border border-gray-200 bg-white p-4 sm:p-5">
-      <div className="flex items-start gap-3">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#eef7ff]">
-          <Star size={24} className="text-btnPrimary" fill="currentColor" />
+    <section className="rounded-xl border border-gray-100 bg-white p-5 shadow-xs">
+      <div className="flex items-start gap-3.5">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#eef7ff]">
+          <Star size={20} className="text-[#258bf5]" fill="currentColor" />
         </span>
         <div>
-          <p className="font-bold text-primary">{premium.title}</p>
-          <p className="mt-0.5 text-sm text-primary/55">{premium.description}</p>
+          <p className="text-[15px] font-bold text-[#0b1736]">{premium.title}</p>
+          <p className="mt-0.5 text-xs text-gray-400">{premium.description}</p>
           <Link
             to={premium.path}
-            className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-btnPrimary hover:opacity-80"
+            className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-[#258bf5] transition-opacity hover:opacity-80"
           >
-            {premium.linkLabel}
-            <ArrowRight size={14} />
+            <span>{premium.linkLabel}</span>
+            <span className="text-sm leading-none">→</span>
           </Link>
         </div>
       </div>
