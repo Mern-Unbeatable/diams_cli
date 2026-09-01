@@ -19,9 +19,9 @@ export const IntlHeroBanner = () => {
   const { banner } = USER_PLANS_OPTIONS.intlCalls;
 
   return (
-    <section className="rounded-2xl bg-[#0f172a] p-6 text-white space-y-4 shadow-lg shadow-slate-900/10">
-      <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-semibold text-white/90">
-        <Globe size={13} className="shrink-0 text-sky-400" />
+    <section className="space-y-4 rounded-2xl bg-[#0f172a] p-6 text-white shadow-lg shadow-slate-900/10 sm:p-7">
+      <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
+        <Globe size={14} className="shrink-0 text-sky-400" />
         <span>{banner.tag}</span>
       </div>
 
@@ -29,16 +29,16 @@ export const IntlHeroBanner = () => {
         <h3 className="text-2xl font-bold text-white sm:text-3xl">
           {banner.title}
         </h3>
-        <p className="mt-1 text-xs text-white/60 max-w-xl leading-relaxed">
+        <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-white/70">
           {banner.description}
         </p>
       </div>
 
-      <div className="border-t border-white/10 pt-4 flex flex-wrap gap-6 text-xs text-white/80 font-medium">
+      <div className="flex flex-wrap gap-6 border-t border-white/10 pt-4 text-sm font-medium text-white/80">
         {banner.features.map((feature, idx) => (
-          <div key={idx} className="flex items-center gap-1.5">
-            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
-              <Check size={11} strokeWidth={3} />
+          <div key={idx} className="flex items-center gap-2">
+            <span className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+              <Check size={12} strokeWidth={3} />
             </span>
             <span>{feature}</span>
           </div>
@@ -54,62 +54,64 @@ export const IntlActivePackageCard = () => {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef7ff] text-btnPrimary border border-blue-50/50">
-            <Package size={17} />
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-50/50 bg-[#eef7ff] text-btnPrimary">
+            <Package size={20} />
           </span>
           <div>
-            <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-primary">Your Active Packages</h3>
-              <span className="rounded-full bg-btnPrimary/10 px-2.5 py-0.5 text-[10px] font-bold text-btnPrimary">
+            <div className="flex items-center gap-2.5">
+              <h3 className="text-base font-bold text-primary">
+                Your Active Packages
+              </h3>
+              <span className="rounded-full bg-btnPrimary/10 px-2.5 py-0.5 text-xs font-bold text-btnPrimary">
                 1 ACTIVE
               </span>
             </div>
-            <p className="text-[11px] text-primary/50">
+            <p className="text-xs text-primary/60 sm:text-sm">
               Your currently active international calling add-ons
             </p>
           </div>
         </div>
       </div>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-5 space-y-4">
+      <section className="space-y-4 rounded-2xl border border-gray-200 bg-white p-6">
         <div className="flex items-start justify-between">
-          <div className="flex items-center gap-2">
-            <Phone size={16} className="text-btnPrimary" />
-            <h4 className="text-sm font-bold text-primary">
+          <div className="flex items-center gap-2.5">
+            <Phone size={18} className="text-btnPrimary" />
+            <h4 className="text-base font-bold text-primary sm:text-lg">
               {activePackage.title}
             </h4>
           </div>
-          <span className="rounded-lg bg-sky-50 px-2.5 py-1 text-xs font-bold text-btnPrimary">
+          <span className="rounded-lg bg-sky-50 px-3 py-1.5 text-sm font-bold text-btnPrimary">
             CHF {activePackage.price}
           </span>
         </div>
 
-        <p className="text-xs text-primary/50">
-          Expires on: {activePackage.expiresOn}
+        <p className="text-sm text-primary/60">
+          Expires on: <span className="font-semibold text-primary">{activePackage.expiresOn}</span>
         </p>
 
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-primary/60 font-medium">Remaining Talk Time:</span>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between text-sm">
+            <span className="font-medium text-primary/70">Remaining Talk Time:</span>
             <span className="font-bold text-btnPrimary">{activePackage.usedText}</span>
           </div>
-          <div className="h-2.5 w-full rounded-full bg-gray-100 overflow-hidden">
-            <div className="h-full rounded-full bg-btnPrimary w-[75%]" />
+          <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100">
+            <div className="h-full w-[75%] rounded-full bg-btnPrimary" />
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-1 text-xs border-t border-gray-100">
+        <div className="flex items-center justify-between border-t border-gray-100 pt-3 text-sm">
           <span className="flex items-center gap-1.5 font-semibold text-primary/70">
-            <RefreshCw size={13} className="text-emerald-600" />
+            <RefreshCw size={15} className="text-emerald-600" />
             Auto-renew: <span className="font-bold text-emerald-600">ON</span>
           </span>
           <button
             type="button"
-            className="flex items-center gap-1 font-semibold text-red-600 hover:underline"
+            className="flex items-center gap-1.5 font-semibold text-red-600 transition-colors hover:underline"
           >
-            <Trash2 size={13} />
-            Remove
+            <Trash2 size={15} />
+            <span>Remove</span>
           </button>
         </div>
       </section>
@@ -122,13 +124,15 @@ export const IntlAvailablePackagesGrid = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2.5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef7ff] text-btnPrimary border border-blue-50/50">
-          <Phone size={17} />
+      <div className="flex items-center gap-3">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-50/50 bg-[#eef7ff] text-btnPrimary">
+          <Phone size={20} />
         </span>
         <div>
-          <h3 className="text-sm font-bold text-primary">Available Packages</h3>
-          <p className="text-[11px] text-primary/50">
+          <h3 className="text-base font-bold text-primary sm:text-lg">
+            Available Packages
+          </h3>
+          <p className="text-xs text-primary/60 sm:text-sm">
             Select 100 Minutes, 300 Minutes, or Unlimited Selected Countries
           </p>
         </div>
@@ -141,93 +145,99 @@ export const IntlAvailablePackagesGrid = () => {
           return (
             <div
               key={pkg.id}
-              className={`relative rounded-2xl bg-white p-5 pt-7 flex flex-col justify-between border-2 transition-all ${
+              className={`relative flex flex-col justify-between rounded-2xl bg-white p-6 pt-8 border-2 transition-all ${
                 isSelected
                   ? "border-btnPrimary shadow-md"
                   : "border-gray-200 hover:border-gray-300"
               }`}
             >
               {pkg.isPopular && (
-                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-btnPrimary px-4 py-1 text-[10px] font-bold text-white tracking-wide shadow-sm flex items-center gap-1">
+                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1 rounded-full bg-btnPrimary px-4 py-1 text-xs font-bold tracking-wide text-white shadow-sm">
                   <span>★</span> MOST POPULAR
                 </span>
               )}
 
               <div>
                 <div className="flex items-start justify-between">
-                  <span className="rounded border border-gray-200 px-2 py-0.5 text-[9px] font-bold tracking-wider text-primary/45 uppercase">
+                  <span className="rounded border border-gray-200 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-primary/55">
                     {pkg.tag}
                   </span>
                   <div className="text-right">
-                    <span className="text-lg font-bold text-primary">CHF {pkg.price}</span>
+                    <span className="text-xl font-bold text-primary sm:text-2xl">
+                      CHF {pkg.price}
+                    </span>
                   </div>
                 </div>
 
-                <div className="mt-3 flex items-center gap-2">
-                  <Phone size={16} className="text-btnPrimary shrink-0" />
-                  <h4 className="font-bold text-primary text-sm">{pkg.title}</h4>
+                <div className="mt-3.5 flex items-center gap-2">
+                  <Phone size={18} className="shrink-0 text-btnPrimary" />
+                  <h4 className="text-base font-bold text-primary sm:text-lg">
+                    {pkg.title}
+                  </h4>
                 </div>
 
-                <p className="mt-1 text-[11px] text-primary/55 leading-normal">
+                <p className="mt-1.5 text-xs leading-normal text-primary/65 sm:text-sm">
                   {pkg.description}
                 </p>
 
-                <div className="mt-4 rounded-xl border border-gray-100 bg-gray-50/60 p-2.5 flex items-center gap-2">
-                  <Clock size={15} className="text-btnPrimary shrink-0" />
+                <div className="mt-4 flex items-center gap-2.5 rounded-xl border border-gray-100 bg-gray-50/70 p-3">
+                  <Clock size={18} className="shrink-0 text-btnPrimary" />
                   <div>
-                    <p className="text-[9px] font-bold uppercase tracking-wider text-primary/40">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
                       VALIDITY
                     </p>
-                    <p className="text-xs font-bold text-primary">{pkg.validity}</p>
+                    <p className="text-sm font-bold text-primary">{pkg.validity}</p>
                   </div>
                 </div>
 
-                <div className="mt-4 space-y-1.5">
-                  <p className="text-xs font-bold text-primary">Included:</p>
+                <div className="mt-4 space-y-2">
+                  <p className="text-xs font-bold text-primary sm:text-sm">
+                    Included:
+                  </p>
                   <div className="flex flex-wrap gap-1.5">
                     {pkg.included.map((country, idx) => (
                       <span
                         key={idx}
-                        className="rounded bg-gray-100 px-2 py-0.5 text-[10px] font-medium text-primary/70"
+                        className="rounded bg-gray-100 px-2.5 py-1 text-xs font-medium text-primary/75"
                       >
                         {country}
                       </span>
                     ))}
-                    <span className="rounded bg-btnPrimary/10 px-2 py-0.5 text-[10px] font-bold text-btnPrimary">
+                    <span className="rounded bg-btnPrimary/10 px-2.5 py-1 text-xs font-bold text-btnPrimary">
                       +{pkg.moreCount} more
                     </span>
                   </div>
                 </div>
 
-                <ul className="mt-5 space-y-2">
+                <ul className="mt-5 space-y-2.5">
                   {pkg.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-xs text-primary/75">
-                      <span className="text-btnPrimary font-bold text-xs">✓</span>
+                    <li key={idx} className="flex items-center gap-2.5 text-xs text-primary/80 sm:text-sm">
+                      <span className="text-xs font-bold text-btnPrimary sm:text-sm">✓</span>
                       <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-7">
                 <button
                   type="button"
                   disabled={isSelected}
-                  className={`w-full py-2.5 rounded-xl text-xs font-bold transition-colors ${
+                  className={`flex w-full items-center justify-center gap-1.5 rounded-xl py-3 text-xs font-bold transition-colors sm:text-sm ${
                     isSelected
-                      ? "bg-gray-100 text-primary/45 cursor-not-allowed flex items-center justify-center gap-1.5"
-                      : "bg-[#1e293b] text-white hover:bg-[#0f172a] shadow-sm flex items-center justify-center gap-1"
+                      ? "cursor-not-allowed bg-gray-100 text-primary/45"
+                      : "bg-[#1e293b] text-white shadow-sm hover:bg-[#0f172a]"
                   }`}
                 >
                   {isSelected ? (
                     <>
-                      <Clock size={14} />
-                      Already Active
+                      <Clock size={16} />
+                      <span>Already Active</span>
                     </>
                   ) : (
                     <>
-                      <Plus size={14} />
-                      Add Package
+                      <Plus size={16} />
+                      <span>Add Package</span>
                     </>
                   )}
                 </button>
@@ -245,37 +255,37 @@ export const IntlCountrySearchCard = () => {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2.5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef7ff] text-btnPrimary border border-blue-50/50">
-          <Globe size={17} />
+      <div className="flex items-center gap-3">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-50/50 bg-[#eef7ff] text-btnPrimary">
+          <Globe size={20} />
         </span>
         <div>
-          <h3 className="text-sm font-bold text-primary">
+          <h3 className="text-base font-bold text-primary sm:text-lg">
             Find Call Rates & Packages for Your Country
           </h3>
-          <p className="text-[11px] text-primary/50">
+          <p className="text-xs text-primary/60 sm:text-sm">
             Search any country to see which calling pack includes it
           </p>
         </div>
       </div>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-5 space-y-4">
+      <section className="space-y-4 rounded-2xl border border-gray-200 bg-white p-6">
         <div className="relative">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary/40" />
+          <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary/40" />
           <input
             type="text"
             placeholder="Search country e.g. Bangladesh, India..."
-            className="w-full rounded-xl border border-gray-200 bg-gray-50/50 pl-10 pr-4 py-3 text-xs text-primary placeholder:text-primary/40 focus:border-btnPrimary focus:bg-white focus:outline-none"
+            className="w-full rounded-xl border border-gray-200 bg-gray-50/50 py-3.5 pr-4 pl-11 text-sm text-primary placeholder:text-primary/40 focus:border-btnPrimary focus:bg-white focus:outline-none"
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="font-semibold text-primary/50">Popular:</span>
+        <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+          <span className="font-semibold text-primary/60">Popular:</span>
           {popularCountries.map((country) => (
             <button
               key={country.code}
               type="button"
-              className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[11px] font-semibold text-primary/75 transition-colors hover:bg-gray-100 hover:text-primary"
+              className="rounded-full border border-gray-200 bg-gray-50 px-3.5 py-1.5 text-xs font-semibold text-primary/80 transition-colors hover:bg-gray-100 hover:text-primary sm:text-sm"
             >
               {country.code} {country.name}
             </button>
@@ -296,36 +306,38 @@ export const IntlFaqAccordion = () => {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2.5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef7ff] text-btnPrimary border border-blue-50/50">
-          <HelpCircle size={17} />
+      <div className="flex items-center gap-3">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-50/50 bg-[#eef7ff] text-btnPrimary">
+          <HelpCircle size={20} />
         </span>
         <div>
-          <h3 className="text-sm font-bold text-primary">Frequently Asked Questions</h3>
-          <p className="text-[11px] text-primary/50">
+          <h3 className="text-base font-bold text-primary sm:text-lg">
+            Frequently Asked Questions
+          </h3>
+          <p className="text-xs text-primary/60 sm:text-sm">
             Common queries regarding international calling
           </p>
         </div>
       </div>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-4 sm:p-5 divide-y divide-gray-100">
+      <section className="divide-y divide-gray-100 rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
         {faqs.map((faq) => {
           const isOpen = openFaqId === faq.id;
 
           return (
-            <div key={faq.id} className="py-3 first:pt-0 last:pb-0">
+            <div key={faq.id} className="py-3.5 first:pt-0 last:pb-0">
               <button
                 type="button"
                 onClick={() => toggleFaq(faq.id)}
-                className="flex w-full items-center justify-between gap-4 text-left text-xs font-bold text-primary transition-colors hover:text-btnPrimary"
+                className="flex w-full items-center justify-between gap-4 text-left text-sm font-bold text-primary transition-colors hover:text-btnPrimary sm:text-base"
               >
                 <span>{faq.question}</span>
                 <span className="shrink-0 text-primary/40">
-                  {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                 </span>
               </button>
               {isOpen && (
-                <p className="mt-2.5 text-xs text-primary/60 leading-relaxed pr-6">
+                <p className="mt-2.5 pr-6 text-xs leading-relaxed text-primary/70 sm:text-sm">
                   {faq.answer}
                 </p>
               )}
