@@ -12,7 +12,10 @@ import {
 } from "lucide-react";
 import { USER_PAYMENTS } from "@/config/userPayments";
 
-export const PaymentHistoryTab = ({ paymentHistory: propHistory, onViewInvoice }) => {
+export const PaymentHistoryTab = ({
+  paymentHistory: propHistory,
+  onViewInvoice,
+}) => {
   const { historyStats, paymentHistory: defaultHistory } = USER_PAYMENTS;
   const historyData = propHistory?.length ? propHistory : defaultHistory;
 
@@ -169,8 +172,8 @@ export const PaymentHistoryTab = ({ paymentHistory: propHistory, onViewInvoice }
                   {dateFilter === "all"
                     ? "All dates"
                     : dateFilter === "2026"
-                    ? "Year 2026"
-                    : "Year 2025"}
+                      ? "Year 2026"
+                      : "Year 2025"}
                 </span>
                 <ChevronDown size={14} className="text-primary/40" />
               </button>
@@ -225,10 +228,10 @@ export const PaymentHistoryTab = ({ paymentHistory: propHistory, onViewInvoice }
                   {statusFilter === "all"
                     ? "All statuses"
                     : statusFilter === "paid"
-                    ? "Paid"
-                    : statusFilter === "pending"
-                    ? "Pending"
-                    : "Failed"}
+                      ? "Paid"
+                      : statusFilter === "pending"
+                        ? "Pending"
+                        : "Failed"}
                 </span>
                 <ChevronDown size={14} className="text-primary/40" />
               </button>
@@ -283,7 +286,7 @@ export const PaymentHistoryTab = ({ paymentHistory: propHistory, onViewInvoice }
 
         {/* History Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[600px]">
+          <table className="w-full text-left border-collapse min-w-150">
             <thead>
               <tr className="border-b border-gray-100 text-[10px] font-bold uppercase tracking-wider text-primary/40">
                 <th className="pb-3 font-bold">INVOICE</th>
@@ -297,13 +300,19 @@ export const PaymentHistoryTab = ({ paymentHistory: propHistory, onViewInvoice }
             <tbody className="divide-y divide-gray-100/80">
               {displayedRows.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="py-8 text-center text-xs text-primary/50">
+                  <td
+                    colSpan="6"
+                    className="py-8 text-center text-xs text-primary/50"
+                  >
                     No payment history matches your search or filters.
                   </td>
                 </tr>
               ) : (
                 displayedRows.map((item) => (
-                  <tr key={item.id || item.invoice} className="group hover:bg-gray-50/50 transition-colors">
+                  <tr
+                    key={item.id || item.invoice}
+                    className="group hover:bg-gray-50/50 transition-colors"
+                  >
                     {/* INVOICE */}
                     <td className="py-4 text-xs font-bold text-primary">
                       {item.invoice || item.id}

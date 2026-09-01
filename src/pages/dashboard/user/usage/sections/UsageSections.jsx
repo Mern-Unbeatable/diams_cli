@@ -743,7 +743,7 @@ export const UsageSidebar = () => {
             <h4 className="text-sm font-bold">Travel with peace of mind</h4>
             <Plane size={18} className="text-white/80 shrink-0" />
           </div>
-          <p className="text-xs text-white/60 leading-relaxed max-w-[200px]">
+          <p className="text-xs text-white/60 leading-relaxed max-w-50">
             Activate a roaming option and enjoy your trip abroad.
           </p>
 

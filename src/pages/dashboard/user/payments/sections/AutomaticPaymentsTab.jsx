@@ -152,7 +152,7 @@ export const AutomaticPaymentsTab = ({
         </p>
 
         {/* Blue Amount Banner */}
-        <div className="rounded-2xl bg-gradient-to-r from-[#1765dc] to-[#1e78f0] p-6 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md shadow-blue-500/10">
+        <div className="rounded-2xl bg-linear-to-r from-[#1765dc] to-[#1e78f0] p-6 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md shadow-blue-500/10">
           <div>
             <p className="text-xs text-white/80 font-medium">Monthly amount</p>
             <p className="text-2xl sm:text-3xl font-extrabold text-white mt-0.5 tracking-tight">
