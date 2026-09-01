@@ -153,7 +153,10 @@ const PaymentsView = () => {
           )}
 
           {activeTab === "payment-history" && (
-            <PaymentHistoryTab paymentHistory={paymentHistory} />
+            <PaymentHistoryTab
+              paymentHistory={paymentHistory}
+              onViewInvoice={() => setIsInvoiceModalOpen(true)}
+            />
           )}
         </div>
 
