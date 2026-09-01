@@ -1,14 +1,11 @@
-import { USER_MY_LINE } from "@/config/userMyLine";
-import {
-  HelpSupportCard,
-  LineDetailsTab,
-  LineInformationCard,
-  LineStatusCard,
-  LineSummaryCard,
-  PinPukCard,
-  QuickActionsCard,
-  SimPromoCard,
-} from "./sections/MyLineSections";
+import { LineSummaryCard } from "./sections/LineSummaryCard";
+import { LineDetailsTab } from "./sections/LineDetailsTab";
+import { LineInformationCard } from "./sections/LineInformationCard";
+import { PinPukCard } from "./sections/PinPukCard";
+import { QuickActionsCard } from "./sections/QuickActionsCard";
+import { LineStatusCard } from "./sections/LineStatusCard";
+import { SimPromoCard } from "./sections/SimPromoCard";
+import { HelpSupportCard } from "./sections/HelpSupportCard";
 
 const MyLineView = () => (
   <div className="space-y-6">
@@ -23,7 +20,7 @@ const MyLineView = () => (
 
     <div className="grid gap-6 lg:grid-cols-3">
       {/* Left Column (2/3 width) */}
-      <div className="lg:col-span-2 space-y-6">
+      <div className="space-y-6 lg:col-span-2">
         <LineSummaryCard />
         <LineDetailsTab />
 
