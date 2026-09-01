@@ -15,9 +15,9 @@ export const USER_ESIM = {
     imei: "35 123456 789012 3",
     iccid: "8944 1000 1234 5678 9012 3",
     eid: "89049032000008882000123456789012",
-    smdpAddress: "LPA:1$smdp.novasky.ch$MATCHING-ID-99238472",
-    activationCode: "B284-9912-4410-8821",
-    confirmationCode: "Not required",
+    smdpAddress: "SMDP.NOVASKY.IO",
+    activationCode: "K2-9F4A-7C21-XR88-QQ03",
+    confirmationCode: "",
     carrier: "NovaSky Switzerland (Sunrise 5G Network)",
     roamingStatus: "Active (EU & US Included)",
     apn: "internet.novasky.ch",
@@ -63,6 +63,169 @@ export const USER_ESIM = {
     },
     infoNotice:
       "Make sure you have a stable internet connection to install your eSIM.",
+  },
+  manualEntry: {
+    tag: "MANUAL ENTRY",
+    title: "Enter your activation details",
+    subtitle: "Copy these values exactly as shown in your NovaSky welcome email.",
+    smdpAddress: "SMDP.NOVASKY.IO",
+    activationCode: "K2-9F4A-7C21-XR88-QQ03",
+    confirmationPlaceholder: "Only if requested by your device",
+    activateButtonText: "Activate eSIM",
+    activateNotice: "Activation is instant and can only be done once per profile.",
+    tipsTitle: "Installation tips",
+    tips: [
+      "Stay connected to a stable Wi-Fi network during the whole installation.",
+      "Keep at least 30% battery — activation can take up to 3 minutes.",
+      "Do not delete the eSIM profile after installing it; it cannot be reinstalled.",
+      "Set NovaSky as your primary data line once the profile appears.",
+    ],
+    referenceValuesTitle: "Reference values",
+    referenceValues: [
+      { id: "smdp", label: "SMDP.NOVASKY.IO", value: "SMDP.NOVASKY.IO" },
+      { id: "code", label: "K2-9F4A-7C21-XR88-QQ03", value: "K2-9F4A-7C21-XR88-QQ03" },
+    ],
+  },
+  deviceTransfer: {
+    tag: "DEVICE TRANSFER",
+    title: "Move your eSIM to a new device",
+    subtitle: "Your number and plan stay the same — only the profile moves.",
+    currentDevice: {
+      label: "CURRENT DEVICE",
+      name: "iPhone 14 Pro",
+      details: "iOS 18.2 • Active since Mar 2024",
+    },
+    newDevice: {
+      label: "NEW DEVICE",
+      name: "iPhone 16 Pro Max",
+      details: "iOS 19.1 • Detected nearby",
+    },
+    stepsTitle: "Transfer steps",
+    steps: [
+      {
+        id: 1,
+        title: "Verify account",
+        description: "Confirm your NovaSky identity with a one-time code.",
+        active: true,
+      },
+      {
+        id: 2,
+        title: "Select current device",
+        description: "Choose the device holding the active eSIM.",
+        active: false,
+      },
+      {
+        id: 3,
+        title: "Confirm transfer",
+        description: "Review the line and accept the transfer terms.",
+        active: false,
+      },
+      {
+        id: 4,
+        title: "Activate on new device",
+        description: "Finish setup on the receiving device.",
+        active: false,
+      },
+    ],
+    startButtonText: "Start transfer",
+    estimatedTime: {
+      title: "Estimated transfer time",
+      value: "2–5 min",
+      description:
+        "Your service stays online on the current device until the new profile activates.",
+    },
+    supportedDevices: {
+      title: "Supported devices",
+      devices: [
+        { brand: "Apple", models: "iPhone XS and newer, iPad Pro (2018+)" },
+        { brand: "Samsung", models: "Galaxy S20 and newer, Fold / Flip series" },
+        { brand: "Google", models: "Pixel 3 and newer" },
+        { brand: "Other", models: "Motorola Razr, Oppo Find X, Huawei P40" },
+      ],
+    },
+  },
+  installationHelp: {
+    tag: "HELP CENTER",
+    title: "Installation guides",
+    subtitle: "Step-by-step walkthroughs for every supported platform.",
+    guides: [
+      {
+        id: "iphone",
+        name: "iPhone",
+        details: "iOS 16 — iOS 19 • 6 steps",
+        icon: "smartphone",
+      },
+      {
+        id: "android",
+        name: "Android",
+        details: "Android 11+ • 5 steps",
+        icon: "android",
+      },
+      {
+        id: "samsung",
+        name: "Samsung",
+        details: "One UI 5+ • 6 steps",
+        icon: "smartphone",
+      },
+      {
+        id: "pixel",
+        name: "Google Pixel",
+        details: "Pixel 3 and newer • 5 steps",
+        icon: "pixel",
+      },
+    ],
+    troubleshootingTitle: "Troubleshooting",
+    troubleshootingItems: [
+      {
+        id: "qr_fail",
+        q: "QR code not working",
+        a: "Make sure you have an active Wi-Fi connection, raise your screen brightness, and clean your camera lens. If scanning fails, use the 'Enter the code manually' tab.",
+      },
+      {
+        id: "act_fail",
+        q: "Activation failed",
+        a: "Restart your phone and verify your software is updated to the latest OS version. Ensure carrier locks are not enabled on your device.",
+      },
+      {
+        id: "no_sig",
+        q: "No signal after install",
+        a: "Toggle Airplane Mode on for 10 seconds and turn it off. Make sure Mobile Data is switched to your NovaSky line under Settings > Cellular.",
+      },
+      {
+        id: "net_unavail",
+        q: "Network unavailable",
+        a: "Verify that Data Roaming is turned ON for your eSIM profile and that NovaSky APN is set to 'internet.novasky.ch'.",
+      },
+    ],
+    videoTutorial: {
+      title: "Video tutorial",
+      subtitle: "Install your NovaSky eSIM in 3 minutes — full walkthrough.",
+    },
+    offlineResources: {
+      title: "Offline resources",
+      pdfButton: "Download PDF guide",
+      supportButton: "Contact support",
+      notice: "AVERAGE RESPONSE TIME UNDER 2 MINUTES, 24/7.",
+    },
+    faqTitle: "Frequently asked questions",
+    faqItems: [
+      {
+        q: "Can I use my eSIM and a physical SIM at the same time?",
+        a: "Yes! Dual SIM dual standby (DSDS) lets you keep a physical nano-SIM active alongside your NovaSky eSIM for calls, SMS, and data switching.",
+      },
+      {
+        q: "What happens if I reset my phone?",
+        a: "When performing a factory reset, select 'Keep eSIM profiles' to retain your NovaSky line. If deleted by accident, scan your QR code again to reinstall.",
+      },
+      {
+        q: "Does the eSIM work abroad?",
+        a: "Yes! Your NovaSky plan includes EU & US high-speed roaming. Roaming activates automatically when you land in covered destinations.",
+      },
+      {
+        q: "How many transfers are included?",
+        a: "eSIM device transfers and profile re-issuing are 100% free and unlimited for all NovaSky customers.",
+      },
+    ],
   },
   manageCards: [
     {
