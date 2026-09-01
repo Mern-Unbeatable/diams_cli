@@ -1,11 +1,10 @@
-import {
-  UsageBoostersGrid,
-  UsageHeader,
-  UsageMainCard,
-  UsageNeedMoreBanner,
-  UsagePlanBanner,
-  UsageSidebar,
-} from "./sections/UsageSections";
+import UsageBoostersGrid from "./sections/UsageBoostersGrid";
+import UsageHeader from "./sections/UsageHeader";
+import UsageMainCard from "./sections/UsageMainCard";
+import UsageNeedMoreBanner from "./sections/UsageNeedMoreBanner";
+import UsagePlanBanner from "./sections/UsagePlanBanner";
+import UsageSidebar from "./sections/UsageSidebar";
+
 
 const UsageView = () => {
   return (
