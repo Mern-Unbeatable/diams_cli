@@ -1,10 +1,11 @@
-import { CreditCard, Headset, Package, Smartphone } from "lucide-react";
+import { CreditCard, Headset, Plus, Smartphone, FileText } from "lucide-react";
 import { Link } from "react-router";
 
 const QUICK_ACTION_ICONS = {
   wallet: CreditCard,
-  package: Package,
+  plus: Plus,
   sim: Smartphone,
+  esim: FileText,
   headset: Headset,
 };
 
@@ -12,20 +13,29 @@ export const OverviewQuickActionsCard = ({ quickActions }) => {
   if (!quickActions?.length) return null;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-4 sm:p-5">
-      <h3 className="text-sm font-bold text-primary">Quick Actions</h3>
-      <div className="mt-4 grid grid-cols-2 gap-3">
+    <section className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
+      <h3 className="text-xl font-bold tracking-tight text-[#0b1736]">
+        Quick actions
+      </h3>
+
+      <div className="mt-6 grid grid-cols-3 gap-3.5">
         {quickActions.map(({ id, label, icon, path }) => {
-          const Icon = QUICK_ACTION_ICONS[icon] ?? Package;
+          const Icon = QUICK_ACTION_ICONS[icon] ?? CreditCard;
 
           return (
             <Link
               key={id}
               to={path}
-              className="flex flex-col items-center gap-2 rounded-xl border border-gray-100 bg-gray-50/80 px-2 py-4 text-center transition-colors hover:bg-gray-100"
+              className="group flex aspect-square flex-col items-center justify-center rounded-xl border border-gray-100 bg-white p-2.5 text-center transition-all hover:border-gray-200 hover:shadow-sm"
             >
-              <Icon size={20} className="text-primary/70" strokeWidth={1.6} />
-              <span className="text-xs font-medium text-primary/75">{label}</span>
+              <Icon
+                size={22}
+                className="text-[#0b1736] transition-transform group-hover:scale-105"
+                strokeWidth={1.8}
+              />
+              <span className="mt-2.5 text-[11px] font-semibold text-[#0b1736]/90 leading-tight">
+                {label}
+              </span>
             </Link>
           );
         })}
