@@ -29,7 +29,7 @@ import AdminSupportView from "@/pages/dashboard/admin/supportCenter/AdminSupport
 import AdminNotificationsView from "@/pages/dashboard/admin/notification/AdminNotificationsView";
 import AdminReportsView from "@/pages/dashboard/admin/reports/AdminReportsView";
 import AdminUsersView from "@/pages/dashboard/admin/usersPermission/AdminUsersView";
-import AdminSettingsView from "@/pages/dashboard/admin/AdminSettingsView";
+import AdminSettingsView from "@/pages/dashboard/admin/systemsettings/AdminSettingsView";
 import AdminAuditLogsView from "@/pages/dashboard/admin/AdminAuditLogsView";
 import CollaboratorOverview from "@/pages/dashboard/collaborator/CollaboratorOverview";
 import CollaboratorCustomersView from "@/pages/dashboard/collaborator/CollaboratorCustomersView";
