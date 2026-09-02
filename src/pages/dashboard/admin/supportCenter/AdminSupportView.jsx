@@ -4,6 +4,8 @@ import DataTable from "@/Components/dashboard/DataTable";
 import {
   SupportHeader,
   SupportDetailsView,
+  ReplyTicketModal,
+  AssignTicketModal,
   SUPPORT_TICKETS_DATA,
   SUPPORT_ACTIONS,
 } from "./sections";
@@ -43,6 +45,12 @@ const AdminSupportView = () => {
   const [tickets, setTickets] = useState(SUPPORT_TICKETS_DATA);
   const [selectedPriority, setSelectedPriority] = useState("All Priority");
   const [selectedStatus, setSelectedStatus] = useState("All Statuses");
+
+  const [selectedTicketForReply, setSelectedTicketForReply] = useState(null);
+  const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
+
+  const [selectedTicketForAssign, setSelectedTicketForAssign] = useState(null);
+  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
 
   // Find active ticket for details view
   const currentTicket = useMemo(() => {
@@ -150,6 +158,12 @@ const AdminSupportView = () => {
     const act = String(actionName).toLowerCase();
     if (act.includes("detail") || act === "details") {
       navigate(`/dashboard/admin/support/${row.ticketId || row.id}`);
+    } else if (act.includes("reply")) {
+      setSelectedTicketForReply(row);
+      setIsReplyModalOpen(true);
+    } else if (act.includes("assign")) {
+      setSelectedTicketForAssign(row);
+      setIsAssignModalOpen(true);
     } else if (act.includes("closed")) {
       setTickets((prev) =>
         prev.map((t) => (t.id === row.id ? { ...t, status: "Closed" } : t))
@@ -170,21 +184,22 @@ const AdminSupportView = () => {
       setTickets((prev) =>
         prev.map((t) => (t.id === row.id ? { ...t, priority: "Low" } : t))
       );
-    } else if (act.includes("assigned")) {
-      const agent = prompt("Enter agent name to assign:", row.assignedAgent);
-      if (agent) {
-        setTickets((prev) =>
-          prev.map((t) => (t.id === row.id ? { ...t, assignedAgent: agent } : t))
-        );
-      }
     }
   };
 
-  // Update ticket details (from Details view)
+  // Update ticket details (from Details view or Modal)
   const handleUpdateTicket = (ticketId, updates) => {
     setTickets((prev) =>
       prev.map((t) => (t.id === ticketId ? { ...t, ...updates } : t))
     );
+  };
+
+  const handleAssignAgent = (ticketId, newAgent) => {
+    handleUpdateTicket(ticketId, { assignedAgent: newAgent });
+  };
+
+  const handleSendReply = (ticketId, messageText) => {
+    console.log(`Reply sent to ticket ${ticketId}:`, messageText);
   };
 
   return (
@@ -231,6 +246,28 @@ const AdminSupportView = () => {
             onActionClick={handleActionClick}
             pageSize={10}
             emptyMessage="No support tickets found matching the selected filters."
+          />
+
+          {/* Reply Ticket Modal for Table actions */}
+          <ReplyTicketModal
+            isOpen={isReplyModalOpen}
+            onClose={() => {
+              setIsReplyModalOpen(false);
+              setSelectedTicketForReply(null);
+            }}
+            ticket={selectedTicketForReply}
+            onSendReply={handleSendReply}
+          />
+
+          {/* Assign Ticket Modal for Table actions */}
+          <AssignTicketModal
+            isOpen={isAssignModalOpen}
+            onClose={() => {
+              setIsAssignModalOpen(false);
+              setSelectedTicketForAssign(null);
+            }}
+            ticket={selectedTicketForAssign}
+            onAssign={handleAssignAgent}
           />
         </>
       )}
