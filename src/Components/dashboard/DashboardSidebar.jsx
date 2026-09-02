@@ -4,6 +4,7 @@ import {
   Bell,
   CircleCheck,
   CreditCard,
+  FileText,
   Headset,
   LayoutGrid,
   Link2,
@@ -11,6 +12,7 @@ import {
   LogOut,
   Package,
   Plus,
+  Power,
   Receipt,
   Settings,
   ShieldCheck,
@@ -18,6 +20,7 @@ import {
   TrendingUp,
   User,
   UserCog,
+  Wallet,
   X,
 } from "lucide-react";
 import { BRAND } from "@/config/navigation";
@@ -42,6 +45,9 @@ const NAV_ICONS = {
   userCog: UserCog,
   settings: Settings,
   check: CircleCheck,
+  power: Power,
+  wallet: Wallet,
+  fileText: FileText,
 };
 
 const navLinkClass = ({ isActive }) =>

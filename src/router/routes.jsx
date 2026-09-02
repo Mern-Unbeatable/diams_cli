@@ -34,6 +34,10 @@ import AdminAuditLogsView from "@/pages/dashboard/admin/auditLogs/AdminAuditLogs
 import CollaboratorOverview from "@/pages/dashboard/collaborator/overview/CollaboratorOverview";
 import CollaboratorCustomersView from "@/pages/dashboard/collaborator/customers/CollaboratorCustomersView";
 import CollaboratorOrdersView from "@/pages/dashboard/collaborator/order/CollaboratorOrdersView";
+import CollaboratorActivationsView from "@/pages/dashboard/collaborator/CollaboratorActivationsView";
+import CollaboratorCommissionsView from "@/pages/dashboard/collaborator/CollaboratorCommissionsView";
+import CollaboratorInvoicesView from "@/pages/dashboard/collaborator/CollaboratorInvoicesView";
+import CollaboratorProfileSettingsView from "@/pages/dashboard/collaborator/CollaboratorProfileSettingsView";
 import CollaboratorIdentityView from "@/pages/dashboard/collaborator/CollaboratorIdentityView";
 import CollaboratorPlansView from "@/pages/dashboard/collaborator/CollaboratorPlansView";
 import CollaboratorSupportView from "@/pages/dashboard/collaborator/CollaboratorSupportView";
@@ -120,13 +124,20 @@ export const router = createBrowserRouter([
               { path: "customers/:id", element: <CollaboratorCustomersView /> },
               { path: "orders", element: <CollaboratorOrdersView /> },
               { path: "orders/:id", element: <CollaboratorOrdersView /> },
-              { path: "identity", element: <CollaboratorIdentityView /> },
-              { path: "plans", element: <CollaboratorPlansView /> },
-              { path: "support", element: <CollaboratorSupportView /> },
+              { path: "activations", element: <CollaboratorActivationsView /> },
+              { path: "commissions", element: <CollaboratorCommissionsView /> },
+              { path: "invoices", element: <CollaboratorInvoicesView /> },
               {
                 path: "notifications",
                 element: <CollaboratorNotificationsView />,
               },
+              {
+                path: "profile",
+                element: <CollaboratorProfileSettingsView />,
+              },
+              { path: "identity", element: <CollaboratorIdentityView /> },
+              { path: "plans", element: <CollaboratorPlansView /> },
+              { path: "support", element: <CollaboratorSupportView /> },
             ],
           },
         ],
