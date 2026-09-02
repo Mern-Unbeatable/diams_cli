@@ -196,7 +196,6 @@ export const ADDONS_DATA = [
 ];
 
 export const ADDON_ACTIONS = [
-  { label: "See Details", isPrimary: true, action: "details" },
-  { label: "Edit Add-on", action: "edit" },
-  { label: "Delete Add-on", action: "delete" },
+  { label: "Edit", action: "edit" },
+  { label: "Delete", action: "delete" },
 ];
