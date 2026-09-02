@@ -57,5 +57,13 @@ export const DASHBOARD_NAV = {
 
 export const getDashboardNav = (role) => DASHBOARD_NAV[role] ?? [];
 
-export const getCurrentNavItem = (role, pathname) =>
-  getDashboardNav(role).find((item) => item.path === pathname);
+export const getCurrentNavItem = (role, pathname) => {
+  const items = getDashboardNav(role);
+  const exact = items.find((item) => item.path === pathname);
+  if (exact) return exact;
+
+  const rootPath = ROLE_DASHBOARD_PATHS[role];
+  return items.find(
+    (item) => item.path !== rootPath && pathname.startsWith(item.path)
+  );
+};

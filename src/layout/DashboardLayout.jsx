@@ -13,7 +13,12 @@ const DashboardLayout = () => {
 
   const navItems = getDashboardNav(user.role);
   const currentItem = getCurrentNavItem(user.role, location.pathname);
-  const isAllowed = navItems.some((item) => item.path === location.pathname);
+  const isAllowed = navItems.some(
+    (item) =>
+      item.path === location.pathname ||
+      (item.path !== getRoleDashboardPath(user.role) &&
+        location.pathname.startsWith(item.path))
+  );
 
   useEffect(() => {
     setIsSidebarOpen(false);

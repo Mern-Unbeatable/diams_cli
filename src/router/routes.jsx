@@ -18,7 +18,7 @@ import NotFound from "@/pages/error/NotFound";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RoleDashboardRedirect from "@/pages/dashboard/RoleDashboardRedirect";
 import AdminOverview from "@/pages/dashboard/admin/overview/AdminOverview";
-import AdminCustomerView from "@/pages/dashboard/admin/AdminCustomerView";
+import AdminCustomerView from "@/pages/dashboard/admin/customer/AdminCustomerView";
 import AdminOrdersView from "@/pages/dashboard/admin/AdminOrdersView";
 import AdminIdentityView from "@/pages/dashboard/admin/AdminIdentityView";
 import AdminPlansView from "@/pages/dashboard/admin/AdminPlansView";
@@ -82,6 +82,7 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <AdminOverview /> },
               { path: "customer", element: <AdminCustomerView /> },
+              { path: "customer/:id", element: <AdminCustomerView /> },
               { path: "orders", element: <AdminOrdersView /> },
               { path: "identity", element: <AdminIdentityView /> },
               { path: "plans", element: <AdminPlansView /> },
