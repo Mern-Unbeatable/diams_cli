@@ -21,7 +21,7 @@ import AdminOverview from "@/pages/dashboard/admin/overview/AdminOverview";
 import AdminCustomerView from "@/pages/dashboard/admin/customer/AdminCustomerView";
 import AdminOrdersView from "@/pages/dashboard/admin/orders/AdminOrdersView";
 import AdminIdentityView from "@/pages/dashboard/admin/identityVerification/AdminIdentityView";
-import AdminPlansView from "@/pages/dashboard/admin/AdminPlansView";
+import AdminPlansView from "@/pages/dashboard/admin/plans/AdminPlansView";
 import AdminAddOnsView from "@/pages/dashboard/admin/AdminAddOnsView";
 import AdminEsimView from "@/pages/dashboard/admin/AdminEsimView";
 import AdminBillingView from "@/pages/dashboard/admin/AdminBillingView";
