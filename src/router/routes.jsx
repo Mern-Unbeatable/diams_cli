@@ -31,7 +31,7 @@ import AdminReportsView from "@/pages/dashboard/admin/reports/AdminReportsView";
 import AdminUsersView from "@/pages/dashboard/admin/usersPermission/AdminUsersView";
 import AdminSettingsView from "@/pages/dashboard/admin/systemsettings/AdminSettingsView";
 import AdminAuditLogsView from "@/pages/dashboard/admin/auditLogs/AdminAuditLogsView";
-import CollaboratorOverview from "@/pages/dashboard/collaborator/CollaboratorOverview";
+import CollaboratorOverview from "@/pages/dashboard/collaborator/overview/CollaboratorOverview";
 import CollaboratorCustomersView from "@/pages/dashboard/collaborator/CollaboratorCustomersView";
 import CollaboratorOrdersView from "@/pages/dashboard/collaborator/CollaboratorOrdersView";
 import CollaboratorIdentityView from "@/pages/dashboard/collaborator/CollaboratorIdentityView";
