@@ -1,12 +1,12 @@
 import {
   ReportsHeader,
-  ReportsKpiCards,
   RevenueOverviewChart,
   MostPopularPlansCard,
   ActivationStatisticsCard,
   CustomerGrowthChart,
   ActivationsPerMonthChart,
 } from "./sections";
+import AdminStatCards from "../overview/sections/AdminStatCards";
 
 const AdminReportsView = () => {
   return (
@@ -14,8 +14,8 @@ const AdminReportsView = () => {
       {/* 1. Header */}
       <ReportsHeader />
 
-      {/* 2. Top 8 KPI Metric Cards */}
-      <ReportsKpiCards />
+      {/* 2. Top 8 KPI Metric Cards (using Overview page component) */}
+      <AdminStatCards />
 
       {/* 3. Middle Section: Revenue Overview (8 cols) + Most Popular Plans (4 cols) */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
