@@ -3,41 +3,31 @@ import { MoreVertical } from "lucide-react";
 
 /**
  * Status Badge Style Resolver
- * Maps status names to design-accurate pill badges
+ * Matches the soft-pill badges seen in the design (borderless, soft tints)
  */
 export const getStatusBadgeStyle = (status) => {
-  if (!status) return "bg-slate-50 text-slate-600 border-slate-200";
+  if (!status) return "bg-slate-100 text-slate-600";
   const normalized = String(status).toLowerCase().trim();
 
   switch (normalized) {
     case "pending":
-      return "bg-sky-50 text-sky-600 border-sky-100";
+      return "bg-[#e0f7fa] text-[#0097a7]"; // Light cyan/teal
     case "identity verification":
     case "verification":
-      return "bg-slate-100 text-slate-600 border-slate-200/80";
+      return "bg-[#f1f3f5] text-[#6c757d]"; // Subtle grey
     case "approved":
-      return "bg-blue-50 text-blue-600 border-blue-100";
+      return "bg-[#e8f0fe] text-[#3b82f6]"; // Soft light blue
     case "activated":
-      return "bg-amber-50 text-amber-600 border-amber-100";
-    case "rejected":
-      return "bg-purple-50 text-purple-600 border-purple-100";
     case "active":
-    case "live":
-    case "provisioned":
-    case "paid":
-      return "bg-emerald-50 text-emerald-600 border-emerald-100";
+      return "bg-[#fef3c7] text-[#d97706]"; // Warm yellow/amber
+    case "rejected":
     case "suspended":
-    case "cancelled":
-    case "failed":
-      return "bg-rose-50 text-rose-600 border-rose-100";
+      return "bg-[#f3e8ff] text-[#9333ea]"; // Soft purple/violet
     default:
-      return "bg-slate-50 text-slate-700 border-slate-200";
+      return "bg-slate-100 text-slate-600";
   }
 };
 
-/**
- * Default Action Items matching the mockup
- */
 export const DEFAULT_ACTIONS = [
   { label: "See Details", isPrimary: true, action: "details" },
   { label: "Pending", action: "status_pending" },
@@ -47,9 +37,6 @@ export const DEFAULT_ACTIONS = [
   { label: "Rejected", action: "status_rejected" },
 ];
 
-/**
- * Reusable Action Popover Component
- */
 const ActionMenu = ({
   row,
   actions = DEFAULT_ACTIONS,
@@ -85,7 +72,7 @@ const ActionMenu = ({
   return (
     <div
       ref={menuRef}
-      className="absolute right-3 top-10 z-30 min-w-[160px] overflow-hidden rounded-xl border border-slate-100 bg-white py-1 shadow-2xl ring-1 ring-black/5"
+      className="absolute right-4 top-10 z-30 min-w-[150px] overflow-hidden rounded-lg border border-slate-100 bg-white py-1 shadow-xl ring-1 ring-black/5"
     >
       {actions.map((act, index) => {
         if (act.isPrimary) {
@@ -124,25 +111,6 @@ const ActionMenu = ({
   );
 };
 
-/**
- * Reusable DataTable Component
- *
- * Props:
- * @param {Array} columns - Column definition objects [{ key, label, render, align, className }] or strings ['Col1', 'Col2']
- * @param {Array} data - Array of row objects [{ id, ... }] or 2D array of values [['val1', 'val2']]
- * @param {Array} rows - Alias for data (backwards compatibility)
- * @param {Array} actions - Custom action menu items [{ label, isPrimary, action, onClick }]
- * @param {Function} onActionClick - Handler callback (actionName, row) => void
- * @param {number} pageSize - Number of rows per page (default 10)
- * @param {number} currentPage - Controlled current page (optional)
- * @param {number} totalItems - Controlled total items count (optional)
- * @param {Function} onPageChange - Controlled page change handler (newPage) => void
- * @param {boolean} showPagination - Whether to display the pagination footer (default true)
- * @param {string} title - Optional title to show above table
- * @param {string} emptyMessage - Message to show when data is empty
- * @param {boolean} isLoading - Shows loading state
- * @param {string} className - Additional CSS wrapper classes
- */
 const DataTable = ({
   columns = [],
   data = [],
@@ -154,7 +122,6 @@ const DataTable = ({
   totalItems: controlledTotal,
   onPageChange,
   showPagination = true,
-  title,
   emptyMessage = "No records found.",
   isLoading = false,
   className = "",
@@ -163,36 +130,42 @@ const DataTable = ({
   const [activeRowMenuId, setActiveRowMenuId] = useState(null);
   const triggerRefs = useRef({});
 
-  // Support both `data` and legacy `rows`
   const tableData = data.length > 0 ? data : rows;
 
-  // Normalized columns
   const normalizedColumns = columns.map((col, index) => {
     if (typeof col === "string") {
-      const isActionCol = col.toLowerCase().includes("action");
-      const isStatusCol = col.toLowerCase().includes("status");
+      const isAction = col.toLowerCase().includes("action");
+      const isStatus = col.toLowerCase().includes("status");
       return {
         key: `col_${index}`,
         label: col,
-        isAction: isActionCol,
-        isStatus: isStatusCol,
+        isAction,
+        isStatus,
+        align: isAction ? "center" : "left",
       };
     }
     return {
       key: col.key || `col_${index}`,
       label: col.label || "",
       render: col.render,
-      align: col.align || (col.isAction || col.key === "action" ? "right" : "left"),
+      align:
+        col.align ||
+        (col.isAction || col.key === "action"
+          ? "center"
+          : col.isStatus || col.key === "status"
+          ? "left"
+          : "left"),
       className: col.className || "",
       isAction: col.isAction || col.key === "action",
       isStatus: col.isStatus || col.key === "status",
     };
   });
 
-  // Pagination logic (client-side if not controlled externally)
-  const isControlledPagination = controlledPage !== undefined && onPageChange !== undefined;
+  const isControlledPagination =
+    controlledPage !== undefined && onPageChange !== undefined;
   const activePage = isControlledPagination ? controlledPage : internalPage;
-  const totalCount = controlledTotal !== undefined ? controlledTotal : tableData.length;
+  const totalCount =
+    controlledTotal !== undefined ? controlledTotal : tableData.length;
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   const paginatedData = isControlledPagination
@@ -204,53 +177,43 @@ const DataTable = ({
 
   const handlePrevPage = () => {
     if (activePage > 1) {
-      if (isControlledPagination) {
-        onPageChange(activePage - 1);
-      } else {
-        setInternalPage((p) => p - 1);
-      }
+      if (isControlledPagination) onPageChange(activePage - 1);
+      else setInternalPage((p) => p - 1);
     }
   };
 
   const handleNextPage = () => {
     if (activePage < totalPages) {
-      if (isControlledPagination) {
-        onPageChange(activePage + 1);
-      } else {
-        setInternalPage((p) => p + 1);
-      }
+      if (isControlledPagination) onPageChange(activePage + 1);
+      else setInternalPage((p) => p + 1);
     }
   };
 
-  // Helper to extract cell value
   const getCellValue = (row, col, colIndex) => {
-    if (Array.isArray(row)) {
-      return row[colIndex];
-    }
+    if (Array.isArray(row)) return row[colIndex];
     return row[col.key];
   };
 
   return (
-    <div className={`space-y-4 ${className}`}>
-      {/* Optional Table Header Title */}
-      {title && (
-        <div className="border-b border-slate-100 pb-3">
-          <h3 className="text-base font-bold text-slate-900">{title}</h3>
-        </div>
-      )}
-
-      {/* Main Table Container */}
-      <div className="overflow-x-auto rounded-2xl border border-slate-100/90 bg-white">
-        <table className="w-full min-w-[700px] border-collapse text-left">
-          <thead>
-            <tr className="border-b border-slate-100 bg-white text-xs font-semibold text-slate-700 sm:text-[13px]">
+    <div
+      className={`w-full overflow-hidden rounded-lg border border-slate-100 bg-white font-sans shadow-[0_2px_10px_rgba(0,0,0,0.02)] ${className}`}
+    >
+      {/* Table Area */}
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[760px] border-collapse text-left">
+          <thead className="bg-[#F6FBFF]">
+            <tr className="border-b border-slate-100 text-[13px] font-semibold text-slate-800">
               {normalizedColumns.map((col, idx) => (
                 <th
                   key={col.key}
-                  className={`py-4 px-4 ${
-                    idx === 0 ? "pl-6" : ""
-                  } ${idx === normalizedColumns.length - 1 ? "pr-6" : ""} ${
-                    col.align === "right" ? "text-right" : "text-left"
+                  className={`py-4 px-4 ${idx === 0 ? "pl-6" : ""} ${
+                    idx === normalizedColumns.length - 1 ? "pr-6" : ""
+                  } ${
+                    col.align === "center"
+                      ? "text-center"
+                      : col.align === "right"
+                      ? "text-right"
+                      : "text-left"
                   }`}
                 >
                   {col.label}
@@ -259,7 +222,7 @@ const DataTable = ({
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-slate-100 text-xs sm:text-[13px]">
+          <tbody className="divide-y divide-slate-100 text-[13px] text-slate-600">
             {isLoading ? (
               <tr>
                 <td
@@ -276,57 +239,60 @@ const DataTable = ({
               <tr>
                 <td
                   colSpan={normalizedColumns.length || 1}
-                  className="py-16 text-center font-medium text-slate-400"
+                  className="py-16 text-center text-slate-400"
                 >
                   {emptyMessage}
                 </td>
               </tr>
             ) : (
               paginatedData.map((row, rowIndex) => {
-                const rowKey = row.id || row.orderId || row.key || rowIndex;
+                const rowKey =
+                  row.id || row.orderId || row.key || rowIndex;
 
                 return (
                   <tr
                     key={rowKey}
-                    className="transition-colors hover:bg-slate-50/60"
+                    className="transition-colors hover:bg-slate-50/50"
                   >
                     {normalizedColumns.map((col, colIndex) => {
                       const value = getCellValue(row, col, colIndex);
                       const isFirst = colIndex === 0;
-                      const isLast = colIndex === normalizedColumns.length - 1;
+                      const isLast =
+                        colIndex === normalizedColumns.length - 1;
 
-                      // Custom column renderer
                       if (col.render) {
                         return (
                           <td
                             key={col.key}
-                            className={`py-4 px-4 ${isFirst ? "pl-6" : ""} ${
-                              isLast ? "pr-6" : ""
-                            } ${col.className || ""}`}
+                            className={`py-3.5 px-4 ${
+                              isFirst ? "pl-6 font-medium text-slate-900" : ""
+                            } ${isLast ? "pr-6" : ""} ${col.className || ""}`}
                           >
                             {col.render(row, value, rowIndex)}
                           </td>
                         );
                       }
 
-                      // Action Column with 3-dot Popover
+                      // Action Dropdown Column
                       if (col.isAction || col.key === "action") {
                         return (
                           <td
                             key={col.key}
-                            className={`relative py-4 px-4 text-right ${
+                            className={`relative py-3.5 px-4 text-center ${
                               isLast ? "pr-6" : ""
                             }`}
                           >
                             <button
-                              ref={(el) => (triggerRefs.current[rowKey] = el)}
+                              ref={(el) =>
+                                (triggerRefs.current[rowKey] = el)
+                              }
                               type="button"
                               onClick={() =>
                                 setActiveRowMenuId(
                                   activeRowMenuId === rowKey ? null : rowKey
                                 )
                               }
-                              className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-800"
+                              className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-700 transition hover:bg-slate-100"
                             >
                               <MoreVertical className="h-4 w-4" />
                             </button>
@@ -345,13 +311,13 @@ const DataTable = ({
                         );
                       }
 
-                      // Status Column with Pill Badge
+                      // Soft Badge Column
                       if (col.isStatus || col.key === "status") {
                         const badgeStyle = getStatusBadgeStyle(value);
                         return (
-                          <td key={col.key} className="py-4 px-4">
+                          <td key={col.key} className="py-3.5 px-4">
                             <span
-                              className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${badgeStyle}`}
+                              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium tracking-tight ${badgeStyle}`}
                             >
                               {value}
                             </span>
@@ -359,12 +325,12 @@ const DataTable = ({
                         );
                       }
 
-                      // Default Cell Render
+                      // Default Row
                       return (
                         <td
                           key={col.key}
-                          className={`py-4 px-4 text-slate-600 ${
-                            isFirst ? "pl-6 font-medium text-slate-900" : ""
+                          className={`py-3.5 px-4 ${
+                            isFirst ? "pl-6 font-medium text-slate-800" : ""
                           } ${isLast ? "pr-6" : ""} ${col.className || ""}`}
                         >
                           {value}
@@ -379,21 +345,19 @@ const DataTable = ({
         </table>
       </div>
 
-      {/* Pagination Bar */}
+      {/* Pagination Footer */}
       {showPagination && totalCount > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-          {/* Results summary in Orange */}
-          <span className="text-xs font-medium text-[#f97316] sm:text-sm">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 bg-white px-6 py-4">
+          <p className="text-[13px] font-medium text-[#f97316]">
             Showing {startIndex} to {endIndex} of {totalCount} results
-          </span>
+          </p>
 
-          {/* Previous & Next Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center space-x-2">
             <button
               type="button"
               onClick={handlePrevPage}
               disabled={activePage <= 1}
-              className="rounded-xl border border-orange-400/60 bg-white px-4 py-1.5 text-xs font-medium text-[#f97316] shadow-sm transition-all hover:bg-orange-50/60 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-lg border border-[#f97316] bg-white px-3.5 py-1 text-xs font-medium text-[#f97316] transition hover:bg-orange-50 disabled:cursor-not-allowed disabled:border-orange-200 disabled:text-orange-200"
             >
               Previous
             </button>
@@ -401,7 +365,7 @@ const DataTable = ({
               type="button"
               onClick={handleNextPage}
               disabled={activePage >= totalPages}
-              className="rounded-xl border border-orange-400/60 bg-white px-4 py-1.5 text-xs font-medium text-[#f97316] shadow-sm transition-all hover:bg-orange-50/60 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-lg border border-[#f97316] bg-white px-3.5 py-1 text-xs font-medium text-[#f97316] transition hover:bg-orange-50 disabled:cursor-not-allowed disabled:border-orange-200 disabled:text-orange-200"
             >
               Next
             </button>

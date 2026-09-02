@@ -19,7 +19,7 @@ import DashboardLayout from "@/layout/DashboardLayout";
 import RoleDashboardRedirect from "@/pages/dashboard/RoleDashboardRedirect";
 import AdminOverview from "@/pages/dashboard/admin/overview/AdminOverview";
 import AdminCustomerView from "@/pages/dashboard/admin/customer/AdminCustomerView";
-import AdminOrdersView from "@/pages/dashboard/admin/AdminOrdersView";
+import AdminOrdersView from "@/pages/dashboard/admin/orders/AdminOrdersView";
 import AdminIdentityView from "@/pages/dashboard/admin/AdminIdentityView";
 import AdminPlansView from "@/pages/dashboard/admin/AdminPlansView";
 import AdminAddOnsView from "@/pages/dashboard/admin/AdminAddOnsView";
