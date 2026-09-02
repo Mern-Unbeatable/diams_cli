@@ -2,12 +2,13 @@ import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import ReplyTicketModal from "./ReplyTicketModal";
 import AssignTicketModal from "./AssignTicketModal";
+import CloseTicketModal from "./CloseTicketModal";
 
 const getPriorityBadgeStyle = (priority) => {
   const norm = String(priority).toLowerCase();
   switch (norm) {
     case "high":
-      return "bg-[#e0f7fa] text-[#0284c7]";
+      return "bg-[#e0f2fe] text-[#0284c7]";
     case "medium":
       return "bg-[#fef9c3] text-[#a16207]";
     case "low":
@@ -48,6 +49,7 @@ const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
   ]);
   const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+  const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
 
   const ticketId = ticket?.ticketId || "TCK-5011";
   const customer = ticket?.customer || "Jonas Baumann";
@@ -69,7 +71,7 @@ const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
     }
   };
 
-  const handleClose = () => {
+  const handleConfirmClose = () => {
     setCurrentStatus("Closed");
     if (onUpdateTicket) {
       onUpdateTicket(ticket?.id, { status: "Closed" });
@@ -183,7 +185,7 @@ const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
 
           <button
             type="button"
-            onClick={handleClose}
+            onClick={() => setIsCloseModalOpen(true)}
             className="rounded-xl bg-[#38bdf8] px-7 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-sm transition-all hover:bg-sky-400 active:scale-95"
           >
             Close
@@ -205,6 +207,14 @@ const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
         onClose={() => setIsAssignModalOpen(false)}
         ticket={{ ...ticket, assignedAgent }}
         onAssign={handleAssignAgent}
+      />
+
+      {/* Close Ticket Modal */}
+      <CloseTicketModal
+        isOpen={isCloseModalOpen}
+        onClose={() => setIsCloseModalOpen(false)}
+        ticket={ticket}
+        onConfirmClose={handleConfirmClose}
       />
     </div>
   );

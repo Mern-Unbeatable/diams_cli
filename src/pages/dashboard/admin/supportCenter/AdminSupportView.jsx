@@ -6,6 +6,7 @@ import {
   SupportDetailsView,
   ReplyTicketModal,
   AssignTicketModal,
+  CloseTicketModal,
   SUPPORT_TICKETS_DATA,
   SUPPORT_ACTIONS,
 } from "./sections";
@@ -51,6 +52,9 @@ const AdminSupportView = () => {
 
   const [selectedTicketForAssign, setSelectedTicketForAssign] = useState(null);
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+
+  const [selectedTicketForClose, setSelectedTicketForClose] = useState(null);
+  const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
 
   // Find active ticket for details view
   const currentTicket = useMemo(() => {
@@ -165,9 +169,8 @@ const AdminSupportView = () => {
       setSelectedTicketForAssign(row);
       setIsAssignModalOpen(true);
     } else if (act.includes("closed")) {
-      setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, status: "Closed" } : t))
-      );
+      setSelectedTicketForClose(row);
+      setIsCloseModalOpen(true);
     } else if (act.includes("open")) {
       setTickets((prev) =>
         prev.map((t) => (t.id === row.id ? { ...t, status: "Open" } : t))
@@ -196,6 +199,10 @@ const AdminSupportView = () => {
 
   const handleAssignAgent = (ticketId, newAgent) => {
     handleUpdateTicket(ticketId, { assignedAgent: newAgent });
+  };
+
+  const handleConfirmClose = (ticketId) => {
+    handleUpdateTicket(ticketId, { status: "Closed" });
   };
 
   const handleSendReply = (ticketId, messageText) => {
@@ -268,6 +275,17 @@ const AdminSupportView = () => {
             }}
             ticket={selectedTicketForAssign}
             onAssign={handleAssignAgent}
+          />
+
+          {/* Close Ticket Modal for Table actions */}
+          <CloseTicketModal
+            isOpen={isCloseModalOpen}
+            onClose={() => {
+              setIsCloseModalOpen(false);
+              setSelectedTicketForClose(null);
+            }}
+            ticket={selectedTicketForClose}
+            onConfirmClose={handleConfirmClose}
           />
         </>
       )}
