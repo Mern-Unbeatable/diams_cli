@@ -23,7 +23,7 @@ import AdminOrdersView from "@/pages/dashboard/admin/orders/AdminOrdersView";
 import AdminIdentityView from "@/pages/dashboard/admin/identityVerification/AdminIdentityView";
 import AdminPlansView from "@/pages/dashboard/admin/plans/AdminPlansView";
 import AdminAddOnsView from "@/pages/dashboard/admin/addOns/AdminAddOnsView";
-import AdminEsimView from "@/pages/dashboard/admin/AdminEsimView";
+import AdminEsimView from "@/pages/dashboard/admin/esim/AdminEsimView";
 import AdminBillingView from "@/pages/dashboard/admin/AdminBillingView";
 import AdminSupportView from "@/pages/dashboard/admin/AdminSupportView";
 import AdminNotificationsView from "@/pages/dashboard/admin/AdminNotificationsView";
@@ -95,6 +95,7 @@ export const router = createBrowserRouter([
               { path: "add-ons/create", element: <AdminAddOnsView /> },
               { path: "add-ons/edit/:id", element: <AdminAddOnsView /> },
               { path: "esim", element: <AdminEsimView /> },
+              { path: "esim/:id", element: <AdminEsimView /> },
               { path: "billing", element: <AdminBillingView /> },
               { path: "support", element: <AdminSupportView /> },
               { path: "notifications", element: <AdminNotificationsView /> },
