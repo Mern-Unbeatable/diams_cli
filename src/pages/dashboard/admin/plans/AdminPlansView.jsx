@@ -1,24 +1,27 @@
 import { useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useLocation } from "react-router";
 import {
   PlansHeader,
   PlanCard,
-  CreatePlanModal,
   PlanDetailsView,
+  CreatePlanView,
   INITIAL_PLANS_DATA,
 } from "./sections";
 
 const AdminPlansView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [plans, setPlans] = useState(INITIAL_PLANS_DATA);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingPlan, setEditingPlan] = useState(null);
+
+  const isCreatePage =
+    id === "create" || location.pathname.endsWith("/create");
+  const isEditPage = location.pathname.includes("/plans/edit/");
 
   // Find plan by ID or Name from URL parameter (e.g. plan-2 or plus)
   const currentPlan = useMemo(() => {
-    if (!id) return null;
+    if (!id || isCreatePage) return null;
     return (
       plans.find(
         (p) =>
@@ -27,18 +30,16 @@ const AdminPlansView = () => {
           `${p.brand}-${p.name}`.toLowerCase() === id.toLowerCase()
       ) || plans[1] || plans[0]
     );
-  }, [id, plans]);
+  }, [id, isCreatePage, plans]);
 
-  // Open Create Plan modal
+  // Navigate to Create Plan page
   const handleOpenCreate = () => {
-    setEditingPlan(null);
-    setIsModalOpen(true);
+    navigate("/dashboard/admin/plans/create");
   };
 
-  // Open Edit Plan modal
+  // Navigate to Edit Plan page
   const handleOpenEdit = (plan) => {
-    setEditingPlan(plan);
-    setIsModalOpen(true);
+    navigate(`/dashboard/admin/plans/edit/${plan.id}`);
   };
 
   // Delete Plan
@@ -70,8 +71,21 @@ const AdminPlansView = () => {
 
   return (
     <div className="min-h-full space-y-8 text-slate-900">
-      {/* If URL contains plan id parameter, render PlanDetailsView */}
-      {id ? (
+      {/* 1. If URL is /dashboard/admin/plans/create, render CreatePlanView */}
+      {isCreatePage ? (
+        <CreatePlanView
+          onBack={() => navigate("/dashboard/admin/plans")}
+          onSubmitPlan={handleSavePlan}
+        />
+      ) : isEditPage ? (
+        /* 2. If URL is /dashboard/admin/plans/edit/:id, render CreatePlanView with populated plan data */
+        <CreatePlanView
+          planToEdit={currentPlan}
+          onBack={() => navigate("/dashboard/admin/plans")}
+          onSubmitPlan={handleSavePlan}
+        />
+      ) : id ? (
+        /* 3. If URL contains plan id parameter, render PlanDetailsView */
         currentPlan ? (
           <PlanDetailsView
             plan={currentPlan}
@@ -93,11 +107,12 @@ const AdminPlansView = () => {
           </div>
         )
       ) : (
+        /* 4. Main Plans Management View */
         <>
-          {/* 1. Plans Management Header */}
+          {/* Header */}
           <PlansHeader onCreatePlan={handleOpenCreate} />
 
-          {/* 2. 3 Premium Plan Cards Grid with Middle Card Featured Elevation */}
+          {/* 3 Premium Plan Cards Grid with Middle Card Featured Elevation */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 items-center py-4 lg:py-8">
             {plans.map((plan) => (
               <PlanCard
@@ -109,14 +124,6 @@ const AdminPlansView = () => {
               />
             ))}
           </div>
-
-          {/* Create / Edit Plan Modal */}
-          <CreatePlanModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            planToEdit={editingPlan}
-            onSave={handleSavePlan}
-          />
         </>
       )}
     </div>
