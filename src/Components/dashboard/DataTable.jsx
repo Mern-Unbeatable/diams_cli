@@ -273,11 +273,18 @@ const DataTable = ({
                       const isLast =
                         colIndex === normalizedColumns.length - 1;
 
+                      const alignClass =
+                        col.align === "center"
+                          ? "text-center"
+                          : col.align === "right"
+                          ? "text-right"
+                          : "text-left";
+
                       if (col.render) {
                         return (
                           <td
                             key={col.key}
-                            className={`py-3.5 px-4 ${
+                            className={`py-3.5 px-4 ${alignClass} ${
                               isFirst ? "pl-6 font-medium text-slate-900" : ""
                             } ${isLast ? "pr-6" : ""} ${col.className || ""}`}
                           >

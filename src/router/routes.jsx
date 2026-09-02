@@ -26,7 +26,7 @@ import AdminAddOnsView from "@/pages/dashboard/admin/addOns/AdminAddOnsView";
 import AdminEsimView from "@/pages/dashboard/admin/esim/AdminEsimView";
 import AdminBillingView from "@/pages/dashboard/admin/billingPayment/AdminBillingView";
 import AdminSupportView from "@/pages/dashboard/admin/supportCenter/AdminSupportView";
-import AdminNotificationsView from "@/pages/dashboard/admin/AdminNotificationsView";
+import AdminNotificationsView from "@/pages/dashboard/admin/notification/AdminNotificationsView";
 import AdminReportsView from "@/pages/dashboard/admin/AdminReportsView";
 import AdminUsersView from "@/pages/dashboard/admin/AdminUsersView";
 import AdminSettingsView from "@/pages/dashboard/admin/AdminSettingsView";
