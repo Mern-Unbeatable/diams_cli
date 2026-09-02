@@ -4,9 +4,9 @@ import DataTable from "@/Components/dashboard/DataTable";
 import {
   AddOnsHeader,
   AddOnsTabs,
-  CreateAddonModal,
   InternationalCallsView,
   PremiumServicesView,
+  CreateAddonView,
   ADDONS_DATA,
   INTERNATIONAL_CALLS_DATA,
   PREMIUM_SERVICES_DATA,
@@ -21,8 +21,8 @@ const AdminAddOnsView = () => {
   const [premiumServicesList, setPremiumServicesList] = useState(
     PREMIUM_SERVICES_DATA
   );
-  const [activeTab, setActiveTab] = useState("Premium Services");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("Data Booster");
+  const [isCreatePage, setIsCreatePage] = useState(false);
   const [editingAddon, setEditingAddon] = useState(null);
 
   // Filter regular addons by active category tab
@@ -82,7 +82,7 @@ const AdminAddOnsView = () => {
     const act = String(actionName).toLowerCase();
     if (act.includes("edit")) {
       setEditingAddon(row);
-      setIsModalOpen(true);
+      setIsCreatePage(true);
     } else if (act.includes("delete")) {
       if (
         window.confirm(
@@ -105,9 +105,12 @@ const AdminAddOnsView = () => {
       price: callItem.price,
       validity: callItem.validity,
       speed: "HD Voice",
+      tag: callItem.tag,
+      countries: callItem.countries,
+      tagline: callItem.tagline,
       isPopular: callItem.isPopular,
     });
-    setIsModalOpen(true);
+    setIsCreatePage(true);
   };
 
   // International Call Delete Handler
@@ -130,11 +133,11 @@ const AdminAddOnsView = () => {
       category: "Premium Services",
       dataAmount: service.title,
       price: service.price,
-      validity: "Monthly",
-      speed: "Realtime",
+      serviceType: service.icon,
+      description: service.description,
       isPopular: false,
     });
-    setIsModalOpen(true);
+    setIsCreatePage(true);
   };
 
   // Premium Service Delete Handler
@@ -148,10 +151,10 @@ const AdminAddOnsView = () => {
     }
   };
 
-  // Open Create Add-on modal
+  // Open Create Add-on page based on current active tab
   const handleOpenCreate = () => {
     setEditingAddon(null);
-    setIsModalOpen(true);
+    setIsCreatePage(true);
   };
 
   // Save (Create or Update) Add-on
@@ -161,125 +164,96 @@ const AdminAddOnsView = () => {
         const exists = prev.some((c) => c.id === savedAddon.id);
         if (exists) {
           return prev.map((c) =>
-            c.id === savedAddon.id
-              ? {
-                  ...c,
-                  minutes: savedAddon.dataAmount,
-                  price: savedAddon.price,
-                  validity: savedAddon.validity,
-                  isPopular: savedAddon.isPopular,
-                }
-              : c
+            c.id === savedAddon.id ? { ...c, ...savedAddon } : c
           );
         }
-        return [
-          {
-            id: savedAddon.id,
-            tag: "CUSTOM PACK",
-            price: savedAddon.price,
-            minutes: savedAddon.dataAmount,
-            iconType: "phone",
-            tagline: "Custom international calling package.",
-            validity: savedAddon.validity || "30 days",
-            countries: ["Bangladesh", "India", "Pakistan"],
-            moreCountriesCount: 4,
-            features: ["HD voice calling", "Landline & mobile"],
-            isPopular: savedAddon.isPopular,
-          },
-          ...prev,
-        ];
+        return [savedAddon, ...prev];
       });
     } else if (savedAddon.category === "Premium Services") {
       setPremiumServicesList((prev) => {
         const exists = prev.some((s) => s.id === savedAddon.id);
         if (exists) {
           return prev.map((s) =>
-            s.id === savedAddon.id
-              ? {
-                  ...s,
-                  title: savedAddon.dataAmount,
-                  price: savedAddon.price,
-                }
-              : s
+            s.id === savedAddon.id ? { ...s, ...savedAddon } : s
           );
         }
-        return [
-          {
-            id: savedAddon.id,
-            title: savedAddon.dataAmount,
-            price: savedAddon.price,
-            priceType: "purple",
-            icon: "sim",
-            description:
-              "Active telecommunication service configured for device management and security.",
-          },
-          ...prev,
-        ];
+        return [savedAddon, ...prev];
       });
     } else {
       setAddonsList((prev) => {
         const exists = prev.some((a) => a.id === savedAddon.id);
         if (exists) {
-          return prev.map((a) => (a.id === savedAddon.id ? savedAddon : a));
+          return prev.map((a) =>
+            a.id === savedAddon.id ? { ...a, ...savedAddon } : a
+          );
         }
         return [savedAddon, ...prev];
       });
     }
+    setIsCreatePage(false);
+    setEditingAddon(null);
   };
 
   return (
     <div className="min-h-full space-y-6 text-slate-900 font-sans">
-      {/* 1. Header with Create Button */}
-      <AddOnsHeader onCreateAddon={handleOpenCreate} />
-
-      {/* 2. Category Filter Tabs */}
-      <AddOnsTabs activeTab={activeTab} onSelectTab={setActiveTab} />
-
-      {/* 3. Main Body */}
-      {activeTab === "Premium Services" ? (
-        /* Managed Services Card Grid Component */
-        <PremiumServicesView
-          servicesData={premiumServicesList}
-          onEdit={handleEditPremiumService}
-          onDelete={handleDeletePremiumService}
-        />
-      ) : activeTab === "International Calls" ? (
-        /* Separate International Calls Cards Component */
-        <InternationalCallsView
-          callsData={internationalCallsList}
-          onEdit={handleEditInternationalCall}
-          onDelete={handleDeleteInternationalCall}
+      {/* 1. If in Create / Edit page mode, render CreateAddonView */}
+      {isCreatePage ? (
+        <CreateAddonView
+          category={editingAddon?.category || activeTab}
+          addonToEdit={editingAddon}
+          onBack={() => {
+            setIsCreatePage(false);
+            setEditingAddon(null);
+          }}
+          onSave={handleSaveAddon}
         />
       ) : (
-        /* Comparison Table for Data Booster and Roaming Package */
-        <div className="space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8">
-          {/* Table Title Bar */}
-          <div className="flex items-center gap-2 pb-2">
-            <Zap className="h-4 w-4 text-sky-500" />
-            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800">
-              Quick Comparison Table
-            </h2>
-          </div>
+        /* 2. Main Add-ons Management Dashboard View */
+        <>
+          {/* Header with Create Button */}
+          <AddOnsHeader onCreateAddon={handleOpenCreate} />
 
-          {/* Common DataTable Component */}
-          <DataTable
-            columns={columns}
-            data={filteredAddons}
-            actions={ADDON_ACTIONS}
-            onActionClick={handleActionClick}
-            pageSize={10}
-            emptyMessage={`No add-ons found in "${activeTab}".`}
-          />
-        </div>
+          {/* Category Filter Tabs */}
+          <AddOnsTabs activeTab={activeTab} onSelectTab={setActiveTab} />
+
+          {/* Tab Content */}
+          {activeTab === "Premium Services" ? (
+            /* Managed Services Card Grid */
+            <PremiumServicesView
+              servicesData={premiumServicesList}
+              onEdit={handleEditPremiumService}
+              onDelete={handleDeletePremiumService}
+            />
+          ) : activeTab === "International Calls" ? (
+            /* Separate International Calls Cards */
+            <InternationalCallsView
+              callsData={internationalCallsList}
+              onEdit={handleEditInternationalCall}
+              onDelete={handleDeleteInternationalCall}
+            />
+          ) : (
+            /* Quick Comparison Table for Data Booster & Roaming Package */
+            <div className="space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8">
+              <div className="flex items-center gap-2 pb-2">
+                <Zap className="h-4 w-4 text-sky-500" />
+                <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                  Quick Comparison Table
+                </h2>
+              </div>
+
+              {/* Common DataTable Component */}
+              <DataTable
+                columns={columns}
+                data={filteredAddons}
+                actions={ADDON_ACTIONS}
+                onActionClick={handleActionClick}
+                pageSize={10}
+                emptyMessage={`No add-ons found in "${activeTab}".`}
+              />
+            </div>
+          )}
+        </>
       )}
-
-      {/* Create / Edit Add-on Modal */}
-      <CreateAddonModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        addonToEdit={editingAddon}
-        onSave={handleSaveAddon}
-      />
     </div>
   );
 };
