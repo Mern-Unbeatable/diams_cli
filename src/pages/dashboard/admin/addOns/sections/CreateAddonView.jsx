@@ -4,7 +4,7 @@ import { ArrowLeft, Info } from "lucide-react";
 const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSave }) => {
   // Form States
   const [formData, setFormData] = useState({
-    // Common & Roaming / Booster
+    // Common, Roaming, Booster, Premium
     dataAmount: "",
     name: "",
     price: "",
@@ -18,9 +18,6 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
     included: "",
     featured: "",
 
-    // Premium Services specific fields
-    serviceType: "sim",
-
     // General
     isPopular: false,
   });
@@ -29,7 +26,7 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
     if (addonToEdit) {
       setFormData({
         dataAmount: addonToEdit.dataAmount || addonToEdit.minutes || addonToEdit.title || "",
-        name: addonToEdit.name || addonToEdit.dataAmount || addonToEdit.tag || "",
+        name: addonToEdit.name || addonToEdit.title || addonToEdit.dataAmount || addonToEdit.tag || "",
         price: addonToEdit.price || "",
         validity: addonToEdit.validity || "",
         speed: addonToEdit.speed || "",
@@ -40,7 +37,6 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
           ? addonToEdit.countries.join(",")
           : addonToEdit.included || "",
         featured: addonToEdit.tagline || addonToEdit.featured || "",
-        serviceType: addonToEdit.icon || "sim",
         isPopular: Boolean(addonToEdit.isPopular),
       });
     } else {
@@ -55,7 +51,6 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
         subtitle: "",
         included: "",
         featured: "",
-        serviceType: "sim",
         isPopular: false,
       });
     }
@@ -99,6 +94,14 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
         category: "International Calls",
       };
     } else if (category === "Premium Services") {
+      const nameLower = (formData.name || "").toLowerCase();
+      let iconType = "sim";
+      if (nameLower.includes("lock") || nameLower.includes("protect") || nameLower.includes("security")) {
+        iconType = "lock";
+      } else if (nameLower.includes("voice") || nameLower.includes("mail")) {
+        iconType = "voicemail";
+      }
+
       savedItem = {
         id: addonToEdit?.id || `ps-${Date.now()}`,
         title: formData.name || formData.dataAmount || "SIM Replacement",
@@ -106,14 +109,15 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
           ? formData.price.startsWith("CHF")
             ? formData.price
             : `CHF ${formData.price}`
-          : "CHF 20.00",
+          : "CHF 30.00",
         priceType:
           formData.price && formData.price.includes("/mo") ? "purple" : "amber",
-        icon: formData.serviceType || "sim",
+        icon: iconType,
         description:
-          formData.description || "Active telecommunication service.",
+          formData.description ||
+          "Active telecommunication service configured for device management and security.",
         category: "Premium Services",
-        isPopular: formData.isPopular,
+        isPopular: false,
       };
     } else if (category === "Roaming Package") {
       savedItem = {
@@ -204,8 +208,60 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
           </div>
 
           {/* DYNAMIC FORM FIELDS BASED ON CATEGORY */}
-          {category === "Roaming Package" ? (
-            /* ROAMING PACKAGE FIELDS (EXACT MATCH TO SCREENSHOT) */
+          {category === "Premium Services" ? (
+            /* PREMIUM SERVICES FIELDS (EXACT MATCH TO SCREENSHOT) */
+            <>
+              {/* Row 1: Name & Price (2 columns) */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    placeholder="+5GB"
+                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700">
+                    Price
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.price}
+                    onChange={(e) =>
+                      setFormData({ ...formData, price: e.target.value })
+                    }
+                    placeholder="CHF 30.00"
+                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              {/* Row 2: Description (Large Textarea Box) */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700">
+                  Description
+                </label>
+                <textarea
+                  rows={4}
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  placeholder="5G- High Speed"
+                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
+                />
+              </div>
+            </>
+          ) : category === "Roaming Package" ? (
+            /* ROAMING PACKAGE FIELDS */
             <>
               {/* Row 1: Name, Price, Validity (3 columns) */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -269,6 +325,28 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
                   placeholder="5G- High Speed"
                   className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
                 />
+              </div>
+
+              {/* Most Popular Toggle Bar */}
+              <div className="flex items-center justify-between rounded-xl border border-slate-100 bg-[#f8fafc] p-3.5">
+                <span className="text-xs font-semibold text-slate-700 sm:text-sm">
+                  Most Popular
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData({ ...formData, isPopular: !formData.isPopular })
+                  }
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                    formData.isPopular ? "bg-sky-500" : "bg-slate-300"
+                  }`}
+                >
+                  <span
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      formData.isPopular ? "translate-x-5" : "translate-x-0"
+                    }`}
+                  />
+                </button>
               </div>
             </>
           ) : category === "International Calls" ? (
@@ -386,9 +464,31 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
                   className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
                 />
               </div>
+
+              {/* Most Popular Toggle Bar */}
+              <div className="flex items-center justify-between rounded-xl border border-slate-100 bg-[#f8fafc] p-3.5">
+                <span className="text-xs font-semibold text-slate-700 sm:text-sm">
+                  Most Popular
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData({ ...formData, isPopular: !formData.isPopular })
+                  }
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                    formData.isPopular ? "bg-sky-500" : "bg-slate-300"
+                  }`}
+                >
+                  <span
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      formData.isPopular ? "translate-x-5" : "translate-x-0"
+                    }`}
+                  />
+                </button>
+              </div>
             </>
-          ) : category === "Data Booster" ? (
-            /* DATA BOOSTER FIELDS (EXACT MATCH TO SCREENSHOT) */
+          ) : (
+            /* DATA BOOSTER FIELDS */
             <>
               {/* Row 1: Data Amount, Price, Validity */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -453,97 +553,30 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
                   className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
                 />
               </div>
-            </>
-          ) : (
-            /* PREMIUM SERVICES FIELDS */
-            <>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700">
-                    Service Title
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name || formData.dataAmount}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    placeholder="e.g. SIM Replacement"
-                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                  />
-                </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700">
-                    Price
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.price}
-                    onChange={(e) =>
-                      setFormData({ ...formData, price: e.target.value })
-                    }
-                    placeholder="CHF 20.00 or CHF 5.90/mo"
-                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700">
-                  Service Icon / Type
-                </label>
-                <select
-                  value={formData.serviceType}
-                  onChange={(e) =>
-                    setFormData({ ...formData, serviceType: e.target.value })
+              {/* Most Popular Toggle Bar */}
+              <div className="flex items-center justify-between rounded-xl border border-slate-100 bg-[#f8fafc] p-3.5">
+                <span className="text-xs font-semibold text-slate-700 sm:text-sm">
+                  Most Popular
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData({ ...formData, isPopular: !formData.isPopular })
                   }
-                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                    formData.isPopular ? "bg-sky-500" : "bg-slate-300"
+                  }`}
                 >
-                  <option value="sim">SIM Replacement (Device / Physical SIM)</option>
-                  <option value="lock">Number Protection (Security / Anti-Fraud)</option>
-                  <option value="voicemail">Visual Voicemail (Transcripts & Audio)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700">
-                  Description
-                </label>
-                <textarea
-                  rows={3}
-                  value={formData.description}
-                  onChange={(e) =>
-                    setFormData({ ...formData, description: e.target.value })
-                  }
-                  placeholder="Order a replacement physical triple- cut SIM card..."
-                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                />
+                  <span
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      formData.isPopular ? "translate-x-5" : "translate-x-0"
+                    }`}
+                  />
+                </button>
               </div>
             </>
           )}
-
-          {/* Most Popular Toggle Bar */}
-          <div className="flex items-center justify-between rounded-xl border border-slate-100 bg-[#f8fafc] p-3.5">
-            <span className="text-xs font-semibold text-slate-700 sm:text-sm">
-              Most Popular
-            </span>
-            <button
-              type="button"
-              onClick={() =>
-                setFormData({ ...formData, isPopular: !formData.isPopular })
-              }
-              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                formData.isPopular ? "bg-sky-500" : "bg-slate-300"
-              }`}
-            >
-              <span
-                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                  formData.isPopular ? "translate-x-5" : "translate-x-0"
-                }`}
-              />
-            </button>
-          </div>
         </div>
 
         {/* Save Button */}
