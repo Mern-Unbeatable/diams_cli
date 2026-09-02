@@ -37,11 +37,11 @@ import CollaboratorOrdersView from "@/pages/dashboard/collaborator/order/Collabo
 import CollaboratorActivationsView from "@/pages/dashboard/collaborator/activation/CollaboratorActivationsView";
 import CollaboratorCommissionsView from "@/pages/dashboard/collaborator/commission/CollaboratorCommissionsView";
 import CollaboratorInvoicesView from "@/pages/dashboard/collaborator/invoice/CollaboratorInvoicesView";
-import CollaboratorProfileSettingsView from "@/pages/dashboard/collaborator/CollaboratorProfileSettingsView";
+import CollaboratorProfileSettingsView from "@/pages/dashboard/collaborator/profile/CollaboratorProfileSettingsView";
 import CollaboratorIdentityView from "@/pages/dashboard/collaborator/CollaboratorIdentityView";
 import CollaboratorPlansView from "@/pages/dashboard/collaborator/CollaboratorPlansView";
 import CollaboratorSupportView from "@/pages/dashboard/collaborator/CollaboratorSupportView";
-import CollaboratorNotificationsView from "@/pages/dashboard/collaborator/CollaboratorNotificationsView";
+import CollaboratorNotificationsView from "@/pages/dashboard/collaborator/notification/CollaboratorNotificationsView";
 import OverviewView from "@/pages/dashboard/user/overview/OverviewView";
 import MyLineView from "@/pages/dashboard/user/my-line/MyLineView";
 import PlansOptionsView from "@/pages/dashboard/user/plans-options/PlansOptionsView";
