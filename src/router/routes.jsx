@@ -34,9 +34,9 @@ import AdminAuditLogsView from "@/pages/dashboard/admin/auditLogs/AdminAuditLogs
 import CollaboratorOverview from "@/pages/dashboard/collaborator/overview/CollaboratorOverview";
 import CollaboratorCustomersView from "@/pages/dashboard/collaborator/customers/CollaboratorCustomersView";
 import CollaboratorOrdersView from "@/pages/dashboard/collaborator/order/CollaboratorOrdersView";
-import CollaboratorActivationsView from "@/pages/dashboard/collaborator/CollaboratorActivationsView";
-import CollaboratorCommissionsView from "@/pages/dashboard/collaborator/CollaboratorCommissionsView";
-import CollaboratorInvoicesView from "@/pages/dashboard/collaborator/CollaboratorInvoicesView";
+import CollaboratorActivationsView from "@/pages/dashboard/collaborator/activation/CollaboratorActivationsView";
+import CollaboratorCommissionsView from "@/pages/dashboard/collaborator/commission/CollaboratorCommissionsView";
+import CollaboratorInvoicesView from "@/pages/dashboard/collaborator/invoice/CollaboratorInvoicesView";
 import CollaboratorProfileSettingsView from "@/pages/dashboard/collaborator/CollaboratorProfileSettingsView";
 import CollaboratorIdentityView from "@/pages/dashboard/collaborator/CollaboratorIdentityView";
 import CollaboratorPlansView from "@/pages/dashboard/collaborator/CollaboratorPlansView";
@@ -125,6 +125,7 @@ export const router = createBrowserRouter([
               { path: "orders", element: <CollaboratorOrdersView /> },
               { path: "orders/:id", element: <CollaboratorOrdersView /> },
               { path: "activations", element: <CollaboratorActivationsView /> },
+              { path: "activations/:id", element: <CollaboratorActivationsView /> },
               { path: "commissions", element: <CollaboratorCommissionsView /> },
               { path: "invoices", element: <CollaboratorInvoicesView /> },
               {
