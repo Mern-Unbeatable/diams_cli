@@ -5,8 +5,8 @@ import {
   CollaboratorCustomerFilters,
   CollaboratorCustomerTable,
   CollaboratorCustomerDetailsView,
+  CollaboratorRegisterCustomerView,
   CollaboratorEditCustomerModal,
-  CollaboratorRegisterCustomerModal,
   COLLABORATOR_CUSTOMERS_DATA,
 } from "./sections";
 
@@ -21,12 +21,14 @@ const CollaboratorCustomersView = () => {
   const [plan, setPlan] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isRegisteringView, setIsRegisteringView] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(null);
+
+  const isRegisterMode = id === "register" || isRegisteringView;
 
   // Find customer by ID from URL parameter
   const currentCustomer = useMemo(() => {
-    if (!id) return null;
+    if (!id || id === "register") return null;
     return (
       customersList.find(
         (c) =>
@@ -88,15 +90,26 @@ const CollaboratorCustomersView = () => {
     );
   };
 
-  // Register new customer
-  const handleRegisterCustomer = (newCustomer) => {
+  // Register new customer handler
+  const handleRegisterSuccess = (newCustomer) => {
     setCustomersList((prev) => [newCustomer, ...prev]);
+    setIsRegisteringView(false);
+    navigate(`/dashboard/collaborator/customers/${newCustomer.id}`);
   };
 
   return (
     <div className="min-h-full space-y-6 text-slate-900">
-      {/* If URL contains customer id parameter, render CustomerDetailsView */}
-      {id ? (
+      {/* 1. Register Customer Multi-Step Page View */}
+      {isRegisterMode ? (
+        <CollaboratorRegisterCustomerView
+          onBack={() => {
+            setIsRegisteringView(false);
+            navigate("/dashboard/collaborator/customers");
+          }}
+          onRegisterSuccess={handleRegisterSuccess}
+        />
+      ) : id ? (
+        /* 2. Customer Details Profile View */
         currentCustomer ? (
           <CollaboratorCustomerDetailsView
             customer={currentCustomer}
@@ -122,13 +135,17 @@ const CollaboratorCustomersView = () => {
           </div>
         )
       ) : (
+        /* 3. Main Customer Table List View */
         <>
-          {/* 1. Header */}
+          {/* Header */}
           <CollaboratorCustomerHeader
-            onRegisterCustomer={() => setIsRegisterModalOpen(true)}
+            onRegisterCustomer={() => {
+              setIsRegisteringView(true);
+              navigate("/dashboard/collaborator/customers/register");
+            }}
           />
 
-          {/* 2. Main White Container Card */}
+          {/* Main Table Card Container */}
           <div className="space-y-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
             {/* Filters Bar */}
             <CollaboratorCustomerFilters
@@ -160,13 +177,6 @@ const CollaboratorCustomersView = () => {
             onClose={() => setEditingCustomer(null)}
             customer={editingCustomer}
             onSave={handleUpdateCustomer}
-          />
-
-          {/* Register Customer Modal */}
-          <CollaboratorRegisterCustomerModal
-            isOpen={isRegisterModalOpen}
-            onClose={() => setIsRegisterModalOpen(false)}
-            onRegister={handleRegisterCustomer}
           />
         </>
       )}

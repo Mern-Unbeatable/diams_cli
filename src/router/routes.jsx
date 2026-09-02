@@ -33,7 +33,7 @@ import AdminSettingsView from "@/pages/dashboard/admin/systemsettings/AdminSetti
 import AdminAuditLogsView from "@/pages/dashboard/admin/auditLogs/AdminAuditLogsView";
 import CollaboratorOverview from "@/pages/dashboard/collaborator/overview/CollaboratorOverview";
 import CollaboratorCustomersView from "@/pages/dashboard/collaborator/customers/CollaboratorCustomersView";
-import CollaboratorOrdersView from "@/pages/dashboard/collaborator/CollaboratorOrdersView";
+import CollaboratorOrdersView from "@/pages/dashboard/collaborator/order/CollaboratorOrdersView";
 import CollaboratorIdentityView from "@/pages/dashboard/collaborator/CollaboratorIdentityView";
 import CollaboratorPlansView from "@/pages/dashboard/collaborator/CollaboratorPlansView";
 import CollaboratorSupportView from "@/pages/dashboard/collaborator/CollaboratorSupportView";

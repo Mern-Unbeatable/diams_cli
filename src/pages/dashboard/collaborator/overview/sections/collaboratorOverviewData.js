@@ -64,7 +64,7 @@ export const COLLABORATOR_QUICK_ACTIONS = [
     label: "Register Customer",
     icon: Plus,
     isPrimary: true,
-    href: "/dashboard/collaborator/customers",
+    href: "/dashboard/collaborator/customers/register",
   },
   {
     id: "order-sim",
