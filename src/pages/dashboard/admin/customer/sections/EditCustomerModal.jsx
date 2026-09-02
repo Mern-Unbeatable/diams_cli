@@ -1,0 +1,244 @@
+import { useState, useEffect } from "react";
+import { X, ChevronDown } from "lucide-react";
+
+const PLAN_OPTIONS = [
+  "Nova Start",
+  "Nova One",
+  "Nova Swiss+",
+  "Nova Family",
+  "Nova Roam",
+  "Nova Plus",
+  "Nova Max",
+];
+
+const CUSTOMER_TYPE_OPTIONS = ["Private", "Business"];
+const LINE_STATUS_OPTIONS = ["Active", "Suspended", "Pending"];
+const STATUS_OPTIONS = ["Active", "Suspended", "Pending"];
+
+const EditCustomerModal = ({ isOpen, onClose, customer, onSave }) => {
+  const [formData, setFormData] = useState({
+    customer: "",
+    email: "",
+    phone: "",
+    plan: "Nova One",
+    customerType: "Private",
+    lineStatus: "Active",
+    status: "Active",
+  });
+
+  useEffect(() => {
+    if (customer) {
+      setFormData({
+        customer: customer.customer || "",
+        email: customer.email || "",
+        phone: customer.phone || "",
+        plan: customer.plan || "Nova One",
+        customerType: customer.customerType || "Private",
+        lineStatus: customer.lineStatus || "Active",
+        status: customer.status || "Active",
+      });
+    }
+  }, [customer, isOpen]);
+
+  if (!isOpen || !customer) return null;
+
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onSave) {
+      onSave({
+        ...customer,
+        ...formData,
+      });
+    }
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div
+        className="fixed inset-0"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="flex items-start justify-between pb-4 border-b border-slate-100">
+          <div>
+            <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
+              Edit customer
+            </h2>
+            <p className="mt-0.5 text-xs text-slate-400">
+              Update customer information, plan, type and line status.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-lg border border-slate-100 p-1.5 text-slate-400 transition-colors hover:bg-slate-50 hover:text-slate-600"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* Form Body */}
+        <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* 1. Customer Name */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Customer name
+              </label>
+              <input
+                type="text"
+                value={formData.customer}
+                onChange={(e) => handleChange("customer", e.target.value)}
+                required
+                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* 2. Email */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Email
+              </label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+                required
+                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* 3. Phone */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Phone
+              </label>
+              <input
+                type="text"
+                value={formData.phone}
+                onChange={(e) => handleChange("phone", e.target.value)}
+                required
+                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-mono font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* 4. Plan */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Plan
+              </label>
+              <div className="relative">
+                <select
+                  value={formData.plan}
+                  onChange={(e) => handleChange("plan", e.target.value)}
+                  className="w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-3.5 pr-8 text-xs font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer"
+                >
+                  {PLAN_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+              </div>
+            </div>
+
+            {/* 5. Customer Type */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Customer Type
+              </label>
+              <div className="relative">
+                <select
+                  value={formData.customerType}
+                  onChange={(e) => handleChange("customerType", e.target.value)}
+                  className="w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-3.5 pr-8 text-xs font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer"
+                >
+                  {CUSTOMER_TYPE_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+              </div>
+            </div>
+
+            {/* 6. Line Status */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Line Status
+              </label>
+              <div className="relative">
+                <select
+                  value={formData.lineStatus}
+                  onChange={(e) => handleChange("lineStatus", e.target.value)}
+                  className="w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-3.5 pr-8 text-xs font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer"
+                >
+                  {LINE_STATUS_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+              </div>
+            </div>
+
+            {/* 7. Status */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Status
+              </label>
+              <div className="relative">
+                <select
+                  value={formData.status}
+                  onChange={(e) => handleChange("status", e.target.value)}
+                  className="w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-3.5 pr-8 text-xs font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer"
+                >
+                  {STATUS_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Actions */}
+          <div className="flex items-center justify-end gap-3 pt-5 border-t border-slate-100">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-xs font-medium text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-95"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="rounded-xl bg-[#0066ff] px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-95"
+            >
+              Save Customer
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default EditCustomerModal;

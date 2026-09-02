@@ -1,0 +1,81 @@
+export const USER_MY_LINE = {
+  subtitle: "Manage your NovaSky line and services.",
+  simCardImage: "/sim2.png",
+  summary: {
+    label: "My main line",
+    phone: "+41 76 123 45 67",
+    status: "ACTIVE",
+    plan: "NovaSky Plus Plan",
+    networkBadge: "5G",
+    since: "Since September 12, 2023",
+    iccid: "8944 1000 1234 5678 9012 3",
+    simType: "eSIM",
+    lineStatus: "Active",
+    network: "Sunrise 5G",
+    dataRenewal: "August 07, 2024",
+    dataRenewalHint: "13 days left",
+    bannerMessage:
+      "Your line is active and everything is working perfectly. If you need help, we're here for you.",
+    viewUsagePath: "/dashboard/user/usage",
+  },
+  tabs: [{ id: "line-details", label: "Line Details" }],
+  lineInfo: [
+    { label: "Phone Number", value: "+41 76 123 45 67", copy: true },
+    { label: "Plan", value: "NovaSky Plus" },
+    { label: "Data", value: "80 GB" },
+    { label: "Calls", value: "Unlimited" },
+    { label: "SMS", value: "Unlimited" },
+    { label: "International Calls", value: "Included" },
+    { label: "Voicemail", value: "Active", highlight: "text-emerald-600" },
+    { label: "Hotspot", value: "Included" },
+  ],
+  quickActions: [
+    {
+      id: "usage",
+      label: "View Data Usage",
+      icon: "barChart",
+      path: "/dashboard/user/usage",
+    },
+    {
+      id: "top-up",
+      label: "Top Up Data",
+      icon: "plus",
+      path: "/dashboard/user/payments",
+    },
+    {
+      id: "invoices",
+      label: "View Invoices",
+      icon: "file",
+      path: "/dashboard/user/bills",
+    },
+  ],
+  simPromo: {
+    title: "Need a new SIM or eSIM?",
+    description: "Replace your SIM or switch to eSIM in a few easy steps.",
+    linkLabel: "Get started",
+    path: "/dashboard/user/esim",
+  },
+  help: {
+    seeAllPath: "/dashboard/user/support",
+    items: [
+      {
+        id: "chat",
+        title: "Live Chat",
+        description: "Chat with an advisor",
+        icon: "message",
+      },
+      {
+        id: "help-center",
+        title: "Help Center",
+        description: "Find answers to your questions",
+        icon: "help",
+      },
+      {
+        id: "contact",
+        title: "Contact Support",
+        description: "We're here to help you",
+        icon: "headset",
+      },
+    ],
+  },
+};

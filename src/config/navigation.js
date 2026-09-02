@@ -8,6 +8,7 @@ export const MAIN_NAV_LINKS = [
 
 export const LOGIN_PATH = "/login";
 export const ACCOUNT_PATH = "/account";
+export const DASHBOARD_PATH = "/dashboard";
 
 export const LOGO_CLASS = "h-12 w-auto lg:h-14";
 

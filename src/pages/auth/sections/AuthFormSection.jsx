@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { AUTH_PAGE } from "@/config/auth";
+import { DUMMY_USERS, getRoleDashboardPath, ROLE_LABELS } from "@/config/dummyAuth";
 import { BRAND, LOGO_CLASS } from "@/config/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const labelClass = "mb-2 block text-sm font-bold text-primary";
 const inputClass =
@@ -11,8 +13,36 @@ const inputClass =
 
 const AuthFormSection = () => {
   const { logo, brandName, form } = AUTH_PAGE;
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [googleHint, setGoogleHint] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setGoogleHint("");
+
+    const result = login(email, password);
+
+    if (!result.ok) {
+      setError(result.message);
+      return;
+    }
+
+    setError("");
+    navigate(getRoleDashboardPath(result.user.role), { replace: true });
+  };
+
+  const fillDemoAccount = (account) => {
+    setEmail(account.email);
+    setPassword(account.password);
+    setError("");
+    setGoogleHint("");
+  };
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-white px-5 py-10 sm:px-8 lg:px-12 xl:px-16">
@@ -32,10 +62,29 @@ const AuthFormSection = () => {
           </p>
         </div>
 
-        <form
-          className="mt-8 space-y-5"
-          onSubmit={(event) => event.preventDefault()}
-        >
+        <div className="mt-6 rounded-xl border border-gray-200 bg-[#f8fbff] p-4">
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-primary/45">
+            Demo accounts
+          </p>
+          <div className="mt-3 space-y-2">
+            {DUMMY_USERS.map((account) => (
+              <button
+                key={account.email}
+                type="button"
+                onClick={() => fillDemoAccount(account)}
+                className="flex w-full items-center justify-between rounded-lg bg-white px-3 py-2 text-left text-xs text-primary shadow-sm ring-1 ring-gray-100 transition-colors hover:ring-btnPrimary/40"
+              >
+                <span>
+                  <span className="font-bold">{ROLE_LABELS[account.role]}</span>
+                  <span className="mt-0.5 block text-primary/55">{account.email}</span>
+                </span>
+                <span className="font-mono text-primary/70">{account.password}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="auth-email" className={labelClass}>
               {form.emailLabel}
@@ -52,6 +101,9 @@ const AuthFormSection = () => {
                 autoComplete="email"
                 placeholder={form.emailPlaceholder}
                 className={inputClass}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
               />
             </div>
           </div>
@@ -72,6 +124,9 @@ const AuthFormSection = () => {
                 autoComplete="current-password"
                 placeholder={form.passwordPlaceholder}
                 className={`${inputClass} pr-11`}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
               />
               <button
                 type="button"
@@ -103,6 +158,12 @@ const AuthFormSection = () => {
             </Link>
           </div>
 
+          {error ? (
+            <p className="rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-600">
+              {error}
+            </p>
+          ) : null}
+
           <button
             type="submit"
             className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-btnPrimary px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
@@ -120,11 +181,18 @@ const AuthFormSection = () => {
 
         <button
           type="button"
+          onClick={() =>
+            setGoogleHint("Google sign-in is not available in this demo. Use an account above.")
+          }
           className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-gray-200 bg-white px-6 py-3.5 text-sm font-semibold text-primary transition-colors hover:bg-gray-50"
         >
           <FcGoogle size={20} />
           {form.google}
         </button>
+
+        {googleHint ? (
+          <p className="mt-3 text-center text-xs text-primary/55">{googleHint}</p>
+        ) : null}
 
         <p className="mt-8 text-center text-sm text-primary/55">
           {form.noAccount}{" "}

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
   --color-primary: #00183c;
   --color-forfooter:#021735;
   --color-secondary: #0d2548;
@@ -20,11 +21,11 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
   background-color: var(--color-primary);
   color: #ffffff;
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 

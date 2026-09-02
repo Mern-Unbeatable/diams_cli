@@ -1,0 +1,201 @@
+export const ADDON_TABS = [
+  "Data Booster",
+  "International Calls",
+  "Roaming Package",
+  "Premium Services",
+];
+
+export const INTERNATIONAL_CALLS_DATA = [
+  {
+    id: "ic-1",
+    tag: "BASIC PACK",
+    price: "CHF 7.90",
+    minutes: "100 Minutes",
+    iconType: "phone",
+    tagline: "Ideal starter package for calling top destinations in Asia & Europe.",
+    validity: "30 days",
+    countries: ["Bangladesh", "India", "Pakistan"],
+    moreCountriesCount: 4,
+    features: ["100 minutes of HD voice", "Landline & mobile"],
+  },
+  {
+    id: "ic-2",
+    tag: "STANDARD PACK",
+    isPopular: true,
+    price: "CHF 14.90",
+    minutes: "300 Minutes",
+    iconType: "phone",
+    tagline: "Best value for frequent callers. 300 talk minutes at discount rates.",
+    validity: "30 days",
+    countries: ["Bangladesh", "India", "Pakistan"],
+    moreCountriesCount: 4,
+    features: ["300 minutes premium calling", "Great cost per minute"],
+  },
+  {
+    id: "ic-3",
+    tag: "UNLIMITED",
+    price: "CHF 24.90",
+    minutes: "Unlimited Selected Countries",
+    iconType: "infinity",
+    tagline: "Unlimited talk time to selected high-frequency destinations.",
+    validity: "30 days",
+    countries: ["Bangladesh", "India", "Pakistan"],
+    moreCountriesCount: 4,
+    features: ["Unlimited calling to 25+ countries", "No minute cap"],
+  },
+];
+
+export const PREMIUM_SERVICES_DATA = [
+  {
+    id: "ps-1",
+    title: "SIM Replacement",
+    price: "CHF 20.00",
+    priceType: "amber",
+    icon: "sim",
+    description:
+      "Order a replacement physical triple- cut SIM card or instantly download an eSIM profile for device change or lost cards.",
+  },
+  {
+    id: "ps-2",
+    title: "Number Protection",
+    price: "CHF 5.90/mo",
+    priceType: "purple",
+    icon: "lock",
+    description:
+      "Advanced biometric and multi-factor defense against unauthorized SIM swapping, number porting theft, and caller ID spoofing.",
+  },
+  {
+    id: "ps-3",
+    title: "Visual Voicemail",
+    price: "CHF 5.90/mo",
+    priceType: "purple",
+    icon: "voicemail",
+    description:
+      "Listen to, read transcripts, and manage audio voicemails directly on your phone screen without dialing an audio mailbox.",
+  },
+  {
+    id: "ps-4",
+    title: "SIM Replacement",
+    price: "CHF 20.00",
+    priceType: "amber",
+    icon: "sim",
+    description:
+      "Order a replacement physical triple- cut SIM card or instantly download an eSIM profile for device change or lost cards.",
+  },
+  {
+    id: "ps-5",
+    title: "Number Protection",
+    price: "CHF 5.90/mo",
+    priceType: "purple",
+    icon: "lock",
+    description:
+      "Advanced biometric and multi-factor defense against unauthorized SIM swapping, number porting theft, and caller ID spoofing.",
+  },
+  {
+    id: "ps-6",
+    title: "Visual Voicemail",
+    price: "CHF 5.90/mo",
+    priceType: "purple",
+    icon: "voicemail",
+    description:
+      "Listen to, read transcripts, and manage audio voicemails directly on your phone screen without dialing an audio mailbox.",
+  },
+];
+
+export const ADDONS_DATA = [
+  {
+    id: "addon-1",
+    category: "Data Booster",
+    dataAmount: "+5 GB",
+    isPopular: false,
+    price: "CHF 5.00",
+    validity: "30 Days",
+    speed: "5G High-Speed",
+  },
+  {
+    id: "addon-2",
+    category: "Data Booster",
+    dataAmount: "+10 GB",
+    isPopular: true,
+    price: "CHF 9.00",
+    validity: "30 Days",
+    speed: "5G Ultra Speed",
+  },
+  {
+    id: "addon-3",
+    category: "Data Booster",
+    dataAmount: "+20 GB",
+    isPopular: false,
+    price: "CHF 16.00",
+    validity: "30 Days",
+    speed: "5G Max Speed",
+  },
+  {
+    id: "addon-4",
+    category: "Data Booster",
+    dataAmount: "+50 GB",
+    isPopular: false,
+    price: "CHF 30.00",
+    validity: "30 Days",
+    speed: "5G Hyper Speed",
+  },
+  {
+    id: "addon-5",
+    category: "Data Booster",
+    dataAmount: "+50 GB",
+    isPopular: false,
+    price: "CHF 30.00",
+    validity: "30 Days",
+    speed: "5G Hyper Speed",
+  },
+  {
+    id: "addon-6",
+    category: "Data Booster",
+    dataAmount: "+50 GB",
+    isPopular: false,
+    price: "CHF 30.00",
+    validity: "30 Days",
+    speed: "5G Hyper Speed",
+  },
+  {
+    id: "addon-7",
+    category: "Data Booster",
+    dataAmount: "+50 GB",
+    isPopular: false,
+    price: "CHF 30.00",
+    validity: "30 Days",
+    speed: "5G Hyper Speed",
+  },
+  {
+    id: "addon-8",
+    category: "Data Booster",
+    dataAmount: "+50 GB",
+    isPopular: false,
+    price: "CHF 30.00",
+    validity: "30 Days",
+    speed: "5G Hyper Speed",
+  },
+  {
+    id: "addon-11",
+    category: "Roaming Package",
+    dataAmount: "5 GB Roam EU",
+    isPopular: false,
+    price: "CHF 12.00",
+    validity: "14 Days",
+    speed: "5G Roaming",
+  },
+  {
+    id: "addon-12",
+    category: "Roaming Package",
+    dataAmount: "10 GB Global Roam",
+    isPopular: true,
+    price: "CHF 25.00",
+    validity: "30 Days",
+    speed: "5G Roaming",
+  },
+];
+
+export const ADDON_ACTIONS = [
+  { label: "Edit", action: "edit" },
+  { label: "Delete", action: "delete" },
+];
