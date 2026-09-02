@@ -47,7 +47,7 @@ const PlanCard = ({ plan, onEdit, onDelete, onMoreDetails }) => {
         </h2>
 
         {/* Plan Tagline / Subtitle */}
-        <p className="mt-2 min-h-[38px] text-xs text-slate-300 sm:text-[13px]">
+        <p className="mt-2 min-h-9.5 text-xs text-slate-300 sm:text-[13px]">
           {plan.tagline}
         </p>
 

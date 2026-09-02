@@ -34,7 +34,7 @@ const OrdersHeader = ({ selectedStatus, onSelectStatus }) => {
               className="fixed inset-0 z-10"
               onClick={() => setIsOpen(false)}
             />
-            <div className="absolute right-0 top-full z-20 mt-1.5 min-w-[160px] rounded-xl border border-slate-100 bg-white p-1 shadow-lg ring-1 ring-black/5">
+            <div className="absolute right-0 top-full z-20 mt-1.5 min-w-40 rounded-xl border border-slate-100 bg-white p-1 shadow-lg ring-1 ring-black/5">
               {ORDER_STATUS_FILTERS.map((status) => (
                 <button
                   key={status}

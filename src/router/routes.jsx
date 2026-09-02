@@ -22,7 +22,7 @@ import AdminCustomerView from "@/pages/dashboard/admin/customer/AdminCustomerVie
 import AdminOrdersView from "@/pages/dashboard/admin/orders/AdminOrdersView";
 import AdminIdentityView from "@/pages/dashboard/admin/identityVerification/AdminIdentityView";
 import AdminPlansView from "@/pages/dashboard/admin/plans/AdminPlansView";
-import AdminAddOnsView from "@/pages/dashboard/admin/AdminAddOnsView";
+import AdminAddOnsView from "@/pages/dashboard/admin/addOns/AdminAddOnsView";
 import AdminEsimView from "@/pages/dashboard/admin/AdminEsimView";
 import AdminBillingView from "@/pages/dashboard/admin/AdminBillingView";
 import AdminSupportView from "@/pages/dashboard/admin/AdminSupportView";

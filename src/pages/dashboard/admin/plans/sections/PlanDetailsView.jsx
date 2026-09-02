@@ -75,7 +75,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
       <div className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm sm:p-8">
         <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-12">
           {/* Left: 3D eSIM Visual Card */}
-          <div className="relative col-span-12 flex h-[220px] flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br from-[#0c1f38] via-[#091a30] to-[#040e1c] p-6 text-white shadow-xl lg:col-span-3">
+          <div className="relative col-span-12 flex h-55 flex-col justify-between overflow-hidden rounded-2xl bg-linear-to-br from-[#0c1f38] via-[#091a30] to-[#040e1c] p-6 text-white shadow-xl lg:col-span-3">
             {/* Glowing Accent Ring */}
             <div className="absolute -right-12 -top-12 h-44 w-44 rounded-full bg-sky-500/20 blur-2xl" />
             <div className="absolute -left-10 -bottom-10 h-36 w-36 rounded-full bg-blue-600/20 blur-xl" />
@@ -90,8 +90,8 @@ const PlanDetailsView = ({ plan, onBack }) => {
             </div>
 
             {/* Golden Chip Graphic */}
-            <div className="relative z-10 my-auto h-8 w-11 rounded-md bg-gradient-to-tr from-amber-300 via-yellow-200 to-amber-400 p-1.5 shadow-md">
-              <div className="h-full w-full rounded-[2px] border border-amber-600/30 grid grid-cols-2 gap-0.5 opacity-80" />
+            <div className="relative z-10 my-auto h-8 w-11 rounded-md bg-linear-to-tr from-amber-300 via-yellow-200 to-amber-400 p-1.5 shadow-md">
+              <div className="h-full w-full rounded-xs border border-amber-600/30 grid grid-cols-2 gap-0.5 opacity-80" />
             </div>
 
             <div className="relative z-10 flex items-center justify-between">
@@ -143,7 +143,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
           </div>
 
           {/* Right: Monthly Price Card */}
-          <div className="col-span-12 flex h-[220px] flex-col justify-center rounded-2xl bg-[#0c1f38] p-6 text-white shadow-xl lg:col-span-3">
+          <div className="col-span-12 flex h-55 flex-col justify-center rounded-2xl bg-[#0c1f38] p-6 text-white shadow-xl lg:col-span-3">
             <span className="text-xs font-medium text-slate-300">
               Monthly Price
             </span>

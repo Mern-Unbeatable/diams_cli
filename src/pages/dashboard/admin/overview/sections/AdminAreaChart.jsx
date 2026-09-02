@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     const item = payload[0].payload;
     return (
       <div className="pointer-events-none relative flex flex-col items-center drop-shadow-md">
-        <div className="min-w-[78px] rounded-xl border border-slate-100 bg-white px-3.5 py-1.5 text-center shadow-sm">
+        <div className="min-w-19.5 rounded-xl border border-slate-100 bg-white px-3.5 py-1.5 text-center shadow-sm">
           <span className="block text-[10px] font-medium leading-tight text-slate-400">
             {item.fullMonth || label}
           </span>
@@ -144,7 +144,7 @@ const AdminAreaChart = ({
                 className="fixed inset-0 z-10"
                 onClick={() => setIsDropdownOpen(false)}
               />
-              <div className="absolute right-0 top-full z-20 mt-1.5 min-w-[120px] rounded-lg border border-slate-100 bg-white p-1 shadow-lg">
+              <div className="absolute right-0 top-full z-20 mt-1.5 min-w-30 rounded-lg border border-slate-100 bg-white p-1 shadow-lg">
                 {filterOptions.map((opt) => (
                   <button
                     key={opt}
