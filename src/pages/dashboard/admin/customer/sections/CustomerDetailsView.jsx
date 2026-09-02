@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import EditCustomerModal from "./EditCustomerModal";
+import SuspendCustomerModal from "./SuspendCustomerModal";
 
 const getBadgeStyle = (status) => {
   const norm = String(status).toLowerCase().trim();
@@ -18,10 +19,21 @@ const getBadgeStyle = (status) => {
 
 const CustomerDetailsView = ({ customer, onBack, onToggleStatus, onUpdateCustomer }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
 
   if (!customer) return null;
 
   const isSuspended = customer.status?.toLowerCase() === "suspended";
+
+  const handleSuspendButtonClick = () => {
+    if (isSuspended) {
+      // If already suspended, activate directly or via toggle
+      if (onToggleStatus) onToggleStatus(customer);
+    } else {
+      // If active, open confirmation modal
+      setIsSuspendModalOpen(true);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -174,7 +186,7 @@ const CustomerDetailsView = ({ customer, onBack, onToggleStatus, onUpdateCustome
 
           <button
             type="button"
-            onClick={() => onToggleStatus && onToggleStatus(customer)}
+            onClick={handleSuspendButtonClick}
             className="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-xs font-medium text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-95 sm:text-sm"
           >
             {isSuspended ? "Activate Customer" : "Suspend Customer"}
@@ -189,6 +201,16 @@ const CustomerDetailsView = ({ customer, onBack, onToggleStatus, onUpdateCustome
         customer={customer}
         onSave={(updated) => {
           if (onUpdateCustomer) onUpdateCustomer(updated);
+        }}
+      />
+
+      {/* Suspend Customer Confirmation Modal */}
+      <SuspendCustomerModal
+        isOpen={isSuspendModalOpen}
+        onClose={() => setIsSuspendModalOpen(false)}
+        customer={customer}
+        onConfirm={(cust) => {
+          if (onToggleStatus) onToggleStatus(cust);
         }}
       />
     </div>

@@ -4,4 +4,5 @@ export { default as CustomerTable } from "./CustomerTable";
 export { default as CustomerPagination } from "./CustomerPagination";
 export { default as CustomerDetailsView } from "./CustomerDetailsView";
 export { default as EditCustomerModal } from "./EditCustomerModal";
+export { default as SuspendCustomerModal } from "./SuspendCustomerModal";
 export * from "./customerData";

@@ -5,6 +5,7 @@ import {
   CustomerHeader,
   CustomerFilters,
   CustomerDetailsView,
+  SuspendCustomerModal,
   CUSTOMERS_DATA,
   CUSTOMER_COLUMNS,
   CUSTOMER_ACTIONS,
@@ -15,6 +16,7 @@ const AdminCustomerView = () => {
   const navigate = useNavigate();
 
   const [customersList, setCustomersList] = useState(CUSTOMERS_DATA);
+  const [suspendTargetCustomer, setSuspendTargetCustomer] = useState(null);
   const [status, setStatus] = useState("All");
   const [plan, setPlan] = useState("All");
   const [date, setDate] = useState("");
@@ -66,7 +68,7 @@ const AdminCustomerView = () => {
     setLineStatus("All");
   };
 
-  // Action Click Handler (See Details navigates to URL with ID)
+  // Action Click Handler (See Details navigates to URL with ID; Suspend opens modal)
   const handleActionClick = (actionName, row) => {
     const act = String(actionName).toLowerCase();
     if (
@@ -76,13 +78,7 @@ const AdminCustomerView = () => {
     ) {
       navigate(`/dashboard/admin/customer/${row.id}`);
     } else if (act.includes("suspend")) {
-      setCustomersList((prev) =>
-        prev.map((c) =>
-          c.id === row.id
-            ? { ...c, status: "Suspended", lineStatus: "Suspended" }
-            : c
-        )
-      );
+      setSuspendTargetCustomer(row);
     } else if (act.includes("active")) {
       setCustomersList((prev) =>
         prev.map((c) =>
@@ -92,6 +88,18 @@ const AdminCustomerView = () => {
         )
       );
     }
+  };
+
+  // Confirm Suspend Customer
+  const handleConfirmSuspend = (customer) => {
+    setCustomersList((prev) =>
+      prev.map((c) =>
+        c.id === customer.id
+          ? { ...c, status: "Suspended", lineStatus: "Suspended" }
+          : c
+      )
+    );
+    setSuspendTargetCustomer(null);
   };
 
   // Toggle status from details view
@@ -180,6 +188,14 @@ const AdminCustomerView = () => {
               emptyMessage="No customers found matching the criteria."
             />
           </div>
+
+          {/* Suspend Customer Confirmation Modal from Table Action */}
+          <SuspendCustomerModal
+            isOpen={Boolean(suspendTargetCustomer)}
+            onClose={() => setSuspendTargetCustomer(null)}
+            customer={suspendTargetCustomer}
+            onConfirm={handleConfirmSuspend}
+          />
         </>
       )}
     </div>
