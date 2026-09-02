@@ -98,6 +98,7 @@ export const router = createBrowserRouter([
               { path: "esim/:id", element: <AdminEsimView /> },
               { path: "billing", element: <AdminBillingView /> },
               { path: "support", element: <AdminSupportView /> },
+              { path: "support/:id", element: <AdminSupportView /> },
               { path: "notifications", element: <AdminNotificationsView /> },
               { path: "reports", element: <AdminReportsView /> },
               { path: "users", element: <AdminUsersView /> },

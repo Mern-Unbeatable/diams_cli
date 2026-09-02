@@ -1,7 +1,9 @@
 import { useState, useMemo } from "react";
+import { useParams, useNavigate } from "react-router";
 import DataTable from "@/Components/dashboard/DataTable";
 import {
   SupportHeader,
+  SupportDetailsView,
   SUPPORT_TICKETS_DATA,
   SUPPORT_ACTIONS,
 } from "./sections";
@@ -35,9 +37,25 @@ const getStatusBadgeStyle = (status) => {
 };
 
 const AdminSupportView = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [tickets, setTickets] = useState(SUPPORT_TICKETS_DATA);
   const [selectedPriority, setSelectedPriority] = useState("All Priority");
   const [selectedStatus, setSelectedStatus] = useState("All Statuses");
+
+  // Find active ticket for details view
+  const currentTicket = useMemo(() => {
+    if (!id) return null;
+    return (
+      tickets.find(
+        (t) =>
+          t.id.toLowerCase() === id.toLowerCase() ||
+          t.ticketId.toLowerCase() === id.toLowerCase() ||
+          t.customer.toLowerCase().replace(/\s+/g, "-") === id.toLowerCase()
+      ) || tickets[0]
+    );
+  }, [id, tickets]);
 
   // Filter tickets based on Priority and Status filters
   const filteredTickets = useMemo(() => {
@@ -130,7 +148,9 @@ const AdminSupportView = () => {
   // Action Menu Click Handler
   const handleActionClick = (actionName, row) => {
     const act = String(actionName).toLowerCase();
-    if (act.includes("closed")) {
+    if (act.includes("detail") || act === "details") {
+      navigate(`/dashboard/admin/support/${row.ticketId || row.id}`);
+    } else if (act.includes("closed")) {
       setTickets((prev) =>
         prev.map((t) => (t.id === row.id ? { ...t, status: "Closed" } : t))
       );
@@ -157,30 +177,63 @@ const AdminSupportView = () => {
           prev.map((t) => (t.id === row.id ? { ...t, assignedAgent: agent } : t))
         );
       }
-    } else {
-      console.log("Ticket action:", actionName, row);
     }
+  };
+
+  // Update ticket details (from Details view)
+  const handleUpdateTicket = (ticketId, updates) => {
+    setTickets((prev) =>
+      prev.map((t) => (t.id === ticketId ? { ...t, ...updates } : t))
+    );
   };
 
   return (
     <div className="min-h-full space-y-6 text-slate-900 font-sans">
-      {/* 1. Header with Priority & Status Filter Dropdowns */}
-      <SupportHeader
-        selectedPriority={selectedPriority}
-        onSelectPriority={setSelectedPriority}
-        selectedStatus={selectedStatus}
-        onSelectStatus={setSelectedStatus}
-      />
+      {/* 1. If URL has :id, render SupportDetailsView */}
+      {id ? (
+        currentTicket ? (
+          <SupportDetailsView
+            ticket={currentTicket}
+            onBack={() => navigate("/dashboard/admin/support")}
+            onUpdateTicket={handleUpdateTicket}
+          />
+        ) : (
+          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900">Ticket Not Found</h2>
+            <p className="mt-1 text-xs text-slate-500">
+              No ticket found with ID &quot;{id}&quot;.
+            </p>
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard/admin/support")}
+              className="mt-4 inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-sky-700"
+            >
+              Back to Support Center
+            </button>
+          </div>
+        )
+      ) : (
+        /* 2. Main Support Center Table View */
+        <>
+          {/* Header with Priority & Status Filter Dropdowns */}
+          <SupportHeader
+            selectedPriority={selectedPriority}
+            onSelectPriority={setSelectedPriority}
+            selectedStatus={selectedStatus}
+            onSelectStatus={setSelectedStatus}
+          />
 
-      {/* 2. Support Tickets Table with Common DataTable */}
-      <DataTable
-        columns={columns}
-        data={filteredTickets}
-        actions={SUPPORT_ACTIONS}
-        onActionClick={handleActionClick}
-        pageSize={10}
-        emptyMessage="No support tickets found matching the selected filters."
-      />
+          {/* Support Tickets Table with Common DataTable */}
+          <DataTable
+            columns={columns}
+            data={filteredTickets}
+            actions={SUPPORT_ACTIONS}
+            onActionClick={handleActionClick}
+            pageSize={10}
+            emptyMessage="No support tickets found matching the selected filters."
+          />
+        </>
+      )}
     </div>
   );
 };
