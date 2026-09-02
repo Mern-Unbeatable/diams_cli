@@ -22,7 +22,7 @@ export const getStatusBadgeStyle = (status) => {
       return "bg-[#fef3c7] text-[#d97706]"; // Warm yellow/amber
     case "rejected":
     case "suspended":
-      return "bg-[#f3e8ff] text-[#9333ea]"; // Soft purple/violet
+      return "bg-[#fee2e2] text-[#ef4444]"; // Soft red/pink matching image
     default:
       return "bg-slate-100 text-slate-600";
   }

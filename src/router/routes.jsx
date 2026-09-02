@@ -86,6 +86,7 @@ export const router = createBrowserRouter([
               { path: "orders", element: <AdminOrdersView /> },
               { path: "orders/:id", element: <AdminOrdersView /> },
               { path: "identity", element: <AdminIdentityView /> },
+              { path: "identity/:id", element: <AdminIdentityView /> },
               { path: "plans", element: <AdminPlansView /> },
               { path: "add-ons", element: <AdminAddOnsView /> },
               { path: "esim", element: <AdminEsimView /> },
