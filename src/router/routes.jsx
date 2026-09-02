@@ -32,7 +32,7 @@ import AdminUsersView from "@/pages/dashboard/admin/usersPermission/AdminUsersVi
 import AdminSettingsView from "@/pages/dashboard/admin/systemsettings/AdminSettingsView";
 import AdminAuditLogsView from "@/pages/dashboard/admin/auditLogs/AdminAuditLogsView";
 import CollaboratorOverview from "@/pages/dashboard/collaborator/overview/CollaboratorOverview";
-import CollaboratorCustomersView from "@/pages/dashboard/collaborator/CollaboratorCustomersView";
+import CollaboratorCustomersView from "@/pages/dashboard/collaborator/customers/CollaboratorCustomersView";
 import CollaboratorOrdersView from "@/pages/dashboard/collaborator/CollaboratorOrdersView";
 import CollaboratorIdentityView from "@/pages/dashboard/collaborator/CollaboratorIdentityView";
 import CollaboratorPlansView from "@/pages/dashboard/collaborator/CollaboratorPlansView";
@@ -117,11 +117,15 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <CollaboratorOverview /> },
               { path: "customers", element: <CollaboratorCustomersView /> },
+              { path: "customers/:id", element: <CollaboratorCustomersView /> },
               { path: "orders", element: <CollaboratorOrdersView /> },
               { path: "identity", element: <CollaboratorIdentityView /> },
               { path: "plans", element: <CollaboratorPlansView /> },
               { path: "support", element: <CollaboratorSupportView /> },
-              { path: "notifications", element: <CollaboratorNotificationsView /> },
+              {
+                path: "notifications",
+                element: <CollaboratorNotificationsView />,
+              },
             ],
           },
         ],
