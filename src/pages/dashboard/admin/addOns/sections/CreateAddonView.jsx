@@ -4,14 +4,15 @@ import { ArrowLeft, Info } from "lucide-react";
 const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSave }) => {
   // Form States
   const [formData, setFormData] = useState({
-    // Common & Data Booster
+    // Common & Roaming / Booster
     dataAmount: "",
+    name: "",
     price: "",
     validity: "",
     speed: "",
+    description: "",
 
     // International Calls specific fields
-    name: "",
     title: "",
     subtitle: "",
     included: "",
@@ -19,7 +20,6 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
 
     // Premium Services specific fields
     serviceType: "sim",
-    description: "",
 
     // General
     isPopular: false,
@@ -29,10 +29,11 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
     if (addonToEdit) {
       setFormData({
         dataAmount: addonToEdit.dataAmount || addonToEdit.minutes || addonToEdit.title || "",
+        name: addonToEdit.name || addonToEdit.dataAmount || addonToEdit.tag || "",
         price: addonToEdit.price || "",
         validity: addonToEdit.validity || "",
         speed: addonToEdit.speed || "",
-        name: addonToEdit.tag || addonToEdit.name || "",
+        description: addonToEdit.description || addonToEdit.speed || "",
         title: addonToEdit.minutes || addonToEdit.title || "",
         subtitle: addonToEdit.subtitle || addonToEdit.speed || "",
         included: Array.isArray(addonToEdit.countries)
@@ -40,22 +41,21 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
           : addonToEdit.included || "",
         featured: addonToEdit.tagline || addonToEdit.featured || "",
         serviceType: addonToEdit.icon || "sim",
-        description: addonToEdit.description || "",
         isPopular: Boolean(addonToEdit.isPopular),
       });
     } else {
       setFormData({
         dataAmount: "",
+        name: "",
         price: "",
         validity: "",
         speed: "",
-        name: "",
+        description: "",
         title: "",
         subtitle: "",
         included: "",
         featured: "",
         serviceType: "sim",
-        description: "",
         isPopular: false,
       });
     }
@@ -101,7 +101,7 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
     } else if (category === "Premium Services") {
       savedItem = {
         id: addonToEdit?.id || `ps-${Date.now()}`,
-        title: formData.dataAmount || formData.name || "SIM Replacement",
+        title: formData.name || formData.dataAmount || "SIM Replacement",
         price: formData.price
           ? formData.price.startsWith("CHF")
             ? formData.price
@@ -115,12 +115,26 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
         category: "Premium Services",
         isPopular: formData.isPopular,
       };
-    } else {
-      // Data Booster & Roaming Package
+    } else if (category === "Roaming Package") {
       savedItem = {
         id: addonToEdit?.id || `addon-${Date.now()}`,
-        category: category || "Data Booster",
-        dataAmount: formData.dataAmount || "+5GB",
+        category: "Roaming Package",
+        dataAmount: formData.name || formData.dataAmount || "+5GB",
+        isPopular: formData.isPopular,
+        price: formData.price
+          ? formData.price.startsWith("CHF")
+            ? formData.price
+            : `CHF ${formData.price}`
+          : "CHF 30.00",
+        validity: formData.validity || "30 Days",
+        speed: formData.description || formData.speed || "5G- High Speed",
+      };
+    } else {
+      // Data Booster
+      savedItem = {
+        id: addonToEdit?.id || `addon-${Date.now()}`,
+        category: "Data Booster",
+        dataAmount: formData.dataAmount || formData.name || "+5GB",
         isPopular: formData.isPopular,
         price: formData.price
           ? formData.price.startsWith("CHF")
@@ -190,8 +204,75 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
           </div>
 
           {/* DYNAMIC FORM FIELDS BASED ON CATEGORY */}
-          {category === "International Calls" ? (
-            /* INTERNATIONAL CALLS FIELDS (MATCHING EXACT SCREENSHOT) */
+          {category === "Roaming Package" ? (
+            /* ROAMING PACKAGE FIELDS (EXACT MATCH TO SCREENSHOT) */
+            <>
+              {/* Row 1: Name, Price, Validity (3 columns) */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    placeholder="+5GB"
+                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700">
+                    Price
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.price}
+                    onChange={(e) =>
+                      setFormData({ ...formData, price: e.target.value })
+                    }
+                    placeholder="CHF 30.00"
+                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700">
+                    Validity
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.validity}
+                    onChange={(e) =>
+                      setFormData({ ...formData, validity: e.target.value })
+                    }
+                    placeholder="30 Days"
+                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              {/* Row 2: Description (Full Width) */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700">
+                  Description
+                </label>
+                <input
+                  type="text"
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  placeholder="5G- High Speed"
+                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
+                />
+              </div>
+            </>
+          ) : category === "International Calls" ? (
+            /* INTERNATIONAL CALLS FIELDS */
             <>
               {/* Row 1: Name, Tittle, Price (3 columns) */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -373,7 +454,7 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
                 />
               </div>
             </>
-          ) : category === "Premium Services" ? (
+          ) : (
             /* PREMIUM SERVICES FIELDS */
             <>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -383,9 +464,9 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
                   </label>
                   <input
                     type="text"
-                    value={formData.dataAmount}
+                    value={formData.name || formData.dataAmount}
                     onChange={(e) =>
-                      setFormData({ ...formData, dataAmount: e.target.value })
+                      setFormData({ ...formData, name: e.target.value })
                     }
                     placeholder="e.g. SIM Replacement"
                     className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
@@ -436,71 +517,6 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
                     setFormData({ ...formData, description: e.target.value })
                   }
                   placeholder="Order a replacement physical triple- cut SIM card..."
-                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                />
-              </div>
-            </>
-          ) : (
-            /* ROAMING PACKAGE FIELDS */
-            <>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700">
-                    Data Amount / Package
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.dataAmount}
-                    onChange={(e) =>
-                      setFormData({ ...formData, dataAmount: e.target.value })
-                    }
-                    placeholder="5 GB Roam EU"
-                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700">
-                    Price
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.price}
-                    onChange={(e) =>
-                      setFormData({ ...formData, price: e.target.value })
-                    }
-                    placeholder="CHF 12.00"
-                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700">
-                    Validity
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.validity}
-                    onChange={(e) =>
-                      setFormData({ ...formData, validity: e.target.value })
-                    }
-                    placeholder="14 Days"
-                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700">
-                  Speed / Network
-                </label>
-                <input
-                  type="text"
-                  value={formData.speed}
-                  onChange={(e) =>
-                    setFormData({ ...formData, speed: e.target.value })
-                  }
-                  placeholder="5G Roaming"
                   className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm"
                 />
               </div>
