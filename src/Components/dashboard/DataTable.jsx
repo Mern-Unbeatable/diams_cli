@@ -72,9 +72,20 @@ const ActionMenu = ({
   return (
     <div
       ref={menuRef}
-      className="absolute right-4 top-10 z-30 min-w-[150px] overflow-hidden rounded-lg border border-slate-100 bg-white py-1 shadow-xl ring-1 ring-black/5"
+      className="absolute right-4 top-10 z-30 min-w-[150px] overflow-hidden rounded-xl border border-slate-100 bg-white py-1 shadow-xl ring-1 ring-black/5"
     >
       {actions.map((act, index) => {
+        if (act.isSeparator || act.isHeader) {
+          return (
+            <div
+              key={index}
+              className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50/80 border-t border-slate-100 first:border-t-0"
+            >
+              {act.header || act.label}
+            </div>
+          );
+        }
+
         if (act.isPrimary) {
           return (
             <button
@@ -91,6 +102,8 @@ const ActionMenu = ({
             </button>
           );
         }
+
+        if (!act.label) return null;
 
         return (
           <button
