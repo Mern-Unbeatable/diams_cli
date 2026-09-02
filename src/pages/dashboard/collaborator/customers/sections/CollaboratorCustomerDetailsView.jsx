@@ -6,14 +6,17 @@ import {
   Check,
   AlertCircle,
   Clock,
+  Shield,
   ShieldCheck,
   FileText,
   CreditCard,
   Layers,
   ArrowLeft,
+  Upload,
 } from "lucide-react";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
 import CollaboratorEditCustomerModal from "./CollaboratorEditCustomerModal";
+import CollaboratorSubmitKycModal from "./CollaboratorSubmitKycModal";
 
 const CollaboratorCustomerDetailsView = ({
   customer,
@@ -23,6 +26,7 @@ const CollaboratorCustomerDetailsView = ({
 }) => {
   const [activeTab, setActiveTab] = useState("Overview");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isKycModalOpen, setIsKycModalOpen] = useState(false);
 
   if (!customer) return null;
 
@@ -377,33 +381,36 @@ const CollaboratorCustomerDetailsView = ({
 
           {/* Tab 3: KYC */}
           {activeTab === "KYC" && (
-            <div className="max-w-2xl space-y-4">
-              <h2 className="text-sm font-bold tracking-tight text-slate-900 sm:text-base mb-4">
-                Identity Verification (KYC)
-              </h2>
-
-              <div className="space-y-3 rounded-2xl border border-slate-100 bg-[#f8fafc]/60 p-5 text-xs sm:text-sm">
-                <div className="flex items-center justify-between border-b border-slate-100/60 pb-2.5">
-                  <span className="text-slate-500">Verification Status</span>
-                  <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-600 border border-amber-200/60">
-                    Submitted
-                  </span>
+            <div className="space-y-6 max-w-4xl py-1">
+              {/* Identity Verification Card */}
+              <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-[#f8fafc]/80 p-4.5 sm:p-5">
+                <div className="flex items-center gap-3.5">
+                  <Shield className="h-5 w-5 text-sky-500 shrink-0" />
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900 sm:text-base">
+                      Identity Verification
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {customer.kycDocument || "Passport · Expires Dec 2030"}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex items-center justify-between border-b border-slate-100/60 pb-2.5">
-                  <span className="text-slate-500">Document Type</span>
-                  <span className="font-semibold text-slate-900">Passport / Swiss ID</span>
-                </div>
+                <span className="inline-flex items-center rounded-full border border-sky-200/80 bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-600">
+                  {customer.kycStatus || "Submitted"}
+                </span>
+              </div>
 
-                <div className="flex items-center justify-between border-b border-slate-100/60 pb-2.5">
-                  <span className="text-slate-500">Submission Date</span>
-                  <span className="font-mono text-slate-900">2026-02-12</span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-500">Verification Agent</span>
-                  <span className="text-slate-700">Auto-Verification System</span>
-                </div>
+              {/* Submit KYC Documents Action Button */}
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setIsKycModalOpen(true)}
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#0080ff] px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-blue-600 active:scale-95 sm:text-sm"
+                >
+                  <Upload className="h-4 w-4" />
+                  <span>Submit KYC Documents</span>
+                </button>
               </div>
             </div>
           )}
@@ -541,6 +548,16 @@ const CollaboratorCustomerDetailsView = ({
         onClose={() => setIsEditModalOpen(false)}
         customer={customer}
         onSave={(updated) => {
+          if (onUpdateCustomer) onUpdateCustomer(updated);
+        }}
+      />
+
+      {/* Submit KYC Modal */}
+      <CollaboratorSubmitKycModal
+        isOpen={isKycModalOpen}
+        onClose={() => setIsKycModalOpen(false)}
+        customer={customer}
+        onSubmit={(updated) => {
           if (onUpdateCustomer) onUpdateCustomer(updated);
         }}
       />

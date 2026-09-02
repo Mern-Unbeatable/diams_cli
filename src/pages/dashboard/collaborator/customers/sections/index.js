@@ -4,4 +4,6 @@ export { default as CollaboratorCustomerTable } from "./CollaboratorCustomerTabl
 export { default as CollaboratorCustomerDetailsView } from "./CollaboratorCustomerDetailsView";
 export { default as CollaboratorEditCustomerModal } from "./CollaboratorEditCustomerModal";
 export { default as CollaboratorRegisterCustomerModal } from "./CollaboratorRegisterCustomerModal";
+export { default as CollaboratorSubmitKycModal } from "./CollaboratorSubmitKycModal";
 export * from "./collaboratorCustomerData";
+
