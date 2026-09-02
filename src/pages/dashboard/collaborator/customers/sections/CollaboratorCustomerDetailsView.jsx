@@ -4,19 +4,18 @@ import {
   SquarePen,
   Zap,
   Check,
-  AlertCircle,
-  Clock,
-  Shield,
-  ShieldCheck,
-  FileText,
-  CreditCard,
-  Layers,
-  ArrowLeft,
-  Upload,
 } from "lucide-react";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
 import CollaboratorEditCustomerModal from "./CollaboratorEditCustomerModal";
 import CollaboratorSubmitKycModal from "./CollaboratorSubmitKycModal";
+import {
+  CustomerOverviewTab,
+  CustomerPersonalInfoTab,
+  CustomerKycTab,
+  CustomerOrdersTab,
+  CustomerActivationsTab,
+  CustomerInvoicesTab,
+} from "./detailsTabs";
 
 const CollaboratorCustomerDetailsView = ({
   customer,
@@ -147,7 +146,7 @@ const CollaboratorCustomerDetailsView = ({
             <button
               type="button"
               onClick={() => setIsEditModalOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-95"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-95 cursor-pointer"
             >
               <SquarePen className="h-3.5 w-3.5 text-slate-500" />
               <span>Edit</span>
@@ -156,7 +155,7 @@ const CollaboratorCustomerDetailsView = ({
             <button
               type="button"
               onClick={() => onToggleStatus && onToggleStatus(customer)}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#0f172a] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-slate-800 active:scale-95"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#0f172a] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-slate-800 active:scale-95 cursor-pointer"
             >
               <Zap className="h-3.5 w-3.5 text-amber-400 fill-amber-400" />
               <span>Activation</span>
@@ -223,322 +222,28 @@ const CollaboratorCustomerDetailsView = ({
           onChange={setActiveTab}
         />
 
-        {/* Tab Content Panels */}
+        {/* Tab Content Panels handled in individual components */}
         <div className="mt-8">
-          {/* Tab 1: Overview */}
           {activeTab === "Overview" && (
-            <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
-              {/* Left Column: Service Information */}
-              <div>
-                <h2 className="text-sm font-bold tracking-tight text-slate-900 sm:text-base mb-5">
-                  Service Information
-                </h2>
-
-                <div className="space-y-4 text-xs sm:text-sm">
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-500">Current Plan</span>
-                    <span className="font-semibold text-slate-900">
-                      {customer.plan || "NovaSky One"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-500">SIM Type</span>
-                    <span className="font-semibold text-slate-900">
-                      {customer.simType || "eSIM"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-500">Phone Number</span>
-                    <span className="font-medium text-slate-700">
-                      {customer.phone || "Not assigned"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-500">Activation Status</span>
-                    <span className="font-semibold text-slate-900">
-                      {customer.status || "Pending"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-500">Activation Date</span>
-                    <span className="font-medium text-slate-700">
-                      Not activated
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: KYC Status */}
-              <div>
-                <h2 className="text-sm font-bold tracking-tight text-slate-900 sm:text-base mb-5">
-                  KYC Status
-                </h2>
-
-                <div className="flex items-center gap-3.5 rounded-2xl border border-slate-100 bg-[#f8fafc]/80 p-5 shadow-xs">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-500">
-                    <AlertCircle className="h-5 w-5" />
-                  </div>
-
-                  <div>
-                    <div className="text-sm font-bold text-slate-900">
-                      Submitted
-                    </div>
-                    <p className="text-xs text-slate-400">
-                      Identity verification status
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CustomerOverviewTab customer={customer} />
           )}
 
-          {/* Tab 2: Personal Information */}
           {activeTab === "Personal Information" && (
-            <div className="grid grid-cols-1 gap-y-7 gap-x-12 sm:grid-cols-2 max-w-4xl py-1">
-              {/* Left Column */}
-              <div className="space-y-6">
-                <div>
-                  <span className="block text-xs font-medium text-slate-400">
-                    Full Name
-                  </span>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">
-                    {customer.customer}
-                  </div>
-                </div>
-
-                <div>
-                  <span className="block text-xs font-medium text-slate-400">
-                    Phone
-                  </span>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">
-                    {customer.phone || "+41 78 456 78 90"}
-                  </div>
-                </div>
-
-                <div>
-                  <span className="block text-xs font-medium text-slate-400">
-                    Address
-                  </span>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">
-                    {customer.address || "Via Nassa 8"}
-                  </div>
-                </div>
-
-                <div>
-                  <span className="block text-xs font-medium text-slate-400">
-                    Postal Code
-                  </span>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">
-                    {customer.postalCode || "6900"}
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-6">
-                <div>
-                  <span className="block text-xs font-medium text-slate-400">
-                    Email
-                  </span>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">
-                    {customer.email}
-                  </div>
-                </div>
-
-                <div>
-                  <span className="block text-xs font-medium text-slate-400">
-                    Date of Birth
-                  </span>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">
-                    {customer.dob || "1978-11-08"}
-                  </div>
-                </div>
-
-                <div>
-                  <span className="block text-xs font-medium text-slate-400">
-                    City
-                  </span>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">
-                    {customer.city || "Lugano"}
-                  </div>
-                </div>
-
-                <div>
-                  <span className="block text-xs font-medium text-slate-400">
-                    Country
-                  </span>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">
-                    {customer.country || "Switzerland"}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CustomerPersonalInfoTab customer={customer} />
           )}
 
-          {/* Tab 3: KYC */}
           {activeTab === "KYC" && (
-            <div className="space-y-6 max-w-4xl py-1">
-              {/* Identity Verification Card */}
-              <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-[#f8fafc]/80 p-4.5 sm:p-5">
-                <div className="flex items-center gap-3.5">
-                  <Shield className="h-5 w-5 text-sky-500 shrink-0" />
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-900 sm:text-base">
-                      Identity Verification
-                    </h3>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      {customer.kycDocument || "Passport · Expires Dec 2030"}
-                    </p>
-                  </div>
-                </div>
-
-                <span className="inline-flex items-center rounded-full border border-sky-200/80 bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-600">
-                  {customer.kycStatus || "Submitted"}
-                </span>
-              </div>
-
-              {/* Submit KYC Documents Action Button */}
-              <div>
-                <button
-                  type="button"
-                  onClick={() => setIsKycModalOpen(true)}
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#0080ff] px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-blue-600 active:scale-95 sm:text-sm"
-                >
-                  <Upload className="h-4 w-4" />
-                  <span>Submit KYC Documents</span>
-                </button>
-              </div>
-            </div>
+            <CustomerKycTab
+              customer={customer}
+              onSubmitKyc={() => setIsKycModalOpen(true)}
+            />
           )}
 
-          {/* Tab 4: Orders */}
-          {activeTab === "Orders" && (
-            <div className="space-y-4">
-              <h2 className="text-sm font-bold tracking-tight text-slate-900 sm:text-base mb-4">
-                Customer Orders
-              </h2>
+          {activeTab === "Orders" && <CustomerOrdersTab />}
 
-              <div className="overflow-x-auto rounded-xl border border-slate-100">
-                <table className="min-w-full divide-y divide-slate-100 text-xs sm:text-sm text-left">
-                  <thead className="bg-slate-50/70 text-[11px] font-bold text-slate-400 uppercase">
-                    <tr>
-                      <th className="py-3 px-4">Order ID</th>
-                      <th className="px-4 py-3">Plan</th>
-                      <th className="px-4 py-3">SIM Type</th>
-                      <th className="px-4 py-3">Date</th>
-                      <th className="px-4 py-3">Status</th>
-                      <th className="px-4 py-3 text-right">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 text-slate-600">
-                    <tr>
-                      <td className="py-3.5 px-4 font-mono font-semibold text-slate-900">
-                        #ORD-8921
-                      </td>
-                      <td className="px-4 py-3.5 font-medium text-slate-900">
-                        {customer.plan || "NovaSky One"}
-                      </td>
-                      <td className="px-4 py-3.5">
-                        <span className="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">
-                          {customer.simType || "eSIM"}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3.5 font-mono text-slate-500">
-                        {customer.registrationDate}
-                      </td>
-                      <td className="px-4 py-3.5">
-                        <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-600 border border-emerald-200/60">
-                          Completed
-                        </span>
-                      </td>
-                      <td className="px-4 py-3.5 text-right font-semibold text-slate-900">
-                        CHF 39.90
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+          {activeTab === "Activations" && <CustomerActivationsTab />}
 
-          {/* Tab 5: Activations */}
-          {activeTab === "Activations" && (
-            <div className="max-w-2xl space-y-4">
-              <h2 className="text-sm font-bold tracking-tight text-slate-900 sm:text-base mb-4">
-                Activation Details
-              </h2>
-
-              <div className="space-y-3 rounded-2xl border border-slate-100 bg-[#f8fafc]/60 p-5 text-xs sm:text-sm">
-                <div className="flex items-center justify-between border-b border-slate-100/60 pb-2.5">
-                  <span className="text-slate-500">Status</span>
-                  <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-600 border border-amber-200/60">
-                    {customer.status || "Pending"}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between border-b border-slate-100/60 pb-2.5">
-                  <span className="text-slate-500">SIM Type</span>
-                  <span className="font-semibold text-slate-900">
-                    {customer.simType || "eSIM"}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between border-b border-slate-100/60 pb-2.5">
-                  <span className="text-slate-500">ICCID</span>
-                  <span className="font-mono text-slate-700">89410 20000 12345 67890</span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-500">Request Date</span>
-                  <span className="font-mono text-slate-900">{customer.registrationDate}</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Tab 6: Invoices */}
-          {activeTab === "Invoices" && (
-            <div className="space-y-4">
-              <h2 className="text-sm font-bold tracking-tight text-slate-900 sm:text-base mb-4">
-                Customer Invoices
-              </h2>
-
-              <div className="overflow-x-auto rounded-xl border border-slate-100">
-                <table className="min-w-full divide-y divide-slate-100 text-xs sm:text-sm text-left">
-                  <thead className="bg-slate-50/70 text-[11px] font-bold text-slate-400 uppercase">
-                    <tr>
-                      <th className="py-3 px-4">Invoice #</th>
-                      <th className="px-4 py-3">Date</th>
-                      <th className="px-4 py-3">Status</th>
-                      <th className="px-4 py-3 text-right">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 text-slate-600">
-                    <tr>
-                      <td className="py-3.5 px-4 font-mono font-semibold text-sky-600">
-                        {customer.invoice || "INV-9028"}
-                      </td>
-                      <td className="px-4 py-3.5 font-mono text-slate-500">
-                        {customer.registrationDate}
-                      </td>
-                      <td className="px-4 py-3.5">
-                        <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-600 border border-emerald-200/60">
-                          Paid
-                        </span>
-                      </td>
-                      <td className="px-4 py-3.5 text-right font-semibold text-slate-900">
-                        CHF 59.90
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+          {activeTab === "Invoices" && <CustomerInvoicesTab />}
         </div>
       </div>
 
