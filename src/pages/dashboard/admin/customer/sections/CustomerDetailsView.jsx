@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import EditCustomerModal from "./EditCustomerModal";
 
 const getBadgeStyle = (status) => {
   const norm = String(status).toLowerCase().trim();
@@ -14,7 +16,9 @@ const getBadgeStyle = (status) => {
   }
 };
 
-const CustomerDetailsView = ({ customer, onBack, onToggleStatus }) => {
+const CustomerDetailsView = ({ customer, onBack, onToggleStatus, onUpdateCustomer }) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   if (!customer) return null;
 
   const isSuspended = customer.status?.toLowerCase() === "suspended";
@@ -162,6 +166,7 @@ const CustomerDetailsView = ({ customer, onBack, onToggleStatus }) => {
         <div className="flex flex-wrap items-center gap-3 pt-2">
           <button
             type="button"
+            onClick={() => setIsEditModalOpen(true)}
             className="rounded-xl bg-[#2563eb] px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-95 sm:text-sm"
           >
             Edit Customer
@@ -176,6 +181,16 @@ const CustomerDetailsView = ({ customer, onBack, onToggleStatus }) => {
           </button>
         </div>
       </div>
+
+      {/* Edit Customer Modal */}
+      <EditCustomerModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        customer={customer}
+        onSave={(updated) => {
+          if (onUpdateCustomer) onUpdateCustomer(updated);
+        }}
+      />
     </div>
   );
 };

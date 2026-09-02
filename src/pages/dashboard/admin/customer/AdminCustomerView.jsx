@@ -107,6 +107,13 @@ const AdminCustomerView = () => {
     );
   };
 
+  // Update customer details from edit modal
+  const handleUpdateCustomer = (updatedCustomer) => {
+    setCustomersList((prev) =>
+      prev.map((c) => (c.id === updatedCustomer.id ? updatedCustomer : c))
+    );
+  };
+
   return (
     <div className="min-h-full space-y-6 text-slate-900">
       {/* If URL contains customer id parameter, render CustomerDetailsView */}
@@ -116,6 +123,7 @@ const AdminCustomerView = () => {
             customer={currentCustomer}
             onBack={() => navigate("/dashboard/admin/customer")}
             onToggleStatus={handleToggleStatus}
+            onUpdateCustomer={handleUpdateCustomer}
           />
         ) : (
           <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
