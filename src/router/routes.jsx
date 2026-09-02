@@ -119,6 +119,7 @@ export const router = createBrowserRouter([
               { path: "customers", element: <CollaboratorCustomersView /> },
               { path: "customers/:id", element: <CollaboratorCustomersView /> },
               { path: "orders", element: <CollaboratorOrdersView /> },
+              { path: "orders/:id", element: <CollaboratorOrdersView /> },
               { path: "identity", element: <CollaboratorIdentityView /> },
               { path: "plans", element: <CollaboratorPlansView /> },
               { path: "support", element: <CollaboratorSupportView /> },
