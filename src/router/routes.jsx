@@ -17,7 +17,7 @@ import AuthView from "@/pages/auth/AuthView";
 import NotFound from "@/pages/error/NotFound";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RoleDashboardRedirect from "@/pages/dashboard/RoleDashboardRedirect";
-import AdminOverview from "@/pages/dashboard/admin/AdminOverview";
+import AdminOverview from "@/pages/dashboard/admin/overview/AdminOverview";
 import AdminCustomerView from "@/pages/dashboard/admin/AdminCustomerView";
 import AdminOrdersView from "@/pages/dashboard/admin/AdminOrdersView";
 import AdminIdentityView from "@/pages/dashboard/admin/AdminIdentityView";
