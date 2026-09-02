@@ -6,6 +6,7 @@ import {
   BillingKpiCards,
   GenerateInvoiceModal,
   InvoiceDetailsModal,
+  RefundPaymentModal,
   INVOICES_DATA,
   BILLING_STATUS_FILTERS,
   BILLING_ACTIONS,
@@ -32,6 +33,7 @@ const AdminBillingView = () => {
   const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   // Close filter dropdown on outside click
@@ -133,7 +135,8 @@ const AdminBillingView = () => {
     } else if (act.includes("generate")) {
       setIsGenerateModalOpen(true);
     } else if (act.includes("refund")) {
-      handleUpdateInvoiceStatus(row.id, "Refund");
+      setSelectedInvoice(row);
+      setIsRefundModalOpen(true);
     }
   };
 
@@ -147,6 +150,11 @@ const AdminBillingView = () => {
     if (selectedInvoice && selectedInvoice.id === invoiceId) {
       setSelectedInvoice((prev) => (prev ? { ...prev, status: newStatus } : null));
     }
+  };
+
+  // Confirm Refund
+  const handleConfirmRefund = (invoiceId) => {
+    handleUpdateInvoiceStatus(invoiceId, "Refund");
   };
 
   // Add new invoice
@@ -231,6 +239,17 @@ const AdminBillingView = () => {
           setSelectedInvoice(null);
         }}
         onUpdateStatus={handleUpdateInvoiceStatus}
+      />
+
+      {/* Refund Payment Modal */}
+      <RefundPaymentModal
+        isOpen={isRefundModalOpen}
+        invoice={selectedInvoice}
+        onClose={() => {
+          setIsRefundModalOpen(false);
+          setSelectedInvoice(null);
+        }}
+        onConfirmRefund={handleConfirmRefund}
       />
     </div>
   );
