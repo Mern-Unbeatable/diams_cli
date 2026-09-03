@@ -7,7 +7,7 @@ const CollaboratorCommissionDetailsModal = ({ isOpen, onClose, item }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white p-6 sm:p-7 shadow-2xl transition-all z-10 animate-in zoom-in-95 duration-200 space-y-6">
+      <div className="relative w-full max-w-md overflow-hidden rounded-xl bg-white p-6 sm:p-7 shadow-2xl transition-all z-10 animate-in zoom-in-95 duration-200 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <h2 className="text-base font-bold tracking-tight text-slate-900">

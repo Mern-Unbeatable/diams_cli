@@ -19,7 +19,7 @@ export const IntlHeroBanner = () => {
   const { banner } = USER_PLANS_OPTIONS.intlCalls;
 
   return (
-    <section className="space-y-4 rounded-2xl bg-[#0f172a] p-6 text-white shadow-lg shadow-slate-900/10 sm:p-7">
+    <section className="space-y-4 rounded-xl bg-[#0f172a] p-6 text-white shadow-lg shadow-slate-900/10 sm:p-7">
       <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
         <Globe size={14} className="shrink-0 text-sky-400" />
         <span>{banner.tag}</span>
@@ -74,7 +74,7 @@ export const IntlActivePackageCard = () => {
         </div>
       </div>
 
-      <section className="space-y-4 rounded-2xl border border-gray-200 bg-white p-6">
+      <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-6">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2.5">
             <Phone size={18} className="text-btnPrimary" />
@@ -88,13 +88,20 @@ export const IntlActivePackageCard = () => {
         </div>
 
         <p className="text-sm text-primary/60">
-          Expires on: <span className="font-semibold text-primary">{activePackage.expiresOn}</span>
+          Expires on:{" "}
+          <span className="font-semibold text-primary">
+            {activePackage.expiresOn}
+          </span>
         </p>
 
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <span className="font-medium text-primary/70">Remaining Talk Time:</span>
-            <span className="font-bold text-btnPrimary">{activePackage.usedText}</span>
+            <span className="font-medium text-primary/70">
+              Remaining Talk Time:
+            </span>
+            <span className="font-bold text-btnPrimary">
+              {activePackage.usedText}
+            </span>
           </div>
           <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100">
             <div className="h-full w-[75%] rounded-full bg-btnPrimary" />
@@ -145,7 +152,7 @@ export const IntlAvailablePackagesGrid = () => {
           return (
             <div
               key={pkg.id}
-              className={`relative flex flex-col justify-between rounded-2xl bg-white p-6 pt-8 border-2 transition-all ${
+              className={`relative flex flex-col justify-between rounded-xl bg-white p-6 pt-8 border-2 transition-all ${
                 isSelected
                   ? "border-btnPrimary shadow-md"
                   : "border-gray-200 hover:border-gray-300"
@@ -186,7 +193,9 @@ export const IntlAvailablePackagesGrid = () => {
                     <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
                       VALIDITY
                     </p>
-                    <p className="text-sm font-bold text-primary">{pkg.validity}</p>
+                    <p className="text-sm font-bold text-primary">
+                      {pkg.validity}
+                    </p>
                   </div>
                 </div>
 
@@ -211,8 +220,13 @@ export const IntlAvailablePackagesGrid = () => {
 
                 <ul className="mt-5 space-y-2.5">
                   {pkg.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-2.5 text-xs text-primary/80 sm:text-sm">
-                      <span className="text-xs font-bold text-btnPrimary sm:text-sm">✓</span>
+                    <li
+                      key={idx}
+                      className="flex items-center gap-2.5 text-xs text-primary/80 sm:text-sm"
+                    >
+                      <span className="text-xs font-bold text-btnPrimary sm:text-sm">
+                        ✓
+                      </span>
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -269,9 +283,12 @@ export const IntlCountrySearchCard = () => {
         </div>
       </div>
 
-      <section className="space-y-4 rounded-2xl border border-gray-200 bg-white p-6">
+      <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-6">
         <div className="relative">
-          <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary/40" />
+          <Search
+            size={18}
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary/40"
+          />
           <input
             type="text"
             placeholder="Search country e.g. Bangladesh, India..."
@@ -320,7 +337,7 @@ export const IntlFaqAccordion = () => {
         </div>
       </div>
 
-      <section className="divide-y divide-gray-100 rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
+      <section className="divide-y divide-gray-100 rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
         {faqs.map((faq) => {
           const isOpen = openFaqId === faq.id;
 

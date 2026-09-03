@@ -8,8 +8,14 @@ const HIGHLIGHT_ICONS = {
 };
 
 const HelpHeroSection = () => {
-  const { title, subtitle, searchPlaceholder, searchLabel, popularLabel, popularSearches } =
-    HELP_HERO;
+  const {
+    title,
+    subtitle,
+    searchPlaceholder,
+    searchLabel,
+    popularLabel,
+    popularSearches,
+  } = HELP_HERO;
 
   return (
     <section className="relative overflow-hidden bg-white">
@@ -72,33 +78,37 @@ const HelpHeroSection = () => {
               </div>
             </div>
 
-            <aside className="rounded-2xl border border-white/20 bg-primary/55 p-6 shadow-xl backdrop-blur-md sm:p-7 lg:max-w-md lg:justify-self-end lg:p-8">
+            <aside className="rounded-xl border border-white/20 bg-primary/55 p-6 shadow-xl backdrop-blur-md sm:p-7 lg:max-w-md lg:justify-self-end lg:p-8">
               <h2 className="text-lg font-bold text-white sm:text-xl">
                 {HELP_SUPPORT_HIGHLIGHTS.title}
               </h2>
 
               <ul className="mt-6 space-y-7">
-                {HELP_SUPPORT_HIGHLIGHTS.items.map(({ id, icon, title: itemTitle, description }) => {
-                  const Icon = HIGHLIGHT_ICONS[icon];
+                {HELP_SUPPORT_HIGHLIGHTS.items.map(
+                  ({ id, icon, title: itemTitle, description }) => {
+                    const Icon = HIGHLIGHT_ICONS[icon];
 
-                  return (
-                    <li key={id} className="flex items-start gap-4">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-btnPrimary">
-                        <Icon
-                          size={18}
-                          strokeWidth={1.75}
-                          className="text-white"
-                        />
-                      </span>
-                      <div className="pt-0.5">
-                        <p className="text-sm font-bold text-white sm:text-base">
-                          {itemTitle}
-                        </p>
-                        <p className="mt-1 text-sm text-white/70">{description}</p>
-                      </div>
-                    </li>
-                  );
-                })}
+                    return (
+                      <li key={id} className="flex items-start gap-4">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-btnPrimary">
+                          <Icon
+                            size={18}
+                            strokeWidth={1.75}
+                            className="text-white"
+                          />
+                        </span>
+                        <div className="pt-0.5">
+                          <p className="text-sm font-bold text-white sm:text-base">
+                            {itemTitle}
+                          </p>
+                          <p className="mt-1 text-sm text-white/70">
+                            {description}
+                          </p>
+                        </div>
+                      </li>
+                    );
+                  },
+                )}
               </ul>
             </aside>
           </div>

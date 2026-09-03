@@ -21,11 +21,15 @@ export const UsageBoostersGrid = () => {
         {boosters.map((booster) => (
           <div
             key={booster.id}
-            className="flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-4"
+            className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4"
           >
             <div>
-              <h4 className="text-sm font-bold text-primary">{booster.amount}</h4>
-              <p className="mt-0.5 text-[10px] text-primary/45">{booster.validity}</p>
+              <h4 className="text-sm font-bold text-primary">
+                {booster.amount}
+              </h4>
+              <p className="mt-0.5 text-[10px] text-primary/45">
+                {booster.validity}
+              </p>
               <p className="mt-2 text-xs font-bold text-primary">
                 CHF {booster.price}
               </p>

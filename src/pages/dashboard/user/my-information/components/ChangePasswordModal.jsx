@@ -26,13 +26,15 @@ export const ChangePasswordModal = ({ isOpen, onClose, onSuccess }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
               <Lock size={18} />
             </span>
-            <h3 className="text-base font-bold text-primary">Change Password</h3>
+            <h3 className="text-base font-bold text-primary">
+              Change Password
+            </h3>
           </div>
           <button
             type="button"
@@ -73,7 +75,9 @@ export const ChangePasswordModal = ({ isOpen, onClose, onSuccess }) => {
           </div>
 
           <div className="space-y-1">
-            <label className="font-bold text-primary">Confirm New Password</label>
+            <label className="font-bold text-primary">
+              Confirm New Password
+            </label>
             <input
               type="password"
               value={confirmPass}

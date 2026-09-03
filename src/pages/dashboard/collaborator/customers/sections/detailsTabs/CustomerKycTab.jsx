@@ -6,7 +6,7 @@ const CustomerKycTab = ({ customer, onSubmitKyc }) => {
   return (
     <div className="space-y-6 max-w-4xl py-1">
       {/* Identity Verification Card */}
-      <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-[#f8fafc]/80 p-4.5 sm:p-5">
+      <div className="flex items-center justify-between rounded-xl border border-slate-100 bg-[#f8fafc]/80 p-4.5 sm:p-5">
         <div className="flex items-center gap-3.5">
           <Shield className="h-5 w-5 text-sky-500 shrink-0" />
           <div>

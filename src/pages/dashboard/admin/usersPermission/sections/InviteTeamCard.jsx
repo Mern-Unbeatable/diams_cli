@@ -16,15 +16,19 @@ const InviteTeamCard = ({ onInvite }) => {
   };
 
   return (
-    <div className="w-full max-w-xl rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+    <div className="w-full max-w-xl rounded-xl border border-slate-100 bg-white p-6 shadow-sm">
       <h2 className="text-xl font-bold tracking-tight text-[#2ea5ff] sm:text-2xl">
         Invite your team
       </h2>
       <p className="mt-1 text-xs text-slate-400 sm:text-sm leading-relaxed">
-        Easily add new members to a role by entering their email addresses below. Once invited, they&apos;ll receive an email with a link to join.
+        Easily add new members to a role by entering their email addresses
+        below. Once invited, they&apos;ll receive an email with a link to join.
       </p>
 
-      <form onSubmit={handleSendInvite} className="mt-5 flex flex-wrap items-center gap-3">
+      <form
+        onSubmit={handleSendInvite}
+        className="mt-5 flex flex-wrap items-center gap-3"
+      >
         <input
           type="email"
           required

@@ -8,7 +8,7 @@ const CollaboratorStatCards = () => {
         return (
           <div
             key={card.id}
-            className="flex flex-col justify-between rounded-2xl border border-slate-100 bg-white p-4.5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow duration-200 hover:shadow-md sm:p-5"
+            className="flex flex-col justify-between rounded-xl border border-slate-100 bg-white p-4.5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow duration-200 hover:shadow-md sm:p-5"
           >
             <div
               className={`flex h-10 w-10 items-center justify-center rounded-xl ${card.iconBg}`}

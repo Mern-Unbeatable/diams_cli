@@ -45,7 +45,7 @@ const PremiumServicesView = ({ servicesData, onEdit, onDelete }) => {
           return (
             <div
               key={service.id || index}
-              className="flex flex-col justify-between rounded-2xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm transition-all duration-200 hover:shadow-md"
+              className="flex flex-col justify-between rounded-xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm transition-all duration-200 hover:shadow-md"
             >
               <div>
                 {/* Top: Icon + Title & Price */}

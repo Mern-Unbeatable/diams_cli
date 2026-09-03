@@ -2,7 +2,7 @@ import { Headset, MessageSquare } from "lucide-react";
 
 export const StillNeedHelpCard = ({ onStartChat }) => {
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0c1a30] via-[#091527] to-[#040a14] p-5 text-white shadow-md border border-slate-800 space-y-3">
+    <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#0c1a30] via-[#091527] to-[#040a14] p-5 text-white shadow-md border border-slate-800 space-y-3">
       {/* Background Watermark */}
       <div className="pointer-events-none absolute -bottom-4 -right-4 text-white/5">
         <Headset size={90} />

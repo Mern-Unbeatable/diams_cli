@@ -35,14 +35,16 @@ const HelpCategoriesSection = () => {
               <li key={id}>
                 <Link
                   to="/help"
-                  className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6"
+                  className="group flex h-full flex-col rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6"
                 >
                   <Icon
                     size={24}
                     strokeWidth={1.75}
                     className="text-textsecondary"
                   />
-                  <h3 className="mt-4 text-base font-bold text-primary">{cardTitle}</h3>
+                  <h3 className="mt-4 text-base font-bold text-primary">
+                    {cardTitle}
+                  </h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-primary/60">
                     {description}
                   </p>

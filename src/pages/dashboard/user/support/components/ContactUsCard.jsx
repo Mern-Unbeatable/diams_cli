@@ -1,11 +1,8 @@
 import { ChevronRight, Mail, MessageSquare, Phone } from "lucide-react";
 
-export const ContactUsCard = ({
-  onStartChat,
-  onOpenNewTicket,
-}) => {
+export const ContactUsCard = ({ onStartChat, onOpenNewTicket }) => {
   return (
-    <section className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
+    <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
       <div>
         <h3 className="text-sm sm:text-base font-bold text-primary">
           Contact us

@@ -1,11 +1,5 @@
 import { Link } from "react-router";
-import {
-  Globe,
-  Headset,
-  ShieldCheck,
-  Signal,
-  Wifi,
-} from "lucide-react";
+import { Globe, Headset, ShieldCheck, Signal, Wifi } from "lucide-react";
 import { PLANS_PAGE_HERO } from "@/config/plansPage";
 import { PLAN_PRICING_IMAGE } from "@/config/planDetails";
 
@@ -20,7 +14,7 @@ const HIGHLIGHT_ICONS = {
 const PlanPriceCard = ({ plan, className = "" }) => {
   return (
     <div
-      className={`rounded-2xl border border-btnPrimary/25 bg-secondary p-6 sm:p-7 ${className}`}
+      className={`rounded-xl border border-btnPrimary/25 bg-secondary p-6 sm:p-7 ${className}`}
     >
       <p className="text-sm text-white">Monthly Price</p>
 

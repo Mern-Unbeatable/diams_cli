@@ -23,7 +23,7 @@ const StepSimSelection = ({
         {/* Card 1: eSIM */}
         <div
           onClick={() => onChange("simType", "eSIM")}
-          className={`flex items-start gap-3.5 rounded-2xl border p-5 transition-all cursor-pointer ${
+          className={`flex items-start gap-3.5 rounded-xl border p-5 transition-all cursor-pointer ${
             selectedSimType === "eSIM"
               ? "border-sky-500 bg-sky-50/20 ring-1 ring-sky-500/30 shadow-xs"
               : "border-slate-200 bg-white hover:border-slate-300"
@@ -41,7 +41,8 @@ const StepSimSelection = ({
               eSIM
             </h3>
             <p className="mt-1 text-xs text-slate-500 leading-relaxed">
-              Instant digital delivery. No physical card required. Activate immediately after order.
+              Instant digital delivery. No physical card required. Activate
+              immediately after order.
             </p>
           </div>
         </div>
@@ -49,7 +50,7 @@ const StepSimSelection = ({
         {/* Card 2: Physical SIM */}
         <div
           onClick={() => onChange("simType", "Physical SIM")}
-          className={`flex items-start gap-3.5 rounded-2xl border p-5 transition-all cursor-pointer ${
+          className={`flex items-start gap-3.5 rounded-xl border p-5 transition-all cursor-pointer ${
             selectedSimType === "Physical SIM"
               ? "border-sky-500 bg-sky-50/20 ring-1 ring-sky-500/30 shadow-xs"
               : "border-slate-200 bg-white hover:border-slate-300"
@@ -67,7 +68,8 @@ const StepSimSelection = ({
               Physical SIM
             </h3>
             <p className="mt-1 text-xs text-slate-500 leading-relaxed">
-              Physical SIM card delivered to your customer's shipping address within 2-3 business days.
+              Physical SIM card delivered to your customer's shipping address
+              within 2-3 business days.
             </p>
           </div>
         </div>

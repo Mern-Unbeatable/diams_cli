@@ -18,7 +18,9 @@ const CoverageNetworkSection = () => {
           <h2 className="text-2xl font-bold text-primary sm:text-3xl lg:text-4xl">
             {title}
           </h2>
-          <p className="mt-3 text-sm text-primary/65 sm:text-base">{subtitle}</p>
+          <p className="mt-3 text-sm text-primary/65 sm:text-base">
+            {subtitle}
+          </p>
         </div>
 
         <ul className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
@@ -28,7 +30,7 @@ const CoverageNetworkSection = () => {
             return (
               <li
                 key={id}
-                className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm"
+                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-btnPrimary/10">
                   <Icon
@@ -37,7 +39,9 @@ const CoverageNetworkSection = () => {
                     className="text-textsecondary"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-bold text-primary">{featureTitle}</h3>
+                <h3 className="mt-4 text-lg font-bold text-primary">
+                  {featureTitle}
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-primary/65">
                   {description}
                 </p>

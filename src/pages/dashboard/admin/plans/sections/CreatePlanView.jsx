@@ -50,7 +50,7 @@ const CreatePlanView = ({ planToEdit, onBack, onSubmitPlan }) => {
           planToEdit.features.map((f) => ({
             title: f.text || "",
             body: "Included with high-speed priority",
-          }))
+          })),
         );
       }
     }
@@ -111,8 +111,16 @@ const CreatePlanView = ({ planToEdit, onBack, onSubmitPlan }) => {
           ? features
           : [
               { id: "f1", icon: "radio", text: "50 GB in 5G Switzerland" },
-              { id: "f2", icon: "phone", text: "Unlimited Calls within Switzerland" },
-              { id: "f3", icon: "message", text: "Unlimited SMS within Switzerland" },
+              {
+                id: "f2",
+                icon: "phone",
+                text: "Unlimited Calls within Switzerland",
+              },
+              {
+                id: "f3",
+                icon: "message",
+                text: "Unlimited SMS within Switzerland",
+              },
               { id: "f4", icon: "wifi", text: "Hotspot included" },
               { id: "f5", icon: "check", text: "No commitment" },
             ],
@@ -150,7 +158,7 @@ const CreatePlanView = ({ planToEdit, onBack, onSubmitPlan }) => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* CARD 1: Basic Info */}
-        <div className="space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
+        <div className="space-y-4 rounded-xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
           <div className="flex items-center gap-2 text-slate-800">
             <Info className="h-4 w-4 text-sky-500" />
             <h2 className="text-sm font-bold text-slate-900">Basic Info</h2>
@@ -264,7 +272,7 @@ const CreatePlanView = ({ planToEdit, onBack, onSubmitPlan }) => {
         </div>
 
         {/* CARD 2: What's Included */}
-        <div className="space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
+        <div className="space-y-4 rounded-xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
           <div className="flex items-center gap-2 text-slate-800">
             <Info className="h-4 w-4 text-sky-500" />
             <h2 className="text-sm font-bold text-slate-900">
@@ -340,7 +348,7 @@ const CreatePlanView = ({ planToEdit, onBack, onSubmitPlan }) => {
         </div>
 
         {/* CARD 3: Good to Know */}
-        <div className="space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
+        <div className="space-y-4 rounded-xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
           <div className="flex items-center gap-2 text-slate-800">
             <Info className="h-4 w-4 text-sky-500" />
             <h2 className="text-sm font-bold text-slate-900">Good to Know</h2>
@@ -414,7 +422,7 @@ const CreatePlanView = ({ planToEdit, onBack, onSubmitPlan }) => {
         </div>
 
         {/* CARD 4: Frequently ASK A Question */}
-        <div className="space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
+        <div className="space-y-4 rounded-xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
           <div className="flex items-center gap-2 text-slate-800">
             <Info className="h-4 w-4 text-sky-500" />
             <h2 className="text-sm font-bold text-slate-900">

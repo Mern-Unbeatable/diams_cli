@@ -67,7 +67,7 @@ const CollaboratorCommissionTableCard = ({ onViewItem }) => {
   ];
 
   return (
-    <div className="space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+    <div className="space-y-4 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
       <h2 className="text-base font-bold tracking-tight text-[#0b1736]">
         Commission Details
       </h2>

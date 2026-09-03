@@ -9,7 +9,11 @@ import {
   Zap,
 } from "lucide-react";
 import { Link } from "react-router";
-import { ROLE_DASHBOARD_PATHS, ROLES, getRoleDashboardPath } from "@/config/dummyAuth";
+import {
+  ROLE_DASHBOARD_PATHS,
+  ROLES,
+  getRoleDashboardPath,
+} from "@/config/dummyAuth";
 import { useAuth } from "@/context/AuthContext";
 
 const USER_HOME = ROLE_DASHBOARD_PATHS[ROLES.USER];
@@ -37,7 +41,8 @@ const INITIAL_NOTIFICATIONS = [
   {
     id: "n-3",
     title: "New Invoice Ready",
-    description: "Your bill for July 2024 (CHF 34.90) is now available for download.",
+    description:
+      "Your bill for July 2024 (CHF 34.90) is now available for download.",
     time: "1 day ago",
     type: "info",
     isUnread: false,
@@ -85,10 +90,12 @@ const UserHeaderActions = ({ user, initials }) => {
 
         {/* Dropdown Menu */}
         {isOpen && (
-          <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 rounded-2xl border border-gray-200 bg-white p-4 shadow-xl z-50 space-y-3">
+          <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 rounded-xl border border-gray-200 bg-white p-4 shadow-xl z-50 space-y-3">
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <div className="flex items-center gap-2">
-                <h4 className="text-sm font-bold text-primary">Notifications</h4>
+                <h4 className="text-sm font-bold text-primary">
+                  Notifications
+                </h4>
                 {unreadCount > 0 && (
                   <span className="rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-600">
                     {unreadCount} NEW
@@ -119,8 +126,8 @@ const UserHeaderActions = ({ user, initials }) => {
                       n.type === "success"
                         ? "bg-emerald-50 text-emerald-600"
                         : n.type === "warning"
-                        ? "bg-amber-50 text-amber-600"
-                        : "bg-blue-50 text-btnPrimary"
+                          ? "bg-amber-50 text-amber-600"
+                          : "bg-blue-50 text-btnPrimary"
                     }`}
                   >
                     {n.type === "success" && <CheckCircle2 size={16} />}
@@ -140,9 +147,7 @@ const UserHeaderActions = ({ user, initials }) => {
                     <p className="mt-0.5 text-[11px] text-primary/60 leading-normal">
                       {n.description}
                     </p>
-                    <p className="mt-1 text-[10px] text-primary/40">
-                      {n.time}
-                    </p>
+                    <p className="mt-1 text-[10px] text-primary/40">{n.time}</p>
                   </div>
                 </div>
               ))}
@@ -219,7 +224,10 @@ const DashboardHeader = ({ title, onMenuClick }) => {
         >
           <Menu size={22} />
         </button>
-        <nav aria-label="Breadcrumb" className="flex min-w-0 items-center text-[15px]">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex min-w-0 items-center text-[15px]"
+        >
           <Link
             to={getRoleDashboardPath(user.role)}
             className="shrink-0 text-[#555] transition-colors hover:text-primary"
@@ -236,7 +244,11 @@ const DashboardHeader = ({ title, onMenuClick }) => {
       {user.role === ROLES.USER ? (
         <UserHeaderActions user={user} initials={initials} />
       ) : (
-        <StaffHeaderActions user={user} roleLabel={roleLabel} initials={initials} />
+        <StaffHeaderActions
+          user={user}
+          roleLabel={roleLabel}
+          initials={initials}
+        />
       )}
     </header>
   );

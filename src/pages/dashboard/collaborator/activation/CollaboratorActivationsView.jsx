@@ -12,7 +12,7 @@ const CollaboratorActivationsView = () => {
   const navigate = useNavigate();
 
   const [activationsList, setActivationsList] = useState(
-    COLLABORATOR_ACTIVATIONS_DATA
+    COLLABORATOR_ACTIVATIONS_DATA,
   );
   const [status, setStatus] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +24,7 @@ const CollaboratorActivationsView = () => {
       activationsList.find(
         (a) =>
           a.id.toLowerCase() === id.toLowerCase() ||
-          (a.activationId && a.activationId.toLowerCase() === id.toLowerCase())
+          (a.activationId && a.activationId.toLowerCase() === id.toLowerCase()),
       ) || null
     );
   }, [id, activationsList]);
@@ -32,7 +32,10 @@ const CollaboratorActivationsView = () => {
   // Filter Activations by Status
   const filteredData = useMemo(() => {
     return activationsList.filter((item) => {
-      if (status !== "All" && item.status.toLowerCase() !== status.toLowerCase()) {
+      if (
+        status !== "All" &&
+        item.status.toLowerCase() !== status.toLowerCase()
+      ) {
         return false;
       }
       return true;
@@ -48,8 +51,8 @@ const CollaboratorActivationsView = () => {
               status: "Activated",
               timeline: item.timeline.map((t) => ({ ...t, completed: true })),
             }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
@@ -64,7 +67,7 @@ const CollaboratorActivationsView = () => {
             onStartActivation={handleStartActivation}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">
               Activation Record Not Found
             </h2>
@@ -98,7 +101,7 @@ const CollaboratorActivationsView = () => {
               navigate(
                 `/dashboard/collaborator/activations/${
                   act.activationId || act.id
-                }`
+                }`,
               )
             }
             currentPage={currentPage}

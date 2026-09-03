@@ -47,7 +47,14 @@ const StaticJulyBadge = ({ cx, cy, label = "July", value = "$5600.00" }) => {
       {/* Outer Halo */}
       <circle cx={cx} cy={cy} r={7} fill="rgba(56, 189, 248, 0.25)" />
       {/* Inner White Dot with Blue Stroke */}
-      <circle cx={cx} cy={cy} r={4.5} fill="#ffffff" stroke="#0284c7" strokeWidth={2.5} />
+      <circle
+        cx={cx}
+        cy={cy}
+        r={4.5}
+        fill="#ffffff"
+        stroke="#0284c7"
+        strokeWidth={2.5}
+      />
 
       {/* Floating Card Background */}
       <rect
@@ -119,11 +126,13 @@ const AdminAreaChart = ({
   const gradientId = `areaGradient_${id}`;
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+    <div className="flex h-full flex-col justify-between rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
       {/* Card Header */}
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h2 className="text-base font-bold tracking-tight text-slate-900">{title}</h2>
+          <h2 className="text-base font-bold tracking-tight text-slate-900">
+            {title}
+          </h2>
           <p className="mt-0.5 text-xs text-slate-400">{subtitle}</p>
         </div>
 
@@ -195,7 +204,11 @@ const AdminAreaChart = ({
               dataKey="month"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#94a3b8", fontSize: 11, fontFamily: "Poppins, sans-serif" }}
+              tick={{
+                fill: "#94a3b8",
+                fontSize: 11,
+                fontFamily: "Poppins, sans-serif",
+              }}
               dy={8}
             />
 
@@ -205,7 +218,11 @@ const AdminAreaChart = ({
               tickFormatter={(val) => `$${val}k`}
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#94a3b8", fontSize: 11, fontFamily: "Poppins, sans-serif" }}
+              tick={{
+                fill: "#94a3b8",
+                fontSize: 11,
+                fontFamily: "Poppins, sans-serif",
+              }}
             />
 
             {/* Vertical dashed line on July */}

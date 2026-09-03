@@ -75,7 +75,7 @@ export const EsimDeviceTransferTab = ({ onStartTransfer }) => {
   return (
     <div className="grid gap-5 md:grid-cols-2">
       {/* Left Main Card */}
-      <div className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-5 flex flex-col justify-between">
+      <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-5 flex flex-col justify-between">
         <div className="space-y-4">
           {/* Header */}
           <div>
@@ -103,7 +103,8 @@ export const EsimDeviceTransferTab = ({ onStartTransfer }) => {
                   {data.currentDevice?.name || "iPhone 14 Pro"}
                 </p>
                 <p className="text-[10px] sm:text-[11px] text-primary/50 truncate">
-                  {data.currentDevice?.details || "iOS 18.2 • Active since Mar 2024"}
+                  {data.currentDevice?.details ||
+                    "iOS 18.2 • Active since Mar 2024"}
                 </p>
               </div>
             </div>
@@ -189,10 +190,12 @@ export const EsimDeviceTransferTab = ({ onStartTransfer }) => {
       {/* Right Column: Estimated transfer time & Supported devices */}
       <div className="space-y-4 flex flex-col justify-between">
         {/* Widget 1: Estimated transfer time */}
-        <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-2">
+        <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-2">
           <div className="flex items-center gap-1.5 text-xs font-bold text-[#0284c7]">
             <Clock size={15} />
-            <span>{data.estimatedTime?.title || "Estimated transfer time"}</span>
+            <span>
+              {data.estimatedTime?.title || "Estimated transfer time"}
+            </span>
           </div>
           <h4 className="text-2xl sm:text-3xl font-extrabold text-primary">
             {data.estimatedTime?.value || "2–5 min"}
@@ -204,7 +207,7 @@ export const EsimDeviceTransferTab = ({ onStartTransfer }) => {
         </div>
 
         {/* Widget 2: Supported devices */}
-        <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3">
+        <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3">
           <div className="flex items-center gap-1.5 text-xs font-bold text-[#0284c7]">
             <ShieldCheck size={15} />
             <span>{data.supportedDevices?.title || "Supported devices"}</span>

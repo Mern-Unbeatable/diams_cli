@@ -15,7 +15,13 @@ const getStatusBadge = (status) => {
   }
 };
 
-const IdentityDetailsView = ({ item, onBack, onApprove, onReject, onSaveComment }) => {
+const IdentityDetailsView = ({
+  item,
+  onBack,
+  onApprove,
+  onReject,
+  onSaveComment,
+}) => {
   const [comment, setComment] = useState(item?.comment || "");
 
   if (!item) return null;
@@ -33,14 +39,15 @@ const IdentityDetailsView = ({ item, onBack, onApprove, onReject, onSaveComment 
       </button>
 
       {/* Main Container Card */}
-      <div className="space-y-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+      <div className="space-y-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
         {/* Top Review Title & Ref */}
         <div>
           <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
             Verification review
           </h2>
           <p className="mt-0.5 font-mono text-xs text-slate-400">
-            {item.verificationId || "V-8841"} | {item.relatedOrder || "NS-240618-047"}
+            {item.verificationId || "V-8841"} |{" "}
+            {item.relatedOrder || "NS-240618-047"}
           </p>
         </div>
 
@@ -57,7 +64,7 @@ const IdentityDetailsView = ({ item, onBack, onApprove, onReject, onSaveComment 
 
           <span
             className={`inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium tracking-tight ${getStatusBadge(
-              item.status
+              item.status,
             )}`}
           >
             {item.status}
@@ -67,7 +74,7 @@ const IdentityDetailsView = ({ item, onBack, onApprove, onReject, onSaveComment 
         {/* 2 Document Preview Cards (Uploaded ID & Selfie) */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {/* Box 1: Uploaded ID */}
-          <div className="rounded-2xl border border-dashed border-slate-200/90 bg-white p-6 text-center transition-colors hover:border-slate-300">
+          <div className="rounded-xl border border-dashed border-slate-200/90 bg-white p-6 text-center transition-colors hover:border-slate-300">
             <h3 className="text-sm font-bold text-slate-900">Uploaded ID</h3>
             <p className="mt-0.5 text-xs text-slate-400">
               {item.uploadedIdType || "Swiss identity card"}
@@ -81,7 +88,7 @@ const IdentityDetailsView = ({ item, onBack, onApprove, onReject, onSaveComment 
           </div>
 
           {/* Box 2: Selfie */}
-          <div className="rounded-2xl border border-dashed border-slate-200/90 bg-white p-6 text-center transition-colors hover:border-slate-300">
+          <div className="rounded-xl border border-dashed border-slate-200/90 bg-white p-6 text-center transition-colors hover:border-slate-300">
             <h3 className="text-sm font-bold text-slate-900">Selfie</h3>
             <p className="mt-0.5 text-xs text-slate-400">Face match ready</p>
             <button
@@ -94,7 +101,7 @@ const IdentityDetailsView = ({ item, onBack, onApprove, onReject, onSaveComment 
         </div>
 
         {/* CUSTOMER INFORMATION Section */}
-        <div className="space-y-3.5 rounded-2xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
+        <div className="space-y-3.5 rounded-xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
           <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Customer Information
           </h2>
@@ -102,13 +109,16 @@ const IdentityDetailsView = ({ item, onBack, onApprove, onReject, onSaveComment 
           <div className="space-y-2.5 text-xs sm:text-[13px]">
             <div className="flex items-center justify-between">
               <span className="text-slate-500">Full name</span>
-              <span className="font-semibold text-slate-900">{item.customer}</span>
+              <span className="font-semibold text-slate-900">
+                {item.customer}
+              </span>
             </div>
 
             <div className="flex items-center justify-between">
               <span className="text-slate-500">Document type</span>
               <span className="font-semibold text-slate-900">
-                {item.documentTypeRaw || item.documentType?.replace(/\s+/g, "_")}
+                {item.documentTypeRaw ||
+                  item.documentType?.replace(/\s+/g, "_")}
               </span>
             </div>
 
@@ -122,7 +132,7 @@ const IdentityDetailsView = ({ item, onBack, onApprove, onReject, onSaveComment 
         </div>
 
         {/* ADD COMMENT Section */}
-        <div className="space-y-3 rounded-2xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
+        <div className="space-y-3 rounded-xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
           <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Add Comment
           </h2>

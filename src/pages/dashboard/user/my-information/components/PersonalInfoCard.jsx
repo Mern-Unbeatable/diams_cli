@@ -9,13 +9,9 @@ import {
   User,
 } from "lucide-react";
 
-export const PersonalInfoCard = ({
-  personalInfo,
-  onEdit,
-  onChangeAvatar,
-}) => {
+export const PersonalInfoCard = ({ personalInfo, onEdit, onChangeAvatar }) => {
   return (
-    <section className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-6">
+    <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-6">
       {/* Card Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-base sm:text-lg font-bold text-primary">

@@ -35,7 +35,7 @@ const getStatusBadgeStyle = (status) => {
 const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
   const [currentStatus, setCurrentStatus] = useState(ticket?.status || "Open");
   const [assignedAgent, setAssignedAgent] = useState(
-    ticket?.assignedAgent || "Mira Roth"
+    ticket?.assignedAgent || "Mira Roth",
   );
   const [messages, setMessages] = useState([
     {
@@ -102,7 +102,7 @@ const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
         </div>
 
         {/* 1. TICKET DETAILS Card */}
-        <div className="rounded-2xl border border-slate-100 bg-[#f8fbfe] p-6 sm:p-7 space-y-4">
+        <div className="rounded-xl border border-slate-100 bg-[#f8fbfe] p-6 sm:p-7 space-y-4">
           <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-400">
             TICKET DETAILS
           </span>
@@ -122,7 +122,7 @@ const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
               <span className="text-slate-500 font-normal">Priority</span>
               <span
                 className={`inline-block rounded-full px-3.5 py-0.5 text-xs font-semibold ${getPriorityBadgeStyle(
-                  priority
+                  priority,
                 )}`}
               >
                 {priority}
@@ -133,7 +133,7 @@ const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
               <span className="text-slate-500 font-normal">Status</span>
               <span
                 className={`inline-block rounded-full px-3.5 py-0.5 text-xs font-semibold ${getStatusBadgeStyle(
-                  currentStatus
+                  currentStatus,
                 )}`}
               >
                 {currentStatus}
@@ -142,13 +142,15 @@ const SupportDetailsView = ({ ticket, onBack, onUpdateTicket }) => {
 
             <div className="flex items-center justify-between">
               <span className="text-slate-500 font-normal">Assigned agent</span>
-              <span className="font-semibold text-slate-900">{assignedAgent}</span>
+              <span className="font-semibold text-slate-900">
+                {assignedAgent}
+              </span>
             </div>
           </div>
         </div>
 
         {/* 2. CONVERSATION Card */}
-        <div className="rounded-2xl border border-slate-100 bg-[#f8fbfe] p-6 sm:p-7 space-y-4">
+        <div className="rounded-xl border border-slate-100 bg-[#f8fbfe] p-6 sm:p-7 space-y-4">
           <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-400">
             CONVERSATION
           </span>

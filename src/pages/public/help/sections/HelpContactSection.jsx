@@ -18,38 +18,50 @@ const HelpContactSection = () => {
         <p className="mt-2 text-sm text-primary/65 sm:text-base">{subtitle}</p>
 
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {methods.map(({ id, icon, title: methodTitle, description, action, footer, footerType }) => {
-            const Icon = CONTACT_ICONS[icon];
+          {methods.map(
+            ({
+              id,
+              icon,
+              title: methodTitle,
+              description,
+              action,
+              footer,
+              footerType,
+            }) => {
+              const Icon = CONTACT_ICONS[icon];
 
-            return (
-              <li
-                key={id}
-                className="flex flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm"
-              >
-                <Icon
-                  size={24}
-                  strokeWidth={1.75}
-                  className="text-textsecondary"
-                />
-                <h3 className="mt-4 text-lg font-bold text-primary">{methodTitle}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-primary/60">
-                  {description}
-                </p>
-                <button
-                  type="button"
-                  className="mt-5 w-full rounded-lg border border-btnPrimary py-3 text-sm font-semibold text-btnPrimary transition-colors hover:bg-btnPrimary/5"
+              return (
+                <li
+                  key={id}
+                  className="flex flex-col rounded-xl border border-gray-100 bg-white p-6 shadow-sm"
                 >
-                  {action}
-                </button>
-                <p className="mt-3 flex items-center justify-center gap-2 text-xs text-primary/55">
-                  {footerType === "status" && (
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  )}
-                  {footer}
-                </p>
-              </li>
-            );
-          })}
+                  <Icon
+                    size={24}
+                    strokeWidth={1.75}
+                    className="text-textsecondary"
+                  />
+                  <h3 className="mt-4 text-lg font-bold text-primary">
+                    {methodTitle}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-primary/60">
+                    {description}
+                  </p>
+                  <button
+                    type="button"
+                    className="mt-5 w-full rounded-lg border border-btnPrimary py-3 text-sm font-semibold text-btnPrimary transition-colors hover:bg-btnPrimary/5"
+                  >
+                    {action}
+                  </button>
+                  <p className="mt-3 flex items-center justify-center gap-2 text-xs text-primary/55">
+                    {footerType === "status" && (
+                      <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    )}
+                    {footer}
+                  </p>
+                </li>
+              );
+            },
+          )}
         </ul>
       </div>
     </section>

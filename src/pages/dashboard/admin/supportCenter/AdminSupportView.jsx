@@ -64,7 +64,7 @@ const AdminSupportView = () => {
         (t) =>
           t.id.toLowerCase() === id.toLowerCase() ||
           t.ticketId.toLowerCase() === id.toLowerCase() ||
-          t.customer.toLowerCase().replace(/\s+/g, "-") === id.toLowerCase()
+          t.customer.toLowerCase().replace(/\s+/g, "-") === id.toLowerCase(),
       ) || tickets[0]
     );
   }, [id, tickets]);
@@ -112,7 +112,7 @@ const AdminSupportView = () => {
         render: (row) => (
           <span
             className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getPriorityBadgeStyle(
-              row.priority
+              row.priority,
             )}`}
           >
             {row.priority}
@@ -125,7 +125,7 @@ const AdminSupportView = () => {
         render: (row) => (
           <span
             className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getStatusBadgeStyle(
-              row.status
+              row.status,
             )}`}
           >
             {row.status}
@@ -154,7 +154,7 @@ const AdminSupportView = () => {
         align: "center",
       },
     ],
-    []
+    [],
   );
 
   // Action Menu Click Handler
@@ -173,19 +173,19 @@ const AdminSupportView = () => {
       setIsCloseModalOpen(true);
     } else if (act.includes("open")) {
       setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, status: "Open" } : t))
+        prev.map((t) => (t.id === row.id ? { ...t, status: "Open" } : t)),
       );
     } else if (act.includes("pending")) {
       setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, status: "Pending" } : t))
+        prev.map((t) => (t.id === row.id ? { ...t, status: "Pending" } : t)),
       );
     } else if (act.includes("high")) {
       setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, priority: "High" } : t))
+        prev.map((t) => (t.id === row.id ? { ...t, priority: "High" } : t)),
       );
     } else if (act.includes("low")) {
       setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, priority: "Low" } : t))
+        prev.map((t) => (t.id === row.id ? { ...t, priority: "Low" } : t)),
       );
     }
   };
@@ -193,7 +193,7 @@ const AdminSupportView = () => {
   // Update ticket details (from Details view or Modal)
   const handleUpdateTicket = (ticketId, updates) => {
     setTickets((prev) =>
-      prev.map((t) => (t.id === ticketId ? { ...t, ...updates } : t))
+      prev.map((t) => (t.id === ticketId ? { ...t, ...updates } : t)),
     );
   };
 
@@ -220,8 +220,10 @@ const AdminSupportView = () => {
             onUpdateTicket={handleUpdateTicket}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">Ticket Not Found</h2>
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900">
+              Ticket Not Found
+            </h2>
             <p className="mt-1 text-xs text-slate-500">
               No ticket found with ID &quot;{id}&quot;.
             </p>

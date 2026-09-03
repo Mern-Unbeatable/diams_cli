@@ -13,7 +13,8 @@ export const EsimManageSection = ({ onRename, onDelete, onGetNew }) => {
     {
       id: "delete",
       title: "Delete your eSIM",
-      description: "Remove your eSIM from this device. You can reinstall it later.",
+      description:
+        "Remove your eSIM from this device. You can reinstall it later.",
       icon: <Trash2 size={18} />,
       iconBoxClass: "bg-rose-50 text-rose-500 border-rose-100/80",
       onClick: onDelete,
@@ -40,7 +41,7 @@ export const EsimManageSection = ({ onRename, onDelete, onGetNew }) => {
             key={card.id}
             type="button"
             onClick={card.onClick}
-            className="group relative flex flex-col justify-between rounded-2xl border border-gray-200/90 bg-white p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-md"
+            className="group relative flex flex-col justify-between rounded-xl border border-gray-200/90 bg-white p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-md"
           >
             <div className="flex items-start gap-4">
               <span

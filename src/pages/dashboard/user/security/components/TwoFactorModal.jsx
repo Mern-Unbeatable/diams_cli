@@ -14,7 +14,7 @@ export const TwoFactorModal = ({ isOpen, onClose, isEnabled, onToggle }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
@@ -35,7 +35,9 @@ export const TwoFactorModal = ({ isOpen, onClose, isEnabled, onToggle }) => {
 
         <div className="mt-4 space-y-4 text-xs">
           <p className="text-primary/70">
-            Two-factor authentication adds an essential layer of security by requiring a code when signing into your NovaSky account from a new device.
+            Two-factor authentication adds an essential layer of security by
+            requiring a code when signing into your NovaSky account from a new
+            device.
           </p>
 
           <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50/70 p-3.5">

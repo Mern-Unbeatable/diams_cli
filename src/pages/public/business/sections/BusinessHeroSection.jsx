@@ -17,7 +17,7 @@ const FEATURE_ICONS = {
 
 const BusinessFeatureBar = () => {
   return (
-    <div className="business-feature-bar overflow-hidden rounded-xl bg-secondary sm:rounded-2xl">
+    <div className="business-feature-bar overflow-hidden rounded-xl bg-secondary sm:rounded-xl">
       <ul className="grid divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
         {BUSINESS_HERO_FEATURES.map(({ id, icon, title, description }) => {
           const Icon = FEATURE_ICONS[icon];
@@ -77,8 +77,12 @@ const BusinessHeroSection = () => {
             </p>
 
             <h1 className="mt-3 text-[2rem] font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
-              <span className="block xl:whitespace-nowrap">{BUSINESS_HERO.title}</span>
-              <span className="block text-textAccent">{BUSINESS_HERO.titleAccent}</span>
+              <span className="block xl:whitespace-nowrap">
+                {BUSINESS_HERO.title}
+              </span>
+              <span className="block text-textAccent">
+                {BUSINESS_HERO.titleAccent}
+              </span>
             </h1>
 
             <p className="mt-4 max-w-md text-sm leading-relaxed text-white/85 sm:mt-5 sm:max-w-lg sm:text-base lg:text-lg">

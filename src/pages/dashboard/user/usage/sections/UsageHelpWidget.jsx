@@ -6,7 +6,7 @@ export const UsageHelpWidget = () => {
   const { helpLinks } = USER_USAGE;
 
   return (
-    <section className="space-y-3 rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
+    <section className="space-y-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
       <h3 className="text-sm font-bold text-primary">Need help?</h3>
       <ul className="divide-y divide-gray-100">
         {helpLinks.map((item) => (
@@ -21,7 +21,9 @@ export const UsageHelpWidget = () => {
                 {item.icon === "phone" && <Phone size={16} />}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-primary">{item.title}</p>
+                <p className="text-xs font-semibold text-primary">
+                  {item.title}
+                </p>
                 <p className="mt-0.5 truncate text-[10px] text-primary/45">
                   {item.subtitle}
                 </p>

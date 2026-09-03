@@ -58,7 +58,7 @@ const LatestBillCard = () => {
 
       <button
         type="button"
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl border border-blue-100 bg-white py-3 text-sm font-semibold text-[#258bf5] transition-all hover:bg-blue-50/50 active:scale-[0.99]"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border border-blue-100 bg-white py-3 text-sm font-semibold text-[#258bf5] transition-all hover:bg-blue-50/50 active:scale-[0.99]"
       >
         <Download size={16} strokeWidth={2.2} />
         <span>Download invoice</span>

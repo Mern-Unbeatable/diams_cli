@@ -38,7 +38,7 @@ export const PopularTopicsSection = ({ topics, onSelectTopic, onViewAll }) => {
             key={topic.id}
             type="button"
             onClick={() => onSelectTopic?.(topic)}
-            className="flex flex-col items-center justify-center rounded-2xl border border-gray-200/90 bg-white p-4 text-center shadow-xs transition-all hover:bg-sky-50/50 hover:border-sky-200 group cursor-pointer"
+            className="flex flex-col items-center justify-center rounded-xl border border-gray-200/90 bg-white p-4 text-center shadow-xs transition-all hover:bg-sky-50/50 hover:border-sky-200 group cursor-pointer"
           >
             {/* Icon Container */}
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-[#0284c7] border border-sky-100/70 shadow-2xs group-hover:scale-105 transition-transform">

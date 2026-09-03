@@ -2,7 +2,7 @@ import { ShieldCheck } from "lucide-react";
 
 const DataSafetyCard = () => {
   return (
-    <article className="rounded-2xl border border-gray-100 bg-[#f0f6fc] p-6 text-center">
+    <article className="rounded-xl border border-gray-100 bg-[#f0f6fc] p-6 text-center">
       <h3 className="text-base font-bold text-primary">Your data is safe</h3>
       <p className="mt-2 text-sm leading-relaxed text-primary/70">
         We use bank-level encryption to protect your personal information.

@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  ChevronRight,
-  SquarePen,
-  Zap,
-  Check,
-} from "lucide-react";
+import { ChevronRight, SquarePen, Zap, Check } from "lucide-react";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
 import CollaboratorEditCustomerModal from "./CollaboratorEditCustomerModal";
 import CollaboratorSubmitKycModal from "./CollaboratorSubmitKycModal";
@@ -100,11 +95,13 @@ const CollaboratorCustomerDetailsView = ({
           My Customers
         </button>
         <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
-        <span className="font-semibold text-slate-900">{customer.customer}</span>
+        <span className="font-semibold text-slate-900">
+          {customer.customer}
+        </span>
       </nav>
 
       {/* 2. Top Header Card */}
-      <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-7">
+      <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-7">
         <div className="flex flex-wrap items-start justify-between gap-4">
           {/* Left Avatar & Info */}
           <div className="flex items-start gap-4">
@@ -135,8 +132,8 @@ const CollaboratorCustomerDetailsView = ({
               </p>
 
               <p className="text-xs text-slate-400">
-                {customer.plan || "NovaSky One"} · {customer.simType || "eSIM"} · Joined{" "}
-                {customer.registrationDate || "Aug 15, 2026"}
+                {customer.plan || "NovaSky One"} · {customer.simType || "eSIM"}{" "}
+                · Joined {customer.registrationDate || "Aug 15, 2026"}
               </p>
             </div>
           </div>
@@ -214,7 +211,7 @@ const CollaboratorCustomerDetailsView = ({
       </div>
 
       {/* 3. Main Bottom Card with Navigation Tabs */}
-      <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+      <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
         {/* Common Tabs Component */}
         <DashboardTabs
           tabs={tabs}

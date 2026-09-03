@@ -2,7 +2,7 @@ import { Check, Clock, ShieldCheck } from "lucide-react";
 
 export const SecurityLevelCard = ({ securityLevel }) => {
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0c182b] via-[#091526] to-[#040a14] p-5 sm:p-6 text-white shadow-md border border-slate-800 space-y-4">
+    <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#0c182b] via-[#091526] to-[#040a14] p-5 sm:p-6 text-white shadow-md border border-slate-800 space-y-4">
       {/* Title */}
       <h3 className="text-xs sm:text-sm font-bold text-white/80">
         {securityLevel?.title || "Security level"}

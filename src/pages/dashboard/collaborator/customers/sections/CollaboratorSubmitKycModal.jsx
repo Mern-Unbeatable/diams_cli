@@ -8,7 +8,12 @@ const DOCUMENT_TYPES = [
   "Driver's License",
 ];
 
-const CollaboratorSubmitKycModal = ({ isOpen, onClose, customer, onSubmit }) => {
+const CollaboratorSubmitKycModal = ({
+  isOpen,
+  onClose,
+  customer,
+  onSubmit,
+}) => {
   const [docType, setDocType] = useState("Passport");
   const [expiry, setExpiry] = useState("2030-12-31");
   const [fileName, setFileName] = useState("");
@@ -31,7 +36,7 @@ const CollaboratorSubmitKycModal = ({ isOpen, onClose, customer, onSubmit }) => 
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between pb-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
@@ -96,7 +101,7 @@ const CollaboratorSubmitKycModal = ({ isOpen, onClose, customer, onSubmit }) => 
             <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               Document File (PDF, PNG, JPG)
             </label>
-            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-6 text-center hover:border-sky-500 transition-colors cursor-pointer">
+            <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-6 text-center hover:border-sky-500 transition-colors cursor-pointer">
               <Upload className="h-6 w-6 text-slate-400 mb-2" />
               <p className="text-xs font-medium text-slate-600">
                 {fileName || "Click or drag document to upload"}

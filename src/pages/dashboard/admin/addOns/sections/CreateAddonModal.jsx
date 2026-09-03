@@ -56,13 +56,9 @@ const CreateAddonModal = ({ isOpen, onClose, addonToEdit, onSave }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between pb-4 border-b border-slate-100">
           <div>
@@ -180,7 +176,10 @@ const CreateAddonModal = ({ isOpen, onClose, addonToEdit, onSave }) => {
               }
               className="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
             />
-            <label htmlFor="isPopular" className="text-xs font-semibold text-slate-700 sm:text-sm">
+            <label
+              htmlFor="isPopular"
+              className="text-xs font-semibold text-slate-700 sm:text-sm"
+            >
               Mark as Popular badge
             </label>
           </div>

@@ -32,7 +32,9 @@ const AccountView = () => {
               className="mt-0.5 shrink-0 text-emerald-600"
             />
             <div>
-              <p className="font-bold text-emerald-900">{ACCOUNT_PAGE.welcomeTitle}</p>
+              <p className="font-bold text-emerald-900">
+                {ACCOUNT_PAGE.welcomeTitle}
+              </p>
               <p className="mt-1 text-sm leading-relaxed text-emerald-800">
                 {ACCOUNT_PAGE.welcomeMessage}
               </p>
@@ -44,7 +46,7 @@ const AccountView = () => {
               <Link
                 key={id}
                 to={path}
-                className="group rounded-2xl border border-gray-200 bg-white p-5 transition-colors hover:border-btnPrimary/30 hover:bg-[#f8fbff] sm:p-6"
+                className="group rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-btnPrimary/30 hover:bg-[#f8fbff] sm:p-6"
               >
                 <p className="font-bold text-primary">{label}</p>
                 <p className="mt-2 text-sm leading-relaxed text-primary/65">

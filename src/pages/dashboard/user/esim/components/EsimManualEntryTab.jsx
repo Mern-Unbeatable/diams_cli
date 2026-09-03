@@ -10,7 +10,8 @@ const DEFAULT_MANUAL_ENTRY = {
   activationCode: "K2-9F4A-7C21-XR88-QQ03",
   confirmationPlaceholder: "Only if requested by your device",
   activateButtonText: "Activate eSIM",
-  activateNotice: "Activation is instant and can only be done once per profile.",
+  activateNotice:
+    "Activation is instant and can only be done once per profile.",
   tipsTitle: "Installation tips",
   tips: [
     "Stay connected to a stable Wi-Fi network during the whole installation.",
@@ -21,7 +22,11 @@ const DEFAULT_MANUAL_ENTRY = {
   referenceValuesTitle: "Reference values",
   referenceValues: [
     { id: "smdp", label: "SMDP.NOVASKY.IO", value: "SMDP.NOVASKY.IO" },
-    { id: "code", label: "K2-9F4A-7C21-XR88-QQ03", value: "K2-9F4A-7C21-XR88-QQ03" },
+    {
+      id: "code",
+      label: "K2-9F4A-7C21-XR88-QQ03",
+      value: "K2-9F4A-7C21-XR88-QQ03",
+    },
   ],
 };
 
@@ -32,10 +37,10 @@ export const EsimManualEntryTab = ({ esimData, onActivationSuccess }) => {
   };
 
   const [smdpAddress, setSmdpAddress] = useState(
-    esimData?.smdpAddress || manualEntry.smdpAddress
+    esimData?.smdpAddress || manualEntry.smdpAddress,
   );
   const [activationCode, setActivationCode] = useState(
-    esimData?.activationCode || manualEntry.activationCode
+    esimData?.activationCode || manualEntry.activationCode,
   );
   const [confirmationCode, setConfirmationCode] = useState("");
   const [copiedField, setCopiedField] = useState(null);
@@ -63,7 +68,7 @@ export const EsimManualEntryTab = ({ esimData, onActivationSuccess }) => {
   return (
     <div className="grid gap-5 md:grid-cols-2">
       {/* Left Form Card */}
-      <div className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-5 flex flex-col justify-between">
+      <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-5 flex flex-col justify-between">
         {/* Header */}
         <div>
           <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-[#38bdf8]">
@@ -173,7 +178,7 @@ export const EsimManualEntryTab = ({ esimData, onActivationSuccess }) => {
       {/* Right Column: Installation tips & Reference values */}
       <div className="space-y-4 flex flex-col justify-between">
         {/* Widget 1: Installation tips */}
-        <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3.5">
+        <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3.5">
           <div className="flex items-center gap-2 text-primary">
             <Wifi size={17} className="text-[#0284c7]" />
             <h4 className="text-sm sm:text-base font-bold">
@@ -195,7 +200,7 @@ export const EsimManualEntryTab = ({ esimData, onActivationSuccess }) => {
         </div>
 
         {/* Widget 2: Reference values */}
-        <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3">
+        <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3">
           <h4 className="text-sm sm:text-base font-bold text-primary">
             {manualEntry.referenceValuesTitle || "Reference values"}
           </h4>

@@ -43,7 +43,7 @@ export const MakePaymentTab = ({
   const [activeMenuMethodId, setActiveMenuMethodId] = useState(null);
 
   const isBill = paymentType === "bill";
-  const currentAmount = isBill ? (selectedBill?.amount || "34.90") : topUpAmount;
+  const currentAmount = isBill ? selectedBill?.amount || "34.90" : topUpAmount;
 
   return (
     <div className="space-y-6">
@@ -57,7 +57,7 @@ export const MakePaymentTab = ({
           {/* Option 1: My Bill */}
           <div
             onClick={() => setPaymentType("bill")}
-            className={`flex items-center gap-3.5 p-4 sm:p-5 rounded-2xl cursor-pointer transition-all ${
+            className={`flex items-center gap-3.5 p-4 sm:p-5 rounded-xl cursor-pointer transition-all ${
               paymentType === "bill"
                 ? "border-2 border-btnPrimary bg-white shadow-sm ring-4 ring-btnPrimary/5"
                 : "border border-gray-200 bg-white hover:border-gray-300"
@@ -101,7 +101,7 @@ export const MakePaymentTab = ({
           {/* Option 2: Top up my line */}
           <div
             onClick={() => setPaymentType("topup")}
-            className={`flex items-center gap-3.5 p-4 sm:p-5 rounded-2xl cursor-pointer transition-all ${
+            className={`flex items-center gap-3.5 p-4 sm:p-5 rounded-xl cursor-pointer transition-all ${
               paymentType === "topup"
                 ? "border-2 border-btnPrimary bg-white shadow-sm ring-4 ring-btnPrimary/5"
                 : "border border-gray-200 bg-white hover:border-gray-300"
@@ -155,7 +155,7 @@ export const MakePaymentTab = ({
             {/* Selected Bill Card */}
             <div
               onClick={() => setIsBillDropdownOpen(!isBillDropdownOpen)}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-2xl border border-gray-200 bg-white hover:border-btnPrimary/50 cursor-pointer transition-all shadow-sm"
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-xl border border-gray-200 bg-white hover:border-btnPrimary/50 cursor-pointer transition-all shadow-sm"
             >
               <div className="flex items-center gap-3.5">
                 <div className="flex items-center justify-center shrink-0">
@@ -195,7 +195,7 @@ export const MakePaymentTab = ({
 
             {/* Dropdown for other bills */}
             {isBillDropdownOpen && (
-              <div className="absolute top-full left-0 right-0 mt-2 z-20 rounded-2xl border border-gray-200 bg-white p-2 shadow-xl space-y-1 animate-in fade-in slide-in-from-top-2 duration-150">
+              <div className="absolute top-full left-0 right-0 mt-2 z-20 rounded-xl border border-gray-200 bg-white p-2 shadow-xl space-y-1 animate-in fade-in slide-in-from-top-2 duration-150">
                 {bills.map((bill) => (
                   <div
                     key={bill.id}
@@ -233,7 +233,9 @@ export const MakePaymentTab = ({
                       >
                         {bill.status}
                       </span>
-                      <span className="text-xs font-bold">CHF {bill.amount}</span>
+                      <span className="text-xs font-bold">
+                        CHF {bill.amount}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -257,7 +259,7 @@ export const MakePaymentTab = ({
             2. Select top-up amount
           </h3>
 
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 space-y-4 shadow-sm">
+          <div className="rounded-xl border border-gray-200 bg-white p-5 space-y-4 shadow-sm">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
               {topUpOptions.map((opt) => {
                 const isSelected = topUpAmount === opt.amount && !customTopUp;
@@ -328,7 +330,7 @@ export const MakePaymentTab = ({
           Choose your payment method
         </h3>
 
-        <div className="rounded-2xl border border-gray-200 bg-white divide-y divide-gray-100 overflow-hidden shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white divide-y divide-gray-100 overflow-hidden shadow-sm">
           {paymentMethods.map((method) => {
             const isSelected = selectedMethodId === method.id;
 
@@ -384,7 +386,7 @@ export const MakePaymentTab = ({
                       onClick={(e) => {
                         e.stopPropagation();
                         setActiveMenuMethodId(
-                          activeMenuMethodId === method.id ? null : method.id
+                          activeMenuMethodId === method.id ? null : method.id,
                         );
                       }}
                       className="p-1 rounded-lg text-primary/40 hover:text-primary hover:bg-gray-100 transition-colors"
@@ -452,7 +454,7 @@ export const MakePaymentTab = ({
           4. Confirm the payment
         </h3>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border border-blue-100 bg-[#eef7ff] shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-xl border border-blue-100 bg-[#eef7ff] shadow-sm">
           <div className="flex items-center gap-3.5">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-white text-btnPrimary shadow-sm">
               <ShieldCheck size={22} />

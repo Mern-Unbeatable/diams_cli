@@ -8,7 +8,7 @@ const BusinessCtaSection = () => {
   return (
     <div className="page-section">
       <div className="mx-auto container px-4 sm:px-6 lg:px-10">
-        <div className="relative min-h-60 overflow-hidden rounded-2xl sm:min-h-70 lg:min-h-75">
+        <div className="relative min-h-60 overflow-hidden rounded-xl sm:min-h-70 lg:min-h-75">
           <img
             src={image}
             alt=""

@@ -12,7 +12,11 @@ const getInitials = (name) => {
 
 const getStatusBadge = (status) => {
   const s = String(status || "").toLowerCase();
-  if (s.includes("activated") || s.includes("active") || s.includes("completed")) {
+  if (
+    s.includes("activated") ||
+    s.includes("active") ||
+    s.includes("completed")
+  ) {
     return (
       <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600 border border-emerald-200/60">
         Activated
@@ -33,9 +37,15 @@ const getStatusBadge = (status) => {
   );
 };
 
-const CollaboratorActivationDetailsView = ({ activation, onBack, onStartActivation }) => {
+const CollaboratorActivationDetailsView = ({
+  activation,
+  onBack,
+  onStartActivation,
+}) => {
   const [isActivating, setIsActivating] = useState(false);
-  const [currentStatus, setCurrentStatus] = useState(activation?.status || "Pending");
+  const [currentStatus, setCurrentStatus] = useState(
+    activation?.status || "Pending",
+  );
 
   if (!activation) return null;
 
@@ -73,7 +83,7 @@ const CollaboratorActivationDetailsView = ({ activation, onBack, onStartActivati
       </nav>
 
       {/* 2. Main White Card */}
-      <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8 space-y-8">
+      <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8 space-y-8">
         {/* Customer Header Info & Status */}
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -186,8 +196,8 @@ const CollaboratorActivationDetailsView = ({ activation, onBack, onStartActivati
               {isActivating
                 ? "Starting Activation..."
                 : currentStatus === "Activated"
-                ? "Line Active"
-                : "Start Activation"}
+                  ? "Line Active"
+                  : "Start Activation"}
             </span>
           </button>
         </div>

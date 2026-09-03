@@ -43,7 +43,7 @@ const EditUserModal = ({ isOpen, onClose, user, onSave }) => {
     setSelectedPermissions((prev) =>
       prev.includes(moduleName)
         ? prev.filter((p) => p !== moduleName)
-        : [...prev, moduleName]
+        : [...prev, moduleName],
     );
   };
 
@@ -67,13 +67,9 @@ const EditUserModal = ({ isOpen, onClose, user, onSave }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200 font-sans">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-sm sm:max-w-md overflow-hidden rounded-2xl bg-white p-5 shadow-2xl transition-all sm:p-6 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-sm sm:max-w-md overflow-hidden rounded-xl bg-white p-5 shadow-2xl transition-all sm:p-6 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-center justify-between pb-2.5 border-b border-slate-100">
           <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">

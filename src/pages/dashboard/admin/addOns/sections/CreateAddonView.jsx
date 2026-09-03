@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, Info } from "lucide-react";
 
-const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSave }) => {
+const CreateAddonView = ({
+  category = "Data Booster",
+  addonToEdit,
+  onBack,
+  onSave,
+}) => {
   // Form States
   const [formData, setFormData] = useState({
     // Common, Roaming, Booster, Premium
@@ -25,8 +30,17 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
   useEffect(() => {
     if (addonToEdit) {
       setFormData({
-        dataAmount: addonToEdit.dataAmount || addonToEdit.minutes || addonToEdit.title || "",
-        name: addonToEdit.name || addonToEdit.title || addonToEdit.dataAmount || addonToEdit.tag || "",
+        dataAmount:
+          addonToEdit.dataAmount ||
+          addonToEdit.minutes ||
+          addonToEdit.title ||
+          "",
+        name:
+          addonToEdit.name ||
+          addonToEdit.title ||
+          addonToEdit.dataAmount ||
+          addonToEdit.tag ||
+          "",
         price: addonToEdit.price || "",
         validity: addonToEdit.validity || "",
         speed: addonToEdit.speed || "",
@@ -96,7 +110,11 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
     } else if (category === "Premium Services") {
       const nameLower = (formData.name || "").toLowerCase();
       let iconType = "sim";
-      if (nameLower.includes("lock") || nameLower.includes("protect") || nameLower.includes("security")) {
+      if (
+        nameLower.includes("lock") ||
+        nameLower.includes("protect") ||
+        nameLower.includes("security")
+      ) {
         iconType = "lock";
       } else if (nameLower.includes("voice") || nameLower.includes("mail")) {
         iconType = "voicemail";
@@ -201,7 +219,7 @@ const CreateAddonView = ({ category = "Data Booster", addonToEdit, onBack, onSav
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* CARD: Basic Info */}
-        <div className="space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
+        <div className="space-y-4 rounded-xl border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
           <div className="flex items-center gap-2 text-slate-800">
             <Info className="h-4 w-4 text-sky-500" />
             <h2 className="text-sm font-bold text-slate-900">Basic Info</h2>

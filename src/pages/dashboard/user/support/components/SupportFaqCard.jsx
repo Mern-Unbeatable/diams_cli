@@ -2,7 +2,7 @@ import { ChevronRight } from "lucide-react";
 
 export const SupportFaqCard = ({ faqs, onSelectFaq, onViewAllFaq }) => {
   return (
-    <section className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-3.5">
+    <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-3.5">
       <div className="flex items-center justify-between">
         <h3 className="text-sm sm:text-base font-bold text-primary">
           Frequently asked questions

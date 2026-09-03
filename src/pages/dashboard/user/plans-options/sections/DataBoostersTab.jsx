@@ -5,7 +5,7 @@ export const DataBoosterStatusCard = () => {
   const { dataBoostersStatus } = USER_PLANS_OPTIONS;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6 space-y-5">
+    <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 space-y-5">
       {/* Header Row */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
@@ -37,8 +37,12 @@ export const DataBoosterStatusCard = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex-1 space-y-2">
           <div className="flex items-center justify-between text-xs font-semibold">
-            <span className="text-primary/60">{dataBoostersStatus.usedText}</span>
-            <span className="text-red-500 font-bold">{dataBoostersStatus.usedPercent} used</span>
+            <span className="text-primary/60">
+              {dataBoostersStatus.usedText}
+            </span>
+            <span className="text-red-500 font-bold">
+              {dataBoostersStatus.usedPercent} used
+            </span>
           </div>
           <div className="h-2.5 w-full rounded-full bg-gray-100 overflow-hidden">
             <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-red-500 w-[95%]" />
@@ -61,7 +65,7 @@ export const DataBoosterComparisonTable = () => {
   const { dataBoostersTable = [] } = USER_PLANS_OPTIONS;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
+    <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
       <div className="flex items-center gap-2 mb-6">
         <span className="text-sky-500">
           <Zap size={18} strokeWidth={2.5} />
@@ -101,9 +105,7 @@ export const DataBoosterComparisonTable = () => {
                 <td className="py-4 text-xs font-semibold text-primary/80">
                   {row.validity}
                 </td>
-                <td className="py-4 text-xs text-primary/55">
-                  {row.speed}
-                </td>
+                <td className="py-4 text-xs text-primary/55">{row.speed}</td>
                 <td className="py-4 text-right">
                   <button
                     type="button"

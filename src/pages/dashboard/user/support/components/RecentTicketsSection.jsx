@@ -20,7 +20,7 @@ export const RecentTicketsSection = ({ tickets, onSelectTicket }) => {
         My Recent Tickets
       </h3>
 
-      <div className="rounded-2xl border border-gray-200/90 bg-white p-2 sm:p-3 shadow-sm divide-y divide-gray-100">
+      <div className="rounded-xl border border-gray-200/90 bg-white p-2 sm:p-3 shadow-sm divide-y divide-gray-100">
         {(tickets || []).map((ticket) => (
           <button
             key={ticket.id}
@@ -32,7 +32,7 @@ export const RecentTicketsSection = ({ tickets, onSelectTicket }) => {
             <div className="flex items-center gap-3.5 min-w-0 pr-3">
               <span
                 className={`inline-flex shrink-0 items-center rounded-md border px-2 py-0.5 text-[10px] sm:text-[11px] font-bold ${getBadgeClass(
-                  ticket.statusVariant
+                  ticket.statusVariant,
                 )}`}
               >
                 {ticket.status}

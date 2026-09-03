@@ -54,7 +54,7 @@ const CollaboratorOrderDetailsView = ({ order, onBack }) => {
       </nav>
 
       {/* 2. Main White Card */}
-      <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8 space-y-8">
+      <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8 space-y-8">
         {/* Top Header Row */}
         <div className="flex items-start justify-between">
           <div>
@@ -79,7 +79,9 @@ const CollaboratorOrderDetailsView = ({ order, onBack }) => {
             <div className="space-y-3.5 text-xs sm:text-sm">
               <div className="flex items-center justify-between border-b border-slate-50 pb-2">
                 <span className="text-slate-400">Name</span>
-                <span className="font-bold text-slate-900">{order.customer}</span>
+                <span className="font-bold text-slate-900">
+                  {order.customer}
+                </span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">Order ID</span>
@@ -102,7 +104,9 @@ const CollaboratorOrderDetailsView = ({ order, onBack }) => {
               </div>
               <div className="flex items-center justify-between border-b border-slate-50 pb-2">
                 <span className="text-slate-400">SIM Type</span>
-                <span className="font-medium text-slate-700">{order.simType}</span>
+                <span className="font-medium text-slate-700">
+                  {order.simType}
+                </span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">Amount</span>

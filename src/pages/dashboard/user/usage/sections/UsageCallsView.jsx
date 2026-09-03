@@ -24,7 +24,7 @@ export const UsageCallsView = () => {
       {/* Top 3 Summary Cards Grid */}
       <div className="grid gap-4 md:grid-cols-3">
         {/* Card 1: SUBSCRIPTION PLAN */}
-        <div className="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-5">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
           <div className="flex items-start justify-between">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               SUBSCRIPTION PLAN
@@ -45,7 +45,7 @@ export const UsageCallsView = () => {
         </div>
 
         {/* Card 2: VOICE USAGE */}
-        <div className="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-5">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
           <div className="flex items-start justify-between">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               VOICE USAGE
@@ -70,7 +70,7 @@ export const UsageCallsView = () => {
         </div>
 
         {/* Card 3: INTERNATIONAL CALLS */}
-        <div className="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-5">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
           <div className="flex items-start justify-between">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               INTERNATIONAL CALLS
@@ -91,7 +91,7 @@ export const UsageCallsView = () => {
       </div>
 
       {/* Bottom Card: Recent Call Activity */}
-      <section className="space-y-6 rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
+      <section className="space-y-6 rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 className="text-lg font-bold text-primary">

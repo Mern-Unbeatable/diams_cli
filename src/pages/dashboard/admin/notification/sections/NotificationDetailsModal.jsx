@@ -5,13 +5,9 @@ const NotificationDetailsModal = ({ isOpen, onClose, notification }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200 font-sans">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between pb-3 border-b border-slate-100">
           <div>
@@ -33,7 +29,7 @@ const NotificationDetailsModal = ({ isOpen, onClose, notification }) => {
         </div>
 
         {/* Details Box */}
-        <div className="mt-5 rounded-2xl border border-slate-100/90 bg-white p-5 space-y-4">
+        <div className="mt-5 rounded-xl border border-slate-100/90 bg-white p-5 space-y-4">
           <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
             Notification Detail
           </span>
@@ -68,9 +64,12 @@ const NotificationDetailsModal = ({ isOpen, onClose, notification }) => {
             </div>
 
             <div className="flex items-start justify-between gap-4 pt-1">
-              <span className="text-slate-500 font-normal shrink-0">Message</span>
+              <span className="text-slate-500 font-normal shrink-0">
+                Message
+              </span>
               <span className="font-semibold text-slate-900 text-right leading-relaxed">
-                {notification.message || "We are improving 5G capacity this weekend."}
+                {notification.message ||
+                  "We are improving 5G capacity this weekend."}
               </span>
             </div>
           </div>

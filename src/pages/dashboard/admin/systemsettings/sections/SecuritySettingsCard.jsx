@@ -5,10 +5,10 @@ const SecuritySettingsCard = ({ initialData }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [require2fa, setRequire2fa] = useState(initialData.require2fa);
   const [sessionTimeout, setSessionTimeout] = useState(
-    initialData.sessionTimeout
+    initialData.sessionTimeout,
   );
   const [securityConfig, setSecurityConfig] = useState(
-    initialData.securityConfig
+    initialData.securityConfig,
   );
 
   const handleSave = () => {
@@ -16,7 +16,7 @@ const SecuritySettingsCard = ({ initialData }) => {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
+    <div className="rounded-xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>

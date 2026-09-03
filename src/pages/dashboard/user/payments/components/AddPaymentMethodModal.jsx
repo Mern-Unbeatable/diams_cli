@@ -77,7 +77,7 @@ export const AddPaymentMethodModal = ({ isOpen, onClose, onAddMethod }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto"
+        className="relative w-full max-w-md rounded-xl bg-white p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
@@ -87,8 +87,12 @@ export const AddPaymentMethodModal = ({ isOpen, onClose, onAddMethod }) => {
               <CreditCard size={20} />
             </span>
             <div>
-              <h3 className="text-base font-bold text-primary">Add Payment Method</h3>
-              <p className="text-xs text-primary/60">Securely link a new card or digital wallet</p>
+              <h3 className="text-base font-bold text-primary">
+                Add Payment Method
+              </h3>
+              <p className="text-xs text-primary/60">
+                Securely link a new card or digital wallet
+              </p>
             </div>
           </div>
           <button
@@ -224,7 +228,8 @@ export const AddPaymentMethodModal = ({ isOpen, onClose, onAddMethod }) => {
                 />
               </div>
               <p className="text-[11px] text-primary/60">
-                You will receive a notification in your TWINT app to authenticate this connection.
+                You will receive a notification in your TWINT app to
+                authenticate this connection.
               </p>
             </div>
           )}
@@ -236,7 +241,8 @@ export const AddPaymentMethodModal = ({ isOpen, onClose, onAddMethod }) => {
                 Apple Pay is ready to be linked with your device credentials.
               </p>
               <p className="text-[11px] text-primary/50">
-                No need to enter manual card numbers. Quick and biometric authenticated.
+                No need to enter manual card numbers. Quick and biometric
+                authenticated.
               </p>
             </div>
           )}

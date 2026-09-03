@@ -17,7 +17,7 @@ const AuditFilterBox = ({
   onRefresh,
 }) => {
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm space-y-5">
+    <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-sm space-y-5">
       {/* Top Row: Title, Subtitle, Refresh button */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
@@ -25,7 +25,8 @@ const AuditFilterBox = ({
             Administrator Activity
           </h2>
           <p className="mt-0.5 text-xs text-slate-400">
-            Search logs, filter by admin, module, action and date range, then open complete activity details.
+            Search logs, filter by admin, module, action and date range, then
+            open complete activity details.
           </p>
         </div>
 

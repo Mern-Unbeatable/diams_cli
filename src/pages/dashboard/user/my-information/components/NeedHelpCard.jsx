@@ -1,4 +1,9 @@
-import { ChevronRight, HelpCircle, MessageCircle, HelpCircle as QuestionIcon } from "lucide-react";
+import {
+  ChevronRight,
+  HelpCircle,
+  MessageCircle,
+  HelpCircle as QuestionIcon,
+} from "lucide-react";
 import { Link } from "react-router";
 
 export const NeedHelpCard = () => {
@@ -27,7 +32,7 @@ export const NeedHelpCard = () => {
   ];
 
   return (
-    <section className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-3">
+    <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-3">
       <h3 className="text-sm sm:text-base font-bold text-primary">
         Need Help?
       </h3>

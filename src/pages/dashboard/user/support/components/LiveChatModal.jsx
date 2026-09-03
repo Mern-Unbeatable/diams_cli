@@ -41,7 +41,7 @@ export const LiveChatModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="flex flex-col h-[520px] w-full max-w-md rounded-2xl border border-gray-200 bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div className="flex flex-col h-[520px] w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         {/* Chat Header */}
         <div className="flex items-center justify-between bg-[#00183c] px-4 py-3 text-white">
           <div className="flex items-center gap-2.5">
@@ -77,7 +77,7 @@ export const LiveChatModal = ({ isOpen, onClose }) => {
               }`}
             >
               <div
-                className={`max-w-[80%] rounded-2xl p-3 shadow-xs ${
+                className={`max-w-[80%] rounded-xl p-3 shadow-xs ${
                   m.sender === "user"
                     ? "bg-btnPrimary text-white rounded-br-xs"
                     : "bg-white text-primary border border-gray-200/80 rounded-bl-xs"
@@ -86,7 +86,9 @@ export const LiveChatModal = ({ isOpen, onClose }) => {
                 <p className="leading-relaxed">{m.text}</p>
                 <span
                   className={`block text-[9px] mt-1 ${
-                    m.sender === "user" ? "text-white/70 text-right" : "text-primary/40"
+                    m.sender === "user"
+                      ? "text-white/70 text-right"
+                      : "text-primary/40"
                   }`}
                 >
                   {m.time}

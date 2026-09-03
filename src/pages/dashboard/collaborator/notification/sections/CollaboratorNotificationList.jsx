@@ -37,7 +37,7 @@ const renderNotificationIcon = (type) => {
 
 const CollaboratorNotificationList = ({ notifications, onToggleRead }) => {
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.02)] divide-y divide-slate-100">
+    <div className="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.02)] divide-y divide-slate-100">
       {notifications.map((item) => (
         <div
           key={item.id}

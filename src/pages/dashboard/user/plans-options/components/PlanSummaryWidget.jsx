@@ -5,7 +5,7 @@ export const PlanSummaryWidget = () => {
   const { currentPlan } = USER_PLANS_OPTIONS;
 
   return (
-    <section className="relative rounded-3xl bg-[#09235e] p-6 text-white shadow-xl shadow-blue-950/20 sm:p-7">
+    <section className="relative rounded-xl bg-[#09235e] p-6 text-white shadow-xl shadow-blue-950/20 sm:p-7">
       <h3 className="text-base font-bold tracking-tight text-white sm:text-lg">
         Plan Summary
       </h3>

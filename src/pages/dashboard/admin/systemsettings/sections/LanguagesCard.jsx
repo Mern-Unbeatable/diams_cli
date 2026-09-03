@@ -11,7 +11,7 @@ const LanguagesCard = ({ initialData }) => {
   const toggleLang = (lang) => {
     if (!isEditing) return;
     setSelectedLangs((prev) =>
-      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
+      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang],
     );
   };
 
@@ -20,7 +20,7 @@ const LanguagesCard = ({ initialData }) => {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
+    <div className="rounded-xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>

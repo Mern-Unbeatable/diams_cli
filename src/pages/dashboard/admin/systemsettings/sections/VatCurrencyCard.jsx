@@ -9,7 +9,7 @@ const VatCurrencyCard = ({ initialData }) => {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
+    <div className="rounded-xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>

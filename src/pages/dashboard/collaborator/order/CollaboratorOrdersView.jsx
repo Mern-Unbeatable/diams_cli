@@ -22,7 +22,7 @@ const CollaboratorOrdersView = () => {
       ordersList.find(
         (o) =>
           o.id.toLowerCase() === id.toLowerCase() ||
-          (o.orderId && o.orderId.toLowerCase() === id.toLowerCase())
+          (o.orderId && o.orderId.toLowerCase() === id.toLowerCase()),
       ) || null
     );
   }, [id, ordersList]);
@@ -30,7 +30,10 @@ const CollaboratorOrdersView = () => {
   // Filter Orders by Status
   const filteredOrders = useMemo(() => {
     return ordersList.filter((ord) => {
-      if (status !== "All" && ord.status.toLowerCase() !== status.toLowerCase()) {
+      if (
+        status !== "All" &&
+        ord.status.toLowerCase() !== status.toLowerCase()
+      ) {
         return false;
       }
       return true;
@@ -47,7 +50,7 @@ const CollaboratorOrdersView = () => {
             onBack={() => navigate("/dashboard/collaborator/orders")}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">
               Order Not Found
             </h2>
@@ -78,7 +81,9 @@ const CollaboratorOrdersView = () => {
           <CollaboratorOrderTable
             orders={filteredOrders}
             onViewOrder={(ord) =>
-              navigate(`/dashboard/collaborator/orders/${ord.orderId || ord.id}`)
+              navigate(
+                `/dashboard/collaborator/orders/${ord.orderId || ord.id}`,
+              )
             }
             currentPage={currentPage}
             pageSize={10}

@@ -53,7 +53,7 @@ const CustomerOverviewTab = ({ customer }) => {
           KYC Status
         </h2>
 
-        <div className="flex items-center gap-3.5 rounded-2xl border border-slate-100 bg-[#f8fafc]/80 p-5 shadow-xs">
+        <div className="flex items-center gap-3.5 rounded-xl border border-slate-100 bg-[#f8fafc]/80 p-5 shadow-xs">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-500">
             <AlertCircle className="h-5 w-5" />
           </div>

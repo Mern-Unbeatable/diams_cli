@@ -38,7 +38,9 @@ const ConfirmationContentSection = ({ planId }) => {
         <div>
           <h1 className="text-2xl font-bold text-primary sm:text-3xl lg:text-4xl">
             {CONFIRMATION_PAGE.title}{" "}
-            <span className="text-emerald-600">{CONFIRMATION_PAGE.titleAccent}</span>
+            <span className="text-emerald-600">
+              {CONFIRMATION_PAGE.titleAccent}
+            </span>
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-primary/70 sm:text-base">
             {CONFIRMATION_PAGE.subtitle}
@@ -64,7 +66,9 @@ const ConfirmationContentSection = ({ planId }) => {
               <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-primary/50">
                 Order date and time
               </p>
-              <p className="mt-1 text-sm text-primary/70">{ORDER_DETAILS.orderDate}</p>
+              <p className="mt-1 text-sm text-primary/70">
+                {ORDER_DETAILS.orderDate}
+              </p>
             </div>
           </div>
 
@@ -85,7 +89,9 @@ const ConfirmationContentSection = ({ planId }) => {
       </article>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold text-primary sm:text-2xl">Next steps</h2>
+        <h2 className="text-xl font-bold text-primary sm:text-2xl">
+          Next steps
+        </h2>
         <p className="mt-1 text-sm text-primary/60">
           Follow these simple steps to start using your service.
         </p>
@@ -108,7 +114,9 @@ const ConfirmationContentSection = ({ planId }) => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-bold text-primary">{title}</p>
-                  <p className="mt-0.5 text-sm text-primary/60">{description}</p>
+                  <p className="mt-0.5 text-sm text-primary/60">
+                    {description}
+                  </p>
                 </div>
                 <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
                   <Check size={14} strokeWidth={2.5} />
@@ -120,7 +128,7 @@ const ConfirmationContentSection = ({ planId }) => {
         </ul>
       </section>
 
-      <div className="mt-10 overflow-hidden rounded-2xl">
+      <div className="mt-10 overflow-hidden rounded-xl">
         <img
           src={appPromoImage}
           alt="NovaSky mobile app"

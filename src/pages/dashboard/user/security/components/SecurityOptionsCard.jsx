@@ -12,11 +12,7 @@ import {
   Trash2,
 } from "lucide-react";
 
-export const SecurityOptionsCard = ({
-  banner,
-  settings,
-  onItemClick,
-}) => {
+export const SecurityOptionsCard = ({ banner, settings, onItemClick }) => {
   const getIcon = (iconName) => {
     switch (iconName) {
       case "shield":
@@ -59,7 +55,7 @@ export const SecurityOptionsCard = ({
   };
 
   return (
-    <section className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-6">
+    <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-6">
       {/* Top Banner Area */}
       <div className="flex items-center justify-between gap-4 pb-1">
         <div className="space-y-1">
@@ -99,7 +95,7 @@ export const SecurityOptionsCard = ({
             <div className="flex items-start gap-3.5 min-w-0 pr-3">
               <span
                 className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${getIconBoxClass(
-                  item.statusVariant
+                  item.statusVariant,
                 )} transition-transform group-hover:scale-105`}
               >
                 {getIcon(item.icon)}
@@ -119,7 +115,7 @@ export const SecurityOptionsCard = ({
               <div className="text-right">
                 <span
                   className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[11px] font-bold ${getBadgeClass(
-                    item.statusVariant
+                    item.statusVariant,
                   )}`}
                 >
                   {item.status}

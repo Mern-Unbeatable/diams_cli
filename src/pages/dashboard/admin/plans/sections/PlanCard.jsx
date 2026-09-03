@@ -33,7 +33,7 @@ const PlanCard = ({ plan, onEdit, onDelete, onMoreDetails }) => {
 
   return (
     <div
-      className={`relative flex flex-col justify-between rounded-2xl bg-[#0e213b] text-white shadow-xl transition-all duration-200 hover:shadow-2xl ${
+      className={`relative flex flex-col justify-between rounded-xl bg-[#0e213b] text-white shadow-xl transition-all duration-200 hover:shadow-2xl ${
         isFeatured
           ? "p-8 sm:p-9 lg:py-12 lg:-my-5 z-10 ring-1 ring-sky-500/20 shadow-2xl"
           : "p-7 sm:p-8"

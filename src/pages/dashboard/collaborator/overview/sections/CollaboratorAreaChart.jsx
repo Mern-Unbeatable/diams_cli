@@ -35,7 +35,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 // Static Floating Badge Component for July when idle (not hovering)
-const StaticFloatingBadge = ({ cx, cy, label = "July", value = "$5600.00" }) => {
+const StaticFloatingBadge = ({
+  cx,
+  cy,
+  label = "July",
+  value = "$5600.00",
+}) => {
   if (typeof cx !== "number" || typeof cy !== "number") return null;
   const boxWidth = 84;
   const boxHeight = 42;
@@ -128,7 +133,7 @@ const CollaboratorAreaChart = ({
   const gradientId = `areaGradient_${id}`;
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-6">
+    <div className="flex h-full flex-col justify-between rounded-xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-6">
       {/* Card Header */}
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>

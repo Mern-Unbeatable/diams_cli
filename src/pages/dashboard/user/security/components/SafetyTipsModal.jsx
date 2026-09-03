@@ -24,13 +24,15 @@ export const SafetyTipsModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-lg rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
               <ShieldCheck size={18} />
             </span>
-            <h3 className="text-base font-bold text-primary">Account Safety Tips</h3>
+            <h3 className="text-base font-bold text-primary">
+              Account Safety Tips
+            </h3>
           </div>
           <button
             type="button"
@@ -47,7 +49,10 @@ export const SafetyTipsModal = ({ isOpen, onClose }) => {
               key={idx}
               className="flex items-start gap-3 rounded-xl border border-gray-100 bg-gray-50/50 p-3.5"
             >
-              <CheckCircle2 size={16} className="text-[#0284c7] shrink-0 mt-0.5" />
+              <CheckCircle2
+                size={16}
+                className="text-[#0284c7] shrink-0 mt-0.5"
+              />
               <div>
                 <h4 className="font-bold text-primary">{tip.title}</h4>
                 <p className="text-[11px] text-primary/60 mt-0.5 leading-relaxed">

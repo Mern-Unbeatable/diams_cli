@@ -26,7 +26,7 @@ const AdminIdentityView = () => {
           (item.verificationId &&
             item.verificationId.toLowerCase() === id.toLowerCase()) ||
           (item.relatedOrder &&
-            item.relatedOrder.toLowerCase() === id.toLowerCase())
+            item.relatedOrder.toLowerCase() === id.toLowerCase()),
       ) || null
     );
   }, [id, identityList]);
@@ -37,7 +37,7 @@ const AdminIdentityView = () => {
       return identityList;
     }
     return identityList.filter(
-      (item) => item.status.toLowerCase() === selectedStatus.toLowerCase()
+      (item) => item.status.toLowerCase() === selectedStatus.toLowerCase(),
     );
   }, [identityList, selectedStatus]);
 
@@ -66,7 +66,9 @@ const AdminIdentityView = () => {
     if (statusMap[act]) {
       const newStatus = statusMap[act];
       setIdentityList((prev) =>
-        prev.map((item) => (item.id === row.id ? { ...item, status: newStatus } : item))
+        prev.map((item) =>
+          item.id === row.id ? { ...item, status: newStatus } : item,
+        ),
       );
     }
   };
@@ -74,21 +76,21 @@ const AdminIdentityView = () => {
   // Approve Handler
   const handleApprove = (item) => {
     setIdentityList((prev) =>
-      prev.map((i) => (i.id === item.id ? { ...i, status: "Approved" } : i))
+      prev.map((i) => (i.id === item.id ? { ...i, status: "Approved" } : i)),
     );
   };
 
   // Reject Handler
   const handleReject = (item) => {
     setIdentityList((prev) =>
-      prev.map((i) => (i.id === item.id ? { ...i, status: "Rejected" } : i))
+      prev.map((i) => (i.id === item.id ? { ...i, status: "Rejected" } : i)),
     );
   };
 
   // Comment Save Handler
   const handleSaveComment = (itemId, comment) => {
     setIdentityList((prev) =>
-      prev.map((i) => (i.id === itemId ? { ...i, comment } : i))
+      prev.map((i) => (i.id === itemId ? { ...i, comment } : i)),
     );
   };
 
@@ -105,10 +107,13 @@ const AdminIdentityView = () => {
             onSaveComment={handleSaveComment}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">Record Not Found</h2>
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900">
+              Record Not Found
+            </h2>
             <p className="mt-1 text-xs text-slate-500">
-              No identity verification record was found with ID &quot;{id}&quot;.
+              No identity verification record was found with ID &quot;{id}
+              &quot;.
             </p>
             <button
               type="button"

@@ -2,7 +2,7 @@ import { ChevronRight, Laptop, Smartphone } from "lucide-react";
 
 export const ConnectedDevicesCard = ({ devices, onManageDevices }) => {
   return (
-    <section className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
+    <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-sm sm:text-base font-bold text-primary">

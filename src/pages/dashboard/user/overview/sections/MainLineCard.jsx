@@ -6,7 +6,7 @@
 //   const { mainLine } = USER_OVERVIEW;
 
 //   return (
-//     <section className="relative overflow-hidden rounded-2xl bg-primary p-5 sm:p-6 lg:p-7">
+//     <section className="relative overflow-hidden rounded-xl bg-primary p-5 sm:p-6 lg:p-7">
 //       <div className="relative z-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
 //         <div>
 //           <div className="flex flex-wrap items-center gap-2.5">
@@ -61,8 +61,8 @@
 
 //         <div className="hidden justify-end lg:flex">
 //           <div className="relative flex h-36 w-44 items-center justify-center">
-//             <div className="absolute inset-0 rounded-3xl bg-white/5" />
-//             <div className="relative flex h-28 w-40 flex-col items-center justify-center rounded-2xl border border-white/15 bg-linear-to-br from-[#1a4a8a] to-[#0d2f5c] shadow-xl">
+//             <div className="absolute inset-0 rounded-xl bg-white/5" />
+//             <div className="relative flex h-28 w-40 flex-col items-center justify-center rounded-xl border border-white/15 bg-linear-to-br from-[#1a4a8a] to-[#0d2f5c] shadow-xl">
 //               <Smartphone size={28} className="text-textAccent" strokeWidth={1.5} />
 //               <span className="mt-2 text-xs font-bold tracking-wide text-white">NovaSky</span>
 //               <span className="mt-3 h-8 w-12 rounded-md bg-white/20" />
@@ -76,13 +76,6 @@
 
 // export default MainLineCard;
 
-
-
-
-
-
-
-
 import { Link } from "react-router";
 import { ArrowRight, Check, Pencil } from "lucide-react";
 import { USER_OVERVIEW } from "@/config/userOverview";
@@ -91,7 +84,7 @@ const MainLineCard = () => {
   const { mainLine } = USER_OVERVIEW;
 
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-[#051139] p-6 sm:p-8 lg:px-10 lg:py-8 border border-white/5 shadow-2xl">
+    <section className="relative overflow-hidden rounded-xl bg-[#051139] p-6 sm:p-8 lg:px-10 lg:py-8 border border-white/5 shadow-2xl">
       <div className="relative z-10 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
         {/* Left Content Area */}
         <div className="flex flex-1 flex-col gap-6">

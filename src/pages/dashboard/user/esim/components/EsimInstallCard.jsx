@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  ArrowRightLeft,
-  Download,
-  Info,
-  Printer,
-} from "lucide-react";
+import { ArrowRightLeft, Download, Info, Printer } from "lucide-react";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
 import { EsimManualEntryTab } from "./EsimManualEntryTab";
 import { EsimDeviceTransferTab } from "./EsimDeviceTransferTab";
@@ -165,13 +160,13 @@ export const EsimInstallCard = ({
         <EsimHelpTab onOpenGuideModal={onOpenGuideModal} />
       ) : (
         /* Container Card for QR Code tab */
-        <div className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-8 shadow-sm space-y-6">
+        <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-8 shadow-sm space-y-6">
           {/* TAB 1: Scan a QR Code */}
           {activeTab === "qr-code" && (
             <div className="relative grid gap-8 lg:grid-cols-2 lg:items-center">
               {/* Left QR Code Side */}
               <div className="flex flex-col items-center justify-center text-center space-y-4">
-                <div className="rounded-2xl border-2 border-dashed border-sky-200 bg-sky-50/40 p-4 sm:p-5 shadow-sm">
+                <div className="rounded-xl border-2 border-dashed border-sky-200 bg-sky-50/40 p-4 sm:p-5 shadow-sm">
                   <VectorQrCode />
                 </div>
 

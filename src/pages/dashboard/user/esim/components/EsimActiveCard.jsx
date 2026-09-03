@@ -13,12 +13,12 @@ export const EsimActiveCard = ({ esimData }) => {
   };
 
   return (
-    <section className="relative overflow-hidden rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm">
+    <section className="relative overflow-hidden rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         {/* Left Column: Icon & Line Details */}
         <div className="flex items-start gap-4 sm:gap-5">
           {/* Blue Chip Icon */}
-          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-gradient-to-b from-[#3ba7ff] to-[#1e88e5] text-white shadow-md shadow-blue-500/20">
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 flex-col items-center justify-center rounded-xl bg-gradient-to-b from-[#3ba7ff] to-[#1e88e5] text-white shadow-md shadow-blue-500/20">
             <Cpu className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={1.75} />
             <span className="mt-0.5 text-[11px] sm:text-xs font-bold tracking-tight">
               eSIM
@@ -98,7 +98,7 @@ export const EsimActiveCard = ({ esimData }) => {
             <div className="absolute h-28 w-28 rounded-full border border-sky-100 pointer-events-none" />
 
             {/* Smartphone Vector Illustration */}
-            <div className="relative z-10 flex h-28 w-16 -rotate-6 flex-col items-center justify-between rounded-2xl bg-gradient-to-br from-[#0c182b] via-[#132847] to-[#0a1524] p-1.5 shadow-xl border-2 border-slate-700/60 ring-1 ring-white/20">
+            <div className="relative z-10 flex h-28 w-16 -rotate-6 flex-col items-center justify-between rounded-xl bg-gradient-to-br from-[#0c182b] via-[#132847] to-[#0a1524] p-1.5 shadow-xl border-2 border-slate-700/60 ring-1 ring-white/20">
               {/* Dynamic Island / Speaker */}
               <div className="h-1 w-4 rounded-full bg-slate-800" />
 

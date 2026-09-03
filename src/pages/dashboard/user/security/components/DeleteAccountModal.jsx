@@ -17,13 +17,15 @@ export const DeleteAccountModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-600 border border-rose-100">
               <AlertTriangle size={18} />
             </span>
-            <h3 className="text-base font-bold text-primary">Delete My Account</h3>
+            <h3 className="text-base font-bold text-primary">
+              Delete My Account
+            </h3>
           </div>
           <button
             type="button"
@@ -38,13 +40,16 @@ export const DeleteAccountModal = ({ isOpen, onClose }) => {
           <div className="rounded-xl border border-rose-100 bg-rose-50/70 p-3.5 text-rose-900 space-y-1">
             <p className="font-bold">Irreversible Action</p>
             <p className="text-[11px] leading-relaxed text-rose-800">
-              Deleting your account will terminate all active subscriptions, eSIM profiles, and billing histories permanently.
+              Deleting your account will terminate all active subscriptions,
+              eSIM profiles, and billing histories permanently.
             </p>
           </div>
 
           <div className="space-y-1.5">
             <label className="text-[11px] font-bold uppercase tracking-wider text-primary/60">
-              Type <span className="font-mono text-rose-600 font-bold">DELETE</span> to confirm
+              Type{" "}
+              <span className="font-mono text-rose-600 font-bold">DELETE</span>{" "}
+              to confirm
             </label>
             <input
               type="text"

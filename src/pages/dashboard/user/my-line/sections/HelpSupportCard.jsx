@@ -12,7 +12,7 @@ export const HelpSupportCard = () => {
   const { help } = USER_MY_LINE;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
+    <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
       <h3 className="text-base font-bold text-primary">Help & Support</h3>
       <ul className="mt-3 divide-y divide-gray-100">
         {help.items.map(({ id, title, description, icon }) => {

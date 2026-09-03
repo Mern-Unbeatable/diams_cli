@@ -31,7 +31,8 @@ const CreatePlanModal = ({ isOpen, onClose, planToEdit, onSave }) => {
         currency: "CHF",
         price: "",
         period: "/month",
-        featuresText: "25 GB in 5G Switzerland\nUnlimited Calls within Switzerland\nUnlimited SMS within Switzerland\nHotspot included\nNo commitment",
+        featuresText:
+          "25 GB in 5G Switzerland\nUnlimited Calls within Switzerland\nUnlimited SMS within Switzerland\nHotspot included\nNo commitment",
       });
     }
   }, [planToEdit, isOpen]);
@@ -47,12 +48,26 @@ const CreatePlanModal = ({ isOpen, onClose, planToEdit, onSave }) => {
       .map((text, i) => {
         let icon = "check";
         const lower = text.toLowerCase();
-        if (lower.includes("gb") || lower.includes("5g") || lower.includes("data")) icon = "radio";
-        else if (lower.includes("call") || lower.includes("phone")) icon = "phone";
-        else if (lower.includes("sms") || lower.includes("message")) icon = "message";
-        else if (lower.includes("hotspot") || lower.includes("wifi")) icon = "wifi";
-        else if (lower.includes("roam") || lower.includes("eu") || lower.includes("world")) icon = "globe";
-        else if (lower.includes("priority") || lower.includes("shield")) icon = "shield";
+        if (
+          lower.includes("gb") ||
+          lower.includes("5g") ||
+          lower.includes("data")
+        )
+          icon = "radio";
+        else if (lower.includes("call") || lower.includes("phone"))
+          icon = "phone";
+        else if (lower.includes("sms") || lower.includes("message"))
+          icon = "message";
+        else if (lower.includes("hotspot") || lower.includes("wifi"))
+          icon = "wifi";
+        else if (
+          lower.includes("roam") ||
+          lower.includes("eu") ||
+          lower.includes("world")
+        )
+          icon = "globe";
+        else if (lower.includes("priority") || lower.includes("shield"))
+          icon = "shield";
         return { id: `f-${i}`, icon, text };
       });
 
@@ -73,13 +88,9 @@ const CreatePlanModal = ({ isOpen, onClose, planToEdit, onSave }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-xl overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-xl overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between pb-4 border-b border-slate-100">
           <div>

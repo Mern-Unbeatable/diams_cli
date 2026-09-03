@@ -17,7 +17,7 @@ const PaymentGatewayCard = ({ initialData }) => {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
+    <div className="rounded-xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -90,9 +90,7 @@ const PaymentGatewayCard = ({ initialData }) => {
               type="text"
               disabled={!isEditing}
               value={data.merchantId}
-              onChange={(e) =>
-                setData({ ...data, merchantId: e.target.value })
-              }
+              onChange={(e) => setData({ ...data, merchantId: e.target.value })}
               className={`mt-2 w-full rounded-xl border px-4 py-3 text-sm sm:text-base font-medium transition outline-none ${
                 isEditing
                   ? "border-sky-400 bg-white text-slate-900 ring-1 ring-sky-400"

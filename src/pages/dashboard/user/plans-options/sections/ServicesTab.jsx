@@ -46,7 +46,7 @@ const ServicesTab = () => {
           return (
             <div
               key={service.id}
-              className="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md"
+              className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md"
             >
               <div>
                 <div className="flex items-start justify-between gap-3">

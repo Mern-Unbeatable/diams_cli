@@ -107,7 +107,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
       [
         `NovaSky eSIM Installation & Setup Guide\n\n1. Connect to Wi-Fi\n2. Open Settings > Cellular > Add eSIM\n3. Scan QR Code or Enter SMDP: SMDP.NOVASKY.IO\n4. Confirm Line Label & Data Roaming\n\nFor 24/7 Support: support@novasky.ch`,
       ],
-      { type: "text/plain" }
+      { type: "text/plain" },
     );
     element.href = URL.createObjectURL(file);
     element.download = "NovaSky_eSIM_Installation_Guide.txt";
@@ -123,7 +123,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
         {/* Left Sub-Column: Installation Guides & Troubleshooting */}
         <div className="space-y-5">
           {/* Card 1: Installation guides */}
-          <div className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
+          <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
             <div>
               <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-[#38bdf8]">
                 {data.tag}
@@ -160,7 +160,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
           </div>
 
           {/* Card 2: Troubleshooting */}
-          <div className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-3.5">
+          <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-3.5">
             <div className="flex items-center gap-2 text-primary">
               <Sparkles size={16} className="text-[#38bdf8]" />
               <h4 className="text-sm sm:text-base font-bold">
@@ -175,7 +175,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
                     type="button"
                     onClick={() =>
                       setOpenTroubleId(
-                        openTroubleId === item.id ? null : item.id
+                        openTroubleId === item.id ? null : item.id,
                       )
                     }
                     className="flex w-full items-center justify-between text-left text-xs font-semibold text-primary hover:text-btnPrimary transition-colors"
@@ -204,7 +204,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
         {/* Right Sub-Column: Video Tutorial & Offline Resources */}
         <div className="space-y-5">
           {/* Card 1: Video tutorial */}
-          <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3.5">
+          <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3.5">
             {/* Video Preview Frame */}
             <button
               type="button"
@@ -230,7 +230,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
           </div>
 
           {/* Card 2: Offline resources */}
-          <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3">
+          <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3">
             <div className="flex items-center gap-2 text-primary">
               <FileText size={16} className="text-[#0284c7]" />
               <h4 className="text-xs sm:text-sm font-bold">
@@ -270,7 +270,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
       </div>
 
       {/* Frequently Asked Questions Card */}
-      <div className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-3.5">
+      <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-3.5">
         <h4 className="text-sm sm:text-base font-bold text-primary">
           {data.faqTitle || "Frequently asked questions"}
         </h4>
@@ -304,7 +304,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
       {/* Video Modal Simulation */}
       {isVideoModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
-          <div className="w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl space-y-4">
+          <div className="w-full max-w-xl rounded-xl border border-gray-200 bg-white p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <h3 className="text-base font-bold text-primary">
                 eSIM Video Walkthrough
@@ -321,9 +321,12 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
               <div className="h-16 w-16 rounded-full bg-btnPrimary flex items-center justify-center mb-3 shadow-lg shadow-sky-500/30">
                 <Play size={26} className="fill-white translate-x-0.5" />
               </div>
-              <p className="text-sm font-bold">NovaSky eSIM Setup in 3 Minutes</p>
+              <p className="text-sm font-bold">
+                NovaSky eSIM Setup in 3 Minutes
+              </p>
               <p className="text-xs text-white/60 mt-1">
-                Visual demonstration covering QR scanning, profile naming, and roaming setup.
+                Visual demonstration covering QR scanning, profile naming, and
+                roaming setup.
               </p>
             </div>
             <div className="flex justify-end">

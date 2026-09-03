@@ -11,7 +11,7 @@ export const WhyUpgradeWidget = () => {
   const { whyUpgrade } = USER_PLANS_OPTIONS;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
+    <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
       <h3 className="text-base font-bold text-primary">Why upgrade?</h3>
       <ul className="mt-4 space-y-4">
         {whyUpgrade.map((item) => {

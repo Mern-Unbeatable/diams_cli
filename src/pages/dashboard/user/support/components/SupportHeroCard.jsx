@@ -12,7 +12,7 @@ export const SupportHeroCard = ({ banner, onSearch }) => {
   };
 
   return (
-    <section className="relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-r from-[#eef7ff] via-[#f3f9ff] to-[#e1f1fe] p-6 sm:p-7 shadow-xs">
+    <section className="relative overflow-hidden rounded-xl border border-blue-100 bg-gradient-to-r from-[#eef7ff] via-[#f3f9ff] to-[#e1f1fe] p-6 sm:p-7 shadow-xs">
       <div className="relative z-10 max-w-lg space-y-2">
         <h3 className="text-xl sm:text-2xl font-bold text-primary">
           {banner?.title || "How can we help you today?"}
@@ -97,7 +97,7 @@ export const SupportHeroCard = ({ banner, onSearch }) => {
           </svg>
 
           {/* Speech Bubble */}
-          <div className="absolute -top-1 right-1 flex h-9 w-11 items-center justify-center rounded-2xl bg-white shadow-lg border border-sky-100">
+          <div className="absolute -top-1 right-1 flex h-9 w-11 items-center justify-center rounded-xl bg-white shadow-lg border border-sky-100">
             <span className="flex items-center gap-0.5">
               <span className="h-1.5 w-1.5 rounded-full bg-btnPrimary animate-pulse" />
               <span className="h-1.5 w-1.5 rounded-full bg-btnPrimary animate-pulse delay-100" />

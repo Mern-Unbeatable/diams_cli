@@ -23,13 +23,15 @@ export const DeleteEsimModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-600 border border-rose-100">
               <AlertTriangle size={18} />
             </span>
-            <h3 className="text-base font-bold text-primary">Delete your eSIM</h3>
+            <h3 className="text-base font-bold text-primary">
+              Delete your eSIM
+            </h3>
           </div>
           <button
             type="button"
@@ -44,22 +46,29 @@ export const DeleteEsimModal = ({
           <div className="rounded-xl border border-rose-100 bg-rose-50/70 p-3.5 text-rose-900 space-y-1">
             <p className="font-bold">Important Information:</p>
             <p className="text-[11px] leading-relaxed text-rose-800">
-              Deleting this eSIM will immediately disconnect mobile data, calls, and SMS on this device.
+              Deleting this eSIM will immediately disconnect mobile data, calls,
+              and SMS on this device.
             </p>
           </div>
 
           <div className="space-y-2 text-primary/80">
             <p>
-              Your subscription plan (<strong>{esimData?.planName || "NovaSky Plus"}</strong>) and phone number (<strong>{esimData?.number || "+41 76 123 45 67"}</strong>) remain active on your account.
+              Your subscription plan (
+              <strong>{esimData?.planName || "NovaSky Plus"}</strong>) and phone
+              number (<strong>{esimData?.number || "+41 76 123 45 67"}</strong>)
+              remain active on your account.
             </p>
             <p className="text-primary/60">
-              You can reinstall your eSIM at any time by scanning the QR code again or requesting a replacement.
+              You can reinstall your eSIM at any time by scanning the QR code
+              again or requesting a replacement.
             </p>
           </div>
 
           <div className="space-y-1.5 pt-2">
             <label className="text-[11px] font-bold uppercase tracking-wider text-primary/60">
-              Type <span className="font-mono text-rose-600 font-bold">DELETE</span> to confirm
+              Type{" "}
+              <span className="font-mono text-rose-600 font-bold">DELETE</span>{" "}
+              to confirm
             </label>
             <input
               type="text"

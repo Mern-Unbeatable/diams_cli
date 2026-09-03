@@ -18,17 +18,44 @@ export const AutomaticPaymentsTab = ({
   const [isEnabled, setIsEnabled] = useState(true);
   const [billingDay, setBillingDay] = useState("1st");
   const [isCycleDropdownOpen, setIsCycleDropdownOpen] = useState(false);
-  const [selectedMethodId, setSelectedMethodId] = useState("pm-mastercard-9043");
+  const [selectedMethodId, setSelectedMethodId] =
+    useState("pm-mastercard-9043");
 
   const billingCycles = [
-    { value: "1st", label: "Monthly — on the 1st", cycleText: "Monthly • 1st", nextDate: "1 August 2026" },
-    { value: "5th", label: "Monthly — on the 5th", cycleText: "Monthly • 5th", nextDate: "5 August 2026" },
-    { value: "10th", label: "Monthly — on the 10th", cycleText: "Monthly • 10th", nextDate: "10 August 2026" },
-    { value: "15th", label: "Monthly — on the 15th", cycleText: "Monthly • 15th", nextDate: "15 August 2026" },
-    { value: "25th", label: "Monthly — on the 25th", cycleText: "Monthly • 25th", nextDate: "25 August 2026" },
+    {
+      value: "1st",
+      label: "Monthly — on the 1st",
+      cycleText: "Monthly • 1st",
+      nextDate: "1 August 2026",
+    },
+    {
+      value: "5th",
+      label: "Monthly — on the 5th",
+      cycleText: "Monthly • 5th",
+      nextDate: "5 August 2026",
+    },
+    {
+      value: "10th",
+      label: "Monthly — on the 10th",
+      cycleText: "Monthly • 10th",
+      nextDate: "10 August 2026",
+    },
+    {
+      value: "15th",
+      label: "Monthly — on the 15th",
+      cycleText: "Monthly • 15th",
+      nextDate: "15 August 2026",
+    },
+    {
+      value: "25th",
+      label: "Monthly — on the 25th",
+      cycleText: "Monthly • 25th",
+      nextDate: "25 August 2026",
+    },
   ];
 
-  const currentCycle = billingCycles.find((c) => c.value === billingDay) || billingCycles[0];
+  const currentCycle =
+    billingCycles.find((c) => c.value === billingDay) || billingCycles[0];
 
   const autoPaymentCards = [
     {
@@ -61,12 +88,14 @@ export const AutomaticPaymentsTab = ({
     },
   ];
 
-  const activeMethod = autoPaymentCards.find((m) => m.id === selectedMethodId) || autoPaymentCards[1];
+  const activeMethod =
+    autoPaymentCards.find((m) => m.id === selectedMethodId) ||
+    autoPaymentCards[1];
 
   return (
     <div className="space-y-6">
       {/* 1. Billing cycle Card */}
-      <section className="rounded-3xl border border-gray-100/90 bg-white p-6 shadow-sm space-y-4">
+      <section className="rounded-xl border border-gray-100/90 bg-white p-6 shadow-sm space-y-4">
         <div className="flex items-start gap-3.5">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
             <Calendar size={20} />
@@ -84,7 +113,7 @@ export const AutomaticPaymentsTab = ({
           <button
             type="button"
             onClick={() => setIsCycleDropdownOpen(!isCycleDropdownOpen)}
-            className="flex items-center justify-between w-full sm:w-72 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-xs font-semibold text-primary hover:border-btnPrimary/60 transition-colors shadow-sm cursor-pointer"
+            className="flex items-center justify-between w-full sm:w-72 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-semibold text-primary hover:border-btnPrimary/60 transition-colors shadow-sm cursor-pointer"
           >
             <span>{currentCycle.label}</span>
             <ChevronDown
@@ -96,7 +125,7 @@ export const AutomaticPaymentsTab = ({
           </button>
 
           {isCycleDropdownOpen && (
-            <div className="absolute top-full left-0 mt-2 w-full sm:w-72 z-20 rounded-2xl border border-gray-100 bg-white p-1.5 shadow-xl space-y-1 animate-in fade-in duration-150">
+            <div className="absolute top-full left-0 mt-2 w-full sm:w-72 z-20 rounded-xl border border-gray-100 bg-white p-1.5 shadow-xl space-y-1 animate-in fade-in duration-150">
               {billingCycles.map((cycle) => (
                 <button
                   key={cycle.value}
@@ -121,7 +150,7 @@ export const AutomaticPaymentsTab = ({
       </section>
 
       {/* 2. AutoPay status Card */}
-      <section className="rounded-3xl border border-gray-100/90 bg-white p-6 shadow-sm space-y-5">
+      <section className="rounded-xl border border-gray-100/90 bg-white p-6 shadow-sm space-y-5">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3.5">
@@ -152,7 +181,7 @@ export const AutomaticPaymentsTab = ({
         </p>
 
         {/* Blue Amount Banner */}
-        <div className="rounded-2xl bg-linear-to-r from-[#1765dc] to-[#1e78f0] p-6 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md shadow-blue-500/10">
+        <div className="rounded-xl bg-linear-to-r from-[#1765dc] to-[#1e78f0] p-6 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md shadow-blue-500/10">
           <div>
             <p className="text-xs text-white/80 font-medium">Monthly amount</p>
             <p className="text-2xl sm:text-3xl font-extrabold text-white mt-0.5 tracking-tight">
@@ -185,7 +214,7 @@ export const AutomaticPaymentsTab = ({
 
         {/* 3 Metric Tiles */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          <div className="rounded-2xl bg-gray-50/80 p-4 border border-gray-100 space-y-1">
+          <div className="rounded-xl bg-gray-50/80 p-4 border border-gray-100 space-y-1">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               BILLING CYCLE
             </p>
@@ -194,7 +223,7 @@ export const AutomaticPaymentsTab = ({
             </p>
           </div>
 
-          <div className="rounded-2xl bg-gray-50/80 p-4 border border-gray-100 space-y-1">
+          <div className="rounded-xl bg-gray-50/80 p-4 border border-gray-100 space-y-1">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               NEXT PAYMENT
             </p>
@@ -203,7 +232,7 @@ export const AutomaticPaymentsTab = ({
             </p>
           </div>
 
-          <div className="rounded-2xl bg-gray-50/80 p-4 border border-gray-100 space-y-1">
+          <div className="rounded-xl bg-gray-50/80 p-4 border border-gray-100 space-y-1">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               DEFAULT METHOD
             </p>
@@ -215,7 +244,7 @@ export const AutomaticPaymentsTab = ({
       </section>
 
       {/* 3. Change payment method Card */}
-      <section className="rounded-3xl border border-gray-100/90 bg-white p-6 shadow-sm space-y-5">
+      <section className="rounded-xl border border-gray-100/90 bg-white p-6 shadow-sm space-y-5">
         {/* Header */}
         <div className="flex items-start gap-3.5">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
@@ -240,7 +269,7 @@ export const AutomaticPaymentsTab = ({
               <div
                 key={method.id}
                 onClick={() => setSelectedMethodId(method.id)}
-                className={`p-4 rounded-2xl flex items-center justify-between cursor-pointer transition-all ${
+                className={`p-4 rounded-xl flex items-center justify-between cursor-pointer transition-all ${
                   isSelected
                     ? "border-2 border-btnPrimary bg-white shadow-sm ring-4 ring-btnPrimary/5"
                     : "border border-gray-200 bg-white hover:border-gray-300"
@@ -269,7 +298,10 @@ export const AutomaticPaymentsTab = ({
 
                   {method.brand === "apple-pay" && (
                     <div className="flex h-9 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-50 border border-gray-200">
-                      <svg className="w-4 h-4 fill-primary" viewBox="0 0 170 170">
+                      <svg
+                        className="w-4 h-4 fill-primary"
+                        viewBox="0 0 170 170"
+                      >
                         <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.69-7.83-11.98-14.36-5.83-8.87-10.42-18.99-13.78-30.36-3.36-11.37-5.04-22.37-5.04-33 0-14.88 3.73-27.42 11.19-37.62 7.46-10.2 16.99-15.42 28.58-15.66 4.96 0 10.36 1.34 16.19 4.02 5.83 2.68 9.54 4.09 11.13 4.23 1.29-.26 5.25-1.74 11.88-4.44 6.63-2.7 12.18-3.9 16.65-3.6 12.37.98 22.09 5.66 29.17 14.04-10.99 6.63-16.32 15.65-15.99 27.06.33 9.46 4.14 17.37 11.43 23.73 7.29 6.36 15.86 9.88 25.71 10.57-2.34 7.07-5.18 14.16-8.52 21.28zM119.22 31.84c0-7.39 2.63-14.37 7.9-20.94 5.27-6.57 11.75-10.53 19.44-11.9 1.09 7.82-1.39 15.22-7.44 22.21-6.05 6.99-12.68 10.53-19.9 10.63z" />
                       </svg>
                     </div>
@@ -303,7 +335,7 @@ export const AutomaticPaymentsTab = ({
         {/* Add new card Dashed Row */}
         <div
           onClick={onOpenAddMethod}
-          className="flex items-center gap-3.5 p-4 rounded-2xl border-2 border-dashed border-gray-200 bg-white hover:border-btnPrimary/60 hover:bg-sky-50/20 cursor-pointer transition-all group"
+          className="flex items-center gap-3.5 p-4 rounded-xl border-2 border-dashed border-gray-200 bg-white hover:border-btnPrimary/60 hover:bg-sky-50/20 cursor-pointer transition-all group"
         >
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sky-50 text-btnPrimary border border-sky-100 group-hover:bg-btnPrimary group-hover:text-white transition-colors">
             <Plus size={16} strokeWidth={2.5} />

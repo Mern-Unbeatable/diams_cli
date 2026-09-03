@@ -76,7 +76,7 @@ const StepPlanSelection = ({ formData, onChange, onNext, onPrev }) => {
           return (
             <div
               key={plan.id}
-              className={`relative flex flex-col justify-between rounded-3xl bg-[#0b1b3d] p-7 sm:p-8 text-white shadow-xl transition-all ${
+              className={`relative flex flex-col justify-between rounded-xl bg-[#0b1b3d] p-7 sm:p-8 text-white shadow-xl transition-all ${
                 isSelected
                   ? "ring-4 ring-[#0080ff] shadow-[0_10px_30px_rgba(0,128,255,0.25)]"
                   : "hover:scale-[1.01]"
@@ -92,7 +92,8 @@ const StepPlanSelection = ({ formData, onChange, onNext, onPrev }) => {
               {/* Plan Title & Subtitle */}
               <div>
                 <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                  {plan.prefix} <span className="text-sky-400">{plan.accent}</span>
+                  {plan.prefix}{" "}
+                  <span className="text-sky-400">{plan.accent}</span>
                 </h3>
                 <p className="mt-2 text-xs sm:text-sm text-slate-300 font-normal leading-relaxed">
                   {plan.subtitle}

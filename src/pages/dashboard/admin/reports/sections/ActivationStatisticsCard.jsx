@@ -8,7 +8,7 @@ const ActivationStatisticsCard = () => {
   });
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+    <div className="flex h-full flex-col justify-between rounded-xl border border-slate-100 bg-white p-6 shadow-sm">
       <div>
         <h2 className="text-base font-bold text-slate-900 sm:text-lg">
           Activation Statistics

@@ -3,17 +3,14 @@ import { X } from "lucide-react";
 const ActivityDetailsModal = ({ isOpen, onClose, log }) => {
   if (!isOpen || !log) return null;
 
-  const logId = log.logId || `AUD-${log.id ? log.id.replace("log-", "900") : "9005"}`;
+  const logId =
+    log.logId || `AUD-${log.id ? log.id.replace("log-", "900") : "9005"}`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200 font-sans">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-xl overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-xl overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
@@ -35,7 +32,7 @@ const ActivityDetailsModal = ({ isOpen, onClose, log }) => {
         </div>
 
         {/* Complete Activity Information Box */}
-        <div className="mt-6 rounded-2xl border border-slate-100 bg-[#f8fbfe] p-6 sm:p-7 space-y-4">
+        <div className="mt-6 rounded-xl border border-slate-100 bg-[#f8fbfe] p-6 sm:p-7 space-y-4">
           <span className="block text-[11px] font-bold uppercase tracking-wider text-[#0284c7]">
             COMPLETE ACTIVITY INFORMATION
           </span>
@@ -43,7 +40,9 @@ const ActivityDetailsModal = ({ isOpen, onClose, log }) => {
           <div className="space-y-3.5 text-xs sm:text-sm">
             <div className="flex items-center justify-between">
               <span className="text-slate-500 font-normal">Date & Time</span>
-              <span className="font-semibold text-slate-900">{log.dateTime}</span>
+              <span className="font-semibold text-slate-900">
+                {log.dateTime}
+              </span>
             </div>
 
             <div className="flex items-center justify-between">
@@ -67,8 +66,12 @@ const ActivityDetailsModal = ({ isOpen, onClose, log }) => {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-slate-500 font-normal">IP/Activity information</span>
-              <span className="font-semibold text-slate-900">{log.ipActivity}</span>
+              <span className="text-slate-500 font-normal">
+                IP/Activity information
+              </span>
+              <span className="font-semibold text-slate-900">
+                {log.ipActivity}
+              </span>
             </div>
 
             <div className="flex items-center justify-between">
@@ -85,7 +88,9 @@ const ActivityDetailsModal = ({ isOpen, onClose, log }) => {
             </div>
 
             <div className="flex items-start justify-between gap-4 pt-1">
-              <span className="text-slate-500 font-normal shrink-0">Details</span>
+              <span className="text-slate-500 font-normal shrink-0">
+                Details
+              </span>
               <span className="font-semibold text-slate-900 text-right leading-relaxed">
                 {log.details || "Updated roaming feature copy."}
               </span>

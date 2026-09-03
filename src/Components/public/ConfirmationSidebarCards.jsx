@@ -10,13 +10,15 @@ const CONTACT_ICONS = {
 
 export const ThankYouGiftCard = () => {
   return (
-    <article className="rounded-2xl bg-[#eef4fa] px-5 py-6 sm:px-6">
+    <article className="rounded-xl bg-[#eef4fa] px-5 py-6 sm:px-6">
       <div className="flex items-start gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-btnPrimary/15">
           <Gift size={20} strokeWidth={1.75} className="text-btnPrimary" />
         </div>
         <div>
-          <h3 className="text-base font-bold text-primary">{THANK_YOU_GIFT.title}</h3>
+          <h3 className="text-base font-bold text-primary">
+            {THANK_YOU_GIFT.title}
+          </h3>
           <p className="mt-2 text-sm leading-relaxed text-primary/65">
             {THANK_YOU_GIFT.description}
           </p>
@@ -33,13 +35,19 @@ export const ThankYouGiftCard = () => {
 
 export const ConfirmationHelpCard = () => {
   return (
-    <article className="rounded-2xl bg-[#edf8f0] px-5 py-6 sm:px-6">
+    <article className="rounded-xl bg-[#edf8f0] px-5 py-6 sm:px-6">
       <div className="flex items-start gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-100">
-          <Headphones size={20} strokeWidth={1.75} className="text-emerald-600" />
+          <Headphones
+            size={20}
+            strokeWidth={1.75}
+            className="text-emerald-600"
+          />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="text-base font-bold text-primary">{CONFIRMATION_HELP.title}</h3>
+          <h3 className="text-base font-bold text-primary">
+            {CONFIRMATION_HELP.title}
+          </h3>
           <p className="mt-2 text-sm leading-relaxed text-primary/65">
             {CONFIRMATION_HELP.description}
           </p>

@@ -25,7 +25,7 @@ export const NewEsimModal = ({ isOpen, onClose, onGeneratedNew }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-lg rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
@@ -45,7 +45,9 @@ export const NewEsimModal = ({ isOpen, onClose, onGeneratedNew }) => {
         {!isSuccess ? (
           <div className="mt-4 space-y-4 text-xs">
             <p className="text-primary/70">
-              Generate a brand-new eSIM profile for your NovaSky number (+41 76 123 45 67). Your existing profile will be replaced upon activating the new QR code.
+              Generate a brand-new eSIM profile for your NovaSky number (+41 76
+              123 45 67). Your existing profile will be replaced upon activating
+              the new QR code.
             </p>
 
             <div className="space-y-2">
@@ -54,9 +56,18 @@ export const NewEsimModal = ({ isOpen, onClose, onGeneratedNew }) => {
               </label>
               <div className="grid gap-2">
                 {[
-                  { id: "new_device", label: "I switched to a new smartphone or tablet" },
-                  { id: "qr_lost", label: "I lost my previous QR code or deleted the profile" },
-                  { id: "troubleshoot", label: "Troubleshooting connection or network issues" },
+                  {
+                    id: "new_device",
+                    label: "I switched to a new smartphone or tablet",
+                  },
+                  {
+                    id: "qr_lost",
+                    label: "I lost my previous QR code or deleted the profile",
+                  },
+                  {
+                    id: "troubleshoot",
+                    label: "Troubleshooting connection or network issues",
+                  },
                 ].map((opt) => (
                   <label
                     key={opt.id}
@@ -83,7 +94,8 @@ export const NewEsimModal = ({ isOpen, onClose, onGeneratedNew }) => {
             <div className="rounded-xl border border-emerald-100 bg-emerald-50/60 p-3.5 text-[11px] text-emerald-900 flex items-center gap-2.5">
               <Sparkles size={16} className="text-emerald-600 shrink-0" />
               <span>
-                <strong>Instant & Free:</strong> New eSIM generation is free of charge and takes less than 10 seconds.
+                <strong>Instant & Free:</strong> New eSIM generation is free of
+                charge and takes less than 10 seconds.
               </span>
             </div>
 
@@ -116,7 +128,8 @@ export const NewEsimModal = ({ isOpen, onClose, onGeneratedNew }) => {
                 New eSIM Ready for Installation!
               </h4>
               <p className="mt-1 text-xs text-primary/60 max-w-sm mx-auto">
-                Your new profile has been generated. The QR code on your dashboard has been updated. Scan it now to activate.
+                Your new profile has been generated. The QR code on your
+                dashboard has been updated. Scan it now to activate.
               </p>
             </div>
             <div className="pt-3">

@@ -60,7 +60,7 @@ const ExclusiveOffersSection = () => {
           return (
             <article
               key={offer.id}
-              className={`flex min-h-[170px] flex-col justify-between rounded-2xl p-6 ${theme.cardBg} transition-all hover:shadow-xs`}
+              className={`flex min-h-[170px] flex-col justify-between rounded-xl p-6 ${theme.cardBg} transition-all hover:shadow-xs`}
             >
               <div className="flex items-start gap-3.5">
                 <Icon

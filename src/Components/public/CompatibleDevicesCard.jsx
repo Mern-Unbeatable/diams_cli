@@ -3,7 +3,7 @@ import { COMPATIBLE_DEVICES } from "@/config/activation";
 
 const CompatibleDevicesCard = () => {
   return (
-    <article className="rounded-2xl border border-gray-100 bg-[#f0f6fc] px-5 py-6 sm:px-6">
+    <article className="rounded-xl border border-gray-100 bg-[#f0f6fc] px-5 py-6 sm:px-6">
       <div className="flex items-start gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-btnPrimary/15">
           <Smartphone

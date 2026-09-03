@@ -19,13 +19,9 @@ const ReplyTicketModal = ({ isOpen, onClose, ticket, onSendReply }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200 font-sans">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between pb-3 border-b border-slate-100">
           <div>
@@ -58,7 +54,7 @@ const ReplyTicketModal = ({ isOpen, onClose, ticket, onSendReply }) => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder=""
-              className="mt-1.5 w-full rounded-2xl border border-slate-200 bg-white p-4 text-xs font-medium text-slate-900 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm resize-none"
+              className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white p-4 text-xs font-medium text-slate-900 outline-none transition hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm resize-none"
             />
           </div>
 

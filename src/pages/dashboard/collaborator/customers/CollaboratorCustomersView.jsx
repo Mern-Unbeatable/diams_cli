@@ -15,7 +15,7 @@ const CollaboratorCustomersView = () => {
   const navigate = useNavigate();
 
   const [customersList, setCustomersList] = useState(
-    COLLABORATOR_CUSTOMERS_DATA
+    COLLABORATOR_CUSTOMERS_DATA,
   );
   const [status, setStatus] = useState("All");
   const [plan, setPlan] = useState("All");
@@ -33,7 +33,7 @@ const CollaboratorCustomersView = () => {
       customersList.find(
         (c) =>
           c.id.toLowerCase() === id.toLowerCase() ||
-          (c.profileId && c.profileId.toLowerCase() === id.toLowerCase())
+          (c.profileId && c.profileId.toLowerCase() === id.toLowerCase()),
       ) || null
     );
   }, [id, customersList]);
@@ -78,15 +78,15 @@ const CollaboratorCustomersView = () => {
       prev.map((c) =>
         c.id === cust.id
           ? { ...c, status: nextStatus, lineStatus: nextStatus }
-          : c
-      )
+          : c,
+      ),
     );
   };
 
   // Update customer details from edit modal
   const handleUpdateCustomer = (updatedCustomer) => {
     setCustomersList((prev) =>
-      prev.map((c) => (c.id === updatedCustomer.id ? updatedCustomer : c))
+      prev.map((c) => (c.id === updatedCustomer.id ? updatedCustomer : c)),
     );
   };
 
@@ -118,7 +118,7 @@ const CollaboratorCustomersView = () => {
             onUpdateCustomer={handleUpdateCustomer}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">
               Customer Not Found
             </h2>
@@ -146,7 +146,7 @@ const CollaboratorCustomersView = () => {
           />
 
           {/* Main Table Card Container */}
-          <div className="space-y-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+          <div className="space-y-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
             {/* Filters Bar */}
             <CollaboratorCustomerFilters
               status={status}

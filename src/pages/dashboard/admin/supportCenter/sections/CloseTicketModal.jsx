@@ -12,13 +12,9 @@ const CloseTicketModal = ({ isOpen, onClose, ticket, onConfirmClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200 font-sans">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
@@ -40,7 +36,7 @@ const CloseTicketModal = ({ isOpen, onClose, ticket, onConfirmClose }) => {
         </div>
 
         {/* Audit Log Notice Box */}
-        <div className="my-6 rounded-2xl border border-amber-200/80 bg-[#fffaf5] p-4">
+        <div className="my-6 rounded-xl border border-amber-200/80 bg-[#fffaf5] p-4">
           <p className="text-xs sm:text-sm font-medium text-[#c2410c]">
             This action will be recorded in NovaSky audit logs.
           </p>

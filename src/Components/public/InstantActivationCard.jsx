@@ -3,7 +3,7 @@ import { INSTANT_ACTIVATION } from "@/config/payment";
 
 const InstantActivationCard = () => {
   return (
-    <article className="rounded-2xl border border-btnPrimary/15 bg-[#f0f7ff] px-5 py-5 sm:px-6">
+    <article className="rounded-xl border border-btnPrimary/15 bg-[#f0f7ff] px-5 py-5 sm:px-6">
       <div className="flex items-start gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-btnPrimary/15">
           <Zap size={20} strokeWidth={1.75} className="text-btnPrimary" />

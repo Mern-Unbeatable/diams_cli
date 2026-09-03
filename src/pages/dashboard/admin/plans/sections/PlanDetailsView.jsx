@@ -72,10 +72,10 @@ const PlanDetailsView = ({ plan, onBack }) => {
       </button>
 
       {/* 1. Top Hero / Plan Summary Banner */}
-      <div className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm sm:p-8">
+      <div className="rounded-xl border border-sky-100 bg-white p-6 shadow-sm sm:p-8">
         <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-12">
           {/* Left: 3D eSIM Visual Card */}
-          <div className="relative col-span-12 flex h-55 flex-col justify-between overflow-hidden rounded-2xl bg-linear-to-br from-[#0c1f38] via-[#091a30] to-[#040e1c] p-6 text-white shadow-xl lg:col-span-3">
+          <div className="relative col-span-12 flex h-55 flex-col justify-between overflow-hidden rounded-xl bg-linear-to-br from-[#0c1f38] via-[#091a30] to-[#040e1c] p-6 text-white shadow-xl lg:col-span-3">
             {/* Glowing Accent Ring */}
             <div className="absolute -right-12 -top-12 h-44 w-44 rounded-full bg-sky-500/20 blur-2xl" />
             <div className="absolute -left-10 -bottom-10 h-36 w-36 rounded-full bg-blue-600/20 blur-xl" />
@@ -143,7 +143,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
           </div>
 
           {/* Right: Monthly Price Card */}
-          <div className="col-span-12 flex h-55 flex-col justify-center rounded-2xl bg-[#0c1f38] p-6 text-white shadow-xl lg:col-span-3">
+          <div className="col-span-12 flex h-55 flex-col justify-center rounded-xl bg-[#0c1f38] p-6 text-white shadow-xl lg:col-span-3">
             <span className="text-xs font-medium text-slate-300">
               Monthly Price
             </span>
@@ -165,7 +165,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
       {/* 2. Middle Two Cards: What's included & Plan summary */}
       <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2">
         {/* Left Card: What's included */}
-        <div className="flex flex-col justify-between rounded-3xl bg-[#0e213b] p-7 text-white shadow-xl sm:p-8">
+        <div className="flex flex-col justify-between rounded-xl bg-[#0e213b] p-7 text-white shadow-xl sm:p-8">
           <div>
             <h2 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
               What&apos;s included
@@ -264,7 +264,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
         </div>
 
         {/* Right Card: Plan summary */}
-        <div className="flex flex-col justify-between rounded-3xl bg-[#0e213b] p-7 text-white shadow-xl sm:p-8">
+        <div className="flex flex-col justify-between rounded-xl bg-[#0e213b] p-7 text-white shadow-xl sm:p-8">
           <div>
             <h2 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
               Plan summary
@@ -362,7 +362,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
         </h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex items-center gap-3.5 rounded-2xl bg-[#0e213b] p-4 text-white shadow-md">
+          <div className="flex items-center gap-3.5 rounded-xl bg-[#0e213b] p-4 text-white shadow-md">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400">
               <Cpu className="h-5 w-5" />
             </div>
@@ -374,7 +374,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5 rounded-2xl bg-[#0e213b] p-4 text-white shadow-md">
+          <div className="flex items-center gap-3.5 rounded-xl bg-[#0e213b] p-4 text-white shadow-md">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400">
               <Plane className="h-5 w-5" />
             </div>
@@ -386,7 +386,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5 rounded-2xl bg-[#0e213b] p-4 text-white shadow-md">
+          <div className="flex items-center gap-3.5 rounded-xl bg-[#0e213b] p-4 text-white shadow-md">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400">
               <Clock className="h-5 w-5" />
             </div>
@@ -400,12 +400,14 @@ const PlanDetailsView = ({ plan, onBack }) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5 rounded-2xl bg-[#0e213b] p-4 text-white shadow-md">
+          <div className="flex items-center gap-3.5 rounded-xl bg-[#0e213b] p-4 text-white shadow-md">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400">
               <Lock className="h-5 w-5" />
             </div>
             <div>
-              <h4 className="text-xs font-bold sm:text-sm">Secure & reliable</h4>
+              <h4 className="text-xs font-bold sm:text-sm">
+                Secure & reliable
+              </h4>
               <p className="mt-0.5 text-[11px] text-slate-300">
                 Your data and privacy are our priority.
               </p>
@@ -426,7 +428,7 @@ const PlanDetailsView = ({ plan, onBack }) => {
             return (
               <div
                 key={index}
-                className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all"
+                className="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all"
               >
                 <button
                   type="button"

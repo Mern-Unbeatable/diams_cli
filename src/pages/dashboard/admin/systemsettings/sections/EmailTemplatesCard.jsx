@@ -9,7 +9,7 @@ const EmailTemplatesCard = ({ initialData }) => {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
+    <div className="rounded-xl border border-slate-100 bg-white p-6 sm:p-7 shadow-sm">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -101,10 +101,8 @@ const EmailTemplatesCard = ({ initialData }) => {
             rows={3}
             disabled={!isEditing}
             value={data.templateBody}
-            onChange={(e) =>
-              setData({ ...data, templateBody: e.target.value })
-            }
-            className={`mt-2 w-full rounded-2xl border p-4 text-sm sm:text-base font-medium transition outline-none resize-none ${
+            onChange={(e) => setData({ ...data, templateBody: e.target.value })}
+            className={`mt-2 w-full rounded-xl border p-4 text-sm sm:text-base font-medium transition outline-none resize-none ${
               isEditing
                 ? "border-sky-400 bg-white text-slate-900 ring-1 ring-sky-400"
                 : "border-slate-100 bg-[#f8fbfe] text-slate-800"

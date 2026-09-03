@@ -6,7 +6,7 @@ const ReportsKpiCards = () => {
       {REPORTS_KPIS.map((kpi, idx) => (
         <div
           key={idx}
-          className="flex flex-col justify-between rounded-2xl border border-slate-100 bg-white p-5 sm:p-6 shadow-sm"
+          className="flex flex-col justify-between rounded-xl border border-slate-100 bg-white p-5 sm:p-6 shadow-sm"
         >
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500">

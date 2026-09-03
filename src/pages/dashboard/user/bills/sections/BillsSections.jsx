@@ -21,9 +21,7 @@ import DashboardTabs from "@/Components/dashboard/DashboardTabs";
 
 export const BillsHeader = () => (
   <div>
-    <h2 className="text-2xl font-bold text-primary sm:text-[1.75rem]">
-      Bills
-    </h2>
+    <h2 className="text-2xl font-bold text-primary sm:text-[1.75rem]">Bills</h2>
     <p className="mt-1 text-sm text-primary/60">
       View and download all your bills.
     </p>
@@ -37,7 +35,7 @@ export const BillsAutoPaymentBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <section className="flex flex-col gap-3 rounded-2xl border border-blue-100 bg-[#eef7ff] p-4 sm:flex-row sm:items-center sm:justify-between shadow-sm">
+    <section className="flex flex-col gap-3 rounded-xl border border-blue-100 bg-[#eef7ff] p-4 sm:flex-row sm:items-center sm:justify-between shadow-sm">
       <div className="flex items-center gap-3">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-white text-btnPrimary shadow-sm">
           <FileText size={20} />
@@ -85,7 +83,7 @@ export const BillsTableCard = () => {
   });
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6 space-y-6">
+    <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 space-y-6">
       {/* Tabs & Filter Bar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex-1 min-w-0">
@@ -233,7 +231,7 @@ export const BillsSidebar = () => {
   return (
     <div className="space-y-6">
       {/* Widget 1: Summary of your bills */}
-      <section className="rounded-2xl bg-[#0b1329] p-5 sm:p-6 text-white space-y-4 shadow-lg shadow-slate-900/10">
+      <section className="rounded-xl bg-[#0b1329] p-5 sm:p-6 text-white space-y-4 shadow-lg shadow-slate-900/10">
         <div className="flex items-center gap-2.5">
           <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white">
             <FileText size={16} />
@@ -277,7 +275,7 @@ export const BillsSidebar = () => {
       </section>
 
       {/* Widget 2: Payment method */}
-      <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6 space-y-3">
+      <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 space-y-3">
         <h3 className="text-sm font-bold text-primary">Payment method</h3>
         <div className="flex items-center gap-3 pt-1">
           <span className="rounded border border-gray-200 bg-gray-50 px-2 py-1 text-[10px] font-bold text-blue-800 tracking-wider">
@@ -299,7 +297,7 @@ export const BillsSidebar = () => {
       </section>
 
       {/* Widget 3: Zero paper, more impact */}
-      <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6 space-y-3">
+      <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 space-y-3">
         <div className="flex items-start gap-3">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
             <Heart size={16} />
@@ -325,7 +323,7 @@ export const BillsSidebar = () => {
       </section>
 
       {/* Widget 4: Need help */}
-      <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6 space-y-3">
+      <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 space-y-3">
         <h3 className="text-sm font-bold text-primary">Need help?</h3>
         <ul className="divide-y divide-gray-100">
           {helpLinks.map((item) => (
@@ -340,7 +338,9 @@ export const BillsSidebar = () => {
                   {item.icon === "phone" && <Phone size={16} />}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold text-primary">{item.title}</p>
+                  <p className="text-xs font-semibold text-primary">
+                    {item.title}
+                  </p>
                   <p className="text-[10px] text-primary/45 truncate mt-0.5">
                     {item.subtitle}
                   </p>

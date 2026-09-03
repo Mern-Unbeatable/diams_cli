@@ -23,7 +23,7 @@ const CollaboratorInvoiceModal = ({ isOpen, onClose, invoice }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md overflow-hidden rounded-xl bg-white shadow-2xl z-10 animate-in zoom-in-95 duration-200">
         {/* Dark Navy Branded Header */}
         <div className="bg-[#001738] px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-2">

@@ -32,8 +32,10 @@ const BusinessPlansSection = () => {
             }) => (
               <li
                 key={id}
-                className={`relative flex flex-col rounded-2xl border bg-white p-6 shadow-sm sm:p-8 ${
-                  popular ? "border-btnPrimary lg:scale-[1.02]" : "border-gray-100"
+                className={`relative flex flex-col rounded-xl border bg-white p-6 shadow-sm sm:p-8 ${
+                  popular
+                    ? "border-btnPrimary lg:scale-[1.02]"
+                    : "border-gray-100"
                 }`}
               >
                 {popular && (
@@ -43,7 +45,9 @@ const BusinessPlansSection = () => {
                 )}
 
                 <header>
-                  <h3 className="text-xl font-bold text-primary sm:text-2xl">{name}</h3>
+                  <h3 className="text-xl font-bold text-primary sm:text-2xl">
+                    {name}
+                  </h3>
                   <p className="mt-1 text-sm text-primary/60">{tagline}</p>
                 </header>
 
@@ -69,7 +73,9 @@ const BusinessPlansSection = () => {
                         strokeWidth={2.5}
                         className="mt-0.5 shrink-0 text-textsecondary"
                       />
-                      <span className="text-sm leading-snug text-primary/75">{feature}</span>
+                      <span className="text-sm leading-snug text-primary/75">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>

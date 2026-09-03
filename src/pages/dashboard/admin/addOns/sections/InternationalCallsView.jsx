@@ -1,4 +1,10 @@
-import { Phone, Infinity as InfinityIcon, Clock, Globe, Check } from "lucide-react";
+import {
+  Phone,
+  Infinity as InfinityIcon,
+  Clock,
+  Globe,
+  Check,
+} from "lucide-react";
 
 const InternationalCallsView = ({ callsData, onEdit, onDelete }) => {
   return (
@@ -9,7 +15,7 @@ const InternationalCallsView = ({ callsData, onEdit, onDelete }) => {
         return (
           <div
             key={item.id}
-            className={`relative flex flex-col justify-between rounded-2xl bg-white p-6 sm:p-7 shadow-sm transition-all duration-200 hover:shadow-md ${
+            className={`relative flex flex-col justify-between rounded-xl bg-white p-6 sm:p-7 shadow-sm transition-all duration-200 hover:shadow-md ${
               isPopular
                 ? "border-2 border-sky-500 ring-1 ring-sky-500/20"
                 : "border border-slate-100"

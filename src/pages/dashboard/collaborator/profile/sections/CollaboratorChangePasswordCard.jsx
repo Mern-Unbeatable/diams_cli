@@ -32,7 +32,7 @@ const CollaboratorChangePasswordCard = () => {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-7">
+    <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-7">
       {/* Card Header */}
       <div className="border-b border-slate-100 pb-4">
         <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700">

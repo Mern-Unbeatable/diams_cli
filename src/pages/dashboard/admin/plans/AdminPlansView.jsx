@@ -15,8 +15,7 @@ const AdminPlansView = () => {
 
   const [plans, setPlans] = useState(INITIAL_PLANS_DATA);
 
-  const isCreatePage =
-    id === "create" || location.pathname.endsWith("/create");
+  const isCreatePage = id === "create" || location.pathname.endsWith("/create");
   const isEditPage = location.pathname.includes("/plans/edit/");
 
   // Find plan by ID or Name from URL parameter (e.g. plan-2 or plus)
@@ -27,8 +26,10 @@ const AdminPlansView = () => {
         (p) =>
           p.id.toLowerCase() === id.toLowerCase() ||
           p.name.toLowerCase() === id.toLowerCase() ||
-          `${p.brand}-${p.name}`.toLowerCase() === id.toLowerCase()
-      ) || plans[1] || plans[0]
+          `${p.brand}-${p.name}`.toLowerCase() === id.toLowerCase(),
+      ) ||
+      plans[1] ||
+      plans[0]
     );
   }, [id, isCreatePage, plans]);
 
@@ -46,7 +47,7 @@ const AdminPlansView = () => {
   const handleDeletePlan = (planToDelete) => {
     if (
       window.confirm(
-        `Are you sure you want to delete the plan "${planToDelete.brand} ${planToDelete.name}"?`
+        `Are you sure you want to delete the plan "${planToDelete.brand} ${planToDelete.name}"?`,
       )
     ) {
       setPlans((prev) => prev.filter((p) => p.id !== planToDelete.id));
@@ -92,7 +93,7 @@ const AdminPlansView = () => {
             onBack={() => navigate("/dashboard/admin/plans")}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">Plan Not Found</h2>
             <p className="mt-1 text-xs text-slate-500">
               No plan was found with ID &quot;{id}&quot;.

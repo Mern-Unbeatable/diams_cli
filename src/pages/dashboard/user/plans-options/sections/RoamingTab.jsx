@@ -6,7 +6,7 @@ export const QuickComparisonTable = () => {
   const { roamingTable = [] } = USER_PLANS_OPTIONS;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
+    <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
       <div className="flex items-center gap-2 mb-6">
         <span className="text-sky-500">
           <Zap size={18} strokeWidth={2.5} />

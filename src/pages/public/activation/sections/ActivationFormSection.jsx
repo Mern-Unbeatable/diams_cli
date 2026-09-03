@@ -200,7 +200,7 @@ const ActivationFormSection = ({ planId }) => {
 
       {activeTab !== "scan" && <ActivationTroubleshootingCard />}
 
-      <div className="mt-10 overflow-hidden rounded-2xl">
+      <div className="mt-10 overflow-hidden rounded-xl">
         <img
           src={welcomeBannerImage}
           alt="Welcome to NovaSky"

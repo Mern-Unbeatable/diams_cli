@@ -45,7 +45,7 @@ const StepKycDocuments = ({ formData, onChange, onNext, onPrev }) => {
         </div>
 
         {/* Drag & Drop Upload Zone */}
-        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200/90 bg-white py-12 px-6 text-center hover:border-sky-400 transition-colors">
+        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200/90 bg-white py-12 px-6 text-center hover:border-sky-400 transition-colors">
           <Upload className="h-7 w-7 text-sky-400 mb-2" />
           <p className="text-sm font-semibold text-slate-800">
             {fileName || "Drag & Drop or Browse Files"}

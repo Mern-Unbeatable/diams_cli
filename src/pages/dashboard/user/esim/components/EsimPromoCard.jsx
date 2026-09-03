@@ -2,7 +2,7 @@ import { Cpu, RefreshCw, ShieldCheck } from "lucide-react";
 
 export const EsimPromoCard = ({ onLearnMore }) => {
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0c2461] via-[#091b49] to-[#040f2d] p-5 sm:p-6 text-white shadow-xl shadow-blue-950/20 border border-blue-900/50">
+    <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#0c2461] via-[#091b49] to-[#040f2d] p-5 sm:p-6 text-white shadow-xl shadow-blue-950/20 border border-blue-900/50">
       {/* Background glow effects */}
       <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-blue-500/20 blur-2xl pointer-events-none" />
       <div className="absolute right-0 bottom-0 h-48 w-48 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none" />
@@ -76,7 +76,7 @@ export const EsimPromoCard = ({ onLearnMore }) => {
 
       {/* Cyber Phone Graphic with Glowing QR on Right Side */}
       <div className="absolute -right-6 top-8 hidden sm:block pointer-events-none opacity-90 lg:opacity-100">
-        <div className="relative h-44 w-28 rotate-12 rounded-2xl bg-gradient-to-b from-slate-900 to-blue-950 p-2 shadow-2xl border border-cyan-400/40 ring-1 ring-cyan-400/20">
+        <div className="relative h-44 w-28 rotate-12 rounded-xl bg-gradient-to-b from-slate-900 to-blue-950 p-2 shadow-2xl border border-cyan-400/40 ring-1 ring-cyan-400/20">
           {/* Glowing QR Screen */}
           <div className="h-full w-full rounded-xl bg-[#001433] p-2 flex flex-col items-center justify-center border border-cyan-500/30">
             {/* Mini glowing neon QR matrix */}

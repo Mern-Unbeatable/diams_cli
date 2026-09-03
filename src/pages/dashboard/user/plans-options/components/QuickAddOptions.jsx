@@ -4,13 +4,21 @@ import { USER_PLANS_OPTIONS } from "@/config/userPlansOptions";
 
 // Social Media Icons
 const WhatsAppMini = () => (
-  <svg className="h-5 w-5 shrink-0 transition-transform hover:scale-110" viewBox="0 0 24 24" fill="#22c55e">
+  <svg
+    className="h-5 w-5 shrink-0 transition-transform hover:scale-110"
+    viewBox="0 0 24 24"
+    fill="#22c55e"
+  >
     <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.54 1.861.855 2.795.856 3.183 0 5.768-2.587 5.768-5.766.001-3.18-2.585-5.767-5.767-5.767zm3.376 8.212c-.14.396-.709.728-1.026.772-.303.042-.693.072-2.222-.56-1.954-.808-3.21-2.8-3.308-2.929-.098-.129-.788-1.047-.788-1.996 0-.949.497-1.414.673-1.607.176-.193.385-.241.513-.241.129 0 .257.001.369.006.118.006.275-.045.431.33.16.386.547 1.334.595 1.431.048.097.08.21.016.338-.064.129-.096.21-.192.322-.096.113-.203.252-.29.338-.096.096-.197.2-.085.393.113.193.502.828 1.077 1.341.739.66 1.363.864 1.556.96.193.097.306.081.418-.048.113-.129.482-.563.611-.756.129-.193.257-.161.434-.096.177.064 1.125.53 1.318.627.193.096.321.144.369.225.048.08.048.467-.092.863z" />
   </svg>
 );
 
 const FacebookMini = () => (
-  <svg className="h-5 w-5 shrink-0 transition-transform hover:scale-110" viewBox="0 0 24 24" fill="#1877F2">
+  <svg
+    className="h-5 w-5 shrink-0 transition-transform hover:scale-110"
+    viewBox="0 0 24 24"
+    fill="#1877F2"
+  >
     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
   </svg>
 );
@@ -24,7 +32,7 @@ const TikTokMini = () => (
 );
 
 const InstagramBadge = () => (
-  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-pink-100/90 bg-[#fff5f6] p-2.5 shadow-2xs">
+  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-pink-100/90 bg-[#fff5f6] p-2.5 shadow-2xs">
     <svg
       className="h-6 w-6 text-[#e1306c]"
       viewBox="0 0 24 24"
@@ -53,12 +61,18 @@ const formatTitle = (title) => {
   if (title === "International calls 100 min") {
     return (
       <div className="leading-tight">
-        <span className="block font-bold text-[#0b1736]">International calls</span>
+        <span className="block font-bold text-[#0b1736]">
+          International calls
+        </span>
         <span className="block font-bold text-[#0b1736]">100 min</span>
       </div>
     );
   }
-  return <span className="block font-bold text-[#0b1736] leading-tight">{title}</span>;
+  return (
+    <span className="block font-bold text-[#0b1736] leading-tight">
+      {title}
+    </span>
+  );
 };
 
 export const QuickAddOptions = () => {
@@ -95,7 +109,7 @@ export const QuickAddOptions = () => {
               {isSocial ? (
                 <InstagramBadge />
               ) : (
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#f0f7ff] text-[#0b1736] shadow-2xs">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#f0f7ff] text-[#0b1736] shadow-2xs">
                   {isPhone ? (
                     <Phone size={20} strokeWidth={1.8} />
                   ) : (
@@ -106,9 +120,7 @@ export const QuickAddOptions = () => {
 
               {/* Middle Content */}
               <div className="min-w-0 flex-1 pr-8">
-                <div className="text-[13px]">
-                  {formatTitle(item.title)}
-                </div>
+                <div className="text-[13px]">{formatTitle(item.title)}</div>
 
                 {isSocial && (
                   <div className="mt-1.5 flex items-center gap-2">

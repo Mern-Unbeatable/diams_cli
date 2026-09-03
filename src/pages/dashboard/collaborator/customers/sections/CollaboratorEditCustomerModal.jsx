@@ -55,17 +55,17 @@ const CollaboratorEditCustomerModal = ({
   };
 
   const planOptionsWithoutAll = COLLABORATOR_PLAN_OPTIONS.filter(
-    (p) => p !== "All"
+    (p) => p !== "All",
   );
   const statusOptionsWithoutAll = COLLABORATOR_STATUS_OPTIONS.filter(
-    (s) => s !== "All"
+    (s) => s !== "All",
   );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between pb-4 border-b border-slate-100">
           <div>

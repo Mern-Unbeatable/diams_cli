@@ -6,7 +6,7 @@ export const SimPromoCard = () => {
   const { simPromo } = USER_MY_LINE;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
+    <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
       <div className="flex items-start gap-3">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#eef7ff]">
           <Smartphone size={18} className="text-btnPrimary" />

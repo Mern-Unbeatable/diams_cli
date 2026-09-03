@@ -20,7 +20,13 @@ const getStatusBadge = (status) => {
   }
 };
 
-const OrderDetailsView = ({ order, onBack, onApprove, onReject, onSaveNote }) => {
+const OrderDetailsView = ({
+  order,
+  onBack,
+  onApprove,
+  onReject,
+  onSaveNote,
+}) => {
   const [internalNote, setInternalNote] = useState(order?.internalNote || "");
 
   if (!order) return null;
@@ -38,7 +44,7 @@ const OrderDetailsView = ({ order, onBack, onApprove, onReject, onSaveNote }) =>
       </button>
 
       {/* Main Container Card */}
-      <div className="space-y-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+      <div className="space-y-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
         {/* Top Header */}
         <div>
           <span className="block text-xs font-bold uppercase tracking-wider text-sky-600">
@@ -50,7 +56,7 @@ const OrderDetailsView = ({ order, onBack, onApprove, onReject, onSaveNote }) =>
         </div>
 
         {/* 1. CUSTOMER INFORMATION Section */}
-        <div className="space-y-3.5 rounded-2xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
+        <div className="space-y-3.5 rounded-xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
           <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Customer Information
           </h2>
@@ -58,14 +64,16 @@ const OrderDetailsView = ({ order, onBack, onApprove, onReject, onSaveNote }) =>
           <div className="space-y-2.5 text-xs sm:text-[13px]">
             <div className="flex items-center justify-between">
               <span className="text-slate-500">Customer</span>
-              <span className="font-semibold text-slate-900">{order.customer}</span>
+              <span className="font-semibold text-slate-900">
+                {order.customer}
+              </span>
             </div>
 
             <div className="flex items-center justify-between">
               <span className="text-slate-500">Order status</span>
               <span
                 className={`inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium ${getStatusBadge(
-                  order.status
+                  order.status,
                 )}`}
               >
                 {order.status}
@@ -75,7 +83,7 @@ const OrderDetailsView = ({ order, onBack, onApprove, onReject, onSaveNote }) =>
         </div>
 
         {/* 2. SELECTED PLAN Section */}
-        <div className="space-y-3.5 rounded-2xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
+        <div className="space-y-3.5 rounded-xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
           <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Selected Plan
           </h2>
@@ -88,7 +96,9 @@ const OrderDetailsView = ({ order, onBack, onApprove, onReject, onSaveNote }) =>
 
             <div className="flex items-center justify-between">
               <span className="text-slate-500">SIM/eSIM</span>
-              <span className="font-medium text-slate-900">{order.simType || "eSIM"}</span>
+              <span className="font-medium text-slate-900">
+                {order.simType || "eSIM"}
+              </span>
             </div>
 
             <div className="flex items-center justify-between">
@@ -101,7 +111,7 @@ const OrderDetailsView = ({ order, onBack, onApprove, onReject, onSaveNote }) =>
         </div>
 
         {/* 3. DOCUMENTS Section */}
-        <div className="space-y-3.5 rounded-2xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
+        <div className="space-y-3.5 rounded-xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
           <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Documents
           </h2>
@@ -130,7 +140,7 @@ const OrderDetailsView = ({ order, onBack, onApprove, onReject, onSaveNote }) =>
         </div>
 
         {/* 4. INTERNAL NOTE Section */}
-        <div className="space-y-3 rounded-2xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
+        <div className="space-y-3 rounded-xl border border-slate-100/90 bg-[#f8fafc]/60 p-5 sm:p-6">
           <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Internal Note
           </h2>

@@ -9,7 +9,7 @@ const CONTACT_ICONS = {
 
 const NeedHelpCard = () => {
   return (
-    <article className="rounded-2xl bg-[#eef4fa] px-5 py-6 sm:px-6">
+    <article className="rounded-xl bg-[#eef4fa] px-5 py-6 sm:px-6">
       <h3 className="text-base font-bold text-primary">{NEED_HELP.title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-primary/65">
         {NEED_HELP.description}

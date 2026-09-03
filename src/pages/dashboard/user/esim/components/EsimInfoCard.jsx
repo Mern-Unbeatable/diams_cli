@@ -23,14 +23,26 @@ export const EsimInfoCard = ({ esimData, onOpenDetailsModal }) => {
       ),
     },
     { label: "Type", value: "eSIM" },
-    { label: "Number", value: esimData.number || "+41 76 123 45 67", copyKey: "num" },
+    {
+      label: "Number",
+      value: esimData.number || "+41 76 123 45 67",
+      copyKey: "num",
+    },
     { label: "Plan", value: esimData.planName || "NovaSky Plus" },
-    { label: "IMEI", value: esimData.imei || "35 123456 789012 3", copyKey: "imei" },
-    { label: "ICCID", value: esimData.iccid || "8944 1000 1234 5678 9012 3", copyKey: "iccid" },
+    {
+      label: "IMEI",
+      value: esimData.imei || "35 123456 789012 3",
+      copyKey: "imei",
+    },
+    {
+      label: "ICCID",
+      value: esimData.iccid || "8944 1000 1234 5678 9012 3",
+      copyKey: "iccid",
+    },
   ];
 
   return (
-    <section className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
+    <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
       <h3 className="text-sm sm:text-base font-bold text-primary">
         eSIM Information
       </h3>

@@ -46,7 +46,7 @@ const BusinessContactForm = () => {
     BUSINESS_CONTACT_FORM;
 
   return (
-    <article className="rounded-2xl border border-gray-100 bg-white p-6 shadow-lg sm:p-8">
+    <article className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg sm:p-8">
       <p className="text-xs font-bold uppercase tracking-[0.12em] text-btnPrimary sm:text-sm">
         {label}
       </p>
@@ -54,7 +54,10 @@ const BusinessContactForm = () => {
         {title}
       </h3>
 
-      <form className="mt-6 space-y-4" onSubmit={(event) => event.preventDefault()}>
+      <form
+        className="mt-6 space-y-4"
+        onSubmit={(event) => event.preventDefault()}
+      >
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="fullName" className={labelClass}>
@@ -187,7 +190,9 @@ const BusinessContactForm = () => {
               />
               <div>
                 <p className="text-xs font-bold text-primary">{badgeTitle}</p>
-                <p className="text-xs leading-snug text-primary/60">{description}</p>
+                <p className="text-xs leading-snug text-primary/60">
+                  {description}
+                </p>
               </div>
             </li>
           );
@@ -213,27 +218,29 @@ const BusinessFeaturesSection = () => {
             </h2>
 
             <ul className="mt-8 grid gap-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-7">
-              {features.map(({ id, icon, title: featureTitle, description }) => {
-                const Icon = FEATURE_ICONS[icon];
+              {features.map(
+                ({ id, icon, title: featureTitle, description }) => {
+                  const Icon = FEATURE_ICONS[icon];
 
-                return (
-                  <li key={id} className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-btnPrimary/10">
-                      <Icon
-                        size={18}
-                        strokeWidth={1.75}
-                        className="text-textsecondary"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold text-primary">{featureTitle}</p>
-                      <p className="mt-1 text-sm leading-relaxed text-primary/65">
-                        {description}
-                      </p>
-                    </div>
-                  </li>
-                );
-              })}
+                  return (
+                    <li key={id} className="flex items-start gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-btnPrimary/10">
+                        <Icon
+                          size={18}
+                          strokeWidth={1.75}
+                          className="text-textsecondary"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-bold text-primary">{featureTitle}</p>
+                        <p className="mt-1 text-sm leading-relaxed text-primary/65">
+                          {description}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                },
+              )}
             </ul>
 
             <Link

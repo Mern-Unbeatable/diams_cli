@@ -19,7 +19,7 @@ const NotFound = () => {
       />
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-20rem)] container flex-col items-center justify-center px-5 py-20 text-center sm:px-6 lg:px-10">
-        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm">
+        <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
           <SearchX size={36} strokeWidth={1.5} className="text-textAccent" />
         </div>
 

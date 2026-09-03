@@ -8,7 +8,7 @@ export const EsimGuideModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-lg rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
@@ -88,7 +88,9 @@ export const EsimGuideModal = ({ isOpen, onClose }) => {
                   </span>
                   <div>
                     <h5 className="font-bold text-primary">{item.title}</h5>
-                    <p className="text-[11px] text-primary/60 mt-0.5">{item.desc}</p>
+                    <p className="text-[11px] text-primary/60 mt-0.5">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -126,7 +128,9 @@ export const EsimGuideModal = ({ isOpen, onClose }) => {
                   </span>
                   <div>
                     <h5 className="font-bold text-primary">{item.title}</h5>
-                    <p className="text-[11px] text-primary/60 mt-0.5">{item.desc}</p>
+                    <p className="text-[11px] text-primary/60 mt-0.5">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               ))}

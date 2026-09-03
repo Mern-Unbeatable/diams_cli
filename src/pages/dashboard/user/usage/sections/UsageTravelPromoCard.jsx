@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 export const UsageTravelPromoCard = () => {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[#0c1a30] p-6 text-white shadow-sm">
+    <section className="relative overflow-hidden rounded-xl bg-[#0c1a30] p-6 text-white shadow-sm">
       {/* Text Content */}
       <div className="relative z-10 max-w-[280px] space-y-2">
         <h4 className="text-base font-bold tracking-tight text-white">

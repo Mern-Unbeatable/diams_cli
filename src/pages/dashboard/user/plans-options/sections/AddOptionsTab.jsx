@@ -43,7 +43,7 @@
 //           return (
 //             <div
 //               key={`${item.id}-${index}`}
-//               className="relative flex items-start gap-3 rounded-2xl border border-gray-200 bg-white p-4"
+//               className="relative flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-4"
 //             >
 //               {isSocial ? (
 //                 <SocialIcons />
@@ -77,8 +77,6 @@
 // };
 
 // export default AddOptionsTab;
-
-
 
 import {
   BarChart3,
@@ -139,17 +137,17 @@ const AddOptionsTab = () => {
           return (
             <div
               key={`${item.id}-${index}`}
-              className="relative flex items-center gap-3.5 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:shadow-md"
+              className="relative flex items-center gap-3.5 rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:shadow-md"
             >
               {/* Left Side Icon Container */}
               {isSocial ? (
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#fdf497] via-[#d6249f] to-[#285AEB] p-[2px]">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#fdf497] via-[#d6249f] to-[#285AEB] p-[2px]">
                   <div className="flex h-full w-full items-center justify-center rounded-[14px] bg-white text-[#d6249f]">
                     <Instagram className="h-5 w-5" strokeWidth={2.2} />
                   </div>
                 </div>
               ) : (
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#ebf4fd] text-[#1e293b]">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#ebf4fd] text-[#1e293b]">
                   <Icon className="h-5 w-5" strokeWidth={1.8} />
                 </div>
               )}

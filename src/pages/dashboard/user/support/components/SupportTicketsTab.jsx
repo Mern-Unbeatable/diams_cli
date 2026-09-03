@@ -75,7 +75,7 @@ export const SupportTicketsTab = ({
       </div>
 
       {/* Tickets Table */}
-      <div className="overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-sm">
         <div className="divide-y divide-gray-100">
           {filteredTickets.length > 0 ? (
             filteredTickets.map((t) => (
@@ -87,7 +87,7 @@ export const SupportTicketsTab = ({
                 <div className="flex items-start gap-3 min-w-0">
                   <span
                     className={`inline-flex shrink-0 items-center rounded-md border px-2 py-0.5 text-[10px] font-bold mt-0.5 ${getBadgeClass(
-                      t.statusVariant
+                      t.statusVariant,
                     )}`}
                   >
                     {t.status}
@@ -97,7 +97,8 @@ export const SupportTicketsTab = ({
                       {t.title}
                     </p>
                     <p className="text-[11px] text-primary/50 mt-0.5">
-                      #{t.id} • Category: {t.category || "General"} • {t.updated}
+                      #{t.id} • Category: {t.category || "General"} •{" "}
+                      {t.updated}
                     </p>
                   </div>
                 </div>

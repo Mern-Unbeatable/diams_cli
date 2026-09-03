@@ -26,9 +26,11 @@ const CheckoutSidebar = ({ plan }) => {
 
   return (
     <aside>
-      <div className="overflow-hidden rounded-2xl bg-primary">
+      <div className="overflow-hidden rounded-xl bg-primary">
         <div className="p-5 sm:p-6">
-          <h2 className="text-lg font-bold text-white sm:text-xl">Order summary</h2>
+          <h2 className="text-lg font-bold text-white sm:text-xl">
+            Order summary
+          </h2>
 
           <div className="mt-4 flex items-start justify-between gap-3">
             <p className="text-base font-bold text-white">
@@ -71,7 +73,9 @@ const CheckoutSidebar = ({ plan }) => {
           <dl className="mt-5 space-y-2.5 text-sm">
             <div className="flex items-center justify-between gap-4">
               <dt className="text-white/60">Line type</dt>
-              <dd className="font-medium text-white">{CHECKOUT_DEFAULTS.lineType}</dd>
+              <dd className="font-medium text-white">
+                {CHECKOUT_DEFAULTS.lineType}
+              </dd>
             </div>
             <div className="flex items-center justify-between gap-4">
               <dt className="text-white/60">Phone number</dt>

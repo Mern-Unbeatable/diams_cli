@@ -14,18 +14,48 @@ import {
 import { COMMISSIONS_CHART_DATA } from "./collaboratorCommissionData";
 
 const CHART_DATA = [
-  { month: "Jan", revenue: 16000, fullMonth: "January", displayVal: "$1600.00" },
-  { month: "Feb", revenue: 20000, fullMonth: "February", displayVal: "$2000.00" },
+  {
+    month: "Jan",
+    revenue: 16000,
+    fullMonth: "January",
+    displayVal: "$1600.00",
+  },
+  {
+    month: "Feb",
+    revenue: 20000,
+    fullMonth: "February",
+    displayVal: "$2000.00",
+  },
   { month: "Mar", revenue: 18000, fullMonth: "March", displayVal: "$1800.00" },
   { month: "Apr", revenue: 26000, fullMonth: "April", displayVal: "$2600.00" },
   { month: "May", revenue: 32000, fullMonth: "May", displayVal: "$3200.00" },
   { month: "Jun", revenue: 35600, fullMonth: "June", displayVal: "$5600.00" },
   { month: "Jul", revenue: 38000, fullMonth: "July", displayVal: "$5600.00" },
   { month: "Aug", revenue: 31000, fullMonth: "August", displayVal: "$3100.00" },
-  { month: "Sep", revenue: 37000, fullMonth: "September", displayVal: "$3700.00" },
-  { month: "Oct", revenue: 42000, fullMonth: "October", displayVal: "$4200.00" },
-  { month: "Nov", revenue: 41000, fullMonth: "November", displayVal: "$4100.00" },
-  { month: "Dec", revenue: 46000, fullMonth: "December", displayVal: "$4600.00" },
+  {
+    month: "Sep",
+    revenue: 37000,
+    fullMonth: "September",
+    displayVal: "$3700.00",
+  },
+  {
+    month: "Oct",
+    revenue: 42000,
+    fullMonth: "October",
+    displayVal: "$4200.00",
+  },
+  {
+    month: "Nov",
+    revenue: 41000,
+    fullMonth: "November",
+    displayVal: "$4100.00",
+  },
+  {
+    month: "Dec",
+    revenue: 46000,
+    fullMonth: "December",
+    displayVal: "$4600.00",
+  },
 ];
 
 // Custom Tooltip on Hover
@@ -50,7 +80,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 // Static Floating Badge Component for July
-const StaticFloatingBadge = ({ cx, cy, label = "July", value = "$5600.00" }) => {
+const StaticFloatingBadge = ({
+  cx,
+  cy,
+  label = "July",
+  value = "$5600.00",
+}) => {
   if (typeof cx !== "number" || typeof cy !== "number") return null;
   const boxWidth = 84;
   const boxHeight = 42;
@@ -117,7 +152,7 @@ const CollaboratorEarningsChartCard = () => {
   const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <div className="space-y-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+    <div className="space-y-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
       {/* Header Row */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -166,7 +201,13 @@ const CollaboratorEarningsChartCard = () => {
             margin={{ top: 40, right: 10, left: -10, bottom: 0 }}
           >
             <defs>
-              <linearGradient id="commissionsBlueGradient" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient
+                id="commissionsBlueGradient"
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
                 <stop offset="0%" stopColor="#38bdf8" stopOpacity={0.35} />
                 <stop offset="50%" stopColor="#60a5fa" stopOpacity={0.15} />
                 <stop offset="100%" stopColor="#93c5fd" stopOpacity={0.0} />

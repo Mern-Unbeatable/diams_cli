@@ -8,7 +8,7 @@ const CoverageCtaSection = () => {
   return (
     <section className="page-section bg-white">
       <div className="mx-auto container px-4 sm:px-6 lg:px-10">
-        <div className="relative overflow-hidden rounded-2xl">
+        <div className="relative overflow-hidden rounded-xl">
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-linear-to-br from-[#1a4a8a] via-primary to-[#001028]"

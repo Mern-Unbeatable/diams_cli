@@ -6,7 +6,7 @@ const AdminStatCards = () => {
       {STAT_CARDS.map((card) => (
         <div
           key={card.id}
-          className="flex flex-col justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow duration-200 hover:shadow-md"
+          className="flex flex-col justify-between rounded-xl border border-slate-100 bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow duration-200 hover:shadow-md"
         >
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-medium text-slate-500 sm:text-[13px]">

@@ -41,7 +41,7 @@ const PlanDetailsContentSection = ({ plan }) => {
     <section className="relative z-10 bg-primary pb-14 sm:pb-20">
       <div className="mx-auto container px-5 sm:px-6 lg:px-10">
         <div className="grid gap-6 lg:grid-cols-[1.7fr_1fr] lg:items-stretch lg:gap-8">
-          <article className="flex h-full flex-col rounded-2xl border border-btnPrimary/20 bg-secondary p-8 lg:p-10">
+          <article className="flex h-full flex-col rounded-xl border border-btnPrimary/20 bg-secondary p-8 lg:p-10">
             <h2 className="text-xl font-bold text-white lg:text-2xl">
               What&apos;s included
             </h2>
@@ -74,7 +74,7 @@ const PlanDetailsContentSection = ({ plan }) => {
             </div>
           </article>
 
-          <article className="flex h-full flex-col rounded-2xl border border-btnPrimary/20 bg-secondary p-8 lg:p-10">
+          <article className="flex h-full flex-col rounded-xl border border-btnPrimary/20 bg-secondary p-8 lg:p-10">
             <h2 className="text-xl font-bold text-white lg:text-2xl">
               Plan summary
             </h2>

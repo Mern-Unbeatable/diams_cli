@@ -21,7 +21,7 @@ const CoverageCheckSection = () => {
     <section id="coverage-search" className="page-section bg-white">
       <div className="mx-auto container px-4 sm:px-6 lg:px-10">
         <div className="grid gap-5 lg:grid-cols-[1.65fr_1fr] lg:gap-6">
-          <article className="rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 lg:p-8">
+          <article className="rounded-xl border border-gray-200 bg-white p-6 sm:p-7 lg:p-8">
             <h2 className="text-lg font-bold text-primary sm:text-xl">
               {COVERAGE_SEARCH.title}
             </h2>
@@ -69,7 +69,7 @@ const CoverageCheckSection = () => {
             </p>
           </article>
 
-          <article className="flex flex-col rounded-2xl border border-[#d9e8f5] bg-[#eef4fa] p-6 sm:p-7 lg:p-8">
+          <article className="flex flex-col rounded-xl border border-[#d9e8f5] bg-[#eef4fa] p-6 sm:p-7 lg:p-8">
             <div className="flex items-center gap-3">
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500">
                 <Check size={15} strokeWidth={3} className="text-white" />
@@ -84,7 +84,10 @@ const CoverageCheckSection = () => {
                 const Icon = METRIC_ICONS[icon];
 
                 return (
-                  <li key={id} className="flex flex-col items-center text-center">
+                  <li
+                    key={id}
+                    className="flex flex-col items-center text-center"
+                  >
                     <Icon
                       size={20}
                       strokeWidth={1.75}

@@ -18,7 +18,10 @@ const parseFeature = (feature) => {
   let value = "";
   let label = "";
 
-  if (text.toLowerCase().includes("data") || text.toLowerCase().includes("gb")) {
+  if (
+    text.toLowerCase().includes("data") ||
+    text.toLowerCase().includes("gb")
+  ) {
     icon = Signal;
     const parts = text.split(/(?<=\bGB\b)\s*/i);
     value = parts[0] || text;
@@ -39,7 +42,10 @@ const parseFeature = (feature) => {
     icon = Wifi;
     value = text.replace(/hotspot/i, "").trim() || "Included";
     label = "Hotspot";
-  } else if (text.toLowerCase().includes("priority") || text.toLowerCase().includes("network")) {
+  } else if (
+    text.toLowerCase().includes("priority") ||
+    text.toLowerCase().includes("network")
+  ) {
     icon = Sparkles;
     value = "Priority";
     label = "Network";
@@ -68,7 +74,7 @@ export const PlanComparisonGrid = () => {
           return (
             <div
               key={plan.id}
-              className={`relative flex flex-col justify-between rounded-3xl bg-white p-7 transition-all ${
+              className={`relative flex flex-col justify-between rounded-xl bg-white p-7 transition-all ${
                 isSelected
                   ? "border-2 border-[#258bf5] shadow-md"
                   : "border border-gray-100/90 shadow-2xs hover:border-gray-200"
@@ -111,16 +117,17 @@ export const PlanComparisonGrid = () => {
                     const { icon: Icon, value, label } = parseFeature(feature);
 
                     return (
-                      <li key={index} className="flex items-center gap-3 text-sm">
+                      <li
+                        key={index}
+                        className="flex items-center gap-3 text-sm"
+                      >
                         <Icon
                           size={18}
                           className="shrink-0 text-[#0b1736]"
                           strokeWidth={1.8}
                         />
                         <span className="flex items-center gap-1.5 leading-none">
-                          <span className=" text-[#475569]">
-                            {value}
-                          </span>
+                          <span className=" text-[#475569]">{value}</span>
                           <span className="font-normal text-[#475569]">
                             {label}
                           </span>
@@ -155,7 +162,9 @@ export const PlanComparisonGrid = () => {
 
       <p className="mt-6 flex items-center gap-2 text-xs font-normal text-gray-400">
         <Info size={14} className="shrink-0 text-[#258bf5]" strokeWidth={2.2} />
-        <span>All plans include eSIM, 5G access and 24/7 customer support.</span>
+        <span>
+          All plans include eSIM, 5G access and 24/7 customer support.
+        </span>
       </p>
     </section>
   );

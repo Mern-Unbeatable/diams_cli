@@ -14,12 +14,7 @@ const getBadgeStyle = (status) => {
   }
 };
 
-const InvoiceDetailsModal = ({
-  isOpen,
-  onClose,
-  invoice,
-  onUpdateStatus,
-}) => {
+const InvoiceDetailsModal = ({ isOpen, onClose, invoice, onUpdateStatus }) => {
   if (!isOpen || !invoice) return null;
 
   const handleMarkPaid = () => {
@@ -38,13 +33,9 @@ const InvoiceDetailsModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200 font-sans">
+      <div className="relative w-full max-w-md overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-7 z-10 animate-in zoom-in-95 duration-200 font-sans">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
@@ -66,7 +57,7 @@ const InvoiceDetailsModal = ({
         </div>
 
         {/* Details Box */}
-        <div className="my-5 rounded-2xl border border-slate-100/90 bg-slate-50/50 p-5 space-y-3.5">
+        <div className="my-5 rounded-xl border border-slate-100/90 bg-slate-50/50 p-5 space-y-3.5">
           <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
             Invoice
           </span>
@@ -87,16 +78,14 @@ const InvoiceDetailsModal = ({
 
           <div className="flex items-center justify-between text-xs sm:text-sm">
             <span className="text-slate-500">Date</span>
-            <span className="font-semibold text-slate-900">
-              {invoice.date}
-            </span>
+            <span className="font-semibold text-slate-900">{invoice.date}</span>
           </div>
 
           <div className="flex items-center justify-between text-xs sm:text-sm pt-0.5">
             <span className="text-slate-500">Status</span>
             <span
               className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getBadgeStyle(
-                invoice.status
+                invoice.status,
               )}`}
             >
               {invoice.status}

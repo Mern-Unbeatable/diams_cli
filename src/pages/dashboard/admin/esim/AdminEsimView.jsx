@@ -68,7 +68,7 @@ const AdminEsimView = () => {
       profiles.find(
         (p) =>
           p.id.toLowerCase() === id.toLowerCase() ||
-          p.customer.toLowerCase().replace(/\s+/g, "-") === id.toLowerCase()
+          p.customer.toLowerCase().replace(/\s+/g, "-") === id.toLowerCase(),
       ) || profiles[0]
     );
   }, [id, profiles]);
@@ -79,23 +79,24 @@ const AdminEsimView = () => {
     return profiles.filter(
       (p) =>
         p.esimStatus.toLowerCase() === selectedStatus.toLowerCase() ||
-        p.qrStatus.toLowerCase() === selectedStatus.toLowerCase()
+        p.qrStatus.toLowerCase() === selectedStatus.toLowerCase(),
     );
   }, [profiles, selectedStatus]);
 
   // Dynamic KPI counts
   const activeCount = useMemo(
-    () => profiles.filter((p) => p.esimStatus.toLowerCase() === "active").length,
-    [profiles]
+    () =>
+      profiles.filter((p) => p.esimStatus.toLowerCase() === "active").length,
+    [profiles],
   );
   const pendingCount = useMemo(
     () =>
       profiles.filter(
         (p) =>
           p.esimStatus.toLowerCase() === "pending" ||
-          p.qrStatus.toLowerCase() === "pending"
+          p.qrStatus.toLowerCase() === "pending",
       ).length,
-    [profiles]
+    [profiles],
   );
 
   // Table Columns Definition matching the screenshot
@@ -121,7 +122,7 @@ const AdminEsimView = () => {
         render: (row) => (
           <span
             className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getEsimStatusBadge(
-              row.esimStatus
+              row.esimStatus,
             )}`}
           >
             {row.esimStatus}
@@ -141,7 +142,7 @@ const AdminEsimView = () => {
         render: (row) => (
           <span
             className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getQrStatusBadge(
-              row.qrStatus
+              row.qrStatus,
             )}`}
           >
             {row.qrStatus}
@@ -154,7 +155,7 @@ const AdminEsimView = () => {
         align: "center",
       },
     ],
-    []
+    [],
   );
 
   // Action Click Handler
@@ -165,34 +166,34 @@ const AdminEsimView = () => {
     } else if (act === "suspend") {
       setProfiles((prev) =>
         prev.map((p) =>
-          p.id === row.id ? { ...p, esimStatus: "Suspended" } : p
-        )
+          p.id === row.id ? { ...p, esimStatus: "Suspended" } : p,
+        ),
       );
     } else if (act === "active") {
       setProfiles((prev) =>
-        prev.map((p) => (p.id === row.id ? { ...p, esimStatus: "Active" } : p))
+        prev.map((p) => (p.id === row.id ? { ...p, esimStatus: "Active" } : p)),
       );
     } else if (act === "pending") {
       setProfiles((prev) =>
         prev.map((p) =>
-          p.id === row.id ? { ...p, esimStatus: "Pending" } : p
-        )
+          p.id === row.id ? { ...p, esimStatus: "Pending" } : p,
+        ),
       );
     } else if (act === "reissue") {
       setProfiles((prev) =>
         prev.map((p) =>
-          p.id === row.id ? { ...p, esimStatus: "Reissue" } : p
-        )
+          p.id === row.id ? { ...p, esimStatus: "Reissue" } : p,
+        ),
       );
     } else if (act === "generated") {
       setProfiles((prev) =>
         prev.map((p) =>
-          p.id === row.id ? { ...p, qrStatus: "Generated" } : p
-        )
+          p.id === row.id ? { ...p, qrStatus: "Generated" } : p,
+        ),
       );
     } else if (act === "failed") {
       setProfiles((prev) =>
-        prev.map((p) => (p.id === row.id ? { ...p, qrStatus: "Failed" } : p))
+        prev.map((p) => (p.id === row.id ? { ...p, qrStatus: "Failed" } : p)),
       );
     }
   };
@@ -200,7 +201,9 @@ const AdminEsimView = () => {
   // Status Change from Details View
   const handleDetailsStatusChange = (profileId, newStatus) => {
     setProfiles((prev) =>
-      prev.map((p) => (p.id === profileId ? { ...p, esimStatus: newStatus } : p))
+      prev.map((p) =>
+        p.id === profileId ? { ...p, esimStatus: newStatus } : p,
+      ),
     );
   };
 
@@ -215,8 +218,10 @@ const AdminEsimView = () => {
             onStatusChange={handleDetailsStatusChange}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">Profile Not Found</h2>
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900">
+              Profile Not Found
+            </h2>
             <p className="mt-1 text-xs text-slate-500">
               No eSIM profile was found with ID &quot;{id}&quot;.
             </p>
@@ -247,7 +252,8 @@ const AdminEsimView = () => {
                   eSIM Profiles
                 </h2>
                 <p className="mt-1 text-xs text-slate-500 sm:text-sm">
-                  Activate, suspend, reissue, delete or view QR generation status.
+                  Activate, suspend, reissue, delete or view QR generation
+                  status.
                 </p>
               </div>
 

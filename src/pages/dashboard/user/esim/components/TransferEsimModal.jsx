@@ -32,7 +32,7 @@ export const TransferEsimModal = ({ isOpen, onClose, esimData }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-lg rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         {/* Modal Header */}
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
@@ -61,8 +61,8 @@ export const TransferEsimModal = ({ isOpen, onClose, esimData }) => {
                   step === s
                     ? "bg-btnPrimary text-white shadow-xs"
                     : step > s
-                    ? "bg-emerald-500 text-white"
-                    : "bg-gray-100 text-primary/40"
+                      ? "bg-emerald-500 text-white"
+                      : "bg-gray-100 text-primary/40"
                 }`}
               >
                 {step > s ? "✓" : s}
@@ -79,13 +79,18 @@ export const TransferEsimModal = ({ isOpen, onClose, esimData }) => {
         {step === 1 && (
           <div className="mt-4 space-y-4 text-xs">
             <p className="text-primary/70">
-              Select the operating system of your destination smartphone or tablet:
+              Select the operating system of your destination smartphone or
+              tablet:
             </p>
 
             <div className="grid grid-cols-2 gap-3">
               {[
                 { id: "ios", label: "Apple iPhone", desc: "iOS 16.0 or newer" },
-                { id: "android", label: "Android", desc: "Samsung, Google Pixel, etc." },
+                {
+                  id: "android",
+                  label: "Android",
+                  desc: "Samsung, Google Pixel, etc.",
+                },
               ].map((dev) => (
                 <button
                   key={dev.id}
@@ -100,7 +105,9 @@ export const TransferEsimModal = ({ isOpen, onClose, esimData }) => {
                   <Smartphone
                     size={22}
                     className={
-                      deviceType === dev.id ? "text-btnPrimary" : "text-primary/50"
+                      deviceType === dev.id
+                        ? "text-btnPrimary"
+                        : "text-primary/50"
                     }
                   />
                   <span className="mt-2 text-xs font-bold text-primary">
@@ -166,7 +173,12 @@ export const TransferEsimModal = ({ isOpen, onClose, esimData }) => {
 
             <div className="text-center py-4 space-y-2">
               <p className="text-xs text-primary/70 max-w-sm mx-auto">
-                On your new device, go to <strong>Settings &gt; Cellular &gt; Add eSIM &gt; Transfer from Nearby Device</strong>.
+                On your new device, go to{" "}
+                <strong>
+                  Settings &gt; Cellular &gt; Add eSIM &gt; Transfer from Nearby
+                  Device
+                </strong>
+                .
               </p>
             </div>
 
@@ -206,7 +218,8 @@ export const TransferEsimModal = ({ isOpen, onClose, esimData }) => {
                 eSIM Transfer Initiated!
               </h4>
               <p className="mt-1 text-xs text-primary/60 max-w-sm mx-auto">
-                Your eSIM is now downloading to your new smartphone. Please accept the carrier prompt on your target phone screen.
+                Your eSIM is now downloading to your new smartphone. Please
+                accept the carrier prompt on your target phone screen.
               </p>
             </div>
             <div className="pt-3">

@@ -7,7 +7,7 @@ const CollaboratorAccountSettingsCard = () => {
   const [email, setEmail] = useState("customer@gmail.com");
   const [phoneNumber, setPhoneNumber] = useState("+1-202-555-0118");
   const [avatarUrl, setAvatarUrl] = useState(
-    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80"
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80",
   );
   const [isSaved, setIsSaved] = useState(false);
   const fileInputRef = useRef(null);
@@ -27,7 +27,7 @@ const CollaboratorAccountSettingsCard = () => {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-7">
+    <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-7">
       {/* Card Header */}
       <div className="border-b border-slate-100 pb-4">
         <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700">
@@ -43,7 +43,10 @@ const CollaboratorAccountSettingsCard = () => {
       )}
 
       {/* Card Body */}
-      <form onSubmit={handleSave} className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-start">
+      <form
+        onSubmit={handleSave}
+        className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-start"
+      >
         {/* Left: Avatar with Camera Edit Icon */}
         <div className="relative mx-auto shrink-0 lg:mx-0">
           <div className="relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-[#0284c7] p-1.5 shadow-md">

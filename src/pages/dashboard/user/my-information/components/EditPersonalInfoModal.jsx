@@ -30,7 +30,7 @@ export const EditPersonalInfoModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-lg rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
@@ -75,7 +75,9 @@ export const EditPersonalInfoModal = ({
               />
             </div>
             <div className="space-y-1">
-              <label className="font-bold text-primary">Preferred Language</label>
+              <label className="font-bold text-primary">
+                Preferred Language
+              </label>
               <select
                 value={formData.language}
                 onChange={(e) => handleChange("language", e.target.value)}
@@ -115,7 +117,9 @@ export const EditPersonalInfoModal = ({
 
           {/* Address */}
           <div className="space-y-1">
-            <label className="font-bold text-primary">Residential Address</label>
+            <label className="font-bold text-primary">
+              Residential Address
+            </label>
             <input
               type="text"
               value={formData.address}

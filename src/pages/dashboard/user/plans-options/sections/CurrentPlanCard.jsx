@@ -24,7 +24,7 @@ export const CurrentPlanCard = () => {
   const { currentPlan } = USER_PLANS_OPTIONS;
 
   return (
-    <section className="rounded-3xl border border-gray-100 bg-white p-6 sm:p-7 shadow-xs">
+    <section className="rounded-xl border border-gray-100 bg-white p-6 sm:p-7 shadow-xs">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
@@ -57,7 +57,7 @@ export const CurrentPlanCard = () => {
           return (
             <div
               key={feature.id}
-              className="flex flex-col items-center justify-center rounded-2xl border border-gray-100 bg-[#fbfcfd] p-4 text-center shadow-2xs transition-all hover:bg-white hover:shadow-xs"
+              className="flex flex-col items-center justify-center rounded-xl border border-gray-100 bg-[#fbfcfd] p-4 text-center shadow-2xs transition-all hover:bg-white hover:shadow-xs"
             >
               <Icon size={20} className="text-[#0b1736]" strokeWidth={1.8} />
               <p className="mt-2 text-sm font-bold text-[#0b1736] sm:text-[15px]">
@@ -74,7 +74,11 @@ export const CurrentPlanCard = () => {
       {/* Bottom Renewal Pill & Details Button */}
       <div className="mt-6 flex flex-col gap-3.5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-1 items-center gap-2.5 rounded-full bg-[#f0f7ff] px-5 py-3">
-          <Info size={16} className="shrink-0 text-[#258bf5]" strokeWidth={2.2} />
+          <Info
+            size={16}
+            className="shrink-0 text-[#258bf5]"
+            strokeWidth={2.2}
+          />
           <p className="text-xs font-normal text-[#0b1736] sm:text-sm">
             Your plan will renew on{" "}
             <span className="font-bold text-[#0b1736]">

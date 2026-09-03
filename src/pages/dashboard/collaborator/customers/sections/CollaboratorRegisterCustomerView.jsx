@@ -98,7 +98,9 @@ const CollaboratorRegisterCustomerView = ({ onBack, onRegisterSuccess }) => {
           My Customers
         </button>
         <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
-        <span className="font-semibold text-slate-900">Register New Customer</span>
+        <span className="font-semibold text-slate-900">
+          Register New Customer
+        </span>
       </nav>
 
       {/* Page Header */}
@@ -129,11 +131,15 @@ const CollaboratorRegisterCustomerView = ({ onBack, onRegisterSuccess }) => {
                     isDone
                       ? "bg-emerald-500 text-white shadow-xs"
                       : isCurrent
-                      ? "bg-[#0080ff] text-white shadow-xs ring-4 ring-sky-100"
-                      : "border border-slate-200 bg-slate-100 text-slate-400"
+                        ? "bg-[#0080ff] text-white shadow-xs ring-4 ring-sky-100"
+                        : "border border-slate-200 bg-slate-100 text-slate-400"
                   }`}
                 >
-                  {isDone ? <Check className="h-3.5 w-3.5 stroke-[3]" /> : step.id}
+                  {isDone ? (
+                    <Check className="h-3.5 w-3.5 stroke-[3]" />
+                  ) : (
+                    step.id
+                  )}
                 </div>
 
                 {/* Step Label */}
@@ -142,8 +148,8 @@ const CollaboratorRegisterCustomerView = ({ onBack, onRegisterSuccess }) => {
                     isCurrent
                       ? "font-bold text-slate-900"
                       : isDone
-                      ? "font-semibold text-slate-700"
-                      : "text-slate-400"
+                        ? "font-semibold text-slate-700"
+                        : "text-slate-400"
                   }`}
                 >
                   {step.label}
@@ -174,7 +180,7 @@ const CollaboratorRegisterCustomerView = ({ onBack, onRegisterSuccess }) => {
           />
         </div>
       ) : (
-        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+        <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
           {currentStep === 1 && (
             <StepCustomerInfo
               formData={formData}

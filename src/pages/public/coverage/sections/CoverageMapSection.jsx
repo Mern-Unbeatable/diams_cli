@@ -22,13 +22,15 @@ const CoverageMapSection = () => {
               {legend.map(({ id, label: legendLabel, color }) => (
                 <li key={id} className="flex items-center gap-3">
                   <span className={`h-3 w-3 shrink-0 rounded-full ${color}`} />
-                  <span className="text-sm font-medium text-primary">{legendLabel}</span>
+                  <span className="text-sm font-medium text-primary">
+                    {legendLabel}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+          <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
             <img
               src={image}
               alt="NovaSky coverage map of Switzerland"

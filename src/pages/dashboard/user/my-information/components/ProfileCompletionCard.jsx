@@ -1,6 +1,6 @@
 export const ProfileCompletionCard = ({ onComplete }) => {
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0c1a30] via-[#091527] to-[#040a14] p-5 text-white shadow-md border border-slate-800 space-y-4">
+    <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#0c1a30] via-[#091527] to-[#040a14] p-5 text-white shadow-md border border-slate-800 space-y-4">
       <div className="flex items-center gap-4">
         {/* Progress Ring */}
         <div className="relative flex h-14 w-14 shrink-0 items-center justify-center">
@@ -33,7 +33,8 @@ export const ProfileCompletionCard = ({ onComplete }) => {
             Complete your profile
           </h4>
           <p className="text-[10px] sm:text-[11px] text-white/60 mt-0.5 leading-tight">
-            The more complete your profile is, the more personalized and secure your experience will be.
+            The more complete your profile is, the more personalized and secure
+            your experience will be.
           </p>
         </div>
       </div>

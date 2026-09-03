@@ -23,8 +23,10 @@ const OrderSummary = ({ plan, simType = "esim" }) => {
 
   return (
     <aside className="lg:sticky lg:top-28 lg:self-start">
-      <div className="rounded-2xl border border-white/10 bg-secondary p-5 sm:p-6">
-        <h2 className="text-lg font-bold text-white sm:text-xl">Order summary</h2>
+      <div className="rounded-xl border border-white/10 bg-secondary p-5 sm:p-6">
+        <h2 className="text-lg font-bold text-white sm:text-xl">
+          Order summary
+        </h2>
 
         <div className="relative mt-4 rounded-xl bg-primary p-5 sm:p-6">
           {plan.popular && (

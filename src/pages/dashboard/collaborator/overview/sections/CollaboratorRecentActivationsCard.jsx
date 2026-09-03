@@ -19,7 +19,7 @@ const CollaboratorRecentActivationsCard = () => {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-6">
+    <div className="rounded-xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-base font-bold tracking-tight text-slate-900">
@@ -76,7 +76,7 @@ const CollaboratorRecentActivationsCard = () => {
                   <td className="whitespace-nowrap px-4 py-3.5">
                     <span
                       className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${getStatusBadge(
-                        item.status
+                        item.status,
                       )}`}
                     >
                       {item.status}

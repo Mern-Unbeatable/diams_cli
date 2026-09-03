@@ -24,7 +24,8 @@ const AdminOrdersView = () => {
         (o) =>
           o.id.toLowerCase() === id.toLowerCase() ||
           o.orderId.toLowerCase() === id.toLowerCase() ||
-          (o.orderDetailId && o.orderDetailId.toLowerCase() === id.toLowerCase())
+          (o.orderDetailId &&
+            o.orderDetailId.toLowerCase() === id.toLowerCase()),
       ) || null
     );
   }, [id, ordersList]);
@@ -35,7 +36,7 @@ const AdminOrdersView = () => {
       return ordersList;
     }
     return ordersList.filter(
-      (ord) => ord.status.toLowerCase() === selectedStatus.toLowerCase()
+      (ord) => ord.status.toLowerCase() === selectedStatus.toLowerCase(),
     );
   }, [ordersList, selectedStatus]);
 
@@ -68,7 +69,7 @@ const AdminOrdersView = () => {
     if (statusMap[act]) {
       const newStatus = statusMap[act];
       setOrdersList((prev) =>
-        prev.map((o) => (o.id === row.id ? { ...o, status: newStatus } : o))
+        prev.map((o) => (o.id === row.id ? { ...o, status: newStatus } : o)),
       );
     }
   };
@@ -76,21 +77,21 @@ const AdminOrdersView = () => {
   // Approve Order Handler
   const handleApprove = (order) => {
     setOrdersList((prev) =>
-      prev.map((o) => (o.id === order.id ? { ...o, status: "Approved" } : o))
+      prev.map((o) => (o.id === order.id ? { ...o, status: "Approved" } : o)),
     );
   };
 
   // Reject Order Handler
   const handleReject = (order) => {
     setOrdersList((prev) =>
-      prev.map((o) => (o.id === order.id ? { ...o, status: "Rejected" } : o))
+      prev.map((o) => (o.id === order.id ? { ...o, status: "Rejected" } : o)),
     );
   };
 
   // Save Internal Note Handler
   const handleSaveNote = (orderId, note) => {
     setOrdersList((prev) =>
-      prev.map((o) => (o.id === orderId ? { ...o, internalNote: note } : o))
+      prev.map((o) => (o.id === orderId ? { ...o, internalNote: note } : o)),
     );
   };
 
@@ -107,8 +108,10 @@ const AdminOrdersView = () => {
             onSaveNote={handleSaveNote}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">Order Not Found</h2>
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900">
+              Order Not Found
+            </h2>
             <p className="mt-1 text-xs text-slate-500">
               No order was found with ID &quot;{id}&quot;.
             </p>

@@ -15,12 +15,7 @@ const SUPPORT_AGENTS = [
   "Dianne Russell",
 ];
 
-const AssignTicketModal = ({
-  isOpen,
-  onClose,
-  ticket,
-  onAssign,
-}) => {
+const AssignTicketModal = ({ isOpen, onClose, ticket, onAssign }) => {
   const [selectedAgent, setSelectedAgent] = useState("");
 
   useEffect(() => {
@@ -43,13 +38,9 @@ const AssignTicketModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200 font-sans">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all sm:p-8 z-10 animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-start justify-between pb-3 border-b border-slate-100">
           <div>

@@ -29,7 +29,7 @@ const AdminCustomerView = () => {
       customersList.find(
         (c) =>
           c.id.toLowerCase() === id.toLowerCase() ||
-          (c.profileId && c.profileId.toLowerCase() === id.toLowerCase())
+          (c.profileId && c.profileId.toLowerCase() === id.toLowerCase()),
       ) || null
     );
   }, [id, customersList]);
@@ -38,7 +38,10 @@ const AdminCustomerView = () => {
   const filteredCustomers = useMemo(() => {
     return customersList.filter((cust) => {
       // Status Filter
-      if (status !== "All" && cust.status.toLowerCase() !== status.toLowerCase()) {
+      if (
+        status !== "All" &&
+        cust.status.toLowerCase() !== status.toLowerCase()
+      ) {
         return false;
       }
       // Plan Filter
@@ -84,8 +87,8 @@ const AdminCustomerView = () => {
         prev.map((c) =>
           c.id === row.id
             ? { ...c, status: "Active", lineStatus: "Active" }
-            : c
-        )
+            : c,
+        ),
       );
     }
   };
@@ -96,8 +99,8 @@ const AdminCustomerView = () => {
       prev.map((c) =>
         c.id === customer.id
           ? { ...c, status: "Suspended", lineStatus: "Suspended" }
-          : c
-      )
+          : c,
+      ),
     );
     setSuspendTargetCustomer(null);
   };
@@ -110,15 +113,15 @@ const AdminCustomerView = () => {
       prev.map((c) =>
         c.id === cust.id
           ? { ...c, status: nextStatus, lineStatus: nextStatus }
-          : c
-      )
+          : c,
+      ),
     );
   };
 
   // Update customer details from edit modal
   const handleUpdateCustomer = (updatedCustomer) => {
     setCustomersList((prev) =>
-      prev.map((c) => (c.id === updatedCustomer.id ? updatedCustomer : c))
+      prev.map((c) => (c.id === updatedCustomer.id ? updatedCustomer : c)),
     );
   };
 
@@ -134,8 +137,10 @@ const AdminCustomerView = () => {
             onUpdateCustomer={handleUpdateCustomer}
           />
         ) : (
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">Customer Not Found</h2>
+          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900">
+              Customer Not Found
+            </h2>
             <p className="mt-1 text-xs text-slate-500">
               No customer was found with ID &quot;{id}&quot;.
             </p>
@@ -154,14 +159,15 @@ const AdminCustomerView = () => {
           <CustomerHeader />
 
           {/* 2. Main White Container Card */}
-          <div className="space-y-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+          <div className="space-y-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
             {/* Card Top Title & Subtitle */}
             <div>
               <h2 className="text-lg font-bold tracking-tight text-slate-900">
                 Customer List
               </h2>
               <p className="mt-0.5 text-xs text-slate-400">
-                Supports search, filters, sorting, pagination, row actions, empty, loading and error states.
+                Supports search, filters, sorting, pagination, row actions,
+                empty, loading and error states.
               </p>
             </div>
 

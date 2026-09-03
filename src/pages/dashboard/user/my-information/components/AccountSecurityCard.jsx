@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export const AccountSecurityCard = ({ securitySummary }) => {
   return (
-    <section className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
+    <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
       {/* Header */}
       <div className="flex items-center gap-2 text-primary">
         <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-50 text-[#0284c7]">

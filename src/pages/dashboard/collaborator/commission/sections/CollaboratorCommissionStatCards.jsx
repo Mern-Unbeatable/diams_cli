@@ -22,7 +22,7 @@ const CollaboratorCommissionStatCards = () => {
       {COMMISSION_STAT_CARDS.map((card) => (
         <div
           key={card.id}
-          className="rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all hover:border-slate-200"
+          className="rounded-xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all hover:border-slate-200"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">

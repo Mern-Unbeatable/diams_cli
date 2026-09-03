@@ -21,7 +21,7 @@ export const UploadAvatarModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
@@ -63,7 +63,9 @@ export const UploadAvatarModal = ({
           <div className="rounded-xl border-2 border-dashed border-sky-200 bg-sky-50/50 p-4 text-center space-y-1 cursor-pointer hover:bg-sky-50 transition-colors">
             <UploadCloud size={22} className="mx-auto text-btnPrimary" />
             <p className="font-bold text-primary text-xs">Upload New Image</p>
-            <p className="text-[10px] text-primary/50">JPG, PNG or GIF, max 5MB</p>
+            <p className="text-[10px] text-primary/50">
+              JPG, PNG or GIF, max 5MB
+            </p>
           </div>
 
           <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-gray-100">

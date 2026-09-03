@@ -8,7 +8,7 @@ export const SupportFaqTab = ({ faqs }) => {
   const filteredFaqs = (faqs || []).filter(
     (f) =>
       f.question.toLowerCase().includes(search.toLowerCase()) ||
-      f.answer.toLowerCase().includes(search.toLowerCase())
+      f.answer.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -29,7 +29,7 @@ export const SupportFaqTab = ({ faqs }) => {
       </div>
 
       {/* Accordion FAQ List */}
-      <div className="rounded-2xl border border-gray-200/90 bg-white p-4 sm:p-6 shadow-sm divide-y divide-gray-100">
+      <div className="rounded-xl border border-gray-200/90 bg-white p-4 sm:p-6 shadow-sm divide-y divide-gray-100">
         {filteredFaqs.length > 0 ? (
           filteredFaqs.map((faq, idx) => (
             <div key={faq.id || idx} className="py-3 first:pt-0 last:pb-0">
