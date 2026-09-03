@@ -5,6 +5,9 @@ import { SecurityLevelCard } from "./components/SecurityLevelCard";
 import { ConnectedDevicesCard } from "./components/ConnectedDevicesCard";
 import { SecurityHelpCard } from "./components/SecurityHelpCard";
 import { TwoFactorModal } from "./components/TwoFactorModal";
+import { ChangePasswordModal } from "./components/ChangePasswordModal";
+import { RecoveryEmailModal } from "./components/RecoveryEmailModal";
+import { PhoneNumberModal } from "./components/PhoneNumberModal";
 import { DevicesModal } from "./components/DevicesModal";
 import { SafetyTipsModal } from "./components/SafetyTipsModal";
 import { DeleteAccountModal } from "./components/DeleteAccountModal";
@@ -60,6 +63,32 @@ const SecurityView = () => {
     );
   };
 
+  const handleUpdateEmail = (newEmail) => {
+    setSettings((prev) =>
+      prev.map((s) =>
+        s.id === "recovery-email"
+          ? {
+              ...s,
+              extraInfo: newEmail,
+            }
+          : s
+      )
+    );
+  };
+
+  const handleUpdatePhone = (newPhone) => {
+    setSettings((prev) =>
+      prev.map((s) =>
+        s.id === "phone-number"
+          ? {
+              ...s,
+              extraInfo: newPhone,
+            }
+          : s
+      )
+    );
+  };
+
   return (
     <div className="space-y-6 pb-6">
       {/* Header */}
@@ -105,6 +134,31 @@ const SecurityView = () => {
         onClose={() => setActiveModal(null)}
         isEnabled={settings.find((s) => s.id === "2fa")?.status === "Enabled"}
         onToggle={handleToggle2FA}
+      />
+
+      <ChangePasswordModal
+        isOpen={activeModal === "password"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <RecoveryEmailModal
+        isOpen={activeModal === "email"}
+        onClose={() => setActiveModal(null)}
+        initialEmail={
+          settings.find((s) => s.id === "recovery-email")?.extraInfo ||
+          "abdoulaye.sow@email.com"
+        }
+        onSave={handleUpdateEmail}
+      />
+
+      <PhoneNumberModal
+        isOpen={activeModal === "phone"}
+        onClose={() => setActiveModal(null)}
+        initialPhone={
+          settings.find((s) => s.id === "phone-number")?.extraInfo ||
+          "+41 76 123 45 67"
+        }
+        onSave={handleUpdatePhone}
       />
 
       <DevicesModal
