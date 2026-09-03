@@ -79,7 +79,7 @@ const StaticJulyBadge = ({ cx, cy, label = "July", value = "$5600.00" }) => {
         fill="#64748b"
         fontSize={10}
         fontWeight={500}
-        fontFamily="Inter, system-ui, sans-serif"
+        fontFamily="Poppins, sans-serif"
       >
         {label}
       </text>
@@ -92,7 +92,7 @@ const StaticJulyBadge = ({ cx, cy, label = "July", value = "$5600.00" }) => {
         fill="#0284c7"
         fontSize={13}
         fontWeight={700}
-        fontFamily="Inter, system-ui, sans-serif"
+        fontFamily="Poppins, sans-serif"
       >
         {value}
       </text>
@@ -195,7 +195,7 @@ const AdminAreaChart = ({
               dataKey="month"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#94a3b8", fontSize: 11, fontFamily: "Inter, sans-serif" }}
+              tick={{ fill: "#94a3b8", fontSize: 11, fontFamily: "Poppins, sans-serif" }}
               dy={8}
             />
 
@@ -205,7 +205,7 @@ const AdminAreaChart = ({
               tickFormatter={(val) => `$${val}k`}
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#94a3b8", fontSize: 11, fontFamily: "Inter, sans-serif" }}
+              tick={{ fill: "#94a3b8", fontSize: 11, fontFamily: "Poppins, sans-serif" }}
             />
 
             {/* Vertical dashed line on July */}
