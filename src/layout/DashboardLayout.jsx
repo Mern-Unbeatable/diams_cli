@@ -6,10 +6,31 @@ import { getCurrentNavItem, getDashboardNav } from "@/config/dashboard";
 import { getRoleDashboardPath } from "@/config/dummyAuth";
 import { useAuth } from "@/context/AuthContext";
 
+const SIDEBAR_COLLAPSED_KEY = "novasky_sidebar_collapsed";
+
 const DashboardLayout = () => {
   const { user } = useAuth();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === "true";
+    } catch {
+      return false;
+    }
+  });
+
+  const toggleSidebarCollapse = () => {
+    setIsSidebarCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(next));
+      } catch {
+        // ignore storage errors
+      }
+      return next;
+    });
+  };
 
   const navItems = getDashboardNav(user.role);
   const currentItem = getCurrentNavItem(user.role, location.pathname);
@@ -34,12 +55,16 @@ const DashboardLayout = () => {
         navItems={navItems}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={toggleSidebarCollapse}
       />
 
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col transition-all duration-300">
         <DashboardHeader
           title={currentItem?.label ?? "Dashboard"}
           onMenuClick={() => setIsSidebarOpen(true)}
+          isSidebarCollapsed={isSidebarCollapsed}
+          onToggleCollapse={toggleSidebarCollapse}
         />
         <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
           <Outlet />

@@ -204,7 +204,12 @@ const StaffHeaderActions = ({ user, roleLabel, initials }) => (
   </div>
 );
 
-const DashboardHeader = ({ title, onMenuClick }) => {
+const DashboardHeader = ({
+  title,
+  onMenuClick,
+  isSidebarCollapsed = false,
+  onToggleCollapse,
+}) => {
   const { user, roleLabel } = useAuth();
   const initials = user.name
     .split(" ")
