@@ -112,9 +112,12 @@ const MainLineCard = () => {
               </button>
             </div>
 
-            <p className="mt-1 text-sm text-slate-400 font-medium">
-              {mainLine.plan}
-            </p>
+            <Link
+              to="/dashboard/user/plans-options"
+              className="mt-1 inline-block text-sm text-slate-400 font-medium hover:text-blue-400 hover:underline transition-colors"
+            >
+              {mainLine.plan} →
+            </Link>
           </div>
 
           {/* CTA Button */}

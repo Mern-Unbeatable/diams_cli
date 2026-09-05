@@ -21,7 +21,7 @@ const UsageCard = () => {
   const { usage } = USER_OVERVIEW;
 
   return (
-    <section className="rounded-xl border border-gray-100 bg-white p-6 shadow-xs">
+    <section className="group relative rounded-xl border border-gray-100 bg-white p-6 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md">
       <div className="flex items-center justify-between">
         <h3 className="text-xl sm:text-[22px] font-bold tracking-tight text-[#0b1736]">
           My usage
@@ -31,7 +31,7 @@ const UsageCard = () => {
           className="inline-flex items-center gap-1 text-sm sm:text-[15px] font-semibold text-[#258bf5] transition-opacity hover:opacity-80"
         >
           <span>Details</span>
-          <span className="text-base leading-none">→</span>
+          <span className="text-base leading-none transition-transform group-hover:translate-x-0.5">→</span>
         </Link>
       </div>
 

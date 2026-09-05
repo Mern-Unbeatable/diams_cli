@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { COLLABORATOR_STAT_CARDS } from "./collaboratorOverviewData";
 
 const CollaboratorStatCards = () => {
@@ -6,9 +7,10 @@ const CollaboratorStatCards = () => {
       {COLLABORATOR_STAT_CARDS.map((card) => {
         const Icon = card.icon;
         return (
-          <div
+          <Link
             key={card.id}
-            className="flex flex-col justify-between rounded-xl border border-slate-100 bg-white p-4.5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow duration-200 hover:shadow-md sm:p-5"
+            to={card.path ?? "#"}
+            className="flex flex-col justify-between rounded-xl border border-slate-100 bg-white p-4.5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md active:translate-y-0 sm:p-5"
           >
             <div
               className={`flex h-10 w-10 items-center justify-center rounded-xl ${card.iconBg}`}
@@ -24,7 +26,7 @@ const CollaboratorStatCards = () => {
                 {card.value}
               </div>
             </div>
-          </div>
+          </Link>
         );
       })}
     </div>

@@ -6,6 +6,7 @@ export const STAT_CARDS = [
     badge: "Customer base",
     badgeStyle: "bg-sky-50 text-sky-700 border-sky-100",
     value: "8",
+    path: "/dashboard/admin/customer",
   },
   {
     id: "active-lines",
@@ -13,6 +14,7 @@ export const STAT_CARDS = [
     badge: "Live",
     badgeStyle: "bg-emerald-50 text-emerald-700 border-emerald-100",
     value: "4",
+    path: "/dashboard/admin/customer",
   },
   {
     id: "pending-activations",
@@ -20,6 +22,7 @@ export const STAT_CARDS = [
     badge: "Needs action",
     badgeStyle: "bg-amber-50 text-amber-700 border-amber-100",
     value: "3",
+    path: "/dashboard/admin/identity",
   },
   {
     id: "active-esims",
@@ -27,6 +30,7 @@ export const STAT_CARDS = [
     badge: "Provisioned",
     badgeStyle: "bg-emerald-50 text-emerald-700 border-emerald-100",
     value: "4",
+    path: "/dashboard/admin/esim",
   },
   {
     id: "monthly-revenue",
@@ -34,6 +38,7 @@ export const STAT_CARDS = [
     badge: "Paid",
     badgeStyle: "bg-emerald-50 text-emerald-700 border-emerald-100",
     value: "CHF 328.70",
+    path: "/dashboard/admin/billing",
   },
   {
     id: "new-customers",
@@ -41,6 +46,7 @@ export const STAT_CARDS = [
     badge: "Growth",
     badgeStyle: "bg-sky-50 text-sky-700 border-sky-100",
     value: "3",
+    path: "/dashboard/admin/customer",
   },
   {
     id: "open-tickets",
@@ -48,6 +54,7 @@ export const STAT_CARDS = [
     badge: "Support",
     badgeStyle: "bg-amber-50 text-amber-700 border-amber-100",
     value: "3",
+    path: "/dashboard/admin/support",
   },
   {
     id: "network-status",
@@ -55,6 +62,7 @@ export const STAT_CARDS = [
     badge: "5G stable",
     badgeStyle: "bg-emerald-50 text-emerald-700 border-emerald-100",
     value: "Nominal",
+    path: "/dashboard/admin/settings",
   },
 ];
 

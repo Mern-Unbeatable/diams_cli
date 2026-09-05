@@ -19,6 +19,7 @@ export const COLLABORATOR_STAT_CARDS = [
     value: "24",
     icon: Users,
     iconBg: "bg-sky-50 text-sky-500",
+    path: "/dashboard/collaborator/customers",
   },
   {
     id: "active-lines",
@@ -26,6 +27,7 @@ export const COLLABORATOR_STAT_CARDS = [
     value: "12",
     icon: Zap,
     iconBg: "bg-emerald-50 text-emerald-500",
+    path: "/dashboard/collaborator/activations",
   },
   {
     id: "pending-activations",
@@ -33,6 +35,7 @@ export const COLLABORATOR_STAT_CARDS = [
     value: "12",
     icon: Clock,
     iconBg: "bg-amber-50 text-amber-500",
+    path: "/dashboard/collaborator/activations",
   },
   {
     id: "total-earnings",
@@ -40,6 +43,7 @@ export const COLLABORATOR_STAT_CARDS = [
     value: "CHF 185.00",
     icon: CreditCard,
     iconBg: "bg-slate-100 text-slate-600",
+    path: "/dashboard/collaborator/commissions",
   },
   {
     id: "month-commission",
@@ -47,6 +51,7 @@ export const COLLABORATOR_STAT_CARDS = [
     value: "CHF 135.00",
     icon: TrendingUp,
     iconBg: "bg-cyan-50 text-cyan-600",
+    path: "/dashboard/collaborator/commissions",
   },
   {
     id: "pending-commission",
@@ -54,6 +59,7 @@ export const COLLABORATOR_STAT_CARDS = [
     value: "CHF 395.00",
     icon: FileText,
     iconBg: "bg-amber-50 text-amber-600",
+    path: "/dashboard/collaborator/commissions",
   },
 ];
 
