@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -124,6 +125,7 @@ const CollaboratorAreaChart = ({
   highlightMonth = "July",
   timeFilter = "This year",
   height = "h-[260px] sm:h-[280px]",
+  reportPath,
 }) => {
   const [selectedFilter, setSelectedFilter] = useState(timeFilter);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -137,9 +139,23 @@ const CollaboratorAreaChart = ({
       {/* Card Header */}
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h2 className="text-base font-bold tracking-tight text-slate-900">
-            {title}
-          </h2>
+          {reportPath ? (
+            <Link
+              to={reportPath}
+              className="group flex items-center gap-2 hover:text-sky-600 transition-colors"
+            >
+              <h2 className="text-base font-bold tracking-tight text-slate-900 group-hover:text-sky-600">
+                {title}
+              </h2>
+              <span className="inline-flex items-center text-xs font-semibold text-sky-500 group-hover:translate-x-0.5 transition-all">
+                Report <ArrowRight size={12} className="ml-0.5" />
+              </span>
+            </Link>
+          ) : (
+            <h2 className="text-base font-bold tracking-tight text-slate-900">
+              {title}
+            </h2>
+          )}
           <p className="mt-0.5 text-xs text-slate-400">{subtitle}</p>
         </div>
 

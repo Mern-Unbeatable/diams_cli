@@ -13,6 +13,7 @@ const CollaboratorRevenueOverviewCard = () => {
       highlightValue="$5600.00"
       highlightMonth="July"
       height="h-[270px] sm:h-[300px]"
+      reportPath="/dashboard/collaborator/commissions"
     />
   );
 };

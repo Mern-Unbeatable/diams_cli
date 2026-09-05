@@ -11,6 +11,7 @@ const AdminRevenueOverviewCard = () => {
       highlightValue="$5600.00"
       highlightMonth="July"
       height="h-[250px]"
+      reportPath="/dashboard/admin/reports"
     />
   );
 };

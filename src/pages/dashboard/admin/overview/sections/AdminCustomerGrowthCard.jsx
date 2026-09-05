@@ -11,6 +11,7 @@ const AdminCustomerGrowthCard = () => {
       highlightValue="5600"
       highlightMonth="July"
       height="h-[250px]"
+      reportPath="/dashboard/admin/reports"
     />
   );
 };

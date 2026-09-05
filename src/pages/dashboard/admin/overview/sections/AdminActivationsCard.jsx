@@ -11,6 +11,7 @@ const AdminActivationsCard = () => {
       highlightValue="200"
       highlightMonth="July"
       height="h-[260px]"
+      reportPath="/dashboard/admin/reports"
     />
   );
 };
