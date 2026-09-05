@@ -62,7 +62,7 @@ const AuthFormSection = () => {
           </p>
         </div>
 
-        <div className="mt-6 rounded-xl border border-gray-200 bg-[#f8fbff] p-4">
+        {/* <div className="mt-6 rounded-xl border border-gray-200 bg-[#f8fbff] p-4">
           <p className="text-xs font-bold uppercase tracking-[0.12em] text-primary/45">
             Demo accounts
           </p>
@@ -82,7 +82,7 @@ const AuthFormSection = () => {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
           <div>
