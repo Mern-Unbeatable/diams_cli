@@ -24,46 +24,48 @@ export const OverviewHelpCard = ({ help }) => {
   if (!help) return null;
 
   return (
-    <section className="rounded-xl border border-gray-100 bg-white p-5 shadow-xs">
-      <h3 className="text-base font-bold tracking-tight text-[#0b1736] sm:text-lg">
-        Need help?
-      </h3>
+    <section className="rounded-xl border border-gray-100 bg-white p-4 sm:p-5 shadow-xs h-full flex flex-col justify-between">
+      <div>
+        <h3 className="text-base font-bold tracking-tight text-[#0b1736] sm:text-lg">
+          Need help?
+        </h3>
 
-      <div className="mt-3.5 flex flex-col gap-3">
-        {(help.items || []).map(({ id, title, description, icon }) => {
-          const config = HELP_ITEM_STYLES[icon] ?? HELP_ITEM_STYLES.help;
-          const Icon = config.icon;
+        <div className="mt-3.5 flex flex-col gap-3">
+          {(help.items || []).map(({ id, title, description, icon }) => {
+            const config = HELP_ITEM_STYLES[icon] ?? HELP_ITEM_STYLES.help;
+            const Icon = config.icon;
 
-          return (
-            <Link
-              key={id}
-              to={help.seeAllPath}
-              className="group flex items-center justify-between gap-3 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${config.bg}`}
-                >
-                  <Icon size={18} className={config.color} strokeWidth={2} />
+            return (
+              <Link
+                key={id}
+                to={help.seeAllPath}
+                className="group flex items-center justify-between gap-2.5 transition-colors min-w-0"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${config.bg}`}
+                  >
+                    <Icon size={18} className={config.color} strokeWidth={2} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[13px] sm:text-[14px] font-bold text-[#0b1736] transition-colors group-hover:text-[#2b88eb] truncate">
+                      {title}
+                    </p>
+                    <p className="text-xs text-gray-400 font-normal leading-tight mt-0.5 truncate">
+                      {description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-[14px] font-bold text-[#0b1736] transition-colors group-hover:text-[#2b88eb]">
-                    {title}
-                  </p>
-                  <p className="text-xs text-gray-400 font-normal leading-tight mt-0.5">
-                    {description}
-                  </p>
-                </div>
-              </div>
 
-              <ChevronRight
-                size={16}
-                className="shrink-0 text-gray-300 transition-transform group-hover:translate-x-0.5"
-                strokeWidth={2}
-              />
-            </Link>
-          );
-        })}
+                <ChevronRight
+                  size={16}
+                  className="shrink-0 text-gray-300 transition-transform group-hover:translate-x-0.5"
+                  strokeWidth={2}
+                />
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       <div className="mt-4 text-center">

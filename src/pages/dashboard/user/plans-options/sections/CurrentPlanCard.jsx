@@ -41,29 +41,29 @@ export const CurrentPlanCard = () => {
           </div>
         </div>
 
-        <div className="flex items-baseline gap-1 sm:text-right">
-          <span className="text-2xl font-extrabold tracking-tight text-[#0b1736] sm:text-3xl">
+        <div className="flex items-baseline gap-1 sm:text-right shrink-0">
+          <span className="text-2xl font-extrabold tracking-tight text-[#0b1736] sm:text-3xl whitespace-nowrap">
             CHF {currentPlan.price}
           </span>
-          <span className="text-sm font-normal text-gray-400"> / month</span>
+          <span className="text-sm font-normal text-gray-400 whitespace-nowrap"> / month</span>
         </div>
       </div>
 
       {/* 6 Feature Tiles */}
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 sm:gap-3.5">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6 sm:gap-3.5">
         {currentPlan.features.map((feature) => {
           const Icon = FEATURE_ICONS[feature.icon] ?? Wifi;
 
           return (
             <div
               key={feature.id}
-              className="flex flex-col items-center justify-center rounded-xl border border-gray-100 bg-[#fbfcfd] p-4 text-center shadow-2xs transition-all hover:bg-white hover:shadow-xs"
+              className="flex flex-col items-center justify-center rounded-xl border border-gray-100 bg-[#fbfcfd] p-3 sm:p-4 text-center shadow-2xs transition-all hover:bg-white hover:shadow-xs min-w-0 overflow-hidden"
             >
-              <Icon size={20} className="text-[#0b1736]" strokeWidth={1.8} />
-              <p className="mt-2 text-sm font-bold text-[#0b1736] sm:text-[15px]">
+              <Icon size={20} className="text-[#0b1736] shrink-0" strokeWidth={1.8} />
+              <p className="mt-2 text-sm font-bold text-[#0b1736] sm:text-[15px] truncate w-full">
                 {feature.value}
               </p>
-              <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+              <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400 truncate w-full">
                 {feature.label}
               </p>
             </div>
@@ -73,13 +73,13 @@ export const CurrentPlanCard = () => {
 
       {/* Bottom Renewal Pill & Details Button */}
       <div className="mt-6 flex flex-col gap-3.5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-1 items-center gap-2.5 rounded-full bg-[#f0f7ff] px-5 py-3">
+        <div className="flex flex-1 items-center gap-2.5 rounded-full bg-[#f0f7ff] px-4 sm:px-5 py-2.5 sm:py-3 min-w-0">
           <Info
             size={16}
             className="shrink-0 text-[#258bf5]"
             strokeWidth={2.2}
           />
-          <p className="text-xs font-normal text-[#0b1736] sm:text-sm">
+          <p className="text-xs font-normal text-[#0b1736] sm:text-sm leading-snug min-w-0">
             Your plan will renew on{" "}
             <span className="font-bold text-[#0b1736]">
               {currentPlan.renewDate}

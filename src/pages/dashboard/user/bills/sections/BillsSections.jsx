@@ -19,14 +19,30 @@ import {
 import { USER_BILLS } from "@/config/userBills";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
 
-export const BillsHeader = () => (
-  <div>
-    <h2 className="text-2xl font-bold text-primary sm:text-[1.75rem]">Bills</h2>
-    <p className="mt-1 text-sm text-primary/60">
-      View and download all your bills.
-    </p>
-  </div>
-);
+export const BillsHeader = () => {
+  const { phoneNumber = "+41 76 123 45 67" } = USER_BILLS;
+
+  return (
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 className="text-2xl font-bold text-primary sm:text-[1.75rem]">Bills</h2>
+        <p className="mt-1 text-sm text-primary/60">
+          View and download all your bills.
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2.5 rounded-full border border-gray-200 bg-white px-4 py-1.5 shadow-2xs self-start sm:self-auto">
+        <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+        <span className="text-xs font-bold text-primary whitespace-nowrap">
+          {phoneNumber}
+        </span>
+        <span className="rounded bg-sky-100 px-1.5 py-0.5 text-[10px] font-bold text-btnPrimary uppercase tracking-wider">
+          Active
+        </span>
+      </div>
+    </div>
+  );
+};
 
 export const BillsAutoPaymentBanner = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -227,6 +243,11 @@ export const BillsTableCard = () => {
 
 export const BillsSidebar = () => {
   const { summary, paymentMethod, helpLinks } = USER_BILLS;
+  const hasPending = Boolean(
+    summary &&
+      Number(summary.pendingPayment) > 0 &&
+      summary.pendingBillsCount > 0
+  );
 
   return (
     <div className="space-y-6">
@@ -239,38 +260,43 @@ export const BillsSidebar = () => {
           <h3 className="text-base font-bold">Summary of your bills</h3>
         </div>
 
-        <div className="space-y-4 pt-2">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">
-              TOTAL PAID
-            </p>
-            <h4 className="text-2xl font-bold text-white mt-0.5 sm:text-3xl">
-              CHF {summary.totalPaid}
-            </h4>
-            <p className="text-xs text-white/50 mt-0.5">
-              {summary.paidBillsCount} bills
-            </p>
-          </div>
+        <div className="pt-2">
+          {hasPending ? (
+            <div className="space-y-4">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
+                  PENDING PAYMENT
+                </p>
+                <h4 className="text-2xl font-bold text-white mt-0.5 sm:text-3xl">
+                  CHF {summary.pendingPayment}
+                </h4>
+                <p className="text-xs text-white/50 mt-0.5">
+                  {summary.pendingBillsCount}{" "}
+                  {summary.pendingBillsCount === 1 ? "bill" : "bills"}
+                </p>
+              </div>
 
-          <div className="border-t border-white/10 pt-4">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">
-              PENDING PAYMENT
-            </p>
-            <h4 className="text-xl font-bold text-white mt-0.5 sm:text-2xl">
-              CHF {summary.pendingPayment}
-            </h4>
-            <p className="text-xs text-white/50 mt-0.5">
-              {summary.pendingBillsCount} bill
-            </p>
-          </div>
-
-          <button
-            type="button"
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-btnPrimary py-3 text-xs font-bold text-white shadow-md transition-colors hover:bg-btnPrimary/90 mt-4"
-          >
-            <CreditCard size={16} />
-            <span>Make a payment</span>
-          </button>
+              <Link
+                to="/dashboard/user/payments"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-btnPrimary py-3 text-xs font-bold text-white shadow-md transition-colors hover:bg-btnPrimary/90 mt-4"
+              >
+                <CreditCard size={16} />
+                <span>Make a payment</span>
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                PENDING PAYMENT
+              </p>
+              <h4 className="text-xl font-bold text-white mt-1">
+                No Pending payment
+              </h4>
+              <p className="text-xs text-white/50 pt-0.5">
+                All your bills are up to date!
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

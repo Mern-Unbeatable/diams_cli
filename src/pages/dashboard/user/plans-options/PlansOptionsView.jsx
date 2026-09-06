@@ -22,24 +22,24 @@ const PlansOptionsView = () => {
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Left Column (2/3 width) */}
-        <div className="lg:col-span-2 space-y-6">
-          <PlansTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+    <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_340px]">
+      {/* Left Main Content Area */}
+      <div className="space-y-6 min-w-0">
+        <PlansTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          {activeTab === "change-plan" && <ChangePlanTab />}
-          {activeTab === "add-options" && <AddOptionsTab />}
-          {activeTab === "roaming" && <RoamingTab />}
-          {activeTab === "data-boosters" && <DataBoostersTab />}
-          {activeTab === "intl-calls" && <IntlCallsTab />}
-          {activeTab === "services" && <ServicesTab />}
-        </div>
-
-        {/* Right Column (1/3 width) */}
-        <div className="space-y-6">
-          <PlansSidebar />
-        </div>
+        {activeTab === "change-plan" && <ChangePlanTab />}
+        {activeTab === "add-options" && <AddOptionsTab />}
+        {activeTab === "roaming" && <RoamingTab />}
+        {activeTab === "data-boosters" && <DataBoostersTab />}
+        {activeTab === "intl-calls" && <IntlCallsTab />}
+        {activeTab === "services" && <ServicesTab />}
       </div>
+
+      {/* Right Column / Sidebar */}
+      <div className="space-y-6 min-w-0">
+        <PlansSidebar />
+      </div>
+    </div>
     </div>
   );
 };

@@ -33,14 +33,14 @@ const ExclusiveOffersSection = () => {
   const { offers } = USER_OVERVIEW;
 
   return (
-    <section className="rounded-xl border border-gray-100 bg-white p-6 shadow-xs">
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl sm:text-[22px] font-bold tracking-tight text-[#0b1736]">
+    <section className="rounded-xl border border-gray-100 bg-white p-4 sm:p-6 shadow-xs min-w-0">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h3 className="text-lg sm:text-xl lg:text-[22px] font-bold tracking-tight text-[#0b1736]">
           Exclusive offers for you
         </h3>
         <Link
           to={offers.seeAllPath}
-          className="inline-flex items-center gap-1 text-sm sm:text-[15px] font-semibold text-[#258bf5] transition-opacity hover:opacity-80"
+          className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#258bf5] transition-opacity hover:opacity-80 shrink-0"
         >
           <span>See all</span>
           <span className="text-base leading-none">→</span>
@@ -60,31 +60,31 @@ const ExclusiveOffersSection = () => {
           return (
             <article
               key={offer.id}
-              className={`flex min-h-[170px] flex-col justify-between rounded-xl p-6 ${theme.cardBg} transition-all hover:shadow-xs`}
+              className={`flex min-h-[160px] flex-col justify-between rounded-xl p-4 sm:p-5 ${theme.cardBg} transition-all hover:shadow-xs min-w-0`}
             >
-              <div className="flex items-start gap-3.5">
+              <div className="flex items-start gap-3 min-w-0">
                 <Icon
-                  size={24}
+                  size={22}
                   className={`mt-0.5 shrink-0 ${theme.iconColor}`}
                   strokeWidth={2}
                 />
-                <div>
-                  <p className="text-base font-bold text-[#0b1736] leading-tight sm:text-[17px]">
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-[#0b1736] leading-tight sm:text-base break-words">
                     {offer.title}
                   </p>
-                  <p className="mt-1 text-xs text-gray-400 font-normal sm:text-sm">
+                  <p className="mt-1 text-xs text-gray-400 font-normal leading-normal">
                     {offer.subtitle}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-8 flex items-center justify-between">
-                <span className="text-base font-bold text-[#0b1736] sm:text-[17px]">
+              <div className="mt-6 flex items-center justify-between gap-2">
+                <span className="text-sm font-bold text-[#0b1736] sm:text-base shrink-0">
                   {offer.price}
                 </span>
                 <button
                   type="button"
-                  className={`rounded-xl px-4 py-1.5 text-xs font-semibold sm:text-sm ${theme.btnBg} ${theme.btnColor} transition-opacity hover:opacity-80 active:scale-95`}
+                  className={`rounded-xl px-3.5 py-1.5 text-xs font-semibold sm:text-sm ${theme.btnBg} ${theme.btnColor} transition-opacity hover:opacity-80 active:scale-95 shrink-0`}
                 >
                   Add
                 </button>

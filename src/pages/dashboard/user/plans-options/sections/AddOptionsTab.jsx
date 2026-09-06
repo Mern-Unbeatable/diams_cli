@@ -129,7 +129,7 @@ const AddOptionsTab = () => {
         Quick add options
       </h3>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {items.map((item, index) => {
           const isSocial = item.icon === "social";
           const Icon = FEATURE_ICONS[item.icon] ?? Wifi;
@@ -137,59 +137,62 @@ const AddOptionsTab = () => {
           return (
             <div
               key={`${item.id}-${index}`}
-              className="relative flex items-center gap-3.5 rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:shadow-md"
+              className="flex flex-col justify-between rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:shadow-md min-w-0"
             >
-              {/* Left Side Icon Container */}
-              {isSocial ? (
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#fdf497] via-[#d6249f] to-[#285AEB] p-[2px]">
-                  <div className="flex h-full w-full items-center justify-center rounded-[14px] bg-white text-[#d6249f]">
-                    <Instagram className="h-5 w-5" strokeWidth={2.2} />
-                  </div>
-                </div>
-              ) : (
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#ebf4fd] text-[#1e293b]">
-                  <Icon className="h-5 w-5" strokeWidth={1.8} />
-                </div>
-              )}
-
-              {/* Content Area */}
-              <div className="min-w-0 flex-1 pr-7">
-                <h4 className="truncate text-xs font-bold leading-tight text-[#1e293b]">
-                  {item.title}
-                </h4>
-
-                {/* Subtitle / Description Section */}
+              <div className="flex items-start gap-3 min-w-0">
+                {/* Left Side Icon Container */}
                 {isSocial ? (
-                  <div className="my-0.5 flex flex-col">
-                    <div className="flex items-center gap-1">
-                      <WhatsAppIcon />
-                      <FacebookIcon />
-                      <TikTokIcon />
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#fdf497] via-[#d6249f] to-[#285AEB] p-[2px]">
+                    <div className="flex h-full w-full items-center justify-center rounded-[14px] bg-white text-[#d6249f]">
+                      <Instagram className="h-5 w-5" strokeWidth={2.2} />
                     </div>
-                    <span className="text-[10px] font-normal text-slate-400">
-                      Valid for 30 Days
-                    </span>
                   </div>
                 ) : (
-                  <p className="truncate text-[10px] font-medium leading-tight text-slate-400">
-                    {item.description}
-                  </p>
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#ebf4fd] text-[#1e293b]">
+                    <Icon className="h-5 w-5" strokeWidth={1.8} />
+                  </div>
                 )}
 
-                {/* Price */}
-                <p className="mt-1 text-xs font-bold leading-none text-[#1e293b]">
-                  CHF {item.price}
-                </p>
+                {/* Content Area */}
+                <div className="min-w-0 flex-1">
+                  <h4 className="truncate text-xs font-bold leading-tight text-[#1e293b]">
+                    {item.title}
+                  </h4>
+
+                  {/* Subtitle / Description Section */}
+                  {isSocial ? (
+                    <div className="my-0.5 flex flex-col">
+                      <div className="flex items-center gap-1">
+                        <WhatsAppIcon />
+                        <FacebookIcon />
+                        <TikTokIcon />
+                      </div>
+                      <span className="text-[10px] font-normal text-slate-400">
+                        Valid for 30 Days
+                      </span>
+                    </div>
+                  ) : (
+                    <p className="truncate text-[10px] font-medium leading-tight text-slate-400">
+                      {item.description}
+                    </p>
+                  )}
+                </div>
               </div>
 
-              {/* Plus (+) Action Button */}
-              <button
-                type="button"
-                className="absolute right-3.5 bottom-3.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#1e60ff] text-white shadow-sm transition-transform hover:scale-110 active:scale-95"
-                aria-label={`Add ${item.title}`}
-              >
-                <Plus size={14} strokeWidth={2.8} />
-              </button>
+              {/* Bottom Row: Price & Plus Button */}
+              <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-50 pt-2.5">
+                <p className="text-xs font-bold leading-none text-[#1e293b]">
+                  CHF {item.price}
+                </p>
+
+                <button
+                  type="button"
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e60ff] text-white shadow-sm transition-transform hover:scale-110 active:scale-95"
+                  aria-label={`Add ${item.title}`}
+                >
+                  <Plus size={14} strokeWidth={2.8} />
+                </button>
+              </div>
             </div>
           );
         })}

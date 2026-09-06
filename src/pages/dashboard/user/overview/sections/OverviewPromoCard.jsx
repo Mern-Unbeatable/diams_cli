@@ -5,8 +5,8 @@ export const OverviewPromoCard = ({ promo }) => {
   if (!promo) return null;
 
   return (
-    <section className="relative overflow-hidden rounded-xl bg-[#0040a8] p-5 text-white shadow-xs">
-      <div className="relative z-10 max-w-[210px]">
+    <section className="relative overflow-hidden rounded-xl bg-[#0040a8] p-5 text-white shadow-xs min-h-[170px] h-full flex flex-col justify-between">
+      <div className="relative z-10 pr-20 sm:pr-24">
         <h3 className="text-base font-bold leading-snug tracking-tight text-white sm:text-lg">
           {promo.title}
         </h3>
@@ -23,7 +23,7 @@ export const OverviewPromoCard = ({ promo }) => {
         </Link>
       </div>
 
-      <div className="pointer-events-none absolute -right-3 -bottom-5 z-0 w-44 select-none">
+      <div className="pointer-events-none absolute -right-3 -bottom-5 z-0 w-36 sm:w-44 select-none">
         <img
           src="/gb.png"
           alt="GB Promo Graphic"

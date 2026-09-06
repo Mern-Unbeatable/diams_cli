@@ -1,4 +1,5 @@
 export const USER_BILLS = {
+  phoneNumber: "+41 76 123 45 67",
   autoPayment: {
     title: "Switch to automatic payments",
     description: "Never miss a due date again. Activate automatic payments.",

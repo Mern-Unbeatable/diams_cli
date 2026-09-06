@@ -3,7 +3,7 @@ import WhyUpgradeWidget from "./WhyUpgradeWidget";
 import NeedHelpWidget from "./NeedHelpWidget";
 
 const PlansSidebar = () => (
-  <div className="space-y-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-6 items-start">
     <PlanSummaryWidget />
     <WhyUpgradeWidget />
     <NeedHelpWidget />
