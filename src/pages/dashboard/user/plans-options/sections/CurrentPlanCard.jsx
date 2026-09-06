@@ -50,20 +50,20 @@ export const CurrentPlanCard = () => {
       </div>
 
       {/* 6 Feature Tiles */}
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 sm:gap-3.5">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6 sm:gap-3.5">
         {currentPlan.features.map((feature) => {
           const Icon = FEATURE_ICONS[feature.icon] ?? Wifi;
 
           return (
             <div
               key={feature.id}
-              className="flex flex-col items-center justify-center rounded-xl border border-gray-100 bg-[#fbfcfd] p-4 text-center shadow-2xs transition-all hover:bg-white hover:shadow-xs"
+              className="flex flex-col items-center justify-center rounded-xl border border-gray-100 bg-[#fbfcfd] p-3 sm:p-4 text-center shadow-2xs transition-all hover:bg-white hover:shadow-xs min-w-0"
             >
-              <Icon size={20} className="text-[#0b1736]" strokeWidth={1.8} />
-              <p className="mt-2 text-sm font-bold text-[#0b1736] sm:text-[15px]">
+              <Icon size={20} className="text-[#0b1736] shrink-0" strokeWidth={1.8} />
+              <p className="mt-2 text-sm font-bold text-[#0b1736] sm:text-[15px] truncate w-full">
                 {feature.value}
               </p>
-              <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+              <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400 truncate w-full">
                 {feature.label}
               </p>
             </div>

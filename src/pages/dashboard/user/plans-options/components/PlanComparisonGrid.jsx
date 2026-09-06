@@ -67,7 +67,7 @@ export const PlanComparisonGrid = () => {
         Choose a new plan
       </h3>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3 sm:gap-6 lg:gap-7">
+      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 sm:gap-6 lg:gap-7">
         {plans.map((plan) => {
           const isSelected = plan.isCurrent;
 

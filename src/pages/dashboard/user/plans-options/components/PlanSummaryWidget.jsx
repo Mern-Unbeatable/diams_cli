@@ -27,22 +27,22 @@ export const PlanSummaryWidget = () => {
 
       {/* Info List */}
       <div className="mt-5 space-y-3">
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2 text-blue-100/70">
+        <div className="flex items-center justify-between text-xs gap-2 min-w-0">
+          <div className="flex items-center gap-2 text-blue-100/70 shrink-0">
             <Tag size={14} className="shrink-0 text-blue-200" />
             <span>Price</span>
           </div>
-          <span className="font-semibold text-white">
+          <span className="font-semibold text-white truncate">
             CHF {currentPlan.price} / month
           </span>
         </div>
 
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2 text-blue-100/70">
+        <div className="flex items-center justify-between text-xs gap-2 min-w-0">
+          <div className="flex items-center gap-2 text-blue-100/70 shrink-0">
             <Calendar size={14} className="shrink-0 text-blue-200" />
             <span>Next billing date</span>
           </div>
-          <span className="font-semibold text-white">
+          <span className="font-semibold text-white truncate">
             {currentPlan.renewDate}
           </span>
         </div>

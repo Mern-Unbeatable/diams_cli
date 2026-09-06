@@ -95,7 +95,7 @@ export const QuickAddOptions = () => {
       </div>
 
       {/* Options Grid */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-4">
         {quickAdd.slice(0, 4).map((item) => {
           const isSocial = item.icon === "social";
           const isPhone = item.icon === "phone";
@@ -103,50 +103,54 @@ export const QuickAddOptions = () => {
           return (
             <div
               key={item.id}
-              className="relative flex items-start gap-3.5 rounded-xl border border-gray-100/90 bg-white p-5 shadow-xs transition-all hover:shadow-sm"
+              className="flex flex-col justify-between rounded-xl border border-gray-100/90 bg-white p-4 shadow-xs transition-all hover:shadow-sm min-w-0"
             >
-              {/* Left Side Icon Badge */}
-              {isSocial ? (
-                <InstagramBadge />
-              ) : (
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#f0f7ff] text-[#0b1736] shadow-2xs">
-                  {isPhone ? (
-                    <Phone size={20} strokeWidth={1.8} />
-                  ) : (
-                    <Wifi size={20} strokeWidth={1.8} />
-                  )}
-                </div>
-              )}
-
-              {/* Middle Content */}
-              <div className="min-w-0 flex-1 pr-8">
-                <div className="text-[13px]">{formatTitle(item.title)}</div>
-
-                {isSocial && (
-                  <div className="mt-1.5 flex items-center gap-2">
-                    <WhatsAppMini />
-                    <FacebookMini />
-                    <TikTokMini />
+              <div className="flex items-start gap-3 min-w-0">
+                {/* Left Side Icon Badge */}
+                {isSocial ? (
+                  <InstagramBadge />
+                ) : (
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#f0f7ff] text-[#0b1736] shadow-2xs">
+                    {isPhone ? (
+                      <Phone size={18} strokeWidth={1.8} />
+                    ) : (
+                      <Wifi size={18} strokeWidth={1.8} />
+                    )}
                   </div>
                 )}
 
-                <p className="mt-1 truncate text-[11px] font-normal text-gray-400">
-                  {item.description}
-                </p>
+                {/* Middle Content */}
+                <div className="min-w-0 flex-1">
+                  <div className="text-xs sm:text-[13px]">{formatTitle(item.title)}</div>
 
-                <p className="mt-2 text-sm font-extrabold text-[#0b1736]">
-                  CHF {item.price}
-                </p>
+                  {isSocial && (
+                    <div className="mt-1.5 flex items-center gap-1.5">
+                      <WhatsAppMini />
+                      <FacebookMini />
+                      <TikTokMini />
+                    </div>
+                  )}
+
+                  <p className="mt-1 truncate text-[11px] font-normal text-gray-400">
+                    {item.description}
+                  </p>
+                </div>
               </div>
 
-              {/* Right Add Plus Button at the Bottom Right Corner */}
-              <button
-                type="button"
-                className="absolute right-4 bottom-4 flex h-7 w-7 items-center justify-center rounded-full bg-[#258bf5] text-white shadow-xs transition-transform hover:scale-105 active:scale-95 sm:right-5 sm:bottom-5"
-                aria-label={`Add ${item.title}`}
-              >
-                <Plus size={15} strokeWidth={2.5} />
-              </button>
+              {/* Bottom Row: Price & Plus Button */}
+              <div className="mt-3 flex items-center justify-between gap-2 border-t border-gray-50 pt-2.5">
+                <p className="text-sm font-extrabold text-[#0b1736]">
+                  CHF {item.price}
+                </p>
+
+                <button
+                  type="button"
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#258bf5] text-white shadow-xs transition-transform hover:scale-105 active:scale-95"
+                  aria-label={`Add ${item.title}`}
+                >
+                  <Plus size={15} strokeWidth={2.5} />
+                </button>
+              </div>
             </div>
           );
         })}
