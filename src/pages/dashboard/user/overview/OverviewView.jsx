@@ -18,11 +18,11 @@ const OverviewView = () => {
         <p className="mt-1 text-sm text-primary/60">{USER_OVERVIEW.subtitle}</p>
       </header>
 
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_360px]">
-        <div className="space-y-6">
+      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="space-y-6 min-w-0">
           <MainLineCard />
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-6 grid-cols-1 2xl:grid-cols-2">
             <UsageCard />
             <LatestBillCard />
           </div>

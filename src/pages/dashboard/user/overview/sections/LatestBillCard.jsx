@@ -6,33 +6,33 @@ const LatestBillCard = () => {
   const { latestBill } = USER_OVERVIEW;
 
   return (
-    <section className="group flex h-full flex-col justify-between rounded-xl border border-gray-100 bg-white p-6 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md">
+    <section className="group flex h-full flex-col justify-between rounded-xl border border-gray-100 bg-white p-4 sm:p-6 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md min-w-0">
       <div>
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl sm:text-[22px] font-bold tracking-tight text-[#0b1736]">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h3 className="text-lg sm:text-xl lg:text-[22px] font-bold tracking-tight text-[#0b1736]">
             Latest bill
           </h3>
           <Link
             to={latestBill.seeAllPath}
-            className="inline-flex items-center gap-1 text-sm sm:text-[15px] font-semibold text-[#258bf5] transition-opacity hover:opacity-80"
+            className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#258bf5] transition-opacity hover:opacity-80 shrink-0"
           >
             <span>See all</span>
             <span className="text-base leading-none transition-transform group-hover:translate-x-0.5">→</span>
           </Link>
         </div>
 
-        <div className="mt-6 flex items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2.5">
-              <span className="text-base font-bold text-[#0b1736]">
+        <div className="mt-6 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 min-w-0">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm sm:text-base font-bold text-[#0b1736]">
                 {latestBill.month}
               </span>
-              <span className="rounded-md bg-[#eafaf1] px-2 py-0.5 text-xs font-semibold text-[#16a34a]">
+              <span className="rounded-md bg-[#eafaf1] px-2 py-0.5 text-xs font-semibold text-[#16a34a] shrink-0">
                 {latestBill.status}
               </span>
             </div>
 
-            <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0b1736]">
+            <p className="mt-2 text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-[#0b1736] break-words">
               {latestBill.amount}
             </p>
 
@@ -42,7 +42,7 @@ const LatestBillCard = () => {
           </div>
 
           {/* Invoice document preview with download badge */}
-          <div className="relative flex h-[82px] w-[66px] shrink-0 flex-col gap-1.5 rounded-xl border border-blue-100/90 bg-[#f8fbff] p-2.5 shadow-2xs">
+          <div className="relative flex h-[76px] w-[60px] sm:h-[82px] sm:w-[66px] shrink-0 flex-col gap-1.5 rounded-xl border border-blue-100/90 bg-[#f8fbff] p-2.5 shadow-2xs">
             <div className="h-1.5 w-6 rounded-full bg-blue-300/80" />
             <div className="h-1 w-10 rounded-full bg-blue-100" />
             <div className="h-1 w-8 rounded-full bg-blue-100" />
@@ -58,7 +58,7 @@ const LatestBillCard = () => {
 
       <button
         type="button"
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border border-blue-100 bg-white py-3 text-sm font-semibold text-[#258bf5] transition-all hover:bg-blue-50/50 active:scale-[0.99]"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border border-blue-100 bg-white py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-[#258bf5] transition-all hover:bg-blue-50/50 active:scale-[0.99]"
       >
         <Download size={16} strokeWidth={2.2} />
         <span>Download invoice</span>

@@ -8,7 +8,7 @@ const OverviewSidebar = () => {
   const { premium, quickActions, promo, help } = USER_OVERVIEW;
 
   return (
-    <aside className="space-y-4">
+    <aside className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-4 items-start">
       {/* Premium Status Section */}
       <OverviewPremiumCard premium={premium} />
 
