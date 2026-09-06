@@ -18,9 +18,9 @@ const MyLineView = () => (
       </p>
     </div>
 
-    <div className="grid gap-6 lg:grid-cols-3">
-      {/* Left Column (2/3 width) */}
-      <div className="space-y-6 lg:col-span-2">
+    <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_340px]">
+      {/* Left Main Column */}
+      <div className="space-y-6 min-w-0">
         <LineSummaryCard />
         <LineDetailsTab />
 
@@ -33,8 +33,8 @@ const MyLineView = () => (
         </div>
       </div>
 
-      {/* Right Column (1/3 width) */}
-      <div className="space-y-6">
+      {/* Right Column / Sidebar */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-1 gap-6 items-start">
         <LineStatusCard />
         <SimPromoCard />
         <HelpSupportCard />
