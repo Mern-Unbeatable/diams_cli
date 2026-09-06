@@ -22,7 +22,7 @@ const PlansOptionsView = () => {
         </p>
       </div>
 
-    <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_360px]">
+    <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_340px]">
       {/* Left Main Content Area */}
       <div className="space-y-6 min-w-0">
         <PlansTabs activeTab={activeTab} setActiveTab={setActiveTab} />

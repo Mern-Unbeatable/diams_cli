@@ -95,7 +95,7 @@ export const QuickAddOptions = () => {
       </div>
 
       {/* Options Grid */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
         {quickAdd.slice(0, 4).map((item) => {
           const isSocial = item.icon === "social";
           const isPhone = item.icon === "phone";
@@ -103,14 +103,14 @@ export const QuickAddOptions = () => {
           return (
             <div
               key={item.id}
-              className="flex flex-col justify-between rounded-xl border border-gray-100/90 bg-white p-4 shadow-xs transition-all hover:shadow-sm min-w-0"
+              className="flex flex-col justify-between rounded-xl border border-gray-100/90 bg-white p-3.5 sm:p-4 shadow-xs transition-all hover:shadow-sm min-w-0 overflow-hidden"
             >
-              <div className="flex items-start gap-3 min-w-0">
+              <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
                 {/* Left Side Icon Badge */}
                 {isSocial ? (
                   <InstagramBadge />
                 ) : (
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#f0f7ff] text-[#0b1736] shadow-2xs">
+                  <div className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl bg-[#f0f7ff] text-[#0b1736] shadow-2xs">
                     {isPhone ? (
                       <Phone size={18} strokeWidth={1.8} />
                     ) : (
@@ -121,25 +121,27 @@ export const QuickAddOptions = () => {
 
                 {/* Middle Content */}
                 <div className="min-w-0 flex-1">
-                  <div className="text-xs sm:text-[13px]">{formatTitle(item.title)}</div>
+                  <div className="text-xs sm:text-[13px] min-w-0 leading-tight">
+                    {formatTitle(item.title)}
+                  </div>
 
                   {isSocial && (
-                    <div className="mt-1.5 flex items-center gap-1.5">
+                    <div className="mt-1.5 flex items-center gap-1.5 shrink-0 flex-wrap">
                       <WhatsAppMini />
                       <FacebookMini />
                       <TikTokMini />
                     </div>
                   )}
 
-                  <p className="mt-1 truncate text-[11px] font-normal text-gray-400">
+                  <p className="mt-1 truncate text-[11px] font-normal text-gray-400 min-w-0">
                     {item.description}
                   </p>
                 </div>
               </div>
 
               {/* Bottom Row: Price & Plus Button */}
-              <div className="mt-3 flex items-center justify-between gap-2 border-t border-gray-50 pt-2.5">
-                <p className="text-sm font-extrabold text-[#0b1736]">
+              <div className="mt-3 flex items-center justify-between gap-2 border-t border-gray-50 pt-2.5 min-w-0">
+                <p className="text-sm font-extrabold text-[#0b1736] whitespace-nowrap">
                   CHF {item.price}
                 </p>
 
