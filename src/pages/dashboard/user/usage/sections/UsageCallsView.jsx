@@ -22,68 +22,68 @@ export const UsageCallsView = () => {
   return (
     <div className="space-y-6">
       {/* Top 3 Summary Cards Grid */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-3.5 sm:grid-cols-3">
         {/* Card 1: SUBSCRIPTION PLAN */}
-        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
-          <div className="flex items-start justify-between">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-3.5 sm:p-4 min-w-0">
+          <div className="flex items-start justify-between gap-1.5">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               SUBSCRIPTION PLAN
             </p>
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
-              <Zap size={16} />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
+              <Zap size={15} />
             </span>
           </div>
-          <div>
-            <h3 className="mt-1 text-xl font-bold text-primary">
+          <div className="mt-2">
+            <h3 className="text-sm font-bold text-primary sm:text-base truncate">
               {callSummary.planName}
             </h3>
-            <p className="mt-2 flex items-center gap-1.5 text-xs text-primary/60">
-              <CheckCircle2 size={13} className="text-emerald-500" />
-              <span>{callSummary.networkBadge}</span>
+            <p className="mt-1 flex items-center gap-1 text-[11px] text-primary/60">
+              <CheckCircle2 size={12} className="shrink-0 text-emerald-500" />
+              <span className="truncate">{callSummary.networkBadge}</span>
             </p>
           </div>
         </div>
 
         {/* Card 2: VOICE USAGE */}
-        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
-          <div className="flex items-start justify-between">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-3.5 sm:p-4 min-w-0">
+          <div className="flex items-start justify-between gap-1.5">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               VOICE USAGE
             </p>
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
-              <Phone size={16} />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
+              <Phone size={15} />
             </span>
           </div>
-          <div>
-            <div className="mt-1 flex items-center gap-2">
-              <h3 className="text-xl font-bold text-primary">
+          <div className="mt-2">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <h3 className="text-sm font-bold text-primary sm:text-base">
                 {callSummary.voiceUsage}
               </h3>
-              <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-600">
+              <span className="inline-flex shrink-0 items-center rounded-full bg-emerald-50 px-1.5 py-0.5 text-[9px] font-bold text-emerald-600">
                 {callSummary.extraCost}
               </span>
             </div>
-            <p className="mt-2 text-xs text-primary/50">
+            <p className="mt-1 text-[11px] text-primary/50">
               {callSummary.voiceUsageLabel}
             </p>
           </div>
         </div>
 
         {/* Card 3: INTERNATIONAL CALLS */}
-        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
-          <div className="flex items-start justify-between">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-3.5 sm:p-4 min-w-0">
+          <div className="flex items-start justify-between gap-1.5">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               INTERNATIONAL CALLS
             </p>
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
-              <Globe size={16} />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
+              <Globe size={15} />
             </span>
           </div>
-          <div>
-            <h3 className="mt-1 text-xl font-bold text-primary">
+          <div className="mt-2">
+            <h3 className="text-xs font-bold text-primary sm:text-sm md:text-base leading-tight truncate">
               {callSummary.intlCalls}
             </h3>
-            <p className="mt-2 text-xs text-primary/50">
+            <p className="mt-1 text-[11px] text-primary/50">
               {callSummary.intlCallsLabel}
             </p>
           </div>

@@ -20,57 +20,57 @@ export const UsageSmsView = () => {
   return (
     <div className="space-y-6">
       {/* Top 3 Summary Cards Grid */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-3.5 sm:grid-cols-3">
         {/* Card 1: MESSAGING PLAN */}
-        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
-          <div className="flex items-start justify-between">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-3.5 sm:p-4 min-w-0">
+          <div className="flex items-start justify-between gap-1.5">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               MESSAGING PLAN
             </p>
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
-              <MessageSquare size={16} />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
+              <MessageSquare size={15} />
             </span>
           </div>
-          <div>
-            <h3 className="mt-1 text-xl font-bold text-primary">
+          <div className="mt-2">
+            <h3 className="text-sm font-bold text-primary sm:text-base truncate">
               {smsSummary.messagingPlan}
             </h3>
           </div>
         </div>
 
         {/* Card 2: COVERAGE REGION */}
-        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
-          <div className="flex items-start justify-between">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-3.5 sm:p-4 min-w-0">
+          <div className="flex items-start justify-between gap-1.5">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               COVERAGE REGION
             </p>
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
-              <Globe size={16} />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-blue-50/70 text-btnPrimary">
+              <Globe size={15} />
             </span>
           </div>
-          <div>
-            <h3 className="mt-1 text-xl font-bold text-primary">
+          <div className="mt-2">
+            <h3 className="text-xs font-bold text-primary sm:text-sm md:text-base leading-tight truncate">
               {smsSummary.coverageRegion}
             </h3>
           </div>
         </div>
 
         {/* Card 3: SERVICE STATUS */}
-        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
-          <div className="flex items-start justify-between">
+        <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-3.5 sm:p-4 min-w-0">
+          <div className="flex items-start justify-between gap-1.5">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary/45">
               SERVICE STATUS
             </p>
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50/70 text-emerald-600">
-              <CheckCircle2 size={16} />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-emerald-50/70 text-emerald-600">
+              <CheckCircle2 size={15} />
             </span>
           </div>
-          <div>
-            <div className="mt-1 flex items-center gap-2">
-              <h3 className="text-xl font-bold text-emerald-600">
+          <div className="mt-2">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <h3 className="text-sm font-bold text-emerald-600 sm:text-base">
                 {smsSummary.serviceStatus}
               </h3>
-              <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-600">
+              <span className="inline-flex shrink-0 items-center rounded-full bg-emerald-50 px-1.5 py-0.5 text-[9px] font-bold text-emerald-600">
                 {smsSummary.signalBadge}
               </span>
             </div>
