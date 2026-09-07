@@ -137,7 +137,7 @@ export const UsageSmsView = () => {
                 key={sms.id}
                 className="flex items-center justify-between py-3.5 first:pt-0 last:pb-0"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-0 flex-1 pr-2">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-btnPrimary">
                     {isSent ? (
                       <MessageSquare size={16} />
@@ -146,16 +146,16 @@ export const UsageSmsView = () => {
                     )}
                   </span>
 
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-primary">
+                      <h4 className="text-sm font-bold text-primary truncate">
                         {sms.name}
                       </h4>
-                      <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-primary/60">
+                      <span className="shrink-0 rounded bg-gray-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-primary/60">
                         {sms.countryCode}
                       </span>
                     </div>
-                    <p className="mt-0.5 text-xs text-primary/50">
+                    <p className="mt-0.5 truncate text-xs text-primary/50">
                       {sms.number} •{" "}
                       {isSent
                         ? `Sent (${sms.chars})`
@@ -164,7 +164,7 @@ export const UsageSmsView = () => {
                   </div>
                 </div>
 
-                <div className="text-right">
+                <div className="text-right shrink-0">
                   <span className="rounded bg-emerald-50 px-2 py-0.5 text-[9px] font-bold uppercase text-emerald-600">
                     {sms.status}
                   </span>
