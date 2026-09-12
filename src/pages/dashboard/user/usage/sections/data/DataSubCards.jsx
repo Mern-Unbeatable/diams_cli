@@ -45,7 +45,7 @@ const DataSubCards = ({ usageSummary }) => {
 
       {/* Card 2: Roaming Usage */}
       <div className="relative flex flex-col justify-between overflow-hidden rounded-xl border border-gray-100 bg-gray-50/40 p-4">
-        <div className="pr-16">
+        <div className="relative z-10 pr-16 sm:pr-20">
           <h4 className="text-lg font-bold text-primary">Roaming usage</h4>
           <p className="mt-2 text-sm leading-relaxed text-primary/55">
             {usageSummary.roamingUsageText}
@@ -53,15 +53,15 @@ const DataSubCards = ({ usageSummary }) => {
         </div>
 
         {/* Suitcase Image */}
-        <div className="absolute right-3 bottom-3">
+        <div className="pointer-events-none absolute right-2 bottom-2 z-0 opacity-80 sm:opacity-100">
           <img
             src="/bag.png"
             alt="Roaming suitcase"
-            className="h-40 w-auto object-contain drop-shadow-sm"
+            className="h-20 w-auto object-contain drop-shadow-sm sm:h-24"
           />
         </div>
 
-        <div className="pt-4">
+        <div className="relative z-10 pt-4">
           <Link
             to="/dashboard/user/plans-options"
             className="inline-flex items-center gap-1 text-xs font-semibold text-btnPrimary hover:underline"

@@ -17,27 +17,27 @@ export const UsageBoostersGrid = () => {
         </Link>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3.5 grid-cols-2 sm:grid-cols-2 xl:grid-cols-4">
         {boosters.map((booster) => (
           <div
             key={booster.id}
-            className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4"
+            className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-3.5 sm:p-4 min-w-0"
           >
-            <div>
-              <h4 className="text-sm font-bold text-primary">
+            <div className="min-w-0 flex-1 pr-2">
+              <h4 className="text-sm font-bold text-primary truncate">
                 {booster.amount}
               </h4>
-              <p className="mt-0.5 text-[10px] text-primary/45">
+              <p className="mt-0.5 text-[10px] text-primary/45 truncate">
                 {booster.validity}
               </p>
-              <p className="mt-2 text-xs font-bold text-primary">
+              <p className="mt-1.5 text-xs font-bold text-primary truncate">
                 CHF {booster.price}
               </p>
             </div>
 
             <button
               type="button"
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-btnPrimary text-white shadow-sm transition-transform hover:scale-105 active:scale-95"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-btnPrimary text-white shadow-sm transition-transform hover:scale-105 active:scale-95"
               aria-label={`Add ${booster.amount}`}
             >
               <Plus size={15} strokeWidth={2.5} />
