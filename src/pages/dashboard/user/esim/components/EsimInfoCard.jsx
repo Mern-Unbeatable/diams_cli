@@ -17,7 +17,7 @@ export const EsimInfoCard = ({ esimData, onOpenDetailsModal }) => {
       label: "Status",
       value: (
         <span className="inline-flex items-center gap-1.5 font-bold text-emerald-600">
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="h-2 w-2 rounded-full bg-emerald-500" />
           Activated
         </span>
       ),
@@ -33,11 +33,6 @@ export const EsimInfoCard = ({ esimData, onOpenDetailsModal }) => {
       label: "IMEI",
       value: esimData.imei || "35 123456 789012 3",
       copyKey: "imei",
-    },
-    {
-      label: "ICCID",
-      value: esimData.iccid || "8944 1000 1234 5678 9012 3",
-      copyKey: "iccid",
     },
   ];
 

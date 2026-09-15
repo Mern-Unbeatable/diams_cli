@@ -2,6 +2,8 @@
 
 @theme {
   --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-mono: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-serif: "Poppins", system-ui, -apple-system, sans-serif;
   --color-primary: #00183c;
   --color-forfooter:#021735;
   --color-secondary: #0d2548;
@@ -19,18 +21,36 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
 }
 
-html, body {
+html,
+body,
+#root,
+button,
+input,
+textarea,
+select,
+option {
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
+}
+
+html,
+body {
   margin: 0;
   background-color: var(--color-primary);
   color: #ffffff;
-  font-family: "Poppins", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 button {
   @apply cursor-pointer rounded-md;
+}
+
+.font-sans,
+.font-mono,
+.font-serif {
+  font-family: "Poppins", system-ui, -apple-system, sans-serif !important;
 }
 
 .hero-haze-overlay {

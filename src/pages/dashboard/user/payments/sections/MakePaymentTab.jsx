@@ -53,20 +53,20 @@ export const MakePaymentTab = ({
   const currentAmount = isBill ? selectedBill?.amount || "34.90" : topUpAmount;
 
   return (
-    <div className="space-y-5">
-      <div className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-6 lg:p-7">
+    <div className="min-w-0 space-y-4 sm:space-y-5">
+      <div className="min-w-0 overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 sm:p-6 lg:p-7">
         {/* 1. What would you like to pay? */}
-        <section>
-          <h3 className="text-[15px] font-bold text-primary">
+        <section className="min-w-0">
+          <h3 className="text-sm font-bold text-primary sm:text-[15px]">
             1. What would you like to pay?
           </h3>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+          <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 sm:mt-4 sm:gap-4">
             <button
               type="button"
               onClick={() => setPaymentType("bill")}
               className={[
-                "flex w-full items-center gap-3.5 rounded-xl border p-4 text-left transition-all sm:p-5",
+                "flex w-full min-w-0 items-center gap-3 rounded-xl border p-3.5 text-left transition-all sm:gap-3.5 sm:p-4",
                 paymentType === "bill"
                   ? "border-btnPrimary bg-white shadow-sm"
                   : "border-gray-200 bg-white hover:border-gray-300",
@@ -75,15 +75,15 @@ export const MakePaymentTab = ({
               <RadioDot selected={paymentType === "bill"} />
               <span
                 className={[
-                  "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border",
+                  "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border sm:h-11 sm:w-11",
                   paymentType === "bill"
                     ? "border-sky-200 bg-sky-50 text-btnPrimary"
                     : "border-gray-200 bg-gray-50 text-gray-500",
                 ].join(" ")}
               >
-                <FileText size={20} />
+                <FileText size={18} />
               </span>
-              <span>
+              <span className="min-w-0">
                 <span className="block text-sm font-bold text-primary">My bill</span>
                 <span className="mt-0.5 block text-xs text-primary/55">
                   Pay your monthly bill
@@ -95,7 +95,7 @@ export const MakePaymentTab = ({
               type="button"
               onClick={() => setPaymentType("topup")}
               className={[
-                "flex w-full items-center gap-3.5 rounded-xl border p-4 text-left transition-all sm:p-5",
+                "flex w-full min-w-0 items-center gap-3 rounded-xl border p-3.5 text-left transition-all sm:gap-3.5 sm:p-4",
                 paymentType === "topup"
                   ? "border-btnPrimary bg-white shadow-sm"
                   : "border-gray-200 bg-white hover:border-gray-300",
@@ -104,15 +104,15 @@ export const MakePaymentTab = ({
               <RadioDot selected={paymentType === "topup"} />
               <span
                 className={[
-                  "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border",
+                  "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border sm:h-11 sm:w-11",
                   paymentType === "topup"
                     ? "border-sky-200 bg-sky-50 text-btnPrimary"
                     : "border-gray-200 bg-gray-50 text-gray-500",
                 ].join(" ")}
               >
-                <Smartphone size={20} />
+                <Smartphone size={18} />
               </span>
-              <span>
+              <span className="min-w-0">
                 <span className="block text-sm font-bold text-primary">
                   Top up my line
                 </span>
@@ -125,20 +125,22 @@ export const MakePaymentTab = ({
         </section>
 
         {/* 2. Select the bill / top-up */}
-        <section className="mt-8">
+        <section className="mt-6 min-w-0 sm:mt-8">
           {isBill ? (
             <>
-              <h3 className="text-[15px] font-bold text-primary">2. Select the bill</h3>
+              <h3 className="text-sm font-bold text-primary sm:text-[15px]">
+                2. Select the bill
+              </h3>
 
-              <div className="relative mt-4">
+              <div className="relative mt-3 sm:mt-4">
                 <button
                   type="button"
                   onClick={() => setIsBillDropdownOpen((open) => !open)}
-                  className="flex w-full flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4 text-left transition-colors hover:border-btnPrimary/40 sm:flex-row sm:items-center sm:justify-between sm:p-5"
+                  className="flex w-full min-w-0 flex-col gap-3 rounded-xl border border-gray-200 bg-white p-3.5 text-left transition-colors hover:border-btnPrimary/40 sm:p-5 lg:flex-row lg:items-center lg:justify-between"
                 >
-                  <span className="flex items-center gap-3.5">
+                  <span className="flex min-w-0 items-center gap-3 sm:gap-3.5">
                     <RadioDot selected />
-                    <span>
+                    <span className="min-w-0">
                       <span className="block text-sm font-bold text-primary">
                         {selectedBill?.month || "July 2024"}
                       </span>
@@ -148,8 +150,8 @@ export const MakePaymentTab = ({
                     </span>
                   </span>
 
-                  <span className="flex items-center gap-3 self-end sm:self-center">
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                  <span className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
+                    <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 sm:px-3 sm:text-xs">
                       {selectedBill?.statusText || "Paid on July 10, 2024"}
                     </span>
                     <span className="text-sm font-bold text-primary sm:text-base">
@@ -166,7 +168,7 @@ export const MakePaymentTab = ({
                 </button>
 
                 {isBillDropdownOpen ? (
-                  <div className="absolute left-0 right-0 top-full z-20 mt-2 space-y-1 rounded-xl border border-gray-200 bg-white p-2 shadow-xl">
+                  <div className="absolute left-0 right-0 top-full z-20 mt-2 max-h-64 space-y-1 overflow-y-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl">
                     {bills.map((bill) => (
                       <button
                         key={bill.id}
@@ -176,22 +178,22 @@ export const MakePaymentTab = ({
                           setIsBillDropdownOpen(false);
                         }}
                         className={[
-                          "flex w-full items-center justify-between rounded-xl p-3 text-left transition-colors",
+                          "flex w-full min-w-0 flex-col gap-2 rounded-xl p-3 text-left transition-colors sm:flex-row sm:items-center sm:justify-between",
                           bill.id === selectedBill?.id
                             ? "bg-blue-50/70 text-btnPrimary"
                             : "text-primary hover:bg-gray-50",
                         ].join(" ")}
                       >
-                        <span className="flex items-center gap-3">
+                        <span className="flex min-w-0 items-center gap-3">
                           <RadioDot selected={bill.id === selectedBill?.id} />
-                          <span>
+                          <span className="min-w-0">
                             <span className="block text-xs font-bold">{bill.month}</span>
                             <span className="block text-[11px] text-primary/50">
                               {bill.issueDate}
                             </span>
                           </span>
                         </span>
-                        <span className="flex items-center gap-3">
+                        <span className="flex items-center gap-2 pl-8 sm:gap-3 sm:pl-0">
                           <span
                             className={[
                               "rounded-full px-2.5 py-0.5 text-[11px] font-semibold",
@@ -220,12 +222,12 @@ export const MakePaymentTab = ({
             </>
           ) : (
             <>
-              <h3 className="text-[15px] font-bold text-primary">
+              <h3 className="text-sm font-bold text-primary sm:text-[15px]">
                 2. Select top-up amount
               </h3>
 
-              <div className="mt-4 space-y-4 rounded-xl border border-gray-200 bg-white p-5">
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+              <div className="mt-3 space-y-4 rounded-xl border border-gray-200 bg-white p-4 sm:mt-4 sm:p-5">
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 xl:grid-cols-5">
                   {topUpOptions.map((opt) => {
                     const isSelected = topUpAmount === opt.amount && !customTopUp;
 
@@ -238,7 +240,7 @@ export const MakePaymentTab = ({
                           setCustomTopUp(false);
                         }}
                         className={[
-                          "relative rounded-xl border p-3.5 text-center transition-all",
+                          "relative rounded-xl border p-3 text-center transition-all sm:p-3.5",
                           isSelected
                             ? "border-btnPrimary bg-sky-50/50 ring-2 ring-btnPrimary/20"
                             : "border-gray-200 bg-white hover:border-gray-300",
@@ -262,11 +264,11 @@ export const MakePaymentTab = ({
                   })}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 border-t border-gray-100 pt-3">
+                <div className="flex flex-col gap-2 border-t border-gray-100 pt-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
                   <span className="text-xs font-semibold text-primary/70">
                     Or enter custom amount:
                   </span>
-                  <div className="relative w-36">
+                  <div className="relative w-full max-w-44">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-primary/50">
                       CHF
                     </span>
@@ -292,12 +294,12 @@ export const MakePaymentTab = ({
         </section>
 
         {/* 3. Choose your payment method */}
-        <section className="mt-8">
-          <h3 className="text-[15px] font-bold text-primary">
+        <section className="mt-6 min-w-0 sm:mt-8">
+          <h3 className="text-sm font-bold text-primary sm:text-[15px]">
             3. Choose your payment method
           </h3>
 
-          <div className="mt-4 divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200 bg-white">
+          <div className="mt-3 divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200 bg-white sm:mt-4">
             {paymentMethods.map((method) => {
               const isSelected = selectedMethodId === method.id;
 
@@ -314,15 +316,15 @@ export const MakePaymentTab = ({
                     }
                   }}
                   className={[
-                    "flex cursor-pointer items-center justify-between gap-3 p-4 transition-colors sm:p-5",
+                    "flex min-w-0 cursor-pointer items-start justify-between gap-2 p-3.5 transition-colors sm:items-center sm:gap-3 sm:p-5",
                     isSelected ? "bg-blue-50/30" : "hover:bg-gray-50/60",
                   ].join(" ")}
                 >
-                  <div className="flex min-w-0 items-center gap-3.5">
+                  <div className="flex min-w-0 flex-1 items-start gap-3 sm:items-center sm:gap-3.5">
                     <RadioDot selected={isSelected} />
-                    <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                    <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 sm:gap-2.5">
                       <PaymentMethodIcon brand={method.brand} />
-                      <span className="text-sm font-semibold text-primary">
+                      <span className="truncate text-sm font-semibold text-primary">
                         {method.title}
                       </span>
                       {method.isDefault ? (
@@ -330,10 +332,15 @@ export const MakePaymentTab = ({
                           Default
                         </span>
                       ) : null}
+                      {method.expiry ? (
+                        <span className="w-full text-xs font-medium text-primary/45 sm:hidden">
+                          Exp. {method.expiry}
+                        </span>
+                      ) : null}
                     </div>
                   </div>
 
-                  <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+                  <div className="flex shrink-0 items-center gap-2 sm:gap-4">
                     {method.expiry ? (
                       <span className="hidden text-xs font-medium text-primary/45 sm:inline">
                         Exp. {method.expiry}
@@ -395,9 +402,9 @@ export const MakePaymentTab = ({
             <button
               type="button"
               onClick={onOpenAddMethod}
-              className="group flex w-full items-center gap-3.5 p-4 text-left transition-colors hover:bg-sky-50/30 sm:p-5"
+              className="group flex w-full items-center gap-3 p-3.5 text-left transition-colors hover:bg-sky-50/30 sm:gap-3.5 sm:p-5"
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-gray-300 text-gray-400 transition-colors group-hover:border-btnPrimary group-hover:text-btnPrimary">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-gray-300 text-gray-400 transition-colors group-hover:border-btnPrimary group-hover:text-btnPrimary">
                 <Plus size={12} strokeWidth={2.5} />
               </span>
               <span className="text-sm font-semibold text-primary/80 transition-colors group-hover:text-btnPrimary">
@@ -408,15 +415,17 @@ export const MakePaymentTab = ({
         </section>
 
         {/* 4. Confirm the payment */}
-        <section className="mt-8">
-          <h3 className="text-[15px] font-bold text-primary">4. Confirm the payment</h3>
+        <section className="mt-6 min-w-0 sm:mt-8">
+          <h3 className="text-sm font-bold text-primary sm:text-[15px]">
+            4. Confirm the payment
+          </h3>
 
-          <div className="mt-4 flex flex-col justify-between gap-4 rounded-xl border border-blue-100 bg-[#eef7ff] p-5 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-3.5">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-white text-btnPrimary shadow-sm">
-                <ShieldCheck size={22} />
+          <div className="mt-3 flex flex-col justify-between gap-4 rounded-xl border border-blue-100 bg-[#eef7ff] p-4 sm:mt-4 sm:flex-row sm:items-center sm:p-5">
+            <div className="flex min-w-0 items-start gap-3 sm:items-center sm:gap-3.5">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-white text-btnPrimary shadow-sm sm:h-11 sm:w-11">
+                <ShieldCheck size={20} />
               </span>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm font-bold text-primary">100% secure payment</p>
                 <p className="mt-0.5 text-xs text-primary/60">
                   Your information is encrypted and protected.
@@ -424,7 +433,7 @@ export const MakePaymentTab = ({
               </div>
             </div>
 
-            <div className="self-end text-left sm:self-center sm:text-right">
+            <div className="self-start text-left sm:self-center sm:text-right">
               <p className="text-xl font-extrabold tracking-tight text-primary sm:text-2xl">
                 CHF {currentAmount}
               </p>
@@ -434,11 +443,11 @@ export const MakePaymentTab = ({
         </section>
       </div>
 
-      {/* Footer actions — outside card */}
-      <div className="flex items-center justify-between gap-3">
+      {/* Footer actions */}
+      <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Link
           to="/dashboard/user"
-          className="rounded-xl border border-gray-200 bg-white px-6 py-2.5 text-sm font-semibold text-primary/70 shadow-sm transition-colors hover:bg-gray-50 hover:text-primary"
+          className="inline-flex w-full items-center justify-center rounded-xl border border-gray-200 bg-white px-6 py-2.5 text-sm font-semibold text-primary/70 shadow-sm transition-colors hover:bg-gray-50 hover:text-primary sm:w-auto"
         >
           Cancel
         </Link>
@@ -447,7 +456,7 @@ export const MakePaymentTab = ({
           type="button"
           disabled={isProcessing}
           onClick={onPayNow}
-          className="inline-flex items-center gap-2 rounded-xl bg-btnPrimary px-6 py-3 text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-[0.99] disabled:opacity-50 sm:px-8"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-btnPrimary px-6 py-3 text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-[0.99] disabled:opacity-50 sm:w-auto sm:px-8"
         >
           <CreditCard size={16} />
           <span>{isProcessing ? "Processing..." : `Pay CHF ${currentAmount}`}</span>

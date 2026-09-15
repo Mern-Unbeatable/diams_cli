@@ -12,7 +12,6 @@ import { Link } from "react-router";
 import {
   ROLE_DASHBOARD_PATHS,
   ROLES,
-  getRoleDashboardPath,
 } from "@/config/dummyAuth";
 import { useAuth } from "@/context/AuthContext";
 
@@ -187,11 +186,8 @@ const UserHeaderActions = ({ user, initials }) => {
   );
 };
 
-const StaffHeaderActions = ({ user, roleLabel, initials }) => (
+const StaffHeaderActions = ({ user, initials }) => (
   <div className="flex items-center gap-3">
-    <span className="hidden rounded-full bg-btnPrimary/10 px-3 py-1 text-xs font-bold text-btnPrimary sm:inline">
-      {roleLabel}
-    </span>
     <div className="flex items-center gap-2.5">
       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
         {initials}
@@ -210,7 +206,7 @@ const DashboardHeader = ({
   isSidebarCollapsed = false,
   onToggleCollapse,
 }) => {
-  const { user, roleLabel } = useAuth();
+  const { user } = useAuth();
   const initials = user.name
     .split(" ")
     .map((part) => part[0])
@@ -229,31 +225,15 @@ const DashboardHeader = ({
         >
           <Menu size={22} />
         </button>
-        <nav
-          aria-label="Breadcrumb"
-          className="flex min-w-0 items-center text-[15px]"
-        >
-          <Link
-            to={getRoleDashboardPath(user.role)}
-            className="shrink-0 text-[#555] transition-colors hover:text-primary"
-          >
-            Main
-          </Link>
-          <span className="mx-2 text-[#c4c4c4]">/</span>
-          <span className="truncate text-[#b0b0b0]">
-            {title === "Overview" ? "Dashboard" : title}
-          </span>
-        </nav>
+        <p className="truncate text-[15px] text-[#b0b0b0]">
+          {title === "Overview" ? "Dashboard" : title}
+        </p>
       </div>
 
       {user.role === ROLES.USER ? (
         <UserHeaderActions user={user} initials={initials} />
       ) : (
-        <StaffHeaderActions
-          user={user}
-          roleLabel={roleLabel}
-          initials={initials}
-        />
+        <StaffHeaderActions user={user} initials={initials} />
       )}
     </header>
   );

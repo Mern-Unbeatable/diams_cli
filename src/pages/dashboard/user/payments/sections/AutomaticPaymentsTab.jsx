@@ -161,7 +161,7 @@ export const AutomaticPaymentsTab = ({
           </div>
 
           <span
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm ${
               isEnabled
                 ? "bg-emerald-50 text-emerald-600 border border-emerald-100"
                 : "bg-gray-100 text-gray-500"
@@ -181,7 +181,7 @@ export const AutomaticPaymentsTab = ({
         </p>
 
         {/* Blue Amount Banner */}
-        <div className="rounded-xl bg-linear-to-r from-[#1765dc] to-[#1e78f0] p-6 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md shadow-blue-500/10">
+        <div className="flex flex-col justify-between gap-4 rounded-xl bg-linear-to-r from-[#002855] to-[#3182CE] p-6 text-white shadow-md shadow-blue-900/15 sm:flex-row sm:items-center">
           <div>
             <p className="text-xs text-white/80 font-medium">Monthly amount</p>
             <p className="text-2xl sm:text-3xl font-extrabold text-white mt-0.5 tracking-tight">
@@ -190,8 +190,8 @@ export const AutomaticPaymentsTab = ({
           </div>
 
           {/* Toggle Switch */}
-          <div className="flex items-center gap-3 self-end sm:self-center">
-            <span className="text-xs sm:text-sm font-semibold text-white">
+          <div className="flex items-center gap-2.5 self-end sm:self-center">
+            <span className="text-xs font-semibold text-white sm:text-sm">
               Enable AutoPay
             </span>
             <button
@@ -199,13 +199,13 @@ export const AutomaticPaymentsTab = ({
               role="switch"
               aria-checked={isEnabled}
               onClick={() => setIsEnabled(!isEnabled)}
-              className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full p-0.5 transition-colors duration-200 ease-in-out focus:outline-none ${
+              className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full p-0.5 transition-colors duration-200 ease-in-out focus:outline-none ${
                 isEnabled ? "bg-[#0b1c3d]" : "bg-white/30"
               }`}
             >
               <span
-                className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
-                  isEnabled ? "translate-x-5" : "translate-x-0"
+                className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+                  isEnabled ? "translate-x-4" : "translate-x-0"
                 }`}
               />
             </button>

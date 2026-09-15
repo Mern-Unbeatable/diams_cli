@@ -26,40 +26,37 @@ export const PopularTopicsSection = ({ topics, onSelectTopic, onViewAll }) => {
   };
 
   return (
-    <section className="space-y-3.5">
-      <h3 className="text-base sm:text-lg font-bold text-primary">
+    <section className="min-w-0 space-y-3.5">
+      <h3 className="text-base font-bold text-primary sm:text-lg">
         Popular Topics
       </h3>
 
-      {/* 5-Column Cards Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+      {/* Stack → 2 → 3 → 5 only when left column is wide enough */}
+      <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
         {(topics || []).map((topic) => (
           <button
             key={topic.id}
             type="button"
             onClick={() => onSelectTopic?.(topic)}
-            className="flex flex-col items-center justify-center rounded-xl border border-gray-200/90 bg-white p-4 text-center shadow-xs transition-all hover:bg-sky-50/50 hover:border-sky-200 group cursor-pointer"
+            className="group flex min-w-0 items-start gap-3 rounded-xl border border-gray-200/90 bg-white p-4 text-left shadow-xs transition-all hover:border-sky-200 hover:bg-sky-50/50 2xl:flex-col 2xl:items-center 2xl:text-center"
           >
-            {/* Icon Container */}
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-[#0284c7] border border-sky-100/70 shadow-2xs group-hover:scale-105 transition-transform">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-sky-100/70 bg-sky-50 text-[#0284c7] shadow-2xs transition-transform group-hover:scale-105">
               {getTopicIcon(topic.icon)}
             </span>
 
-            {/* Title */}
-            <p className="mt-3 text-xs font-bold text-primary group-hover:text-btnPrimary transition-colors line-clamp-1">
-              {topic.title}
-            </p>
-
-            {/* Description */}
-            <p className="mt-1 text-[10px] text-primary/50 line-clamp-2 leading-tight">
-              {topic.description}
-            </p>
+            <div className="min-w-0 flex-1 space-y-1">
+              <p className="text-sm font-bold text-primary transition-colors group-hover:text-btnPrimary">
+                {topic.title}
+              </p>
+              <p className="text-xs leading-relaxed text-primary/50">
+                {topic.description}
+              </p>
+            </div>
           </button>
         ))}
       </div>
 
-      {/* View All Link */}
-      <div className="text-center pt-1">
+      <div className="pt-1 text-center">
         <button
           type="button"
           onClick={onViewAll}

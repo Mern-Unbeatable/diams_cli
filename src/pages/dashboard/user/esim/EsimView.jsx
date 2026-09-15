@@ -6,7 +6,6 @@ import { EsimManageSection } from "./components/EsimManageSection";
 import { EsimPromoCard } from "./components/EsimPromoCard";
 import { EsimInfoCard } from "./components/EsimInfoCard";
 import { EsimHelpCard } from "./components/EsimHelpCard";
-import { EsimFooter } from "./components/EsimFooter";
 import { RenameEsimModal } from "./components/RenameEsimModal";
 import { DeleteEsimModal } from "./components/DeleteEsimModal";
 import { NewEsimModal } from "./components/NewEsimModal";
@@ -21,7 +20,6 @@ const EsimView = () => {
   const [activeTab, setActiveTab] = useState("qr-code");
   const [esimData, setEsimData] = useState(activeEsim);
 
-  // Modals state
   const [isRenameOpen, setIsRenameOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isNewEsimOpen, setIsNewEsimOpen] = useState(false);
@@ -30,7 +28,6 @@ const EsimView = () => {
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isFaqOpen, setIsFaqOpen] = useState(false);
 
-  // Handlers
   const handleRenameSave = (newName) => {
     setEsimData((prev) => ({
       ...prev,
@@ -61,23 +58,19 @@ const EsimView = () => {
   };
 
   return (
-    <div className="space-y-6 pb-4">
-      {/* Top Header */}
+    <div className="min-w-0 space-y-6 pb-4">
       <div>
-        <h2 className="text-2xl font-bold text-primary sm:text-[1.75rem]">
+        <h2 className="text-xl font-bold text-primary sm:text-2xl sm:text-[1.75rem]">
           {header.title}
         </h2>
         <p className="mt-1 text-sm text-primary/60">{header.subtitle}</p>
       </div>
 
-      {/* Main Grid Layout */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Left Column (2/3 width) */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Active Card */}
-          <EsimActiveCard esimData={esimData} />
+      {/* Status / Active eSIM card — full width at top */}
+      <EsimActiveCard esimData={esimData} />
 
-          {/* Install eSIM Section */}
+      <div className="grid min-w-0 gap-6 xl:grid-cols-12">
+        <div className="min-w-0 space-y-6 xl:col-span-9">
           <EsimInstallCard
             installTabs={installTabs}
             activeTab={activeTab}
@@ -87,7 +80,6 @@ const EsimView = () => {
             onOpenGuideModal={() => setIsGuideOpen(true)}
           />
 
-          {/* Manage your eSIM Section */}
           <EsimManageSection
             onRename={() => setIsRenameOpen(true)}
             onDelete={() => setIsDeleteOpen(true)}
@@ -95,18 +87,14 @@ const EsimView = () => {
           />
         </div>
 
-        {/* Right Column (1/3 width) */}
-        <div className="space-y-6">
-          {/* Freedom of eSIM Promo Card */}
+        <div className="min-w-0 space-y-6 xl:col-span-3 xl:sticky xl:top-24 xl:self-start">
           <EsimPromoCard onLearnMore={() => setIsGuideOpen(true)} />
 
-          {/* eSIM Information Card */}
           <EsimInfoCard
             esimData={esimData}
             onOpenDetailsModal={() => setIsDetailsOpen(true)}
           />
 
-          {/* Need help? Card */}
           <EsimHelpCard
             onOpenGuide={() => setIsGuideOpen(true)}
             onOpenFaq={() => setIsFaqOpen(true)}
@@ -114,10 +102,6 @@ const EsimView = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <EsimFooter />
-
-      {/* Interactive Modals */}
       <RenameEsimModal
         isOpen={isRenameOpen}
         onClose={() => setIsRenameOpen(false)}

@@ -73,9 +73,9 @@ export const EsimDeviceTransferTab = ({ onStartTransfer }) => {
   };
 
   return (
-    <div className="grid gap-5 md:grid-cols-2">
+    <div className="grid gap-5 lg:grid-cols-[1.45fr_1fr]">
       {/* Left Main Card */}
-      <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-5 flex flex-col justify-between">
+      <div className="min-w-0 rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-5 flex flex-col justify-between">
         <div className="space-y-4">
           {/* Header */}
           <div>
@@ -89,7 +89,7 @@ export const EsimDeviceTransferTab = ({ onStartTransfer }) => {
           </div>
 
           {/* Device Transition Cards */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-2.5">
             {/* Current Device */}
             <div className="flex items-center gap-3 rounded-xl border border-gray-200/80 bg-gray-50/70 p-3 sm:p-3.5 flex-1 min-w-0">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-primary/70 border border-gray-200/60 shadow-2xs">
@@ -109,8 +109,8 @@ export const EsimDeviceTransferTab = ({ onStartTransfer }) => {
               </div>
             </div>
 
-            {/* Transition Arrow */}
-            <div className="flex justify-center py-1 sm:py-0">
+            {/* Transition Arrow — aligned near top of device cards */}
+            <div className="flex justify-center py-1 sm:py-0 sm:mt-4">
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-btnPrimary text-white shadow-xs text-xs font-bold">
                 <ArrowRight size={14} />
               </span>
@@ -188,7 +188,7 @@ export const EsimDeviceTransferTab = ({ onStartTransfer }) => {
       </div>
 
       {/* Right Column: Estimated transfer time & Supported devices */}
-      <div className="space-y-4 flex flex-col justify-between">
+      <div className="min-w-0 space-y-4">
         {/* Widget 1: Estimated transfer time */}
         <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-2">
           <div className="flex items-center gap-1.5 text-xs font-bold text-[#0284c7]">

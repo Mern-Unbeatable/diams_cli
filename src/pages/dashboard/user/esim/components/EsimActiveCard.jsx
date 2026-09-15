@@ -18,7 +18,7 @@ export const EsimActiveCard = ({ esimData }) => {
         {/* Left Column: Icon & Line Details */}
         <div className="flex items-start gap-4 sm:gap-5">
           {/* Blue Chip Icon */}
-          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 flex-col items-center justify-center rounded-xl bg-gradient-to-b from-[#3ba7ff] to-[#1e88e5] text-white shadow-md shadow-blue-500/20">
+          <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-xl bg-linear-to-b from-[#3ba7ff] to-[#1e88e5] text-white shadow-md shadow-blue-500/20 sm:h-20 sm:w-20">
             <Cpu className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={1.75} />
             <span className="mt-0.5 text-[11px] sm:text-xs font-bold tracking-tight">
               eSIM
