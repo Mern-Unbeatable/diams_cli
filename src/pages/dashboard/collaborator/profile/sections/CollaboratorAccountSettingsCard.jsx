@@ -1,19 +1,32 @@
 import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { Camera, Check } from "lucide-react";
+import { accountSettingsSchema, zodResolver } from "@/lib/formSchemas";
+import { FieldError } from "@/Components/form/FieldError";
 
 const inputClass =
   "w-full rounded-md border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 hover:border-slate-300 focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6]/30";
 
 const CollaboratorAccountSettingsCard = () => {
-  const [firstName, setFirstName] = useState("Kevin");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("customer@gmail.com");
-  const [phoneNumber, setPhoneNumber] = useState("+1-202-555-0118");
   const [avatarUrl, setAvatarUrl] = useState(
     "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
   );
   const [isSaved, setIsSaved] = useState(false);
   const fileInputRef = useRef(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(accountSettingsSchema),
+    defaultValues: {
+      firstName: "Kevin",
+      lastName: "",
+      email: "customer@gmail.com",
+      phoneNumber: "+1-202-555-0118",
+    },
+  });
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -23,8 +36,7 @@ const CollaboratorAccountSettingsCard = () => {
     }
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 2500);
   };
@@ -38,7 +50,7 @@ const CollaboratorAccountSettingsCard = () => {
       </div>
 
       <form
-        onSubmit={handleSave}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-1 flex-col gap-6 p-5 sm:p-6"
       >
         {isSaved && (
@@ -85,10 +97,10 @@ const CollaboratorAccountSettingsCard = () => {
                 </label>
                 <input
                   type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
                   className={inputClass}
+                  {...register("firstName")}
                 />
+                <FieldError message={errors.firstName?.message} />
               </div>
 
               <div>
@@ -98,10 +110,10 @@ const CollaboratorAccountSettingsCard = () => {
                 <input
                   type="text"
                   placeholder="Display name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
                   className={inputClass}
+                  {...register("lastName")}
                 />
+                <FieldError message={errors.lastName?.message} />
               </div>
 
               <div>
@@ -110,10 +122,10 @@ const CollaboratorAccountSettingsCard = () => {
                 </label>
                 <input
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   className={inputClass}
+                  {...register("email")}
                 />
+                <FieldError message={errors.email?.message} />
               </div>
 
               <div>
@@ -122,10 +134,10 @@ const CollaboratorAccountSettingsCard = () => {
                 </label>
                 <input
                   type="tel"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
                   className={inputClass}
+                  {...register("phoneNumber")}
                 />
+                <FieldError message={errors.phoneNumber?.message} />
               </div>
             </div>
           </div>
@@ -134,7 +146,8 @@ const CollaboratorAccountSettingsCard = () => {
         <div className="mt-auto pt-1">
           <button
             type="submit"
-            className="rounded-md bg-[#3b82f6] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-sm transition-colors hover:bg-[#2563eb]"
+            disabled={isSubmitting}
+            className="rounded-md bg-[#3b82f6] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-sm transition-colors hover:bg-[#2563eb] disabled:opacity-60"
           >
             Save Changes
           </button>

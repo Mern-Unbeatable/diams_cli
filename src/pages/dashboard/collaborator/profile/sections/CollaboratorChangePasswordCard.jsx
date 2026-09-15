@@ -1,40 +1,35 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Eye, EyeOff, Check } from "lucide-react";
+import { changePasswordSchema, zodResolver } from "@/lib/formSchemas";
+import { FieldError } from "@/Components/form/FieldError";
 
 const inputClass =
   "w-full rounded-md border border-slate-200 bg-white py-2.5 pl-3 pr-10 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 hover:border-slate-300 focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6]/30";
 
 const CollaboratorChangePasswordCard = () => {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-
   const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!currentPassword || !newPassword || !confirmPassword) {
-      setErrorMessage("Please fill in all password fields.");
-      return;
-    }
-    if (newPassword.length < 8) {
-      setErrorMessage("New password must be at least 8 characters.");
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setErrorMessage("New passwords do not match.");
-      return;
-    }
-    setErrorMessage("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(changePasswordSchema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+
+  const onSubmit = () => {
     setIsSuccess(true);
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
+    reset();
     setTimeout(() => setIsSuccess(false), 3000);
   };
 
@@ -47,19 +42,13 @@ const CollaboratorChangePasswordCard = () => {
       </div>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-1 flex-col gap-4 p-5 sm:p-6"
       >
         {isSuccess && (
           <div className="flex items-center gap-2 rounded-lg bg-emerald-50 px-3.5 py-2 text-xs font-semibold text-emerald-700">
             <Check className="h-3.5 w-3.5" />
             <span>Password changed successfully!</span>
-          </div>
-        )}
-
-        {errorMessage && (
-          <div className="rounded-lg bg-rose-50 px-3.5 py-2 text-xs font-semibold text-rose-700">
-            {errorMessage}
           </div>
         )}
 
@@ -71,9 +60,8 @@ const CollaboratorChangePasswordCard = () => {
             <div className="relative">
               <input
                 type={showCurrent ? "text" : "password"}
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
                 className={inputClass}
+                {...register("currentPassword")}
               />
               <button
                 type="button"
@@ -88,6 +76,7 @@ const CollaboratorChangePasswordCard = () => {
                 )}
               </button>
             </div>
+            <FieldError message={errors.currentPassword?.message} />
           </div>
 
           <div>
@@ -98,9 +87,8 @@ const CollaboratorChangePasswordCard = () => {
               <input
                 type={showNew ? "text" : "password"}
                 placeholder="8+ characters"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
                 className={inputClass}
+                {...register("newPassword")}
               />
               <button
                 type="button"
@@ -115,6 +103,7 @@ const CollaboratorChangePasswordCard = () => {
                 )}
               </button>
             </div>
+            <FieldError message={errors.newPassword?.message} />
           </div>
         </div>
 
@@ -125,9 +114,8 @@ const CollaboratorChangePasswordCard = () => {
           <div className="relative">
             <input
               type={showConfirm ? "text" : "password"}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
               className={inputClass}
+              {...register("confirmPassword")}
             />
             <button
               type="button"
@@ -142,12 +130,14 @@ const CollaboratorChangePasswordCard = () => {
               )}
             </button>
           </div>
+          <FieldError message={errors.confirmPassword?.message} />
         </div>
 
         <div className="mt-auto pt-2">
           <button
             type="submit"
-            className="rounded-md bg-[#3b82f6] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-sm transition-colors hover:bg-[#2563eb]"
+            disabled={isSubmitting}
+            className="rounded-md bg-[#3b82f6] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-sm transition-colors hover:bg-[#2563eb] disabled:opacity-60"
           >
             Change Password
           </button>

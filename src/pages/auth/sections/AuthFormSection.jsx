@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { AUTH_PAGE } from "@/config/auth";
-import { DUMMY_USERS, getRoleDashboardPath, ROLE_LABELS } from "@/config/dummyAuth";
+import {
+  DUMMY_USERS,
+  getRoleDashboardPath,
+  ROLE_LABELS,
+} from "@/config/dummyAuth";
 import { BRAND, LOGO_CLASS } from "@/config/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { loginSchema, zodResolver } from "@/lib/formSchemas";
+import { FieldError } from "@/Components/form/FieldError";
 
 const labelClass = "mb-2 block text-sm font-bold text-primary";
 const inputClass =
@@ -16,31 +23,40 @@ const AuthFormSection = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [authError, setAuthError] = useState("");
   const [googleHint, setGoogleHint] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setGoogleHint("");
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    },
+  });
 
-    const result = login(email, password);
+  const onSubmit = (values) => {
+    setGoogleHint("");
+    const result = login(values.email, values.password);
 
     if (!result.ok) {
-      setError(result.message);
+      setAuthError(result.message);
       return;
     }
 
-    setError("");
+    setAuthError("");
     navigate(getRoleDashboardPath(result.user.role), { replace: true });
   };
 
   const fillDemoAccount = (account) => {
-    setEmail(account.email);
-    setPassword(account.password);
-    setError("");
+    setValue("email", account.email, { shouldValidate: true });
+    setValue("password", account.password, { shouldValidate: true });
+    setAuthError("");
     setGoogleHint("");
   };
 
@@ -75,16 +91,22 @@ const AuthFormSection = () => {
                 className="flex w-full items-center justify-between rounded-lg bg-white px-3 py-2 text-left text-xs text-primary shadow-sm ring-1 ring-gray-100 transition-colors hover:ring-btnPrimary/40"
               >
                 <span>
-                  <span className="font-bold">{ROLE_LABELS[account.role]}</span>
-                  <span className="mt-0.5 block text-primary/55">{account.email}</span>
+                  <span className="font-bold">
+                    {ROLE_LABELS[account.role]}
+                  </span>
+                  <span className="mt-0.5 block text-primary/55">
+                    {account.email}
+                  </span>
                 </span>
-                <span className="font-mono text-primary/70">{account.password}</span>
+                <span className="font-mono text-primary/70">
+                  {account.password}
+                </span>
               </button>
             ))}
           </div>
         </div>
 
-        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="auth-email" className={labelClass}>
               {form.emailLabel}
@@ -101,11 +123,10 @@ const AuthFormSection = () => {
                 autoComplete="email"
                 placeholder={form.emailPlaceholder}
                 className={inputClass}
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
+                {...register("email")}
               />
             </div>
+            <FieldError message={errors.email?.message} />
           </div>
 
           <div>
@@ -124,9 +145,7 @@ const AuthFormSection = () => {
                 autoComplete="current-password"
                 placeholder={form.passwordPlaceholder}
                 className={`${inputClass} pr-11`}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
+                {...register("password")}
               />
               <button
                 type="button"
@@ -137,15 +156,15 @@ const AuthFormSection = () => {
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
+            <FieldError message={errors.password?.message} />
           </div>
 
           <div className="flex items-center justify-between gap-3 pt-0.5">
             <label className="inline-flex cursor-pointer items-center gap-2.5">
               <input
                 type="checkbox"
-                checked={rememberMe}
-                onChange={(event) => setRememberMe(event.target.checked)}
                 className="h-4 w-4 rounded border-gray-300 text-btnPrimary focus:ring-btnPrimary/30"
+                {...register("rememberMe")}
               />
               <span className="text-sm text-primary/70">{form.rememberMe}</span>
             </label>
@@ -158,15 +177,16 @@ const AuthFormSection = () => {
             </Link>
           </div>
 
-          {error ? (
+          {authError ? (
             <p className="rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-600">
-              {error}
+              {authError}
             </p>
           ) : null}
 
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-btnPrimary px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            disabled={isSubmitting}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-btnPrimary px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
           >
             <Lock size={18} strokeWidth={2} />
             {form.submit}
@@ -182,7 +202,9 @@ const AuthFormSection = () => {
         <button
           type="button"
           onClick={() =>
-            setGoogleHint("Google sign-in is not available in this demo. Use an account above.")
+            setGoogleHint(
+              "Google sign-in is not available in this demo. Use an account above.",
+            )
           }
           className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-gray-200 bg-white px-6 py-3.5 text-sm font-semibold text-primary transition-colors hover:bg-gray-50"
         >
@@ -191,7 +213,9 @@ const AuthFormSection = () => {
         </button>
 
         {googleHint ? (
-          <p className="mt-3 text-center text-xs text-primary/55">{googleHint}</p>
+          <p className="mt-3 text-center text-xs text-primary/55">
+            {googleHint}
+          </p>
         ) : null}
 
         <p className="mt-8 text-center text-sm text-primary/55">
