@@ -1,21 +1,41 @@
 import { Check, Mail, UploadCloud, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { newTicketSchema, zodResolver } from "@/lib/formSchemas";
+import { FieldError } from "@/Components/form/FieldError";
 
 export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
-  const [topic, setTopic] = useState("eSIM");
-  const [subject, setSubject] = useState("");
-  const [description, setDescription] = useState("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(newTicketSchema),
+    defaultValues: {
+      topic: "eSIM",
+      subject: "",
+      description: "",
+    },
+  });
+
+  useEffect(() => {
+    if (isOpen) {
+      reset({
+        topic: "eSIM",
+        subject: "",
+        description: "",
+      });
+    }
+  }, [isOpen, reset]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!subject.trim() || !description.trim()) return;
-
+  const onSubmit = (values) => {
     const newTicket = {
       id: `NS-${Math.floor(10000 + Math.random() * 90000)}`,
-      title: subject.trim(),
-      category: topic,
+      title: values.subject.trim(),
+      category: values.topic,
       status: "In Progress",
       statusVariant: "blue",
       priority: "Medium",
@@ -23,12 +43,12 @@ export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
       assignedAgent: "Support Team",
       updated: "Just now",
       date: "Today",
-      description: description.trim(),
+      description: values.description.trim(),
       conversation: [
         {
           id: 1,
           sender: "Customer",
-          text: description.trim(),
+          text: values.description.trim(),
         },
       ],
     };
@@ -42,7 +62,7 @@ export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
       <div className="w-full max-w-lg rounded-xl border border-gray-200 bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-btnPrimary border border-sky-100">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-sky-100 bg-sky-50 text-btnPrimary">
               <Mail size={18} />
             </span>
             <h3 className="text-base font-bold text-primary">
@@ -52,19 +72,21 @@ export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-primary/40 hover:bg-gray-100 hover:text-primary transition-colors"
+            className="rounded-lg p-1.5 text-primary/40 transition-colors hover:bg-gray-100 hover:text-primary"
           >
             <X size={18} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-4 space-y-3.5 text-xs">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-4 space-y-3.5 text-xs"
+        >
           <div className="space-y-1">
             <label className="font-bold text-primary">Topic Category</label>
             <select
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
               className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 font-semibold text-primary focus:border-btnPrimary focus:outline-none"
+              {...register("topic")}
             >
               <option value="eSIM">eSIM & Activation</option>
               <option value="Data">Data & Connectivity</option>
@@ -72,18 +94,18 @@ export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
               <option value="Account">Account & Profile</option>
               <option value="SIM">SIM & PUK</option>
             </select>
+            <FieldError message={errors.topic?.message} />
           </div>
 
           <div className="space-y-1">
             <label className="font-bold text-primary">Subject</label>
             <input
               type="text"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
               placeholder="e.g. Cannot connect to 5G network in Zurich"
               className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 font-semibold text-primary focus:border-btnPrimary focus:outline-none"
-              required
+              {...register("subject")}
             />
+            <FieldError message={errors.subject?.message} />
           </div>
 
           <div className="space-y-1">
@@ -92,32 +114,32 @@ export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
             </label>
             <textarea
               rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
               placeholder="Please describe your issue in detail..."
               className="w-full rounded-xl border border-gray-200 bg-white p-3 font-medium text-primary focus:border-btnPrimary focus:outline-none"
-              required
+              {...register("description")}
             />
+            <FieldError message={errors.description?.message} />
           </div>
 
-          <div className="rounded-xl border border-dashed border-sky-200 bg-sky-50/40 p-3 text-center cursor-pointer hover:bg-sky-50 transition-colors">
+          <div className="cursor-pointer rounded-xl border border-dashed border-sky-200 bg-sky-50/40 p-3 text-center transition-colors hover:bg-sky-50">
             <UploadCloud size={18} className="mx-auto text-btnPrimary" />
-            <p className="font-semibold text-primary text-[11px] mt-0.5">
+            <p className="mt-0.5 text-[11px] font-semibold text-primary">
               Attach screenshot or log file (Optional)
             </p>
           </div>
 
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-gray-100">
+          <div className="flex items-center justify-end gap-2.5 border-t border-gray-100 pt-3">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl border border-gray-200 px-4 py-2 font-semibold text-primary/70 hover:bg-gray-50 transition-colors"
+              className="rounded-xl border border-gray-200 px-4 py-2 font-semibold text-primary/70 transition-colors hover:bg-gray-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-btnPrimary px-5 py-2 font-bold text-white shadow-sm hover:bg-btnPrimary/90 transition-colors"
+              disabled={isSubmitting}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-btnPrimary px-5 py-2 font-bold text-white shadow-sm transition-colors hover:bg-btnPrimary/90 disabled:opacity-60"
             >
               <Check size={14} />
               <span>Submit Ticket</span>
