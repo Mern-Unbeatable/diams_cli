@@ -33,9 +33,9 @@ export const PaymentsSidebar = ({
     : "Instant Credit";
 
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-5 sm:space-y-6">
       {/* Widget 1: Payment summary (Dark Navy Card) */}
-      <section className="rounded-xl bg-[#0b1329] p-5 sm:p-6 text-white space-y-5 shadow-lg shadow-slate-900/10">
+      <section className="space-y-5 rounded-xl bg-[#0b1329] p-4 text-white shadow-lg shadow-slate-900/10 sm:p-6">
         <div className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-white">
             <FileCheck size={18} />

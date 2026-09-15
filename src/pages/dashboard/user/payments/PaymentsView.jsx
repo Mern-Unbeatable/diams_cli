@@ -98,28 +98,21 @@ const PaymentsView = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-5 sm:space-y-6">
       {/* Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-primary sm:text-[1.75rem]">
+      <div className="min-w-0">
+        <h2 className="text-xl font-bold text-primary sm:text-2xl sm:text-[1.75rem]">
           {header.title}
         </h2>
-        <p className="mt-1 text-sm text-primary/60">
-          {header.subtitle}
-        </p>
+        <p className="mt-1 text-sm text-primary/60">{header.subtitle}</p>
       </div>
 
       {/* Top Tabs */}
-      <DashboardTabs
-        tabs={tabs}
-        activeTab={activeTab}
-        onChange={setActiveTab}
-      />
+      <DashboardTabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
-      {/* Main Grid Layout */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Left Column (2/3 width) */}
-        <div className="lg:col-span-2 space-y-6">
+      {/* Main Grid Layout — stack until xl so 1024px isn't cramped */}
+      <div className="grid min-w-0 gap-6 xl:grid-cols-3">
+        <div className="min-w-0 space-y-6 xl:col-span-2">
           {activeTab === "make-payment" && (
             <MakePaymentTab
               paymentTypes={paymentTypes}
@@ -160,8 +153,7 @@ const PaymentsView = () => {
           )}
         </div>
 
-        {/* Right Column (1/3 width) */}
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6 xl:sticky xl:top-24 xl:self-start">
           <PaymentsSidebar
             selectedBill={selectedBill}
             onViewInvoice={() => setIsInvoiceModalOpen(true)}

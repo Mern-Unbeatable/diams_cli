@@ -114,9 +114,7 @@ const EsimView = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <EsimFooter />
-
+ 
       {/* Interactive Modals */}
       <RenameEsimModal
         isOpen={isRenameOpen}

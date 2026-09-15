@@ -103,7 +103,7 @@ export const EsimInstallCard = ({
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, 400, 400);
     ctx.fillStyle = "#00183c";
-    ctx.font = "bold 18px Inter, sans-serif";
+    ctx.font = "bold 18px Poppins, sans-serif";
     ctx.textAlign = "center";
     ctx.fillText("NovaSky eSIM Activation QR", 200, 40);
     ctx.fillText(esimData?.number || "+41 76 123 45 67", 200, 70);

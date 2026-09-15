@@ -46,7 +46,7 @@ export const PaymentHistoryTab = ({
   return (
     <div className="space-y-6">
       {/* 1. Top 4 Metric / Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {/* Card 1: TOTAL PAID */}
         <div className="rounded-xl border border-gray-100/90 bg-white p-5 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
