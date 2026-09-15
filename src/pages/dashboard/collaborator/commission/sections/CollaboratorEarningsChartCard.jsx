@@ -152,14 +152,14 @@ const CollaboratorEarningsChartCard = () => {
   const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <div className="space-y-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+    <div className="space-y-6 rounded-lg border border-slate-100 bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
       {/* Header Row */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-base font-bold tracking-tight text-[#0b1736] sm:text-lg">
+          <h2 className="text-base font-semibold tracking-tight text-[#0b1736] sm:text-lg">
             Earnings Over Time
           </h2>
-          <p className="mt-0.5 text-xs text-slate-400">
+          <p className="mt-0.5 text-sm text-slate-400">
             Paid invoice revenue by selected period.
           </p>
         </div>
@@ -181,10 +181,10 @@ const CollaboratorEarningsChartCard = () => {
 
       {/* Big Value Display */}
       <div>
-        <div className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+        <div className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
           CHF 4444275.00
         </div>
-        <p className="mt-0.5 text-xs font-medium text-slate-400">
+        <p className="mt-0.5 text-sm font-medium text-slate-400">
           Total Earnings
         </p>
       </div>
