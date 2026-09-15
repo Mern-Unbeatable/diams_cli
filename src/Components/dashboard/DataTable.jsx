@@ -292,9 +292,11 @@ const MobileCards = ({
   const dataColumns = columns.filter(
     (col) => !(col.isAction || col.key === "action"),
   );
-  const hasActions =
-    actions !== false &&
-    columns.some((col) => col.isAction || col.key === "action");
+  const actionCol = columns.find(
+    (col) => col.isAction || col.key === "action",
+  );
+  const hasDropdownActions = actions !== false && actionCol && !actionCol.render;
+  const hasCustomAction = Boolean(actionCol?.render);
 
   if (isLoading) {
     return (
@@ -347,7 +349,7 @@ const MobileCards = ({
                 )}
               </div>
 
-              {hasActions && (
+              {hasDropdownActions && (
                 <RowActions
                   row={row}
                   rowKey={`card-${rowKey}`}
@@ -357,6 +359,12 @@ const MobileCards = ({
                   setActiveRowMenuId={setActiveRowMenuId}
                   triggerRefs={triggerRefs}
                 />
+              )}
+
+              {hasCustomAction && (
+                <div className="shrink-0">
+                  {actionCol.render(row, getCellValue(row, actionCol, 0), rowIndex)}
+                </div>
               )}
             </div>
 
@@ -595,19 +603,23 @@ const DataTable = ({
                         return (
                           <td
                             key={col.key}
-                            className={`px-4 py-3.5 text-center ${
-                              isLast ? "pr-6" : ""
-                            }`}
+                            className={`px-4 py-3.5 ${
+                              col.align === "right" ? "text-right" : "text-center"
+                            } ${isLast ? "pr-6" : ""}`}
                           >
-                            <RowActions
-                              row={row}
-                              rowKey={`table-${rowKey}`}
-                              actions={actions}
-                              onActionClick={onActionClick}
-                              activeRowMenuId={activeRowMenuId}
-                              setActiveRowMenuId={setActiveRowMenuId}
-                              triggerRefs={triggerRefs}
-                            />
+                            {col.render ? (
+                              col.render(row, value, rowIndex)
+                            ) : (
+                              <RowActions
+                                row={row}
+                                rowKey={`table-${rowKey}`}
+                                actions={actions}
+                                onActionClick={onActionClick}
+                                activeRowMenuId={activeRowMenuId}
+                                setActiveRowMenuId={setActiveRowMenuId}
+                                triggerRefs={triggerRefs}
+                              />
+                            )}
                           </td>
                         );
                       }

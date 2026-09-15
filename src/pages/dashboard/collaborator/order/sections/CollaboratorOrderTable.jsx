@@ -74,15 +74,16 @@ const CollaboratorOrderTable = ({
     {
       key: "action",
       label: "Action",
-      align: "right",
+      align: "center",
       render: (row) => (
         <button
           type="button"
-          onClick={() => onViewOrder && onViewOrder(row)}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-sky-600 transition-colors cursor-pointer"
+          onClick={() => onViewOrder?.(row)}
+          className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-sky-50 hover:text-sky-600"
+          title="View order"
+          aria-label="View order"
         >
-          <Eye className="h-3.5 w-3.5 text-slate-400 hover:text-sky-600" />
-          <span>View</span>
+          <Eye className="h-4 w-4" strokeWidth={1.75} />
         </button>
       ),
     },
