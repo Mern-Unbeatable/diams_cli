@@ -77,6 +77,7 @@ const EsimView = () => {
             setActiveTab={setActiveTab}
             esimData={esimData}
             onOpenTransferModal={() => setIsTransferOpen(true)}
+            onOpenGuideModal={() => setIsGuideOpen(true)}
           />
 
           <EsimManageSection

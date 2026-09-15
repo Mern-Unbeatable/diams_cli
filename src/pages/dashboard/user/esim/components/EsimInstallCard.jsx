@@ -2,6 +2,7 @@ import { ArrowRightLeft, Info } from "lucide-react";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
 import { EsimManualEntryTab } from "./EsimManualEntryTab";
 import { EsimDeviceTransferTab } from "./EsimDeviceTransferTab";
+import { EsimHelpTab } from "./EsimHelpTab";
 
 // Crisp SVG QR Code component
 const VectorQrCode = () => (
@@ -91,6 +92,7 @@ export const EsimInstallCard = ({
   esimData,
   onOpenTransferModal,
   onActivationSuccess,
+  onOpenGuideModal,
 }) => {
   return (
     <div className="min-w-0 space-y-4">
@@ -116,6 +118,8 @@ export const EsimInstallCard = ({
         />
       ) : activeTab === "transfer" ? (
         <EsimDeviceTransferTab onStartTransfer={onOpenTransferModal} />
+      ) : activeTab === "help" ? (
+        <EsimHelpTab onOpenGuideModal={onOpenGuideModal} />
       ) : (
         <div className="space-y-6 rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm sm:p-8">
           {activeTab === "qr-code" && (

@@ -119,9 +119,9 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
   return (
     <div className="space-y-5">
       {/* 2-Column Grid for Guides & Sidebar */}
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-[1.45fr_1fr]">
         {/* Left Sub-Column: Installation Guides & Troubleshooting */}
-        <div className="space-y-5">
+        <div className="min-w-0 space-y-5">
           {/* Card 1: Installation guides */}
           <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
             <div>
@@ -202,7 +202,7 @@ export const EsimHelpTab = ({ onOpenGuideModal }) => {
         </div>
 
         {/* Right Sub-Column: Video Tutorial & Offline Resources */}
-        <div className="space-y-5">
+        <div className="min-w-0 space-y-5">
           {/* Card 1: Video tutorial */}
           <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3.5">
             {/* Video Preview Frame */}
