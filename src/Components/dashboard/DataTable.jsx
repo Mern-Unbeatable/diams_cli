@@ -22,18 +22,18 @@ export const getStatusBadgeStyle = (status) => {
 
   switch (normalized) {
     case "pending":
-      return "bg-[#e0f7fa] text-[#0097a7]"; // Light cyan/teal
+      return "bg-[#e0f7fa] text-[#0097a7]";
     case "identity verification":
     case "verification":
-      return "bg-[#f1f3f5] text-[#6c757d]"; // Subtle grey
+      return "bg-[#f1f3f5] text-[#6c757d]";
     case "approved":
-      return "bg-[#e8f0fe] text-[#3b82f6]"; // Soft light blue
+      return "bg-[#e8f0fe] text-[#3b82f6]";
     case "activated":
     case "active":
-      return "bg-[#fef3c7] text-[#d97706]"; // Warm yellow/amber
+      return "bg-[#fef3c7] text-[#d97706]";
     case "rejected":
     case "suspended":
-      return "bg-[#fee2e2] text-[#ef4444]"; // Soft red/pink matching image
+      return "bg-[#fee2e2] text-[#ef4444]";
     default:
       return "bg-slate-100 text-slate-600";
   }
@@ -52,18 +52,15 @@ const resolveActionVisual = (act) => {
   const key = `${act.action || ""} ${act.label || ""} ${act.variant || ""}`.toLowerCase();
 
   if (act.variant === "danger" || /delete|reject|remove/.test(key)) {
-    return {
-      Icon: Trash2,
-      className: "text-red-500 hover:bg-red-50",
-    };
+    return { Icon: Trash2, className: "text-red-500 hover:bg-red-50" };
   }
   if (act.variant === "warning" || /deactivate|suspend|ban|forbid/.test(key)) {
-    return {
-      Icon: Ban,
-      className: "text-orange-500 hover:bg-orange-50",
-    };
+    return { Icon: Ban, className: "text-orange-500 hover:bg-orange-50" };
   }
-  if (act.variant === "success" || /active(?!.*de)|approve|activate|enable/.test(key)) {
+  if (
+    act.variant === "success" ||
+    /active(?!.*de)|approve|activate|enable/.test(key)
+  ) {
     return {
       Icon: CheckCircle2,
       className: "text-emerald-600 hover:bg-emerald-50",
@@ -76,10 +73,7 @@ const resolveActionVisual = (act) => {
     };
   }
   if (/edit|update|rename/.test(key)) {
-    return {
-      Icon: Pencil,
-      className: "text-slate-600 hover:bg-slate-50",
-    };
+    return { Icon: Pencil, className: "text-slate-600 hover:bg-slate-50" };
   }
   if (/pending|verification|identity/.test(key)) {
     return {
@@ -88,22 +82,13 @@ const resolveActionVisual = (act) => {
     };
   }
   if (/detail|view|see/.test(key) || act.isPrimary) {
-    return {
-      Icon: Eye,
-      className: "text-slate-700 hover:bg-slate-50",
-    };
+    return { Icon: Eye, className: "text-slate-700 hover:bg-slate-50" };
   }
   if (/close|cancel|x /.test(key)) {
-    return {
-      Icon: XCircle,
-      className: "text-orange-500 hover:bg-orange-50",
-    };
+    return { Icon: XCircle, className: "text-orange-500 hover:bg-orange-50" };
   }
 
-  return {
-    Icon: Pencil,
-    className: "text-slate-600 hover:bg-slate-50",
-  };
+  return { Icon: Pencil, className: "text-slate-600 hover:bg-slate-50" };
 };
 
 const ActionMenu = ({
@@ -138,7 +123,6 @@ const ActionMenu = ({
         ? Math.max(8, rect.top - menuHeight - gap)
         : rect.bottom + gap;
 
-      // Align menu to the right edge of the trigger, extending left
       const left = Math.min(
         Math.max(8, rect.right - menuWidth),
         window.innerWidth - menuWidth - 8,
@@ -148,7 +132,6 @@ const ActionMenu = ({
     };
 
     updatePosition();
-    // Re-measure after paint so real menu height is used for flip
     const raf = requestAnimationFrame(updatePosition);
 
     window.addEventListener("resize", updatePosition);
@@ -231,6 +214,184 @@ const ActionMenu = ({
   );
 };
 
+const RowActions = ({
+  row,
+  rowKey,
+  actions,
+  onActionClick,
+  activeRowMenuId,
+  setActiveRowMenuId,
+  triggerRefs,
+}) => {
+  if (actions === false) return null;
+
+  return (
+    <div className="relative inline-flex">
+      <button
+        ref={(el) => {
+          triggerRefs.current[rowKey] = el;
+        }}
+        type="button"
+        onClick={() =>
+          setActiveRowMenuId(activeRowMenuId === rowKey ? null : rowKey)
+        }
+        className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-700 transition hover:bg-slate-100"
+        aria-label="Row actions"
+      >
+        <MoreVertical className="h-4 w-4" />
+      </button>
+
+      <ActionMenu
+        row={row}
+        actions={actions}
+        onActionClick={onActionClick}
+        isOpen={activeRowMenuId === rowKey}
+        onClose={() => setActiveRowMenuId(null)}
+        triggerRef={{ current: triggerRefs.current[rowKey] }}
+      />
+    </div>
+  );
+};
+
+const CellValue = ({ col, row, value, rowIndex }) => {
+  if (col.render) {
+    return col.render(row, value, rowIndex);
+  }
+
+  if (col.isStatus || col.key === "status" || /status/i.test(col.key || "")) {
+    return (
+      <span
+        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium tracking-tight ${getStatusBadgeStyle(
+          value,
+        )}`}
+      >
+        {value ?? "—"}
+      </span>
+    );
+  }
+
+  if (value === null || value === undefined || value === "") {
+    return <span className="text-slate-400">—</span>;
+  }
+
+  return <span className={col.className || ""}>{value}</span>;
+};
+
+const MobileCards = ({
+  columns,
+  data,
+  actions,
+  onActionClick,
+  activeRowMenuId,
+  setActiveRowMenuId,
+  triggerRefs,
+  isLoading,
+  emptyMessage,
+  getCellValue,
+}) => {
+  const dataColumns = columns.filter(
+    (col) => !(col.isAction || col.key === "action"),
+  );
+  const hasActions =
+    actions !== false &&
+    columns.some((col) => col.isAction || col.key === "action");
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center gap-2 py-16 text-slate-400">
+        <div className="h-2 w-2 animate-ping rounded-full bg-sky-500" />
+        <span className="text-sm">Loading records...</span>
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="py-16 text-center text-sm text-slate-400">
+        {emptyMessage}
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto w-full max-w-full space-y-3 p-3 sm:p-4">
+      {data.map((row, rowIndex) => {
+        const rowKey = row.id || row.orderId || row.key || `m-${rowIndex}`;
+        const titleCol = dataColumns[0];
+        const titleValue = titleCol
+          ? getCellValue(row, titleCol, 0)
+          : null;
+        const restColumns = dataColumns.slice(1);
+
+        return (
+          <article
+            key={rowKey}
+            className="mx-auto w-full max-w-full rounded-xl border border-slate-200/90 bg-white p-4 shadow-xs"
+          >
+            <div className="mb-3 flex items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                {titleCol && (
+                  <>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      {titleCol.label}
+                    </p>
+                    <div className="mt-1 text-sm font-semibold text-slate-900">
+                      <CellValue
+                        col={titleCol}
+                        row={row}
+                        value={titleValue}
+                        rowIndex={rowIndex}
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {hasActions && (
+                <RowActions
+                  row={row}
+                  rowKey={`card-${rowKey}`}
+                  actions={actions}
+                  onActionClick={onActionClick}
+                  activeRowMenuId={activeRowMenuId}
+                  setActiveRowMenuId={setActiveRowMenuId}
+                  triggerRefs={triggerRefs}
+                />
+              )}
+            </div>
+
+            {restColumns.length > 0 && (
+              <div className="divide-y divide-slate-100 border-t border-slate-100">
+                {restColumns.map((col, colIndex) => {
+                  const value = getCellValue(row, col, colIndex + 1);
+                  return (
+                    <div
+                      key={col.key}
+                      className="flex items-start justify-between gap-3 py-2.5"
+                    >
+                      <span className="shrink-0 text-[11px] font-medium uppercase tracking-wide text-slate-400">
+                        {col.label}
+                      </span>
+                      <div className="min-w-0 text-right text-[13px] text-slate-700">
+                        <CellValue
+                          col={col}
+                          row={row}
+                          value={value}
+                          rowIndex={rowIndex}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </article>
+        );
+      })}
+    </div>
+  );
+};
+
 const DataTable = ({
   columns = [],
   data = [],
@@ -273,8 +434,8 @@ const DataTable = ({
         (col.isAction || col.key === "action"
           ? "center"
           : col.isStatus || col.key === "status"
-          ? "left"
-          : "left"),
+            ? "left"
+            : "left"),
       className: col.className || "",
       isAction: col.isAction || col.key === "action",
       isStatus: col.isStatus || col.key === "status",
@@ -314,26 +475,70 @@ const DataTable = ({
     return row[col.key];
   };
 
+  const paginationFooter =
+    showPagination && totalCount > 0 ? (
+      <div className="flex flex-col items-center justify-center gap-3 border-t border-slate-100 bg-white px-4 py-4 text-center sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:text-left">
+        <p className="text-[13px] font-medium text-[#f97316]">
+          Showing {startIndex} to {endIndex} of {totalCount} results
+        </p>
+
+        <div className="flex items-center justify-center space-x-2">
+          <button
+            type="button"
+            onClick={handlePrevPage}
+            disabled={activePage <= 1}
+            className="rounded-lg border border-[#f97316] bg-white px-3.5 py-1 text-xs font-medium text-[#f97316] transition hover:bg-orange-50 disabled:cursor-not-allowed disabled:border-orange-200 disabled:text-orange-200"
+          >
+            Previous
+          </button>
+          <button
+            type="button"
+            onClick={handleNextPage}
+            disabled={activePage >= totalPages}
+            className="rounded-lg border border-[#f97316] bg-white px-3.5 py-1 text-xs font-medium text-[#f97316] transition hover:bg-orange-50 disabled:cursor-not-allowed disabled:border-orange-200 disabled:text-orange-200"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    ) : null;
+
   return (
     <div
       className={`w-full overflow-hidden rounded-lg border border-slate-100 bg-white font-sans shadow-[0_2px_10px_rgba(0,0,0,0.02)] ${className}`}
     >
-      {/* Table Area — x-scroll only; hide vertical scrollbar */}
-      <div className="overflow-x-auto overflow-y-hidden [scrollbar-width:thin]">
+      {/* Mobile + Tablet: card layout */}
+      <div className="lg:hidden">
+        <MobileCards
+          columns={normalizedColumns}
+          data={paginatedData}
+          actions={actions}
+          onActionClick={onActionClick}
+          activeRowMenuId={activeRowMenuId}
+          setActiveRowMenuId={setActiveRowMenuId}
+          triggerRefs={triggerRefs}
+          isLoading={isLoading}
+          emptyMessage={emptyMessage}
+          getCellValue={getCellValue}
+        />
+      </div>
+
+      {/* Desktop: table layout */}
+      <div className="hidden overflow-x-auto overflow-y-hidden lg:block [scrollbar-width:thin]">
         <table className="w-full min-w-[760px] border-collapse text-left">
           <thead className="bg-[#F6FBFF]">
             <tr className="border-b border-slate-100 text-[13px] font-semibold text-slate-800">
               {normalizedColumns.map((col, idx) => (
                 <th
                   key={col.key}
-                  className={`py-4 px-4 ${idx === 0 ? "pl-6" : ""} ${
+                  className={`px-4 py-4 ${idx === 0 ? "pl-6" : ""} ${
                     idx === normalizedColumns.length - 1 ? "pr-6" : ""
                   } ${
                     col.align === "center"
                       ? "text-center"
                       : col.align === "right"
-                      ? "text-right"
-                      : "text-left"
+                        ? "text-right"
+                        : "text-left"
                   }`}
                 >
                   {col.label}
@@ -366,8 +571,7 @@ const DataTable = ({
               </tr>
             ) : (
               paginatedData.map((row, rowIndex) => {
-                const rowKey =
-                  row.id || row.orderId || row.key || rowIndex;
+                const rowKey = row.id || row.orderId || row.key || rowIndex;
 
                 return (
                   <tr
@@ -384,85 +588,43 @@ const DataTable = ({
                         col.align === "center"
                           ? "text-center"
                           : col.align === "right"
-                          ? "text-right"
-                          : "text-left";
+                            ? "text-right"
+                            : "text-left";
 
-                      if (col.render) {
-                        return (
-                          <td
-                            key={col.key}
-                            className={`py-3.5 px-4 ${alignClass} ${
-                              isFirst ? "pl-6 font-medium text-slate-900" : ""
-                            } ${isLast ? "pr-6" : ""} ${col.className || ""}`}
-                          >
-                            {col.render(row, value, rowIndex)}
-                          </td>
-                        );
-                      }
-
-                      // Action Dropdown Column
                       if (col.isAction || col.key === "action") {
                         return (
                           <td
                             key={col.key}
-                            className={`py-3.5 px-4 text-center ${
+                            className={`px-4 py-3.5 text-center ${
                               isLast ? "pr-6" : ""
                             }`}
                           >
-                            <div className="relative inline-flex">
-                              <button
-                                ref={(el) =>
-                                  (triggerRefs.current[rowKey] = el)
-                                }
-                                type="button"
-                                onClick={() =>
-                                  setActiveRowMenuId(
-                                    activeRowMenuId === rowKey ? null : rowKey
-                                  )
-                                }
-                                className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-700 transition hover:bg-slate-100"
-                              >
-                                <MoreVertical className="h-4 w-4" />
-                              </button>
-
-                              <ActionMenu
-                                row={row}
-                                actions={actions}
-                                onActionClick={onActionClick}
-                                isOpen={activeRowMenuId === rowKey}
-                                onClose={() => setActiveRowMenuId(null)}
-                                triggerRef={{
-                                  current: triggerRefs.current[rowKey],
-                                }}
-                              />
-                            </div>
+                            <RowActions
+                              row={row}
+                              rowKey={`table-${rowKey}`}
+                              actions={actions}
+                              onActionClick={onActionClick}
+                              activeRowMenuId={activeRowMenuId}
+                              setActiveRowMenuId={setActiveRowMenuId}
+                              triggerRefs={triggerRefs}
+                            />
                           </td>
                         );
                       }
 
-                      // Soft Badge Column
-                      if (col.isStatus || col.key === "status") {
-                        const badgeStyle = getStatusBadgeStyle(value);
-                        return (
-                          <td key={col.key} className="py-3.5 px-4">
-                            <span
-                              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium tracking-tight ${badgeStyle}`}
-                            >
-                              {value}
-                            </span>
-                          </td>
-                        );
-                      }
-
-                      // Default Row
                       return (
                         <td
                           key={col.key}
-                          className={`py-3.5 px-4 ${
+                          className={`px-4 py-3.5 ${alignClass} ${
                             isFirst ? "pl-6 font-medium text-slate-800" : ""
                           } ${isLast ? "pr-6" : ""} ${col.className || ""}`}
                         >
-                          {value}
+                          <CellValue
+                            col={col}
+                            row={row}
+                            value={value}
+                            rowIndex={rowIndex}
+                          />
                         </td>
                       );
                     })}
@@ -474,33 +636,7 @@ const DataTable = ({
         </table>
       </div>
 
-      {/* Pagination Footer */}
-      {showPagination && totalCount > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 bg-white px-6 py-4">
-          <p className="text-[13px] font-medium text-[#f97316]">
-            Showing {startIndex} to {endIndex} of {totalCount} results
-          </p>
-
-          <div className="flex items-center space-x-2">
-            <button
-              type="button"
-              onClick={handlePrevPage}
-              disabled={activePage <= 1}
-              className="rounded-lg border border-[#f97316] bg-white px-3.5 py-1 text-xs font-medium text-[#f97316] transition hover:bg-orange-50 disabled:cursor-not-allowed disabled:border-orange-200 disabled:text-orange-200"
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              onClick={handleNextPage}
-              disabled={activePage >= totalPages}
-              className="rounded-lg border border-[#f97316] bg-white px-3.5 py-1 text-xs font-medium text-[#f97316] transition hover:bg-orange-50 disabled:cursor-not-allowed disabled:border-orange-200 disabled:text-orange-200"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
+      {paginationFooter}
     </div>
   );
 };
