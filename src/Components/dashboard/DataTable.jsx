@@ -1,5 +1,16 @@
-import { useState, useRef, useEffect } from "react";
-import { MoreVertical } from "lucide-react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
+import { createPortal } from "react-dom";
+import {
+  Ban,
+  CalendarDays,
+  CheckCircle2,
+  Eye,
+  MoreVertical,
+  Pencil,
+  ShieldAlert,
+  Trash2,
+  XCircle,
+} from "lucide-react";
 
 /**
  * Status Badge Style Resolver
@@ -29,13 +40,71 @@ export const getStatusBadgeStyle = (status) => {
 };
 
 export const DEFAULT_ACTIONS = [
-  { label: "See Details", isPrimary: true, action: "details" },
+  { label: "See Details", action: "details" },
   { label: "Pending", action: "status_pending" },
   { label: "Identity Verification", action: "status_verification" },
   { label: "Approved", action: "status_approved" },
   { label: "Activated", action: "status_activated" },
   { label: "Rejected", action: "status_rejected" },
 ];
+
+const resolveActionVisual = (act) => {
+  const key = `${act.action || ""} ${act.label || ""} ${act.variant || ""}`.toLowerCase();
+
+  if (act.variant === "danger" || /delete|reject|remove/.test(key)) {
+    return {
+      Icon: Trash2,
+      className: "text-red-500 hover:bg-red-50",
+    };
+  }
+  if (act.variant === "warning" || /deactivate|suspend|ban|forbid/.test(key)) {
+    return {
+      Icon: Ban,
+      className: "text-orange-500 hover:bg-orange-50",
+    };
+  }
+  if (act.variant === "success" || /active(?!.*de)|approve|activate|enable/.test(key)) {
+    return {
+      Icon: CheckCircle2,
+      className: "text-emerald-600 hover:bg-emerald-50",
+    };
+  }
+  if (/availability|calendar|schedule/.test(key)) {
+    return {
+      Icon: CalendarDays,
+      className: "text-teal-600 hover:bg-teal-50",
+    };
+  }
+  if (/edit|update|rename/.test(key)) {
+    return {
+      Icon: Pencil,
+      className: "text-slate-600 hover:bg-slate-50",
+    };
+  }
+  if (/pending|verification|identity/.test(key)) {
+    return {
+      Icon: ShieldAlert,
+      className: "text-slate-600 hover:bg-slate-50",
+    };
+  }
+  if (/detail|view|see/.test(key) || act.isPrimary) {
+    return {
+      Icon: Eye,
+      className: "text-slate-700 hover:bg-slate-50",
+    };
+  }
+  if (/close|cancel|x /.test(key)) {
+    return {
+      Icon: XCircle,
+      className: "text-orange-500 hover:bg-orange-50",
+    };
+  }
+
+  return {
+    Icon: Pencil,
+    className: "text-slate-600 hover:bg-slate-50",
+  };
+};
 
 const ActionMenu = ({
   row,
@@ -46,6 +115,51 @@ const ActionMenu = ({
   triggerRef,
 }) => {
   const menuRef = useRef(null);
+  const [coords, setCoords] = useState({ top: 0, left: 0 });
+
+  useLayoutEffect(() => {
+    if (!isOpen || !triggerRef?.current) return;
+
+    const updatePosition = () => {
+      const trigger = triggerRef.current;
+      const menu = menuRef.current;
+      if (!trigger) return;
+
+      const rect = trigger.getBoundingClientRect();
+      const menuHeight = menu?.offsetHeight || Math.max(actions.length, 1) * 40;
+      const menuWidth = menu?.offsetWidth || 190;
+      const gap = 6;
+
+      const spaceBelow = window.innerHeight - rect.bottom - gap;
+      const spaceAbove = rect.top - gap;
+      const openUp = spaceBelow < menuHeight && spaceAbove > spaceBelow;
+
+      const top = openUp
+        ? Math.max(8, rect.top - menuHeight - gap)
+        : rect.bottom + gap;
+
+      // Align menu to the right edge of the trigger, extending left
+      const left = Math.min(
+        Math.max(8, rect.right - menuWidth),
+        window.innerWidth - menuWidth - 8,
+      );
+
+      setCoords({ top, left });
+    };
+
+    updatePosition();
+    // Re-measure after paint so real menu height is used for flip
+    const raf = requestAnimationFrame(updatePosition);
+
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [isOpen, triggerRef, actions.length]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -69,41 +183,28 @@ const ActionMenu = ({
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div
       ref={menuRef}
-      className="absolute right-4 top-10 z-30 min-w-[150px] overflow-hidden rounded-xl border border-slate-100 bg-white py-1 shadow-xl ring-1 ring-black/5"
+      style={{ top: coords.top, left: coords.left }}
+      className="fixed z-[80] min-w-[190px] overflow-hidden rounded-xl border border-slate-200/80 bg-white py-1.5 shadow-lg ring-1 ring-black/5"
     >
       {actions.map((act, index) => {
         if (act.isSeparator || act.isHeader) {
           return (
             <div
               key={index}
-              className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50/80 border-t border-slate-100 first:border-t-0"
+              className="border-t border-slate-100 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 first:border-t-0"
             >
               {act.header || act.label}
             </div>
           );
         }
 
-        if (act.isPrimary) {
-          return (
-            <button
-              key={index}
-              type="button"
-              onClick={() => {
-                if (act.onClick) act.onClick(row);
-                if (onActionClick) onActionClick(act.action || act.label, row);
-                onClose();
-              }}
-              className="block w-full bg-[#38bdf8] px-4 py-2 text-left text-xs font-semibold text-white transition-colors hover:bg-sky-500"
-            >
-              {act.label}
-            </button>
-          );
-        }
-
         if (!act.label) return null;
+
+        const { Icon, className } = resolveActionVisual(act);
+        const CustomIcon = act.icon;
 
         return (
           <button
@@ -114,13 +215,19 @@ const ActionMenu = ({
               if (onActionClick) onActionClick(act.action || act.label, row);
               onClose();
             }}
-            className="block w-full px-4 py-2 text-left text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900"
+            className={`flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-[13px] font-medium transition-colors ${className}`}
           >
-            {act.label}
+            {CustomIcon ? (
+              <CustomIcon className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+            ) : (
+              <Icon className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+            )}
+            <span>{act.label}</span>
           </button>
         );
       })}
-    </div>
+    </div>,
+    document.body,
   );
 };
 
@@ -211,8 +318,8 @@ const DataTable = ({
     <div
       className={`w-full overflow-hidden rounded-lg border border-slate-100 bg-white font-sans shadow-[0_2px_10px_rgba(0,0,0,0.02)] ${className}`}
     >
-      {/* Table Area */}
-      <div className="overflow-x-auto">
+      {/* Table Area — x-scroll only; hide vertical scrollbar */}
+      <div className="overflow-x-auto overflow-y-hidden [scrollbar-width:thin]">
         <table className="w-full min-w-[760px] border-collapse text-left">
           <thead className="bg-[#F6FBFF]">
             <tr className="border-b border-slate-100 text-[13px] font-semibold text-slate-800">
@@ -298,35 +405,37 @@ const DataTable = ({
                         return (
                           <td
                             key={col.key}
-                            className={`relative py-3.5 px-4 text-center ${
+                            className={`py-3.5 px-4 text-center ${
                               isLast ? "pr-6" : ""
                             }`}
                           >
-                            <button
-                              ref={(el) =>
-                                (triggerRefs.current[rowKey] = el)
-                              }
-                              type="button"
-                              onClick={() =>
-                                setActiveRowMenuId(
-                                  activeRowMenuId === rowKey ? null : rowKey
-                                )
-                              }
-                              className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-700 transition hover:bg-slate-100"
-                            >
-                              <MoreVertical className="h-4 w-4" />
-                            </button>
+                            <div className="relative inline-flex">
+                              <button
+                                ref={(el) =>
+                                  (triggerRefs.current[rowKey] = el)
+                                }
+                                type="button"
+                                onClick={() =>
+                                  setActiveRowMenuId(
+                                    activeRowMenuId === rowKey ? null : rowKey
+                                  )
+                                }
+                                className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-700 transition hover:bg-slate-100"
+                              >
+                                <MoreVertical className="h-4 w-4" />
+                              </button>
 
-                            <ActionMenu
-                              row={row}
-                              actions={actions}
-                              onActionClick={onActionClick}
-                              isOpen={activeRowMenuId === rowKey}
-                              onClose={() => setActiveRowMenuId(null)}
-                              triggerRef={{
-                                current: triggerRefs.current[rowKey],
-                              }}
-                            />
+                              <ActionMenu
+                                row={row}
+                                actions={actions}
+                                onActionClick={onActionClick}
+                                isOpen={activeRowMenuId === rowKey}
+                                onClose={() => setActiveRowMenuId(null)}
+                                triggerRef={{
+                                  current: triggerRefs.current[rowKey],
+                                }}
+                              />
+                            </div>
                           </td>
                         );
                       }
