@@ -1,9 +1,7 @@
-import { useState } from "react";
-import { ArrowRightLeft, Download, Info, Printer } from "lucide-react";
+import { ArrowRightLeft, Info } from "lucide-react";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
 import { EsimManualEntryTab } from "./EsimManualEntryTab";
 import { EsimDeviceTransferTab } from "./EsimDeviceTransferTab";
-import { EsimHelpTab } from "./EsimHelpTab";
 
 // Crisp SVG QR Code component
 const VectorQrCode = () => (
@@ -92,136 +90,70 @@ export const EsimInstallCard = ({
   setActiveTab,
   esimData,
   onOpenTransferModal,
-  onOpenGuideModal,
   onActivationSuccess,
 }) => {
-  const handleDownloadQr = () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 400;
-    canvas.height = 400;
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, 400, 400);
-    ctx.fillStyle = "#00183c";
-    ctx.font = "bold 18px Poppins, sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("NovaSky eSIM Activation QR", 200, 40);
-    ctx.fillText(esimData?.number || "+41 76 123 45 67", 200, 70);
-
-    ctx.fillStyle = "#00183c";
-    ctx.fillRect(50, 100, 300, 240);
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(60, 110, 280, 220);
-    ctx.fillStyle = "#00183c";
-    ctx.fillRect(80, 130, 80, 80);
-    ctx.fillRect(240, 130, 80, 80);
-    ctx.fillRect(80, 230, 80, 80);
-
-    const link = document.createElement("a");
-    link.download = `novasky-esim-qr-${esimData?.number?.replace(/\s+/g, "") || "profile"}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  };
-
-  const handlePrint = () => {
-    window.print();
-  };
-
   return (
-    <div className="space-y-4">
-      {/* Section Header */}
+    <div className="min-w-0 space-y-4">
       <div>
-        <h2 className="text-lg sm:text-xl font-bold text-primary">
+        <h2 className="text-lg font-bold text-primary sm:text-xl">
           Install your eSIM
         </h2>
-        <p className="text-xs sm:text-sm text-primary/60">
+        <p className="text-xs text-primary/60 sm:text-sm">
           Choose an installation method
         </p>
       </div>
 
-      {/* Tabs Header */}
       <DashboardTabs
         tabs={installTabs}
         activeTab={activeTab}
         onChange={setActiveTab}
       />
 
-      {/* TAB 2: Enter the code manually -> 2-column Manual Entry layout */}
       {activeTab === "manual-code" ? (
         <EsimManualEntryTab
           esimData={esimData}
           onActivationSuccess={onActivationSuccess}
         />
       ) : activeTab === "transfer" ? (
-        /* TAB 3: Transfer from a device -> 2-column Device Transfer layout */
         <EsimDeviceTransferTab onStartTransfer={onOpenTransferModal} />
-      ) : activeTab === "help" ? (
-        /* TAB 4: Installation help -> Full Walkthrough, Troubleshooting, Video, Offline & FAQ layout */
-        <EsimHelpTab onOpenGuideModal={onOpenGuideModal} />
       ) : (
-        /* Container Card for QR Code tab */
-        <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-8 shadow-sm space-y-6">
-          {/* TAB 1: Scan a QR Code */}
+        <div className="space-y-6 rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm sm:p-8">
           {activeTab === "qr-code" && (
             <div className="relative grid gap-8 lg:grid-cols-2 lg:items-center">
-              {/* Left QR Code Side */}
-              <div className="flex flex-col items-center justify-center text-center space-y-4">
-                <div className="rounded-xl border-2 border-dashed border-sky-200 bg-sky-50/40 p-4 sm:p-5 shadow-sm">
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="rounded-xl border-2 border-dashed border-sky-200 bg-sky-50/40 p-4 shadow-sm sm:p-5">
                   <VectorQrCode />
                 </div>
 
                 <div className="space-y-1">
-                  <h4 className="text-sm sm:text-base font-bold text-[#0284c7]">
-                    Scan this QR Code with your device
+                  <h4 className="text-sm font-bold text-[#0284c7] sm:text-base">
+                    Scan this QR Code
                   </h4>
-                  <p className="text-xs text-primary/60 max-w-xs mx-auto">
+                  <p className="mx-auto max-w-xs text-xs text-primary/60">
                     Open the camera or QR code reader on your smartphone.
                   </p>
                 </div>
-
-                {/* Quick Actions */}
-                <div className="flex items-center gap-2 pt-1">
-                  <button
-                    type="button"
-                    onClick={handleDownloadQr}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-primary/70 transition-colors hover:bg-gray-50 hover:text-primary shadow-xs"
-                  >
-                    <Download size={13} className="text-primary/50" />
-                    <span>Save QR</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handlePrint}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-primary/70 transition-colors hover:bg-gray-50 hover:text-primary shadow-xs"
-                  >
-                    <Printer size={13} className="text-primary/50" />
-                    <span>Print</span>
-                  </button>
-                </div>
               </div>
 
-              {/* Central "ou" Divider on Desktop */}
-              <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex-col items-center">
+              <div className="absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 flex-col items-center lg:flex">
                 <div className="h-28 w-px bg-gray-200" />
                 <div className="my-2 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-medium text-primary/50 shadow-xs">
-                  ou
+                  or
                 </div>
                 <div className="h-28 w-px bg-gray-200" />
               </div>
 
-              {/* Mobile Divider */}
-              <div className="flex lg:hidden items-center justify-center gap-3">
+              <div className="flex items-center justify-center gap-3 lg:hidden">
                 <div className="h-px flex-1 bg-gray-200" />
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-xs text-primary/50 font-medium">
-                  ou
+                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-medium text-primary/50">
+                  or
                 </span>
                 <div className="h-px flex-1 bg-gray-200" />
               </div>
 
-              {/* Right Transfer Side */}
-              <div className="flex flex-col items-center justify-center text-center lg:px-6 space-y-4">
-                <div className="space-y-2 max-w-sm">
-                  <h4 className="text-base sm:text-lg font-bold text-primary">
+              <div className="flex flex-col items-center justify-center space-y-4 text-center lg:px-6">
+                <div className="max-w-sm space-y-2">
+                  <h4 className="text-base font-bold text-primary sm:text-lg">
                     Do you already have an eSIM on another device?
                   </h4>
                   <p className="text-xs text-primary/60">
@@ -232,7 +164,7 @@ export const EsimInstallCard = ({
                 <button
                   type="button"
                   onClick={onOpenTransferModal}
-                  className="inline-flex items-center gap-2 rounded-xl border border-sky-300 bg-white px-5 py-2.5 text-xs sm:text-sm font-semibold text-[#0284c7] transition-all hover:bg-sky-50 hover:border-sky-400 shadow-sm"
+                  className="inline-flex items-center gap-2 rounded-xl border border-sky-300 bg-white px-5 py-2.5 text-xs font-semibold text-[#0284c7] shadow-sm transition-all hover:border-sky-400 hover:bg-sky-50 sm:text-sm"
                 >
                   <ArrowRightLeft size={16} />
                   <span>Transfer my eSIM</span>
@@ -241,8 +173,7 @@ export const EsimInstallCard = ({
             </div>
           )}
 
-          {/* Bottom Banner Notice */}
-          <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-[#eef7ff] p-3 sm:p-3.5 text-xs text-primary/80">
+          <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-[#eef7ff] p-3 text-xs text-primary/80 sm:p-3.5">
             <Info size={18} className="shrink-0 text-btnPrimary" />
             <p className="text-[11px] sm:text-xs">
               Make sure you have a stable internet connection to install your

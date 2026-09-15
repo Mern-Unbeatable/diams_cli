@@ -50,7 +50,6 @@ export const USER_ESIM = {
     { id: "qr-code", label: "Scan a QR Code" },
     { id: "manual-code", label: "Enter the code manually" },
     { id: "transfer", label: "Transfer from a device" },
-    { id: "help", label: "Installation help" },
   ],
   qrSection: {
     title: "Scan this QR Code with your device",
