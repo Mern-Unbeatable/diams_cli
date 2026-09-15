@@ -58,59 +58,54 @@ const SupportView = () => {
         onChange={setActiveTab}
       />
 
-      {/* TAB 1: Overview Tab */}
-      {activeTab === "overview" && (
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Left Column (2/3 width) */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Search Hero Card */}
-            <SupportHeroCard
-              banner={searchBanner}
-              onSearch={() => setActiveTab("faq")}
-            />
+      {/* Overview + My Tickets share the right-side panels */}
+      {(activeTab === "overview" || activeTab === "tickets") && (
+        <div className="grid min-w-0 gap-6 xl:grid-cols-3">
+          <div className="min-w-0 space-y-6 xl:col-span-2">
+            {activeTab === "overview" && (
+              <>
+                <SupportHeroCard
+                  banner={searchBanner}
+                  onSearch={() => setActiveTab("faq")}
+                />
 
-            {/* Popular Topics */}
-            <PopularTopicsSection
-              topics={popularTopics}
-              onSelectTopic={handleTopicClick}
-              onViewAll={() => setActiveTab("faq")}
-            />
+                <PopularTopicsSection
+                  topics={popularTopics}
+                  onSelectTopic={handleTopicClick}
+                  onViewAll={() => setActiveTab("faq")}
+                />
 
-            {/* My Recent Tickets */}
-            <RecentTicketsSection
-              tickets={tickets}
-              onSelectTicket={(t) => setSelectedTicket(t)}
-            />
+                <RecentTicketsSection
+                  tickets={tickets}
+                  onSelectTicket={(t) => setSelectedTicket(t)}
+                />
+              </>
+            )}
+
+            {activeTab === "tickets" && (
+              <SupportTicketsTab
+                tickets={tickets}
+                onOpenNewTicket={() => setIsNewTicketOpen(true)}
+                onSelectTicket={(t) => setSelectedTicket(t)}
+              />
+            )}
           </div>
 
-          {/* Right Column (1/3 width) */}
-          <div className="space-y-6">
-            {/* Contact Us Card */}
+          <div className="min-w-0 space-y-6 xl:sticky xl:top-24 xl:self-start">
             <ContactUsCard
               onStartChat={() => setIsChatOpen(true)}
               onOpenNewTicket={() => setIsNewTicketOpen(true)}
             />
 
-            {/* Frequently Asked Questions */}
             <SupportFaqCard
               faqs={frequentlyAskedQuestions}
               onSelectFaq={(faq) => setSelectedFaq(faq)}
               onViewAllFaq={() => setActiveTab("faq")}
             />
 
-            {/* Still Need Help CTA */}
             <StillNeedHelpCard onStartChat={() => setIsChatOpen(true)} />
           </div>
         </div>
-      )}
-
-      {/* TAB 2: My Tickets Tab */}
-      {activeTab === "tickets" && (
-        <SupportTicketsTab
-          tickets={tickets}
-          onOpenNewTicket={() => setIsNewTicketOpen(true)}
-          onSelectTicket={(t) => setSelectedTicket(t)}
-        />
       )}
 
       {/* TAB 3: FAQ Tab */}
