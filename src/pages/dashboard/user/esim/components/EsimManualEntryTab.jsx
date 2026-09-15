@@ -66,9 +66,9 @@ export const EsimManualEntryTab = ({ esimData, onActivationSuccess }) => {
   };
 
   return (
-    <div className="grid gap-5 md:grid-cols-2">
+    <div className="grid gap-5 lg:grid-cols-[1.45fr_1fr]">
       {/* Left Form Card */}
-      <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-5 flex flex-col justify-between">
+      <div className="min-w-0 rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-5 flex flex-col justify-between">
         {/* Header */}
         <div>
           <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-[#38bdf8]">
@@ -176,7 +176,7 @@ export const EsimManualEntryTab = ({ esimData, onActivationSuccess }) => {
       </div>
 
       {/* Right Column: Installation tips & Reference values */}
-      <div className="space-y-4 flex flex-col justify-between">
+      <div className="min-w-0 space-y-4 flex flex-col justify-between">
         {/* Widget 1: Installation tips */}
         <div className="rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm space-y-3.5">
           <div className="flex items-center gap-2 text-primary">

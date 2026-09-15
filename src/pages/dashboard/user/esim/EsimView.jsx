@@ -69,8 +69,8 @@ const EsimView = () => {
       {/* Status / Active eSIM card — full width at top */}
       <EsimActiveCard esimData={esimData} />
 
-      <div className="grid min-w-0 gap-6 xl:grid-cols-3">
-        <div className="min-w-0 space-y-6 xl:col-span-2">
+      <div className="grid min-w-0 gap-6 xl:grid-cols-12">
+        <div className="min-w-0 space-y-6 xl:col-span-9">
           <EsimInstallCard
             installTabs={installTabs}
             activeTab={activeTab}
@@ -86,7 +86,7 @@ const EsimView = () => {
           />
         </div>
 
-        <div className="min-w-0 space-y-6 xl:sticky xl:top-24 xl:self-start">
+        <div className="min-w-0 space-y-6 xl:col-span-3 xl:sticky xl:top-24 xl:self-start">
           <EsimPromoCard onLearnMore={() => setIsGuideOpen(true)} />
 
           <EsimInfoCard
