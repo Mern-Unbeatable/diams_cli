@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Eye, EyeOff, Check } from "lucide-react";
 
+const inputClass =
+  "w-full rounded-md border border-slate-200 bg-white py-2.5 pl-3 pr-10 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 hover:border-slate-300 focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6]/30";
+
 const CollaboratorChangePasswordCard = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -19,6 +22,10 @@ const CollaboratorChangePasswordCard = () => {
       setErrorMessage("Please fill in all password fields.");
       return;
     }
+    if (newPassword.length < 8) {
+      setErrorMessage("New password must be at least 8 characters.");
+      return;
+    }
     if (newPassword !== confirmPassword) {
       setErrorMessage("New passwords do not match.");
       return;
@@ -32,33 +39,33 @@ const CollaboratorChangePasswordCard = () => {
   };
 
   return (
-    <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-7">
-      {/* Card Header */}
-      <div className="border-b border-slate-100 pb-4">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700">
-          CHANGE PASSWORD
+    <div className="flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+      <div className="border-b border-slate-200 bg-slate-50 px-5 py-3.5 sm:px-6">
+        <h2 className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-700">
+          Change Password
         </h2>
       </div>
 
-      {isSuccess && (
-        <div className="mt-4 flex items-center gap-2 rounded-xl bg-emerald-50 px-3.5 py-2 text-xs font-semibold text-emerald-700 animate-in fade-in">
-          <Check className="h-3.5 w-3.5" />
-          <span>Password changed successfully!</span>
-        </div>
-      )}
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-1 flex-col gap-4 p-5 sm:p-6"
+      >
+        {isSuccess && (
+          <div className="flex items-center gap-2 rounded-lg bg-emerald-50 px-3.5 py-2 text-xs font-semibold text-emerald-700">
+            <Check className="h-3.5 w-3.5" />
+            <span>Password changed successfully!</span>
+          </div>
+        )}
 
-      {errorMessage && (
-        <div className="mt-4 rounded-xl bg-rose-50 px-3.5 py-2 text-xs font-semibold text-rose-700 animate-in fade-in">
-          {errorMessage}
-        </div>
-      )}
+        {errorMessage && (
+          <div className="rounded-lg bg-rose-50 px-3.5 py-2 text-xs font-semibold text-rose-700">
+            {errorMessage}
+          </div>
+        )}
 
-      {/* Form Body */}
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {/* Current Password */}
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1.5">
+            <label className="mb-1.5 block text-xs font-medium text-slate-600">
               Current Password
             </label>
             <div className="relative">
@@ -66,25 +73,25 @@ const CollaboratorChangePasswordCard = () => {
                 type={showCurrent ? "text" : "password"}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-3.5 pr-9 text-xs font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+                className={inputClass}
               />
               <button
                 type="button"
                 onClick={() => setShowCurrent(!showCurrent)}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                aria-label={showCurrent ? "Hide password" : "Show password"}
               >
                 {showCurrent ? (
-                  <EyeOff className="h-3.5 w-3.5" />
+                  <EyeOff className="h-4 w-4" />
                 ) : (
-                  <Eye className="h-3.5 w-3.5" />
+                  <Eye className="h-4 w-4" />
                 )}
               </button>
             </div>
           </div>
 
-          {/* New Password */}
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1.5">
+            <label className="mb-1.5 block text-xs font-medium text-slate-600">
               New Password
             </label>
             <div className="relative">
@@ -93,26 +100,26 @@ const CollaboratorChangePasswordCard = () => {
                 placeholder="8+ characters"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-3.5 pr-9 text-xs font-medium text-slate-900 outline-none placeholder:text-slate-400 transition-colors hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+                className={inputClass}
               />
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                aria-label={showNew ? "Hide password" : "Show password"}
               >
                 {showNew ? (
-                  <EyeOff className="h-3.5 w-3.5" />
+                  <EyeOff className="h-4 w-4" />
                 ) : (
-                  <Eye className="h-3.5 w-3.5" />
+                  <Eye className="h-4 w-4" />
                 )}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Confirm Password */}
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1.5">
+          <label className="mb-1.5 block text-xs font-medium text-slate-600">
             Confirm Password
           </label>
           <div className="relative">
@@ -120,29 +127,29 @@ const CollaboratorChangePasswordCard = () => {
               type={showConfirm ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-3.5 pr-9 text-xs font-medium text-slate-900 outline-none transition-colors hover:border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+              className={inputClass}
             />
             <button
               type="button"
               onClick={() => setShowConfirm(!showConfirm)}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              aria-label={showConfirm ? "Hide password" : "Show password"}
             >
               {showConfirm ? (
-                <EyeOff className="h-3.5 w-3.5" />
+                <EyeOff className="h-4 w-4" />
               ) : (
-                <Eye className="h-3.5 w-3.5" />
+                <Eye className="h-4 w-4" />
               )}
             </button>
           </div>
         </div>
 
-        {/* Submit Button */}
-        <div className="pt-2">
+        <div className="mt-auto pt-2">
           <button
             type="submit"
-            className="rounded-lg bg-[#0080ff] px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all hover:bg-blue-600 active:scale-95 cursor-pointer"
+            className="rounded-md bg-[#3b82f6] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-sm transition-colors hover:bg-[#2563eb]"
           >
-            CHANGE PASSWORD
+            Change Password
           </button>
         </div>
       </form>

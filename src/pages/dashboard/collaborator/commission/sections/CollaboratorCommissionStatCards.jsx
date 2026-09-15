@@ -4,13 +4,13 @@ import { COMMISSION_STAT_CARDS } from "./collaboratorCommissionData";
 const renderIcon = (type) => {
   switch (type) {
     case "dollar":
-      return <span className="text-xs font-bold">$</span>;
+      return <span className="text-base">$</span>;
     case "trending":
-      return <TrendingUp className="h-3.5 w-3.5" />;
+      return <TrendingUp className="h-5 w-5" />;
     case "clock":
-      return <Clock className="h-3.5 w-3.5" />;
+      return <Clock className="h-5 w-5" />;
     case "check":
-      return <Check className="h-3.5 w-3.5 stroke-[2.5]" />;
+      return <Check className="h-5 w-5 stroke-[2.5]" />;
     default:
       return null;
   }
@@ -25,17 +25,17 @@ const CollaboratorCommissionStatCards = () => {
           className="rounded-xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all hover:border-slate-200"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">
+            <span className="text-sm font-medium text-slate-500">
               {card.label}
             </span>
             <div
-              className={`flex h-7 w-7 items-center justify-center rounded-lg ${card.iconBg}`}
+              className={`flex h-12 w-12 items-center justify-center rounded-lg ${card.iconBg}`}
             >
               {renderIcon(card.iconType)}
             </div>
           </div>
 
-          <div className="mt-3 text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          <div className="mt-3 text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">
             {card.value}
           </div>
         </div>

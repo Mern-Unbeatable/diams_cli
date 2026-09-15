@@ -5,13 +5,9 @@ import {
 
 const CollaboratorProfileSettingsView = () => {
   return (
-    <div className="min-h-full space-y-6 text-slate-900">
-      {/* 2-Column Responsive Grid Layout */}
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-        {/* 1. Account Settings Card */}
+    <div className="min-h-full text-slate-900">
+      <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2 lg:gap-6">
         <CollaboratorAccountSettingsCard />
-
-        {/* 2. Change Password Card */}
         <CollaboratorChangePasswordCard />
       </div>
     </div>
