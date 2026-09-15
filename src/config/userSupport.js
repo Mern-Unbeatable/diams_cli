@@ -52,10 +52,25 @@ export const USER_SUPPORT = {
       category: "eSIM",
       status: "Resolved",
       statusVariant: "green",
+      priority: "High",
+      customer: "Sam Rivera",
+      assignedAgent: "Marc B.",
       updated: "Updated 2 days ago",
       date: "Aug 05, 2024",
       description:
         "My QR code was not scanning on the new iPhone. Support re-sent the SM-DP+ manual code and it activated immediately.",
+      conversation: [
+        {
+          id: 1,
+          sender: "Customer",
+          text: "My QR code was not scanning on the new iPhone.",
+        },
+        {
+          id: 2,
+          sender: "Marc B.",
+          text: "We re-sent the SM-DP+ manual code — please try activating again.",
+        },
+      ],
     },
     {
       id: "NS-84211",
@@ -63,10 +78,25 @@ export const USER_SUPPORT = {
       category: "Billing",
       status: "In Progress",
       statusVariant: "blue",
+      priority: "Medium",
+      customer: "Sam Rivera",
+      assignedAgent: "Mira Roth",
       updated: "Updated 1 day ago",
       date: "Aug 04, 2024",
       description:
         "Credit card charge showed pending and Twint failed. Agent is reviewing transaction with SIX Payments.",
+      conversation: [
+        {
+          id: 1,
+          sender: "Customer",
+          text: "My payment with Twint failed and the card charge is still pending.",
+        },
+        {
+          id: 2,
+          sender: "Mira Roth",
+          text: "We are reviewing the transaction with SIX Payments and will update you shortly.",
+        },
+      ],
     },
     {
       id: "NS-83677",
@@ -74,10 +104,25 @@ export const USER_SUPPORT = {
       category: "Plans",
       status: "Closed",
       statusVariant: "amber",
+      priority: "Low",
+      customer: "Sam Rivera",
+      assignedAgent: "Marc B.",
       updated: "Updated 5 days ago",
       date: "Jul 30, 2024",
       description:
         "Request to upgrade from NovaSky Plus to NovaSky Max at next billing cycle. Completed successfully.",
+      conversation: [
+        {
+          id: 1,
+          sender: "Customer",
+          text: "I'd like to upgrade to NovaSky Max at the next billing cycle.",
+        },
+        {
+          id: 2,
+          sender: "Marc B.",
+          text: "Done — your plan will switch to NovaSky Max on the next renewal date.",
+        },
+      ],
     },
   ],
   contactMethods: [

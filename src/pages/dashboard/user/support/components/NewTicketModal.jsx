@@ -18,9 +18,19 @@ export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
       category: topic,
       status: "In Progress",
       statusVariant: "blue",
+      priority: "Medium",
+      customer: "Sam Rivera",
+      assignedAgent: "Support Team",
       updated: "Just now",
       date: "Today",
       description: description.trim(),
+      conversation: [
+        {
+          id: 1,
+          sender: "Customer",
+          text: description.trim(),
+        },
+      ],
     };
 
     onCreateTicket?.(newTicket);
