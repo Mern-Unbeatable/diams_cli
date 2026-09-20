@@ -14,6 +14,7 @@ export const FOOTER_INFO_LINKS = [
   { label: "Partners", path: "/partners" },
   { label: "Terms & Conditions", path: "/terms" },
   { label: "Privacy Policy", path: "/privacy" },
+  { label: "Legal Notice", path: "/legal" },
 ];
 
 export const FOOTER_CONTACT = {
