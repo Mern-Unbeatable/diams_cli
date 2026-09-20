@@ -13,6 +13,9 @@ import AccountView from "@/pages/public/account/AccountView";
 import BusinessView from "@/pages/public/business/BusinessView";
 import CoverageView from "@/pages/public/coverage/CoverageView";
 import HelpView from "@/pages/public/help/HelpView";
+import LegalNoticeView from "@/pages/public/legal/LegalNoticeView";
+import PrivacyPolicyView from "@/pages/public/legal/PrivacyPolicyView";
+import TermsOfUseView from "@/pages/public/legal/TermsOfUseView";
 import AuthView from "@/pages/auth/AuthView";
 import NotFound from "@/pages/error/NotFound";
 import DashboardLayout from "@/layout/DashboardLayout";
@@ -190,6 +193,18 @@ export const router = createBrowserRouter([
       {
         path: "help",
         element: <HelpView />,
+      },
+      {
+        path: "legal",
+        element: <LegalNoticeView />,
+      },
+      {
+        path: "privacy",
+        element: <PrivacyPolicyView />,
+      },
+      {
+        path: "terms",
+        element: <TermsOfUseView />,
       },
       {
         path: "plans/:planId/configure",
