@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router";
 import {
   ArrowRight,
@@ -45,6 +46,14 @@ const BusinessContactForm = () => {
   const { label, title, submitLabel, lineOptions, trustBadges } =
     BUSINESS_CONTACT_FORM;
 
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 5000);
+  };
+
   return (
     <article className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg sm:p-8">
       <p className="text-xs font-bold uppercase tracking-[0.12em] text-btnPrimary sm:text-sm">
@@ -54,128 +63,137 @@ const BusinessContactForm = () => {
         {title}
       </h3>
 
-      <form
-        className="mt-6 space-y-4"
-        onSubmit={(event) => event.preventDefault()}
-      >
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="fullName" className={labelClass}>
-              Full Name
-            </label>
-            <div className="relative">
-              <User
-                size={16}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-              <input
-                id="fullName"
-                type="text"
-                placeholder="Full Name"
-                className={inputWithIconClass}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="companyName" className={labelClass}>
-              Company Name
-            </label>
-            <div className="relative">
-              <Building2
-                size={16}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-              <input
-                id="companyName"
-                type="text"
-                placeholder="Company Name"
-                className={inputWithIconClass}
-              />
-            </div>
-          </div>
+      {isSubmitted ? (
+        <div className="mt-6 rounded-lg bg-emerald-50 border border-emerald-200 p-4 text-emerald-700 text-sm font-medium">
+          Thank you for your message! Our business team will get back to you shortly.
         </div>
+      ) : (
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="fullName" className={labelClass}>
+                Full Name
+              </label>
+              <div className="relative">
+                <User
+                  size={16}
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  id="fullName"
+                  type="text"
+                  placeholder="Full Name"
+                  required
+                  className={inputWithIconClass}
+                />
+              </div>
+            </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="companyName" className={labelClass}>
+                Company Name
+              </label>
+              <div className="relative">
+                <Building2
+                  size={16}
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  id="companyName"
+                  type="text"
+                  placeholder="Company Name"
+                  required
+                  className={inputWithIconClass}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="businessEmail" className={labelClass}>
+                Business Email
+              </label>
+              <div className="relative">
+                <Mail
+                  size={16}
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  id="businessEmail"
+                  type="email"
+                  placeholder="Business Email"
+                  required
+                  className={inputWithIconClass}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="phoneNumber" className={labelClass}>
+                Phone Number
+              </label>
+              <div className="relative">
+                <Phone
+                  size={16}
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  id="phoneNumber"
+                  type="tel"
+                  placeholder="Phone Number"
+                  required
+                  className={inputWithIconClass}
+                />
+              </div>
+            </div>
+          </div>
+
           <div>
-            <label htmlFor="businessEmail" className={labelClass}>
-              Business Email
+            <label htmlFor="lineCount" className={labelClass}>
+              Number of Lines
             </label>
             <div className="relative">
-              <Mail
+              <select
+                id="lineCount"
+                defaultValue=""
+                required
+                className={`${inputClass} appearance-none px-4 pr-10`}
+              >
+                {lineOptions.map(({ value, label: optionLabel }) => (
+                  <option key={value || "default"} value={value} disabled={!value}>
+                    {optionLabel}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
                 size={16}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-              <input
-                id="businessEmail"
-                type="email"
-                placeholder="Business Email"
-                className={inputWithIconClass}
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="phoneNumber" className={labelClass}>
-              Phone Number
+            <label htmlFor="businessNeeds" className={labelClass}>
+              Tell us about your business needs
             </label>
-            <div className="relative">
-              <Phone
-                size={16}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-              <input
-                id="phoneNumber"
-                type="tel"
-                placeholder="Phone Number"
-                className={inputWithIconClass}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="lineCount" className={labelClass}>
-            Number of Lines
-          </label>
-          <div className="relative">
-            <select
-              id="lineCount"
-              defaultValue=""
-              className={`${inputClass} appearance-none px-4 pr-10`}
-            >
-              {lineOptions.map(({ value, label: optionLabel }) => (
-                <option key={value || "default"} value={value}>
-                  {optionLabel}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              size={16}
-              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+            <textarea
+              id="businessNeeds"
+              rows={4}
+              placeholder="Type your message here..."
+              required
+              className={`${inputClass} resize-none px-4`}
             />
           </div>
-        </div>
 
-        <div>
-          <label htmlFor="businessNeeds" className={labelClass}>
-            Tell us about your business needs
-          </label>
-          <textarea
-            id="businessNeeds"
-            rows={4}
-            placeholder="Type your message here..."
-            className={`${inputClass} resize-none px-4`}
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full rounded-lg bg-btnPrimary py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-        >
-          {submitLabel}
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-btnPrimary py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          >
+            {submitLabel}
+          </button>
+        </form>
+      )}
 
       <ul className="mt-6 grid gap-4 sm:grid-cols-3">
         {trustBadges.map(({ id, icon, title: badgeTitle, description }) => {
