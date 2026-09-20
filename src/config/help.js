@@ -168,6 +168,7 @@ export const HELP_CONTACT = {
       title: "Email Support",
       description: "Send us an email and we'll get back to you as soon as possible.",
       action: "support@novasky.ch",
+      link: "mailto:support@novasky.ch",
       footer: "We reply within 24h",
     },
     {
@@ -176,6 +177,7 @@ export const HELP_CONTACT = {
       title: "Phone Support",
       description: "Speak directly with our support team for urgent matters.",
       action: "0800 800 100",
+      link: "tel:0800800100",
       footer: "Mon - Fri, 08:00 - 18:00",
     },
     {
@@ -183,7 +185,8 @@ export const HELP_CONTACT = {
       icon: "business",
       title: "Business Support",
       description: "Dedicated support for business customers and enterprise accounts.",
-      action: "Contact Business Team",
+      action: "partnerships@novasky.ch",
+      link: "mailto:partnerships@novasky.ch",
       footer: "Coming soon",
     },
   ],

@@ -25,6 +25,7 @@ const HelpContactSection = () => {
               title: methodTitle,
               description,
               action,
+              link,
               footer,
               footerType,
             }) => {
@@ -46,12 +47,21 @@ const HelpContactSection = () => {
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-primary/60">
                     {description}
                   </p>
-                  <button
-                    type="button"
-                    className="mt-5 w-full rounded-lg border border-btnPrimary py-3 text-sm font-semibold text-btnPrimary transition-colors hover:bg-btnPrimary/5"
-                  >
-                    {action}
-                  </button>
+                  {link ? (
+                    <a
+                      href={link}
+                      className="mt-5 flex w-full items-center justify-center rounded-lg border border-btnPrimary py-3 text-sm font-semibold text-btnPrimary transition-colors hover:bg-btnPrimary/5"
+                    >
+                      {action}
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      className="mt-5 w-full rounded-lg border border-btnPrimary py-3 text-sm font-semibold text-btnPrimary transition-colors hover:bg-btnPrimary/5"
+                    >
+                      {action}
+                    </button>
+                  )}
                   <p className="mt-3 flex items-center justify-center gap-2 text-xs text-primary/55">
                     {footerType === "status" && (
                       <span className="h-2 w-2 rounded-full bg-emerald-500" />
