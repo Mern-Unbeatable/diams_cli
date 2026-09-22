@@ -1,13 +1,16 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 import { getRoleDashboardPath } from "@/config/dummyAuth";
 import { useAuth } from "@/context/AuthContext";
+import { ROUTES } from "@/routes/paths";
 
 export const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    return (
+      <Navigate to={ROUTES.AUTH.LOGIN} replace state={{ from: location }} />
+    );
   }
 
   return <Outlet />;
