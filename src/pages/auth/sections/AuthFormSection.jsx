@@ -11,7 +11,8 @@ import {
 } from "@/config/dummyAuth";
 import { BRAND, LOGO_CLASS } from "@/config/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { loginSchema, zodResolver } from "@/lib/formSchemas";
+import { loginSchema } from "@/features/auth/validation";
+import { zodResolver } from "@/lib/validation";
 import { FieldError } from "@/Components/form/FieldError";
 
 const labelClass = "mb-2 block text-sm font-bold text-primary";

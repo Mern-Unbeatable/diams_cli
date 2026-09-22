@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Camera, Check } from "lucide-react";
-import { accountSettingsSchema, zodResolver } from "@/lib/formSchemas";
+import { accountSettingsSchema } from "@/features/dash/collaborator/profile/validation";
+import { zodResolver } from "@/lib/validation";
 import { FieldError } from "@/Components/form/FieldError";
 
 const inputClass =

@@ -1,7 +1,8 @@
 import { Check, Mail, UploadCloud, X } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { newTicketSchema, zodResolver } from "@/lib/formSchemas";
+import { newTicketSchema } from "@/features/dash/user/support/validation";
+import { zodResolver } from "@/lib/validation";
 import { FieldError } from "@/Components/form/FieldError";
 
 export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {

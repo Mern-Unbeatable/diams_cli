@@ -1,7 +1,7 @@
 import { Check, Eye, EyeOff, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { changePasswordSchema, zodResolver } from "@/lib/formSchemas";
+import { changePasswordSchema, zodResolver } from "@/lib/validation";
 import { FieldError } from "@/Components/form/FieldError";
 
 export const ChangePasswordModal = ({ isOpen, onClose, onSave }) => {
