@@ -1,99 +1,106 @@
 # Features (TanStack Query)
 
-Server state lives in `src/features/<name>/`. HTTP client + QueryClient live in `src/lib/`.
-
-## Layer diagram
+Server state is grouped by **audience / shell**, then by **dashboard role**.
 
 ```text
-UI (src/pages)
-    ↓  useOrders() / useCreateOrder()
-Feature hooks (src/features/<x>/queries)
-    ↓  fetchOrders()
-Feature API (src/features/<x>/api)
-    ↓  apiClient + ENDPOINTS
-HTTP client (src/lib/api)
-    ↓
-Backend
+src/features/
+  auth/                         # login, session, current-user
+  public/                       # marketing + checkout catalog
+    plans/
+    addOns/
+  dash/                         # behind ProtectedRoute
+    admin/                      # admin role domains
+    collaborator/               # partner portal domains
+    user/                       # end-user account domains
 ```
 
-App wiring: `src/lib/query` (`queryClient` + `AppQueryProvider`).
+Demo mode is **on by default** (`VITE_USE_API_MOCKS` !== `"false"`).
 
-## Folder convention
+## Import paths
+
+| Audience | Import |
+| -------- | ------ |
+| Auth | `@/features/auth` |
+| Public plans/add-ons | `@/features/public/plans`, `@/features/public/addOns` |
+| Admin barrel | `@/features/dash/admin` |
+| Admin orders | `@/features/dash/admin/orders` |
+| Collaborator barrel | `@/features/dash/collaborator` |
+| User barrel | `@/features/dash/user` |
+
+Optional top barrels: `@/features/public`, `@/features/dash`, `@/features`.
+
+## Per-feature layout
 
 ```text
-src/lib/
-  api/
-    client.js          # Axios instance + interceptors
-    endpoints.js       # Path map
-    errors.js          # getErrorMessage
-    index.js
-  query/
-    queryClient.js
-    AppQueryProvider.jsx
-    index.js
-
-src/features/<feature>/
+src/features/<audience>/.../<feature>/
+  mocks/<feature>.mock.js
   api/<feature>.api.js
   queries/
     <feature>.keys.js
     <feature>.queries.js
-    <feature>.mutations.js
-  index.js             # public barrel
+    <feature>.mutations.js   # when writes exist
+  index.js
 ```
 
-Reference: **`orders`** — import from `@/features/orders`.
+## Query key namespaces
+
+Keys are prefixed so public / admin / role caches never collide:
+
+- public → `["public", "plans", …]`
+- admin → `["dash", "admin", "orders", …]`
+- collaborator → `["dash", "collaborator", "orders", …]`
+- user → `["dash", "user", "bills", …]`
+- auth → `["auth", …]`
+
+## Layer diagram
+
+```text
+UI (pages)                         ← wire later
+    ↓  hooks from @/features/...
+Feature queries
+    ↓
+Feature api  →  USE_API_MOCKS ? mocks : apiClient + ENDPOINTS
+    ↓
+src/lib/api
+```
+
+## Feature map
+
+### `auth/`
+login / me / logout — `@/features/auth`
+
+### `public/`
+| Feature | Path |
+| ------- | ---- |
+| plans | `public/plans` |
+| addOns | `public/addOns` |
+
+(`coverage` skipped — no feature domain yet.)
+
+### `dash/admin/`
+customers · orders · identity · plans · addOns · esim · billing · support ·
+notifications · users · reports · settings · auditLogs
+
+### `dash/collaborator/`
+customers · orders · activations · commissions · invoices · notifications ·
+profile · identity · plans · support
+
+### `dash/user/`
+overview (includes my-line + profile) · usage · bills · payments · esim ·
+support · notifications
 
 ## Rules
 
-1. Server state lives only in TanStack Query (form drafts may use local state).
-2. Every `queryFn` forwards `signal`.
-3. Every query uses a key factory — no inline key arrays in pages.
-4. Mutations invalidate with `onSettled`, not `onSuccess`.
+1. Server state only in TanStack Query.
+2. `queryFn` forwards `signal`.
+3. Key factories only — no inline keys in pages.
+4. Mutations invalidate with `onSettled`.
 5. Dependent queries use `enabled: !!id`.
-6. No `useEffect` + fetch for server data going forward.
-7. Override `staleTime` only when the domain needs it, with a why-comment.
+6. Seed data stays in `mocks/`.
 
-## Legacy (removed)
+## Switch to real API
 
-The old `src/api/` package (`crud.js`, `queryKeys.js`, `ApiState.jsx`, `queryState.js`, `examples.usage.js`) was deleted. Do not recreate it.
-
-| Concern | Current location |
-| ------- | ---------------- |
-| HTTP client | `src/lib/api/client.js` |
-| Endpoints | `src/lib/api/endpoints.js` |
-| QueryClient / Provider | `src/lib/query/` |
-| Feature keys/hooks | `src/features/<x>/` |
-| Error message helper | `src/lib/api/errors.js` |
-
-## Migration (page using mock/`useEffect`)
-
-1. Confirm paths in `ENDPOINTS`.
-2. Add `features/<x>/api/<x>.api.js` using `apiClient`.
-3. Add key factory + query/mutation hooks.
-4. Export from `features/<x>/index.js`.
-5. In the page: `import { useOrders } from "@/features/orders"`.
-6. Remove local fetch state; keep UI-only state.
-7. Smoke-test with Devtools (`npm run dev`).
-
-## Checklist
-
-- [ ] Endpoints confirmed
-- [ ] Feature api forwards `signal`
-- [ ] Key factory hierarchical
-- [ ] Mutations use `onSettled` + targeted keys
-- [ ] Page uses hooks only
-- [ ] Logout clears cache (`queryClient.clear`)
-- [ ] Build + eslint clean for touched files
-
-## Smoke test
-
-1. Temporarily call `useOrders()` in a mounted component.
-2. Devtools: one `['orders','list',…]` entry; re-render → no duplicate fetch while fresh.
-3. Navigate away/back within 30s → no refetch.
-4. `npm run build && npm run preview` → no Devtools UI.
-
-## Follow-ups
-
-- Real JWT + 401 handling in `client.js`
-- Migrate admin Orders page onto `useOrders`
-- Optimistic updates / infinite queries when backend contracts exist
+```env
+VITE_USE_API_MOCKS=false
+VITE_API_BASE_URL=https://your-api.example/api
+```
