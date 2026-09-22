@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+/**
+ * Authenticated dashboard shell: sidebar + header + page outlet.
+ */
+import { useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router";
-import DashboardHeader from "@/Components/navigation/dash/DashboardHeader";
-import DashboardSidebar from "@/Components/navigation/dash/DashboardSidebar";
+import Header from "@/Components/navigation/dashboard/Header";
+import Sidebar from "@/Components/navigation/dashboard/Sidebar";
 import { getCurrentNavItem, getDashboardNav } from "@/config/dashboard";
 import { getRoleDashboardPath } from "@/config/dummyAuth";
 import { useAuth } from "@/context/AuthContext";
@@ -12,6 +15,7 @@ const DashboardLayout = () => {
   const { user } = useAuth();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarPath, setSidebarPath] = useState(location.pathname);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
     try {
       return localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === "true";
@@ -19,6 +23,11 @@ const DashboardLayout = () => {
       return false;
     }
   });
+
+  if (location.pathname !== sidebarPath) {
+    setSidebarPath(location.pathname);
+    setIsSidebarOpen(false);
+  }
 
   const toggleSidebarCollapse = () => {
     setIsSidebarCollapsed((prev) => {
@@ -41,17 +50,13 @@ const DashboardLayout = () => {
         location.pathname.startsWith(item.path)),
   );
 
-  useEffect(() => {
-    setIsSidebarOpen(false);
-  }, [location.pathname]);
-
   if (!isAllowed) {
     return <Navigate to={getRoleDashboardPath(user.role)} replace />;
   }
 
   return (
     <div className="flex min-h-screen bg-[#f3f6fb] text-primary">
-      <DashboardSidebar
+      <Sidebar
         navItems={navItems}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
@@ -60,11 +65,9 @@ const DashboardLayout = () => {
       />
 
       <div className="flex min-w-0 flex-1 flex-col transition-all duration-300">
-        <DashboardHeader
+        <Header
           title={currentItem?.label ?? "Dashboard"}
           onMenuClick={() => setIsSidebarOpen(true)}
-          isSidebarCollapsed={isSidebarCollapsed}
-          onToggleCollapse={toggleSidebarCollapse}
         />
         <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
           <Outlet />

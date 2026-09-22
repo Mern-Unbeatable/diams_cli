@@ -200,12 +200,7 @@ const StaffHeaderActions = ({ user, initials }) => (
   </div>
 );
 
-const DashboardHeader = ({
-  title,
-  onMenuClick,
-  isSidebarCollapsed = false,
-  onToggleCollapse,
-}) => {
+const Header = ({ title, onMenuClick }) => {
   const { user } = useAuth();
   const initials = user.name
     .split(" ")
@@ -239,4 +234,4 @@ const DashboardHeader = ({
   );
 };
 
-export default DashboardHeader;
+export default Header;

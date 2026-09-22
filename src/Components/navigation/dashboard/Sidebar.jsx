@@ -53,7 +53,7 @@ const NAV_ICONS = {
   fileText: FileText,
 };
 
-const DashboardSidebar = ({
+const Sidebar = ({
   navItems,
   isOpen,
   onClose,
@@ -221,4 +221,4 @@ const DashboardSidebar = ({
   );
 };
 
-export default DashboardSidebar;
+export default Sidebar;

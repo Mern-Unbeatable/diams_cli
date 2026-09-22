@@ -1,6 +1,9 @@
+/**
+ * Public site shell: navbar + page outlet + footer.
+ */
 import { Outlet } from "react-router";
-import NavbarLayout from "@/Components/navigation/public/NavbarLayout";
-import FooterLayout from "@/Components/navigation/public/FooterLayout";
+import Navbar from "@/Components/common/Navbar";
+import Footer from "@/Components/common/Footer";
 import ScrollToTop from "@/Components/utility/ScrollToTop";
 
 const RootLayout = () => {
@@ -8,13 +11,13 @@ const RootLayout = () => {
     <>
       <ScrollToTop />
       <header className="h-20">
-        <NavbarLayout />
+        <Navbar />
       </header>
       <main>
         <Outlet />
       </main>
       <footer>
-        <FooterLayout />
+        <Footer />
       </footer>
     </>
   );
