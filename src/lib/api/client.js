@@ -48,6 +48,3 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-export { BASE_URL };
-export default apiClient;

@@ -1,16 +1,15 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export { z, zodResolver };
+export { zodResolver };
 
-/** Shared Zod field helpers */
-export const emailField = z
+const emailField = z
   .string()
   .trim()
   .min(1, "Email is required")
   .email("Enter a valid email");
 
-export const passwordField = z
+const passwordField = z
   .string()
   .min(1, "Password is required")
   .min(8, "Password must be at least 8 characters")
@@ -19,10 +18,10 @@ export const passwordField = z
   .regex(/\d/, "Include at least one number")
   .regex(/[^A-Za-z0-9]/, "Include at least one symbol");
 
-export const requiredString = (label = "This field") =>
+const requiredString = (label = "This field") =>
   z.string().trim().min(1, `${label} is required`);
 
-export const optionalString = z.string().optional().default("");
+const optionalString = z.string().optional().default("");
 
 /** Login */
 export const loginSchema = z.object({
@@ -57,12 +56,3 @@ export const newTicketSchema = z.object({
   subject: requiredString("Subject"),
   description: requiredString("Description"),
 });
-
-export default {
-  z,
-  zodResolver,
-  loginSchema,
-  accountSettingsSchema,
-  changePasswordSchema,
-  newTicketSchema,
-};
