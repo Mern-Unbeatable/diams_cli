@@ -55,13 +55,13 @@ Keys are prefixed so public / admin / role caches never collide:
 ## Layer diagram
 
 ```text
-UI (pages)                         ← wire later
-    ↓  hooks from @/features/...
+UI (pages)
+    ↓  hooks from @/features/...  ·  schemas from feature validation / @/lib/validation
 Feature queries
     ↓
 Feature api  →  USE_API_MOCKS ? mocks : apiClient + ENDPOINTS
     ↓
-src/lib/api
+src/lib/api  ·  src/lib/query  ·  src/lib/auth  ·  src/lib/storage  ·  src/lib/config
 ```
 
 ## Feature map

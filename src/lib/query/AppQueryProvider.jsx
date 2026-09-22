@@ -1,13 +1,13 @@
 /**
- * Why this file exists:
  * Mounts QueryClientProvider and DEV-only React Query Devtools.
  */
 
 import { lazy, Suspense } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/lib/provider/queryClient";
+import { env } from "@/lib/config/env";
+import { queryClient } from "./query-client";
 
-const ReactQueryDevtools = import.meta.env.DEV
+const ReactQueryDevtools = env.isDev
   ? lazy(() =>
       import("@tanstack/react-query-devtools").then((mod) => ({
         default: mod.ReactQueryDevtools,

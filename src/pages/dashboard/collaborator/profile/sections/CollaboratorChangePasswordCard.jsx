@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff, Check } from "lucide-react";
-import { changePasswordSchema, zodResolver } from "@/lib/formSchemas";
+import { changePasswordSchema, zodResolver } from "@/lib/validation";
 import { FieldError } from "@/Components/form/FieldError";
 
 const inputClass =

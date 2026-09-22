@@ -11,28 +11,24 @@ import {
   ROLE_LABELS,
   ROLES,
 } from "@/config/dummyAuth";
-import { queryClient } from "@/lib/provider/queryClient";
+import { clearAuthSession } from "@/lib/auth/session";
+import { getJSON, setJSON } from "@/lib/storage";
+import { queryClient } from "@/lib/query/query-client";
 
 const AuthContext = createContext(null);
 
 const readStoredUser = () => {
-  try {
-    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (!raw) return null;
+  const parsed = getJSON(AUTH_STORAGE_KEY, null);
+  if (!parsed) return null;
 
-    const parsed = JSON.parse(raw);
-    const isValidRole = Object.values(ROLES).includes(parsed?.role);
+  const isValidRole = Object.values(ROLES).includes(parsed?.role);
+  if (!parsed?.email || !parsed?.name || !isValidRole) return null;
 
-    if (!parsed?.email || !parsed?.name || !isValidRole) return null;
-
-    return {
-      email: parsed.email,
-      name: parsed.name,
-      role: parsed.role,
-    };
-  } catch {
-    return null;
-  }
+  return {
+    email: parsed.email,
+    name: parsed.name,
+    role: parsed.role,
+  };
 };
 
 export const AuthProvider = ({ children }) => {
@@ -56,14 +52,14 @@ export const AuthProvider = ({ children }) => {
     };
 
     setUser(session);
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
+    setJSON(AUTH_STORAGE_KEY, session);
 
     return { ok: true, user: session };
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem(AUTH_STORAGE_KEY);
+    clearAuthSession();
     // Drop cached server state so the next session cannot see the previous user's data.
     queryClient.clear();
   }, []);

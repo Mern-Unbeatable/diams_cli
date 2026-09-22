@@ -7,6 +7,7 @@ import Header from "@/Components/navigation/dashboard/Header";
 import Sidebar from "@/Components/navigation/dashboard/Sidebar";
 import { getCurrentNavItem, getDashboardNav } from "@/config/dashboard";
 import { getRoleDashboardPath } from "@/config/dummyAuth";
+import { getItem, setItem } from "@/lib/storage";
 import { useAuth } from "@/context/AuthContext";
 
 const SIDEBAR_COLLAPSED_KEY = "novasky_sidebar_collapsed";
@@ -16,13 +17,9 @@ const DashLayout = () => {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarPath, setSidebarPath] = useState(location.pathname);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
-    try {
-      return localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === "true";
-    } catch {
-      return false;
-    }
-  });
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
+    () => getItem(SIDEBAR_COLLAPSED_KEY) === "true",
+  );
 
   if (location.pathname !== sidebarPath) {
     setSidebarPath(location.pathname);
@@ -32,11 +29,7 @@ const DashLayout = () => {
   const toggleSidebarCollapse = () => {
     setIsSidebarCollapsed((prev) => {
       const next = !prev;
-      try {
-        localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(next));
-      } catch {
-        // ignore storage errors
-      }
+      setItem(SIDEBAR_COLLAPSED_KEY, String(next));
       return next;
     });
   };

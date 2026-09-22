@@ -1,11 +1,12 @@
 /**
- * Why this file exists:
- * Demo/mock mode for feature APIs until a real backend is available.
+ * Demo/mock mode helpers for feature APIs until a real backend is available.
  * Set VITE_USE_API_MOCKS=false to hit the network via apiClient.
  */
 
+import { env } from "@/lib/config/env";
+
 /** @type {boolean} */
-export const USE_API_MOCKS = import.meta.env.VITE_USE_API_MOCKS !== "false";
+export const USE_API_MOCKS = env.useApiMocks;
 
 /**
  * Abort-aware delay for mock latency.
