@@ -1,8 +1,20 @@
 /**
  * Why this file exists:
- * Composes domain route groups into the single createBrowserRouter instance
- * consumed by the app. Order matches the previous monolithic config:
- * auth → protected dashboard → public (with catch-all).
+ * Single entry for app routing. All route modules live under `src/routes/`
+ * (there is no separate `src/router/` folder).
+ *
+ * Layout:
+ *   paths.js              — ROUTES constants + absolute() helpers
+ *   helpers.jsx           — createRoleDashboardRoutes, detailRoutes, withSuspense
+ *   auth.routes.jsx       — guest /login
+ *   public.routes.jsx     — RootLayout marketing, checkout, legal, 404
+ *   dashboard.routes.jsx  — ProtectedRoute + /dashboard redirect + role trees
+ *   admin.routes.jsx      — admin dashboard children
+ *   collaborator.routes.jsx
+ *   user.routes.jsx
+ *   index.js              — createBrowserRouter composition (this file)
+ *
+ * Import in the app: `import { router, ROUTES, absolute } from "@/routes"`
  */
 
 import { createBrowserRouter } from "react-router";
