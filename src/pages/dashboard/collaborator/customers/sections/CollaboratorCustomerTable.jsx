@@ -67,6 +67,10 @@ const CollaboratorCustomerTable = ({
   currentPage,
   pageSize = 10,
   onPageChange,
+  isLoading = false,
+  isFetching = false,
+  error = null,
+  onRetry,
 }) => {
   return (
     <DataTable
@@ -79,6 +83,10 @@ const CollaboratorCustomerTable = ({
       onPageChange={onPageChange}
       emptyMessage="No customers found matching the selected filters."
       className="border-0 shadow-none"
+      isLoading={isLoading}
+      isFetching={isFetching}
+      error={error}
+      onRetry={onRetry}
     />
   );
 };

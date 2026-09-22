@@ -1,5 +1,15 @@
-import { useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import ErrorState from "@/Components/common/ErrorState";
+import {
+  useCollaboratorCustomer,
+  useCollaboratorCustomers,
+  useCreateCollaboratorCustomer,
+  useUpdateCollaboratorCustomer,
+} from "@/features/dash/collaborator/customers";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
+import { isNotFoundError } from "@/lib/api/errors";
 import {
   CollaboratorCustomerHeader,
   CollaboratorCustomerFilters,
@@ -7,56 +17,54 @@ import {
   CollaboratorCustomerDetailsView,
   CollaboratorRegisterCustomerView,
   CollaboratorEditCustomerModal,
-  COLLABORATOR_CUSTOMERS_DATA,
 } from "./sections";
 
 const CollaboratorCustomersView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [customersList, setCustomersList] = useState(
-    COLLABORATOR_CUSTOMERS_DATA,
-  );
   const [status, setStatus] = useState("All");
   const [plan, setPlan] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-
   const [isRegisteringView, setIsRegisteringView] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(null);
 
   const isRegisterMode = id === "register" || isRegisteringView;
+  const detailId = id && id !== "register" ? id : null;
 
-  // Find customer by ID from URL parameter
-  const currentCustomer = useMemo(() => {
-    if (!id || id === "register") return null;
-    return (
-      customersList.find(
-        (c) =>
-          c.id.toLowerCase() === id.toLowerCase() ||
-          (c.profileId && c.profileId.toLowerCase() === id.toLowerCase()),
-      ) || null
-    );
-  }, [id, customersList]);
+  const listFilters = {
+    ...(status !== "All" ? { status } : {}),
+    ...(plan !== "All" ? { plan } : {}),
+  };
 
-  // Filtering Logic
-  const filteredCustomers = useMemo(() => {
-    return customersList.filter((cust) => {
-      // Status Filter
-      if (
-        status !== "All" &&
-        cust.status.toLowerCase() !== status.toLowerCase()
-      ) {
-        return false;
-      }
-      // Plan Filter
-      if (plan !== "All" && cust.plan.toLowerCase() !== plan.toLowerCase()) {
-        return false;
-      }
-      return true;
-    });
-  }, [customersList, status, plan]);
+  const customersQuery = useCollaboratorCustomers(listFilters);
+  const customerQuery = useCollaboratorCustomer(detailId);
+  const createCustomer = useCreateCollaboratorCustomer();
+  const updateCustomer = useUpdateCollaboratorCustomer();
 
-  // Row Action Click Handler
+  useMutationFeedback(createCustomer, {
+    successMessage: "Customer registered.",
+    errorTitle: "Registration failed",
+  });
+  useMutationFeedback(updateCustomer, {
+    successMessage: "Customer updated.",
+    errorTitle: "Update failed",
+  });
+
+  const customersList = useMemo(
+    () => unwrapList(customersQuery.data),
+    [customersQuery.data],
+  );
+
+  const currentCustomer = detailId ? customerQuery.data : null;
+  const detailLoading = Boolean(detailId) && customerQuery.isLoading;
+  const detailError = Boolean(detailId) && customerQuery.isError;
+  const detailMissing =
+    Boolean(detailId) &&
+    !customerQuery.isLoading &&
+    (isNotFoundError(customerQuery.error) ||
+      (!customerQuery.isError && !currentCustomer && customerQuery.isFetched));
+
   const handleActionClick = (actionName, row) => {
     const act = String(actionName).toLowerCase();
     if (act.includes("detail") || act.includes("see details")) {
@@ -66,41 +74,42 @@ const CollaboratorCustomersView = () => {
     } else if (act.includes("order")) {
       navigate("/dashboard/collaborator/orders");
     } else if (act.includes("activation")) {
-      navigate("/dashboard/collaborator/orders");
+      navigate("/dashboard/collaborator/activations");
     }
   };
 
-  // Toggle status from details view
   const handleToggleStatus = (cust) => {
+    if (updateCustomer.isPending) return;
     const isSuspended = cust.status?.toLowerCase() === "suspended";
     const nextStatus = isSuspended ? "Active" : "Suspended";
-    setCustomersList((prev) =>
-      prev.map((c) =>
-        c.id === cust.id
-          ? { ...c, status: nextStatus, lineStatus: nextStatus }
-          : c,
-      ),
-    );
+    updateCustomer.mutate({
+      id: cust.id,
+      payload: { status: nextStatus, lineStatus: nextStatus },
+    });
   };
 
-  // Update customer details from edit modal
   const handleUpdateCustomer = (updatedCustomer) => {
-    setCustomersList((prev) =>
-      prev.map((c) => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+    if (updateCustomer.isPending || !updatedCustomer?.id) return;
+    const { id: customerId, ...payload } = updatedCustomer;
+    updateCustomer.mutate(
+      { id: customerId, payload },
+      { onSuccess: () => setEditingCustomer(null) },
     );
   };
 
-  // Register new customer handler
   const handleRegisterSuccess = (newCustomer) => {
-    setCustomersList((prev) => [newCustomer, ...prev]);
-    setIsRegisteringView(false);
-    navigate(`/dashboard/collaborator/customers/${newCustomer.id}`);
+    if (createCustomer.isPending) return;
+    createCustomer.mutate(newCustomer, {
+      onSuccess: (created) => {
+        setIsRegisteringView(false);
+        navigate(`/dashboard/collaborator/customers/${created.id}`);
+      },
+    });
   };
 
-  return (
-    <div className="min-h-full space-y-6 text-slate-900">
-      {/* 1. Register Customer Multi-Step Page View */}
-      {isRegisterMode ? (
+  if (isRegisterMode) {
+    return (
+      <div className="min-h-full space-y-6 text-slate-900">
         <CollaboratorRegisterCustomerView
           onBack={() => {
             setIsRegisteringView(false);
@@ -108,16 +117,36 @@ const CollaboratorCustomersView = () => {
           }}
           onRegisterSuccess={handleRegisterSuccess}
         />
-      ) : id ? (
-        /* 2. Customer Details Profile View */
-        currentCustomer ? (
-          <CollaboratorCustomerDetailsView
-            customer={currentCustomer}
-            onBack={() => navigate("/dashboard/collaborator/customers")}
-            onToggleStatus={handleToggleStatus}
-            onUpdateCustomer={handleUpdateCustomer}
-          />
-        ) : (
+      </div>
+    );
+  }
+
+  if (detailId) {
+    if (detailLoading) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
+          <CollaboratorCustomerTable customers={[]} isLoading />
+        </div>
+      );
+    }
+
+    if (detailError && !isNotFoundError(customerQuery.error)) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
+          <div className="rounded-xl border border-slate-100 bg-white shadow-sm">
+            <ErrorState
+              title="Unable to load customer"
+              error={customerQuery.error}
+              onRetry={() => customerQuery.refetch()}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    if (detailMissing || !currentCustomer) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
           <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">
               Customer Not Found
@@ -133,53 +162,64 @@ const CollaboratorCustomersView = () => {
               Back to Customer List
             </button>
           </div>
-        )
-      ) : (
-        /* 3. Main Customer Table List View */
-        <>
-          {/* Header */}
-          <CollaboratorCustomerHeader
-            onRegisterCustomer={() => {
-              setIsRegisteringView(true);
-              navigate("/dashboard/collaborator/customers/register");
-            }}
-          />
+        </div>
+      );
+    }
 
-          {/* Main Table Card Container */}
-          <div className="space-y-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
-            {/* Filters Bar */}
-            <CollaboratorCustomerFilters
-              status={status}
-              setStatus={(val) => {
-                setStatus(val);
-                setCurrentPage(1);
-              }}
-              plan={plan}
-              setPlan={(val) => {
-                setPlan(val);
-                setCurrentPage(1);
-              }}
-            />
+    return (
+      <div className="min-h-full space-y-6 text-slate-900">
+        <CollaboratorCustomerDetailsView
+          customer={currentCustomer}
+          onBack={() => navigate("/dashboard/collaborator/customers")}
+          onToggleStatus={handleToggleStatus}
+          onUpdateCustomer={handleUpdateCustomer}
+        />
+      </div>
+    );
+  }
 
-            {/* Customer Table with Action Menu & Pagination */}
-            <CollaboratorCustomerTable
-              customers={filteredCustomers}
-              onActionClick={handleActionClick}
-              currentPage={currentPage}
-              pageSize={10}
-              onPageChange={setCurrentPage}
-            />
-          </div>
+  return (
+    <div className="min-h-full space-y-6 text-slate-900">
+      <CollaboratorCustomerHeader
+        onRegisterCustomer={() => {
+          setIsRegisteringView(true);
+          navigate("/dashboard/collaborator/customers/register");
+        }}
+      />
 
-          {/* Edit Customer Modal */}
-          <CollaboratorEditCustomerModal
-            isOpen={Boolean(editingCustomer)}
-            onClose={() => setEditingCustomer(null)}
-            customer={editingCustomer}
-            onSave={handleUpdateCustomer}
-          />
-        </>
-      )}
+      <div className="space-y-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] sm:p-8">
+        <CollaboratorCustomerFilters
+          status={status}
+          setStatus={(val) => {
+            setStatus(val);
+            setCurrentPage(1);
+          }}
+          plan={plan}
+          setPlan={(val) => {
+            setPlan(val);
+            setCurrentPage(1);
+          }}
+        />
+
+        <CollaboratorCustomerTable
+          customers={customersList}
+          onActionClick={handleActionClick}
+          currentPage={currentPage}
+          pageSize={10}
+          onPageChange={setCurrentPage}
+          isLoading={customersQuery.isLoading}
+          isFetching={customersQuery.isFetching && !customersQuery.isLoading}
+          error={customersQuery.isError ? customersQuery.error : null}
+          onRetry={() => customersQuery.refetch()}
+        />
+      </div>
+
+      <CollaboratorEditCustomerModal
+        isOpen={Boolean(editingCustomer)}
+        onClose={() => setEditingCustomer(null)}
+        customer={editingCustomer}
+        onSave={handleUpdateCustomer}
+      />
     </div>
   );
 };

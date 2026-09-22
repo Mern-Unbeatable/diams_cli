@@ -22,6 +22,10 @@ const CollaboratorInvoiceTable = ({
   currentPage = 1,
   pageSize = 10,
   onPageChange,
+  isLoading = false,
+  isFetching = false,
+  error = null,
+  onRetry,
 }) => {
   const columns = [
     {
@@ -90,6 +94,10 @@ const CollaboratorInvoiceTable = ({
       pageSize={pageSize}
       onPageChange={onPageChange}
       emptyMessage="No invoices found."
+      isLoading={isLoading}
+      isFetching={isFetching}
+      error={error}
+      onRetry={onRetry}
     />
   );
 };

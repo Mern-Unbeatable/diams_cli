@@ -1,4 +1,22 @@
+/**
+ * Demo records for collaborator commissions (rich UI seed).
+ */
+import {
+  COMMISSION_DETAILS_DATA,
+  COMMISSION_STAT_CARDS,
+  COMMISSIONS_CHART_DATA,
+} from "./commissions.seed";
+
 export const COLLAB_COMMISSIONS_MOCK = {
-  summary: { month: "2026-08", total: 1240.5 },
-  list: [{ id: "cm-1", orderId: "co-2", amount: 40 }],
+  summary: {
+    cards: COMMISSION_STAT_CARDS,
+    chart: COMMISSIONS_CHART_DATA,
+  },
+  list: COMMISSION_DETAILS_DATA,
+};
+
+export {
+  COMMISSION_DETAILS_DATA,
+  COMMISSION_STAT_CARDS,
+  COMMISSIONS_CHART_DATA,
 };

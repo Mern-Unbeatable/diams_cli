@@ -11,6 +11,7 @@ import {
   Trash2,
   XCircle,
 } from "lucide-react";
+import ErrorState from "@/Components/common/ErrorState";
 
 /**
  * Status Badge Style Resolver
@@ -413,6 +414,9 @@ const DataTable = ({
   showPagination = true,
   emptyMessage = "No records found.",
   isLoading = false,
+  isFetching = false,
+  error = null,
+  onRetry,
   className = "",
 }) => {
   const [internalPage, setInternalPage] = useState(1);
@@ -511,10 +515,33 @@ const DataTable = ({
       </div>
     ) : null;
 
+  const hasError = Boolean(error);
+  const showInitialLoading = isLoading && !hasError;
+
   return (
     <div
       className={`w-full overflow-hidden rounded-lg border border-slate-100 bg-white font-sans shadow-[0_2px_10px_rgba(0,0,0,0.02)] ${className}`}
     >
+      {isFetching && !showInitialLoading && !hasError ? (
+        <div
+          className="flex items-center justify-center gap-2 border-b border-slate-100 bg-sky-50/80 px-4 py-1.5 text-[11px] font-medium text-sky-700"
+          role="status"
+          aria-live="polite"
+        >
+          <span className="h-1.5 w-1.5 animate-ping rounded-full bg-sky-500" />
+          Updating…
+        </div>
+      ) : null}
+
+      {hasError && !showInitialLoading ? (
+        <ErrorState
+          compact
+          title="Unable to load records"
+          error={error}
+          onRetry={typeof onRetry === "function" ? onRetry : undefined}
+        />
+      ) : (
+        <>
       {/* Mobile + Tablet: card layout */}
       <div className="lg:hidden">
         <MobileCards
@@ -525,7 +552,7 @@ const DataTable = ({
           activeRowMenuId={activeRowMenuId}
           setActiveRowMenuId={setActiveRowMenuId}
           triggerRefs={triggerRefs}
-          isLoading={isLoading}
+          isLoading={showInitialLoading}
           emptyMessage={emptyMessage}
           getCellValue={getCellValue}
         />
@@ -556,7 +583,7 @@ const DataTable = ({
           </thead>
 
           <tbody className="divide-y divide-slate-100 text-[13px] text-slate-600">
-            {isLoading ? (
+            {showInitialLoading ? (
               <tr>
                 <td
                   colSpan={normalizedColumns.length || 1}
@@ -649,6 +676,8 @@ const DataTable = ({
       </div>
 
       {paginationFooter}
+        </>
+      )}
     </div>
   );
 };

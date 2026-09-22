@@ -2,10 +2,16 @@ import { useState, useMemo } from "react";
 import { SquarePen } from "lucide-react";
 import DataTable from "@/Components/dashboard/DataTable";
 import {
+  useUsers,
+  useCreateUser,
+  useUpdateUser,
+} from "@/features/dash/admin/users";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
+import {
   UsersHeader,
   InviteTeamCard,
   EditUserModal,
-  USERS_DATA,
 } from "./sections";
 
 const getRoleBadgeStyle = (role) => {
@@ -39,11 +45,27 @@ const getStatusBadgeStyle = (status) => {
 };
 
 const AdminUsersView = () => {
-  const [users, setUsers] = useState(USERS_DATA);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  // Table Columns Definition matching the screenshot
+  const usersQuery = useUsers();
+  const createUser = useCreateUser();
+  const updateUser = useUpdateUser();
+
+  useMutationFeedback(createUser, {
+    successMessage: "User invited.",
+    errorTitle: "Invite failed",
+  });
+  useMutationFeedback(updateUser, {
+    successMessage: "User updated.",
+    errorTitle: "Update failed",
+  });
+
+  const users = useMemo(
+    () => unwrapList(usersQuery.data),
+    [usersQuery.data],
+  );
+
   const columns = useMemo(
     () => [
       {
@@ -73,7 +95,7 @@ const AdminUsersView = () => {
         render: (row) => (
           <span
             className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getRoleBadgeStyle(
-              row.role
+              row.role,
             )}`}
           >
             {row.role}
@@ -86,7 +108,7 @@ const AdminUsersView = () => {
         render: (row) => (
           <span
             className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getStatusBadgeStyle(
-              row.status
+              row.status,
             )}`}
           >
             {row.status}
@@ -122,49 +144,47 @@ const AdminUsersView = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   const handleInvite = ({ email, role }) => {
-    const newUser = {
-      id: `usr-${Date.now()}`,
+    if (createUser.isPending) return;
+    createUser.mutate({
       name: email.split("@")[0].replace(".", " "),
-      email: email,
+      email,
       access: "Overview",
-      role: role,
+      role,
       status: "Active",
       loginDate: new Date().toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
       }),
-    };
-    setUsers((prev) => [newUser, ...prev]);
+    });
   };
 
   const handleSaveUser = (userId, updatedData) => {
-    setUsers((prev) =>
-      prev.map((u) => (u.id === userId ? { ...u, ...updatedData } : u))
-    );
+    if (updateUser.isPending) return;
+    updateUser.mutate({ id: userId, payload: updatedData });
   };
 
   return (
     <div className="min-h-full space-y-6 text-slate-900 font-sans pb-10">
-      {/* 1. Header */}
       <UsersHeader />
 
-      {/* 2. Invite Team Card */}
       <InviteTeamCard onInvite={handleInvite} />
 
-      {/* 3. Users Table with Common DataTable */}
       <DataTable
         columns={columns}
         data={users}
         pageSize={10}
         emptyMessage="No users found."
+        isLoading={usersQuery.isLoading}
+        isFetching={usersQuery.isFetching && !usersQuery.isLoading}
+        error={usersQuery.isError ? usersQuery.error : null}
+        onRetry={() => usersQuery.refetch()}
       />
 
-      {/* 4. Edit User Modal */}
       <EditUserModal
         isOpen={isEditModalOpen}
         onClose={() => {

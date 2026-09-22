@@ -1,0 +1,74 @@
+export const USER_BILLS_DATA = [
+  {
+    "id": "bill-1",
+    "periodMonth": "July 2024",
+    "periodDates": "Jul 01 - Jul 31, 2024",
+    "issueDate": "July 10, 2024",
+    "amount": "34.90",
+    "status": "Paid",
+    "downloadUrl": "#"
+  },
+  {
+    "id": "bill-2",
+    "periodMonth": "June 2024",
+    "periodDates": "Jun 01 - Jun 30, 2024",
+    "issueDate": "June 10, 2024",
+    "amount": "34.90",
+    "status": "Paid",
+    "downloadUrl": "#"
+  },
+  {
+    "id": "bill-3",
+    "periodMonth": "May 2024",
+    "periodDates": "May 01 - May 31, 2024",
+    "issueDate": "May 10, 2024",
+    "amount": "34.90",
+    "status": "Paid",
+    "downloadUrl": "#"
+  },
+  {
+    "id": "bill-4",
+    "periodMonth": "April 2024",
+    "periodDates": "Apr 01 - Apr 30, 2024",
+    "issueDate": "April 10, 2024",
+    "amount": "34.90",
+    "status": "Paid",
+    "downloadUrl": "#"
+  },
+  {
+    "id": "bill-5",
+    "periodMonth": "March 2024",
+    "periodDates": "Mar 01 - Mar 31, 2024",
+    "issueDate": "March 10, 2024",
+    "amount": "34.90",
+    "status": "Paid",
+    "downloadUrl": "#"
+  },
+  {
+    "id": "bill-6",
+    "periodMonth": "February 2024",
+    "periodDates": "Feb 01 - Feb 29, 2024",
+    "issueDate": "February 10, 2024",
+    "amount": "34.90",
+    "status": "Paid",
+    "downloadUrl": "#"
+  },
+  {
+    "id": "bill-7",
+    "periodMonth": "January 2024",
+    "periodDates": "Jan 01 - Jan 31, 2024",
+    "issueDate": "January 10, 2024",
+    "amount": "34.90",
+    "status": "Paid",
+    "downloadUrl": "#"
+  },
+  {
+    "id": "bill-8",
+    "periodMonth": "December 2023",
+    "periodDates": "Dec 01 - Dec 31, 2023",
+    "issueDate": "December 10, 2023",
+    "amount": "34.90",
+    "status": "Pending",
+    "downloadUrl": "#"
+  }
+];

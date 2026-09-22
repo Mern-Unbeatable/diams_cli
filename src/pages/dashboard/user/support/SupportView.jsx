@@ -1,6 +1,13 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
+import QueryStatus from "@/Components/common/QueryStatus";
 import { USER_SUPPORT } from "@/config/userSupport";
+import {
+  useCreateUserSupportTicket,
+  useUserSupportTickets,
+} from "@/features/dash/user/support";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
 import { SupportHeroCard } from "./components/SupportHeroCard";
 import { PopularTopicsSection } from "./components/PopularTopicsSection";
 import { RecentTicketsSection } from "./components/RecentTicketsSection";
@@ -20,21 +27,27 @@ const SupportView = () => {
     tabs,
     searchBanner,
     popularTopics,
-    recentTickets: initialTickets,
     frequentlyAskedQuestions,
   } = USER_SUPPORT;
 
   const [activeTab, setActiveTab] = useState("overview");
-  const [tickets, setTickets] = useState(initialTickets);
+  const ticketsQuery = useUserSupportTickets();
+  const createTicket = useCreateUserSupportTicket();
+
+  useMutationFeedback(createTicket, {
+    successMessage: "Support ticket submitted.",
+    errorTitle: "Could not create ticket",
+  });
+
+  const tickets = useMemo(
+    () => unwrapList(ticketsQuery.data),
+    [ticketsQuery.data],
+  );
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isNewTicketOpen, setIsNewTicketOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [selectedFaq, setSelectedFaq] = useState(null);
-
-  const handleCreateTicket = (newTicket) => {
-    setTickets((prev) => [newTicket, ...prev]);
-  };
 
   const handleTopicClick = () => {
     setActiveTab("faq");
@@ -48,7 +61,6 @@ const SupportView = () => {
     setSelectedTicket(null);
   };
 
-  /* Full-page ticket details — white bg, matches design image */
   if (selectedTicket) {
     return (
       <div className="-mx-4 -my-6 min-h-[calc(100vh-4rem)] bg-white px-4 py-6 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -84,58 +96,66 @@ const SupportView = () => {
         onChange={setActiveTab}
       />
 
-      {(activeTab === "overview" || activeTab === "tickets") && (
-        <div className="grid min-w-0 gap-6 xl:grid-cols-3">
-          <div className="min-w-0 space-y-6 xl:col-span-2">
-            {activeTab === "overview" && (
-              <>
-                <SupportHeroCard
-                  banner={searchBanner}
-                  onSearch={() => setActiveTab("faq")}
-                />
+      <QueryStatus
+        isLoading={ticketsQuery.isLoading}
+        isError={ticketsQuery.isError}
+        error={ticketsQuery.error}
+        onRetry={() => ticketsQuery.refetch()}
+        errorTitle="Unable to load tickets"
+      >
+        {(activeTab === "overview" || activeTab === "tickets") && (
+          <div className="grid min-w-0 gap-6 xl:grid-cols-3">
+            <div className="min-w-0 space-y-6 xl:col-span-2">
+              {activeTab === "overview" && (
+                <>
+                  <SupportHeroCard
+                    banner={searchBanner}
+                    onSearch={() => setActiveTab("faq")}
+                  />
 
-                <PopularTopicsSection
-                  topics={popularTopics}
-                  onSelectTopic={handleTopicClick}
-                  onViewAll={() => setActiveTab("faq")}
-                />
+                  <PopularTopicsSection
+                    topics={popularTopics}
+                    onSelectTopic={handleTopicClick}
+                    onViewAll={() => setActiveTab("faq")}
+                  />
 
-                <RecentTicketsSection
+                  <RecentTicketsSection
+                    tickets={tickets}
+                    onSelectTicket={handleSelectTicket}
+                  />
+                </>
+              )}
+
+              {activeTab === "tickets" && (
+                <SupportTicketsTab
                   tickets={tickets}
+                  onOpenNewTicket={() => setIsNewTicketOpen(true)}
                   onSelectTicket={handleSelectTicket}
                 />
-              </>
-            )}
+              )}
+            </div>
 
-            {activeTab === "tickets" && (
-              <SupportTicketsTab
-                tickets={tickets}
+            <div className="min-w-0 space-y-6 xl:sticky xl:top-24 xl:self-start">
+              <ContactUsCard
+                onStartChat={() => setIsChatOpen(true)}
                 onOpenNewTicket={() => setIsNewTicketOpen(true)}
-                onSelectTicket={handleSelectTicket}
               />
-            )}
+
+              <SupportFaqCard
+                faqs={frequentlyAskedQuestions}
+                onSelectFaq={(faq) => setSelectedFaq(faq)}
+                onViewAllFaq={() => setActiveTab("faq")}
+              />
+
+              <StillNeedHelpCard onStartChat={() => setIsChatOpen(true)} />
+            </div>
           </div>
+        )}
 
-          <div className="min-w-0 space-y-6 xl:sticky xl:top-24 xl:self-start">
-            <ContactUsCard
-              onStartChat={() => setIsChatOpen(true)}
-              onOpenNewTicket={() => setIsNewTicketOpen(true)}
-            />
-
-            <SupportFaqCard
-              faqs={frequentlyAskedQuestions}
-              onSelectFaq={(faq) => setSelectedFaq(faq)}
-              onViewAllFaq={() => setActiveTab("faq")}
-            />
-
-            <StillNeedHelpCard onStartChat={() => setIsChatOpen(true)} />
-          </div>
-        </div>
-      )}
-
-      {activeTab === "faq" && (
-        <SupportFaqTab faqs={frequentlyAskedQuestions} />
-      )}
+        {activeTab === "faq" && (
+          <SupportFaqTab faqs={frequentlyAskedQuestions} />
+        )}
+      </QueryStatus>
 
       <LiveChatModal
         isOpen={isChatOpen}
@@ -145,7 +165,7 @@ const SupportView = () => {
       <NewTicketModal
         isOpen={isNewTicketOpen}
         onClose={() => setIsNewTicketOpen(false)}
-        onCreateTicket={handleCreateTicket}
+        createTicket={createTicket}
       />
 
       <FaqDetailModal

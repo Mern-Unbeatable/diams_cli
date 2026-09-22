@@ -1,19 +1,4 @@
 /**
- * Basic demo records for billing.
+ * Demo records for admin billing invoices (rich UI seed).
  */
-export const BILLING_MOCK = [
-  {
-    "id": "bill-1",
-    "customer": "Albert Flores",
-    "amount": 29.9,
-    "status": "Paid",
-    "period": "2026-08"
-  },
-  {
-    "id": "bill-2",
-    "customer": "Dianne Russell",
-    "amount": 79.9,
-    "status": "Open",
-    "period": "2026-08"
-  }
-];
+export { INVOICES_DATA as BILLING_MOCK } from "./billing.seed";

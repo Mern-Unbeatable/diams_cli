@@ -1,19 +1,4 @@
 /**
- * Basic demo records for auditLogs.
+ * Demo records for admin audit logs (rich UI seed).
  */
-export const AUDIT_LOGS_MOCK = [
-  {
-    "id": "log-1",
-    "actor": "admin@novasky.ch",
-    "action": "order.update",
-    "target": "ord-1",
-    "at": "2026-08-07T10:00:00Z"
-  },
-  {
-    "id": "log-2",
-    "actor": "collab@novasky.ch",
-    "action": "customer.view",
-    "target": "cus-2",
-    "at": "2026-08-07T11:00:00Z"
-  }
-];
+export { AUDIT_LOGS_DATA as AUDIT_LOGS_MOCK } from "./auditLogs.seed";

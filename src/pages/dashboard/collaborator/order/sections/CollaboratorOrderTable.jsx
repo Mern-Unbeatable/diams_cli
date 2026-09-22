@@ -30,6 +30,10 @@ const CollaboratorOrderTable = ({
   currentPage = 1,
   pageSize = 10,
   onPageChange,
+  isLoading = false,
+  isFetching = false,
+  error = null,
+  onRetry,
 }) => {
   const columns = [
     {
@@ -98,6 +102,10 @@ const CollaboratorOrderTable = ({
       pageSize={pageSize}
       onPageChange={onPageChange}
       emptyMessage="No orders found matching the filter."
+      isLoading={isLoading}
+      isFetching={isFetching}
+      error={error}
+      onRetry={onRetry}
     />
   );
 };

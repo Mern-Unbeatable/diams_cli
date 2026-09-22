@@ -1,72 +1,95 @@
-import { useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import ErrorState from "@/Components/common/ErrorState";
+import {
+  useCollaboratorActivation,
+  useCollaboratorActivations,
+  useUpdateCollaboratorActivation,
+} from "@/features/dash/collaborator/activations";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
+import { isNotFoundError } from "@/lib/api/errors";
 import {
   CollaboratorActivationHeader,
   CollaboratorActivationTable,
   CollaboratorActivationDetailsView,
-  COLLABORATOR_ACTIVATIONS_DATA,
 } from "./sections";
 
 const CollaboratorActivationsView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [activationsList, setActivationsList] = useState(
-    COLLABORATOR_ACTIVATIONS_DATA,
-  );
   const [status, setStatus] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Find activation by ID (e.g. act-3 or ACT-003)
-  const currentActivation = useMemo(() => {
-    if (!id) return null;
-    return (
-      activationsList.find(
-        (a) =>
-          a.id.toLowerCase() === id.toLowerCase() ||
-          (a.activationId && a.activationId.toLowerCase() === id.toLowerCase()),
-      ) || null
-    );
-  }, [id, activationsList]);
+  const listFilters = status !== "All" ? { status } : {};
+  const activationsQuery = useCollaboratorActivations(listFilters);
+  const activationQuery = useCollaboratorActivation(id);
+  const updateActivation = useUpdateCollaboratorActivation();
 
-  // Filter Activations by Status
-  const filteredData = useMemo(() => {
-    return activationsList.filter((item) => {
-      if (
-        status !== "All" &&
-        item.status.toLowerCase() !== status.toLowerCase()
-      ) {
-        return false;
-      }
-      return true;
-    });
-  }, [activationsList, status]);
+  useMutationFeedback(updateActivation, {
+    successMessage: "Activation updated.",
+    errorTitle: "Update failed",
+  });
+
+  const activationsList = useMemo(
+    () => unwrapList(activationsQuery.data),
+    [activationsQuery.data],
+  );
+
+  const currentActivation = id ? activationQuery.data : null;
+  const detailLoading = Boolean(id) && activationQuery.isLoading;
+  const detailError = Boolean(id) && activationQuery.isError;
+  const detailMissing =
+    Boolean(id) &&
+    !activationQuery.isLoading &&
+    (isNotFoundError(activationQuery.error) ||
+      (!activationQuery.isError &&
+        !currentActivation &&
+        activationQuery.isFetched));
 
   const handleStartActivation = (actId) => {
-    setActivationsList((prev) =>
-      prev.map((item) =>
-        item.id === actId
-          ? {
-              ...item,
-              status: "Activated",
-              timeline: item.timeline.map((t) => ({ ...t, completed: true })),
-            }
-          : item,
-      ),
-    );
+    if (updateActivation.isPending) return;
+    const row =
+      activationsList.find((item) => item.id === actId) || currentActivation;
+    updateActivation.mutate({
+      id: actId,
+      payload: {
+        status: "Activated",
+        timeline: (row?.timeline || []).map((t) => ({
+          ...t,
+          completed: true,
+        })),
+      },
+    });
   };
 
-  return (
-    <div className="min-h-full space-y-6 text-slate-900">
-      {/* If URL contains activation ID, render details view */}
-      {id ? (
-        currentActivation ? (
-          <CollaboratorActivationDetailsView
-            activation={currentActivation}
-            onBack={() => navigate("/dashboard/collaborator/activations")}
-            onStartActivation={handleStartActivation}
-          />
-        ) : (
+  if (id) {
+    if (detailLoading) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
+          <CollaboratorActivationTable activations={[]} isLoading />
+        </div>
+      );
+    }
+
+    if (detailError && !isNotFoundError(activationQuery.error)) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
+          <div className="rounded-xl border border-slate-100 bg-white shadow-sm">
+            <ErrorState
+              title="Unable to load activation"
+              error={activationQuery.error}
+              onRetry={() => activationQuery.refetch()}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    if (detailMissing || !currentActivation) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
           <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">
               Activation Record Not Found
@@ -82,34 +105,50 @@ const CollaboratorActivationsView = () => {
               Back to Activations List
             </button>
           </div>
-        )
-      ) : (
-        <>
-          {/* 1. Header with STATUS dropdown */}
-          <CollaboratorActivationHeader
-            status={status}
-            setStatus={(val) => {
-              setStatus(val);
-              setCurrentPage(1);
-            }}
-          />
+        </div>
+      );
+    }
 
-          {/* 2. Activations Table */}
-          <CollaboratorActivationTable
-            activations={filteredData}
-            onViewActivation={(act) =>
-              navigate(
-                `/dashboard/collaborator/activations/${
-                  act.activationId || act.id
-                }`,
-              )
-            }
-            currentPage={currentPage}
-            pageSize={10}
-            onPageChange={setCurrentPage}
-          />
-        </>
-      )}
+    return (
+      <div className="min-h-full space-y-6 text-slate-900">
+        <CollaboratorActivationDetailsView
+          activation={currentActivation}
+          onBack={() => navigate("/dashboard/collaborator/activations")}
+          onStartActivation={handleStartActivation}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-full space-y-6 text-slate-900">
+      <CollaboratorActivationHeader
+        status={status}
+        setStatus={(val) => {
+          setStatus(val);
+          setCurrentPage(1);
+        }}
+      />
+
+      <CollaboratorActivationTable
+        activations={activationsList}
+        onViewActivation={(act) =>
+          navigate(
+            `/dashboard/collaborator/activations/${
+              act.activationId || act.id
+            }`,
+          )
+        }
+        currentPage={currentPage}
+        pageSize={10}
+        onPageChange={setCurrentPage}
+        isLoading={activationsQuery.isLoading}
+        isFetching={
+          activationsQuery.isFetching && !activationsQuery.isLoading
+        }
+        error={activationsQuery.isError ? activationsQuery.error : null}
+        onRetry={() => activationsQuery.refetch()}
+      />
     </div>
   );
 };

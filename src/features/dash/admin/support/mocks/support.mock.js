@@ -1,19 +1,4 @@
 /**
- * Basic demo records for support.
+ * Demo records for admin support tickets (rich UI seed).
  */
-export const SUPPORT_MOCK = [
-  {
-    "id": "tkt-1",
-    "subject": "eSIM install help",
-    "customer": "Albert Flores",
-    "status": "Open",
-    "priority": "Medium"
-  },
-  {
-    "id": "tkt-2",
-    "subject": "Billing question",
-    "customer": "Dianne Russell",
-    "status": "Resolved",
-    "priority": "Low"
-  }
-];
+export { SUPPORT_TICKETS_DATA as SUPPORT_MOCK } from "./support.seed";

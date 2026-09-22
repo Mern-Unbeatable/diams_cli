@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { USER_ESIM } from "@/config/userEsim";
+import QueryStatus from "@/Components/common/QueryStatus";
+import { useUserEsim } from "@/features/dash/user/esim";
 import { EsimActiveCard } from "./components/EsimActiveCard";
 import { EsimInstallCard } from "./components/EsimInstallCard";
 import { EsimManageSection } from "./components/EsimManageSection";
@@ -16,9 +18,19 @@ import { EsimFaqModal } from "./components/EsimFaqModal";
 
 const EsimView = () => {
   const { header, installTabs, activeEsim } = USER_ESIM;
+  const esimQuery = useUserEsim();
 
   const [activeTab, setActiveTab] = useState("qr-code");
-  const [esimData, setEsimData] = useState(activeEsim);
+  const [localOverrides, setLocalOverrides] = useState({});
+
+  const esimData = useMemo(
+    () => ({
+      ...activeEsim,
+      ...(esimQuery.data || {}),
+      ...localOverrides,
+    }),
+    [activeEsim, esimQuery.data, localOverrides],
+  );
 
   const [isRenameOpen, setIsRenameOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -29,21 +41,21 @@ const EsimView = () => {
   const [isFaqOpen, setIsFaqOpen] = useState(false);
 
   const handleRenameSave = (newName) => {
-    setEsimData((prev) => ({
+    setLocalOverrides((prev) => ({
       ...prev,
       customName: newName,
     }));
   };
 
   const handleDeleteConfirm = () => {
-    setEsimData((prev) => ({
+    setLocalOverrides((prev) => ({
       ...prev,
       status: "Deactivated",
     }));
   };
 
   const handleGenerateNew = () => {
-    setEsimData((prev) => ({
+    setLocalOverrides((prev) => ({
       ...prev,
       status: "Enabled",
       activationCode: `C${Math.floor(100 + Math.random() * 900)}-${Math.floor(1000 + Math.random() * 9000)}-${Math.floor(1000 + Math.random() * 9000)}-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -66,41 +78,50 @@ const EsimView = () => {
         <p className="mt-1 text-sm text-primary/60">{header.subtitle}</p>
       </div>
 
-      {/* Status / Active eSIM card — full width at top */}
-      <EsimActiveCard esimData={esimData} />
+      <QueryStatus
+        isLoading={esimQuery.isLoading}
+        isError={esimQuery.isError}
+        error={esimQuery.error}
+        onRetry={() => esimQuery.refetch()}
+        errorTitle="Unable to load eSIM"
+      >
+        <>
+          <EsimActiveCard esimData={esimData} />
 
-      <div className="grid min-w-0 gap-6 xl:grid-cols-12">
-        <div className="min-w-0 space-y-6 xl:col-span-9">
-          <EsimInstallCard
-            installTabs={installTabs}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            esimData={esimData}
-            onOpenTransferModal={() => setIsTransferOpen(true)}
-            onOpenGuideModal={() => setIsGuideOpen(true)}
-          />
+          <div className="grid min-w-0 gap-6 xl:grid-cols-12">
+            <div className="min-w-0 space-y-6 xl:col-span-9">
+              <EsimInstallCard
+                installTabs={installTabs}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                esimData={esimData}
+                onOpenTransferModal={() => setIsTransferOpen(true)}
+                onOpenGuideModal={() => setIsGuideOpen(true)}
+              />
 
-          <EsimManageSection
-            onRename={() => setIsRenameOpen(true)}
-            onDelete={() => setIsDeleteOpen(true)}
-            onGetNew={() => setIsNewEsimOpen(true)}
-          />
-        </div>
+              <EsimManageSection
+                onRename={() => setIsRenameOpen(true)}
+                onDelete={() => setIsDeleteOpen(true)}
+                onGetNew={() => setIsNewEsimOpen(true)}
+              />
+            </div>
 
-        <div className="min-w-0 space-y-6 xl:col-span-3 xl:sticky xl:top-24 xl:self-start">
-          <EsimPromoCard onLearnMore={() => setIsGuideOpen(true)} />
+            <div className="min-w-0 space-y-6 xl:col-span-3 xl:sticky xl:top-24 xl:self-start">
+              <EsimPromoCard onLearnMore={() => setIsGuideOpen(true)} />
 
-          <EsimInfoCard
-            esimData={esimData}
-            onOpenDetailsModal={() => setIsDetailsOpen(true)}
-          />
+              <EsimInfoCard
+                esimData={esimData}
+                onOpenDetailsModal={() => setIsDetailsOpen(true)}
+              />
 
-          <EsimHelpCard
-            onOpenGuide={() => setIsGuideOpen(true)}
-            onOpenFaq={() => setIsFaqOpen(true)}
-          />
-        </div>
-      </div>
+              <EsimHelpCard
+                onOpenGuide={() => setIsGuideOpen(true)}
+                onOpenFaq={() => setIsFaqOpen(true)}
+              />
+            </div>
+          </div>
+        </>
+      </QueryStatus>
 
       <RenameEsimModal
         isOpen={isRenameOpen}

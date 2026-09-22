@@ -1,15 +1,4 @@
 /**
- * Demo data — collaborator customers.
+ * Demo records for collaborator customers (rich UI seed).
  */
-export const COLLAB_CUSTOMERS_MOCK = [
-  {
-    "id": "cc-1",
-    "name": "Retail Shop ZH",
-    "status": "Active"
-  },
-  {
-    "id": "cc-2",
-    "name": "Kiosk Bern",
-    "status": "Active"
-  }
-];
+export { COLLABORATOR_CUSTOMERS_DATA as COLLAB_CUSTOMERS_MOCK } from "./customers.seed";

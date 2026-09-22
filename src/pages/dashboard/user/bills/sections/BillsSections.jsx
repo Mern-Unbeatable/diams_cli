@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import {
   CheckCircle2,
@@ -18,6 +18,9 @@ import {
 } from "lucide-react";
 import { USER_BILLS } from "@/config/userBills";
 import DashboardTabs from "@/Components/dashboard/DashboardTabs";
+import ErrorState from "@/Components/common/ErrorState";
+import { useUserBills } from "@/features/dash/user/bills";
+import { unwrapList } from "@/lib/query/unwrap";
 
 export const BillsHeader = () => {
   const { phoneNumber = "+41 76 123 45 67" } = USER_BILLS;
@@ -87,9 +90,15 @@ export const BillsAutoPaymentBanner = () => {
 };
 
 export const BillsTableCard = () => {
-  const { billsList, tabs } = USER_BILLS;
+  const { billsList: fallbackBills, tabs } = USER_BILLS;
+  const billsQuery = useUserBills();
   const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+
+  const billsList = useMemo(() => {
+    const rows = unwrapList(billsQuery.data);
+    return rows.length ? rows : fallbackBills;
+  }, [billsQuery.data, fallbackBills]);
 
   const filteredBills = billsList.filter((bill) => {
     if (activeTab === "paid") return bill.status === "Paid";
@@ -97,6 +106,18 @@ export const BillsTableCard = () => {
     if (activeTab === "failed") return bill.status === "Failed";
     return true;
   });
+
+  if (billsQuery.isError) {
+    return (
+      <section className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <ErrorState
+          title="Unable to load bills"
+          error={billsQuery.error}
+          onRetry={() => billsQuery.refetch()}
+        />
+      </section>
+    );
+  }
 
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 space-y-6">
@@ -133,7 +154,14 @@ export const BillsTableCard = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {filteredBills.map((bill) => {
+            {billsQuery.isLoading ? (
+              <tr>
+                <td colSpan={5} className="py-8 text-center text-sm text-primary/50">
+                  Loading bills…
+                </td>
+              </tr>
+            ) : (
+              filteredBills.map((bill) => {
               const isPaid = bill.status === "Paid";
 
               return (
@@ -181,7 +209,8 @@ export const BillsTableCard = () => {
                   </td>
                 </tr>
               );
-            })}
+            })
+            )}
           </tbody>
         </table>
       </div>

@@ -1,6 +1,5 @@
 import { Eye } from "lucide-react";
 import DataTable from "@/Components/dashboard/DataTable";
-import { COMMISSION_DETAILS_DATA } from "./collaboratorCommissionData";
 
 const getStatusBadge = (status) => {
   const isPaid = status?.toLowerCase() === "paid";
@@ -17,7 +16,14 @@ const getStatusBadge = (status) => {
   );
 };
 
-const CollaboratorCommissionTableCard = ({ onViewItem }) => {
+const CollaboratorCommissionTableCard = ({
+  onViewItem,
+  items = [],
+  isLoading = false,
+  isFetching = false,
+  error = null,
+  onRetry,
+}) => {
   const columns = [
     {
       key: "customer",
@@ -74,10 +80,14 @@ const CollaboratorCommissionTableCard = ({ onViewItem }) => {
 
       <DataTable
         columns={columns}
-        data={COMMISSION_DETAILS_DATA}
+        data={items}
         actions={false}
         pageSize={10}
         emptyMessage="No commission details found."
+        isLoading={isLoading}
+        isFetching={isFetching}
+        error={error}
+        onRetry={onRetry}
       />
     </div>
   );

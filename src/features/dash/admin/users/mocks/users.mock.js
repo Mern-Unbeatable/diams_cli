@@ -1,19 +1,4 @@
 /**
- * Basic demo records for users.
+ * Demo records for admin users (rich UI seed).
  */
-export const USERS_MOCK = [
-  {
-    "id": "usr-1",
-    "name": "Admin User",
-    "email": "admin@novasky.ch",
-    "role": "admin",
-    "status": "Active"
-  },
-  {
-    "id": "usr-2",
-    "name": "Collab User",
-    "email": "collab@novasky.ch",
-    "role": "collaborator",
-    "status": "Active"
-  }
-];
+export { USERS_DATA as USERS_MOCK } from "./users.seed";

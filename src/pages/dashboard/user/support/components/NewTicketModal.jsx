@@ -5,12 +5,12 @@ import { newTicketSchema } from "@/features/dash/user/support/validation";
 import { zodResolver } from "@/lib/validation";
 import { FieldError } from "@/Components/form/FieldError";
 
-export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
+export const NewTicketModal = ({ isOpen, onClose, createTicket }) => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(newTicketSchema),
     defaultValues: {
@@ -32,30 +32,22 @@ export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
 
   if (!isOpen) return null;
 
-  const onSubmit = (values) => {
-    const newTicket = {
-      id: `NS-${Math.floor(10000 + Math.random() * 90000)}`,
-      title: values.subject.trim(),
-      category: values.topic,
-      status: "In Progress",
-      statusVariant: "blue",
-      priority: "Medium",
-      customer: "Sam Rivera",
-      assignedAgent: "Support Team",
-      updated: "Just now",
-      date: "Today",
-      description: values.description.trim(),
-      conversation: [
-        {
-          id: 1,
-          sender: "Customer",
-          text: values.description.trim(),
-        },
-      ],
-    };
+  const isPending = Boolean(createTicket?.isPending);
 
-    onCreateTicket?.(newTicket);
-    onClose();
+  const onSubmit = (values) => {
+    if (!createTicket || createTicket.isPending) return;
+    createTicket.mutate(
+      {
+        topic: values.topic,
+        subject: values.subject.trim(),
+        description: values.description.trim(),
+      },
+      {
+        onSuccess: () => {
+          onClose();
+        },
+      },
+    );
   };
 
   return (
@@ -139,11 +131,11 @@ export const NewTicketModal = ({ isOpen, onClose, onCreateTicket }) => {
             </button>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isPending}
               className="inline-flex items-center gap-1.5 rounded-xl bg-btnPrimary px-5 py-2 font-bold text-white shadow-sm transition-colors hover:bg-btnPrimary/90 disabled:opacity-60"
             >
               <Check size={14} />
-              <span>Submit Ticket</span>
+              <span>{isPending ? "Submitting…" : "Submit Ticket"}</span>
             </button>
           </div>
         </form>

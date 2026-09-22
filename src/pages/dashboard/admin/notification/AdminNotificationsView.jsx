@@ -2,10 +2,15 @@ import { useState, useMemo } from "react";
 import { Eye } from "lucide-react";
 import DataTable from "@/Components/dashboard/DataTable";
 import {
+  useNotifications,
+  useCreateNotification,
+} from "@/features/dash/admin/notifications";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
+import {
   NotificationHeader,
   CreateNotificationModal,
   NotificationDetailsModal,
-  NOTIFICATIONS_DATA,
 } from "./sections";
 
 const getTypeBadgeStyle = (type) => {
@@ -24,21 +29,27 @@ const getTypeBadgeStyle = (type) => {
 };
 
 const AdminNotificationsView = () => {
-  const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
   const [selectedType, setSelectedType] = useState("All Types");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
-  // Filter notifications based on selected type
-  const filteredNotifications = useMemo(() => {
-    if (selectedType === "All Types") return notifications;
-    return notifications.filter(
-      (n) => n.type.toLowerCase() === selectedType.toLowerCase()
-    );
-  }, [notifications, selectedType]);
+  const listFilters =
+    selectedType === "All Types" ? {} : { type: selectedType };
 
-  // Table Columns Definition matching the screenshot
+  const notificationsQuery = useNotifications(listFilters);
+  const createNotification = useCreateNotification();
+
+  useMutationFeedback(createNotification, {
+    successMessage: "Notification created.",
+    errorTitle: "Create failed",
+  });
+
+  const notifications = useMemo(
+    () => unwrapList(notificationsQuery.data),
+    [notificationsQuery.data],
+  );
+
   const columns = useMemo(
     () => [
       {
@@ -65,7 +76,7 @@ const AdminNotificationsView = () => {
         render: (row) => (
           <span
             className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getTypeBadgeStyle(
-              row.type
+              row.type,
             )}`}
           >
             {row.type}
@@ -110,38 +121,41 @@ const AdminNotificationsView = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   const handleSaveNotification = (newNotification) => {
-    setNotifications((prev) => [newNotification, ...prev]);
+    if (createNotification.isPending) return;
+    createNotification.mutate(newNotification);
   };
 
   return (
     <div className="min-h-full space-y-6 text-slate-900 font-sans">
-      {/* 1. Header with Create Notifications Button and Type Dropdown */}
       <NotificationHeader
         selectedType={selectedType}
         onSelectType={setSelectedType}
         onCreateNotification={() => setIsCreateModalOpen(true)}
       />
 
-      {/* 2. Notifications Table with Common DataTable */}
       <DataTable
         columns={columns}
-        data={filteredNotifications}
+        data={notifications}
         pageSize={10}
         emptyMessage="No notifications found matching the selected type."
+        isLoading={notificationsQuery.isLoading}
+        isFetching={
+          notificationsQuery.isFetching && !notificationsQuery.isLoading
+        }
+        error={notificationsQuery.isError ? notificationsQuery.error : null}
+        onRetry={() => notificationsQuery.refetch()}
       />
 
-      {/* 3. Create Notification Modal */}
       <CreateNotificationModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onSave={handleSaveNotification}
       />
 
-      {/* 4. Notification Details Modal */}
       <NotificationDetailsModal
         isOpen={isDetailsModalOpen}
         onClose={() => {

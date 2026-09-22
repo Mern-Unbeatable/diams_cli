@@ -2,12 +2,18 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import DataTable from "@/Components/dashboard/DataTable";
 import {
+  useBillingList,
+  useCreateBilling,
+  useUpdateBilling,
+} from "@/features/dash/admin/billing";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
+import {
   BillingHeader,
   BillingKpiCards,
   GenerateInvoiceModal,
   InvoiceDetailsModal,
   RefundPaymentModal,
-  INVOICES_DATA,
   BILLING_STATUS_FILTERS,
   BILLING_ACTIONS,
 } from "./sections";
@@ -27,7 +33,6 @@ const getBillingStatusBadge = (status) => {
 };
 
 const AdminBillingView = () => {
-  const [invoices, setInvoices] = useState(INVOICES_DATA);
   const [selectedStatus, setSelectedStatus] = useState("All Statuses");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false);
@@ -36,7 +41,34 @@ const AdminBillingView = () => {
   const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close filter dropdown on outside click
+  const listFilters =
+    selectedStatus === "All Statuses" ? {} : { status: selectedStatus };
+
+  const billingQuery = useBillingList(listFilters);
+  const createBilling = useCreateBilling();
+  const updateBilling = useUpdateBilling();
+
+  useMutationFeedback(createBilling, {
+    successMessage: "Invoice created.",
+    errorTitle: "Create failed",
+  });
+  useMutationFeedback(updateBilling, {
+    successMessage: "Invoice updated.",
+    errorTitle: "Update failed",
+  });
+
+  const invoices = useMemo(
+    () => unwrapList(billingQuery.data),
+    [billingQuery.data],
+  );
+
+  // Unfiltered list for KPIs — refetch without status when needed
+  const allBillingQuery = useBillingList({});
+  const allInvoices = useMemo(
+    () => unwrapList(allBillingQuery.data),
+    [allBillingQuery.data],
+  );
+
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -47,33 +79,26 @@ const AdminBillingView = () => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
-  // Filter invoices based on selected status
-  const filteredInvoices = useMemo(() => {
-    if (selectedStatus === "All Statuses") return invoices;
-    return invoices.filter(
-      (inv) => inv.status.toLowerCase() === selectedStatus.toLowerCase()
-    );
-  }, [invoices, selectedStatus]);
-
-  // KPI calculations
   const totalRevenue = useMemo(() => {
-    const sum = invoices
+    const sum = allInvoices
       .filter((inv) => inv.status.toLowerCase() === "paid")
       .reduce((acc, curr) => acc + (curr.rawAmount || 0), 0);
     return sum.toFixed(2);
-  }, [invoices]);
+  }, [allInvoices]);
 
   const paidCount = useMemo(
-    () => invoices.filter((inv) => inv.status.toLowerCase() === "paid").length,
-    [invoices]
+    () =>
+      allInvoices.filter((inv) => inv.status.toLowerCase() === "paid").length,
+    [allInvoices],
   );
 
   const unpaidCount = useMemo(
-    () => invoices.filter((inv) => inv.status.toLowerCase() === "unpaid").length,
-    [invoices]
+    () =>
+      allInvoices.filter((inv) => inv.status.toLowerCase() === "unpaid")
+        .length,
+    [allInvoices],
   );
 
-  // Table Columns Definition matching the screenshot
   const columns = useMemo(
     () => [
       {
@@ -110,7 +135,7 @@ const AdminBillingView = () => {
         render: (row) => (
           <span
             className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${getBillingStatusBadge(
-              row.status
+              row.status,
             )}`}
           >
             {row.status}
@@ -123,10 +148,9 @@ const AdminBillingView = () => {
         align: "center",
       },
     ],
-    []
+    [],
   );
 
-  // Action Click Handler
   const handleActionClick = (actionName, row) => {
     const act = String(actionName).toLowerCase();
     if (act.includes("detail") || act === "details") {
@@ -140,43 +164,36 @@ const AdminBillingView = () => {
     }
   };
 
-  // Update Invoice Status
   const handleUpdateInvoiceStatus = (invoiceId, newStatus) => {
-    setInvoices((prev) =>
-      prev.map((inv) =>
-        inv.id === invoiceId ? { ...inv, status: newStatus } : inv
-      )
-    );
+    if (updateBilling.isPending) return;
+    updateBilling.mutate({ id: invoiceId, payload: { status: newStatus } });
     if (selectedInvoice && selectedInvoice.id === invoiceId) {
-      setSelectedInvoice((prev) => (prev ? { ...prev, status: newStatus } : null));
+      setSelectedInvoice((prev) =>
+        prev ? { ...prev, status: newStatus } : null,
+      );
     }
   };
 
-  // Confirm Refund
   const handleConfirmRefund = (invoiceId) => {
     handleUpdateInvoiceStatus(invoiceId, "Refund");
   };
 
-  // Add new invoice
   const handleSaveInvoice = (newInvoice) => {
-    setInvoices((prev) => [newInvoice, ...prev]);
+    if (createBilling.isPending) return;
+    createBilling.mutate(newInvoice);
   };
 
   return (
     <div className="min-h-full space-y-8 text-slate-900 font-sans">
-      {/* 1. Header with Generate Invoice Button */}
       <BillingHeader onGenerateInvoice={() => setIsGenerateModalOpen(true)} />
 
-      {/* 2. Top 3 KPI Metric Cards */}
       <BillingKpiCards
         revenue={totalRevenue > 0 ? totalRevenue : "328.70"}
         paidCount={paidCount}
         unpaidCount={unpaidCount}
       />
 
-      {/* 3. Invoices Table Section */}
       <div className="space-y-4">
-        {/* Status Filter Dropdown */}
         <div className="flex justify-end">
           <div className="relative" ref={dropdownRef}>
             <button
@@ -212,25 +229,26 @@ const AdminBillingView = () => {
           </div>
         </div>
 
-        {/* Common DataTable Component */}
         <DataTable
           columns={columns}
-          data={filteredInvoices}
+          data={invoices}
           actions={BILLING_ACTIONS}
           onActionClick={handleActionClick}
           pageSize={10}
           emptyMessage="No invoices found matching the selected filter."
+          isLoading={billingQuery.isLoading}
+          isFetching={billingQuery.isFetching && !billingQuery.isLoading}
+          error={billingQuery.isError ? billingQuery.error : null}
+          onRetry={() => billingQuery.refetch()}
         />
       </div>
 
-      {/* Generate Invoice Modal */}
       <GenerateInvoiceModal
         isOpen={isGenerateModalOpen}
         onClose={() => setIsGenerateModalOpen(false)}
         onSave={handleSaveInvoice}
       />
 
-      {/* Invoice Details Modal */}
       <InvoiceDetailsModal
         isOpen={isDetailsModalOpen}
         invoice={selectedInvoice}
@@ -241,7 +259,6 @@ const AdminBillingView = () => {
         onUpdateStatus={handleUpdateInvoiceStatus}
       />
 
-      {/* Refund Payment Modal */}
       <RefundPaymentModal
         isOpen={isRefundModalOpen}
         invoice={selectedInvoice}

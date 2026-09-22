@@ -1,59 +1,71 @@
-import { useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import ErrorState from "@/Components/common/ErrorState";
+import {
+  useCollaboratorOrder,
+  useCollaboratorOrders,
+} from "@/features/dash/collaborator/orders";
+import { unwrapList } from "@/lib/query/unwrap";
+import { isNotFoundError } from "@/lib/api/errors";
 import {
   CollaboratorOrderHeader,
   CollaboratorOrderTable,
   CollaboratorOrderDetailsView,
-  COLLABORATOR_ORDERS_DATA,
 } from "./sections";
 
 const CollaboratorOrdersView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [ordersList] = useState(COLLABORATOR_ORDERS_DATA);
   const [status, setStatus] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Find order by ID from URL parameter (e.g. ord-1 or ORD-2026-001)
-  const currentOrder = useMemo(() => {
-    if (!id) return null;
-    return (
-      ordersList.find(
-        (o) =>
-          o.id.toLowerCase() === id.toLowerCase() ||
-          (o.orderId && o.orderId.toLowerCase() === id.toLowerCase()),
-      ) || null
-    );
-  }, [id, ordersList]);
+  const listFilters = status !== "All" ? { status } : {};
+  const ordersQuery = useCollaboratorOrders(listFilters);
+  const orderQuery = useCollaboratorOrder(id);
 
-  // Filter Orders by Status
-  const filteredOrders = useMemo(() => {
-    return ordersList.filter((ord) => {
-      if (
-        status !== "All" &&
-        ord.status.toLowerCase() !== status.toLowerCase()
-      ) {
-        return false;
-      }
-      return true;
-    });
-  }, [ordersList, status]);
+  const ordersList = useMemo(
+    () => unwrapList(ordersQuery.data),
+    [ordersQuery.data],
+  );
 
-  return (
-    <div className="min-h-full space-y-6 text-slate-900">
-      {/* If URL contains order id parameter, render OrderDetailsView */}
-      {id ? (
-        currentOrder ? (
-          <CollaboratorOrderDetailsView
-            order={currentOrder}
-            onBack={() => navigate("/dashboard/collaborator/orders")}
-          />
-        ) : (
+  const currentOrder = id ? orderQuery.data : null;
+  const detailLoading = Boolean(id) && orderQuery.isLoading;
+  const detailError = Boolean(id) && orderQuery.isError;
+  const detailMissing =
+    Boolean(id) &&
+    !orderQuery.isLoading &&
+    (isNotFoundError(orderQuery.error) ||
+      (!orderQuery.isError && !currentOrder && orderQuery.isFetched));
+
+  if (id) {
+    if (detailLoading) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
+          <CollaboratorOrderTable orders={[]} isLoading />
+        </div>
+      );
+    }
+
+    if (detailError && !isNotFoundError(orderQuery.error)) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
+          <div className="rounded-xl border border-slate-100 bg-white shadow-sm">
+            <ErrorState
+              title="Unable to load order"
+              error={orderQuery.error}
+              onRetry={() => orderQuery.refetch()}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    if (detailMissing || !currentOrder) {
+      return (
+        <div className="min-h-full space-y-6 text-slate-900">
           <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">
-              Order Not Found
-            </h2>
+            <h2 className="text-lg font-bold text-slate-900">Order Not Found</h2>
             <p className="mt-1 text-xs text-slate-500">
               No order was found with ID &quot;{id}&quot;.
             </p>
@@ -65,32 +77,43 @@ const CollaboratorOrdersView = () => {
               Back to Orders List
             </button>
           </div>
-        )
-      ) : (
-        <>
-          {/* 1. Header with STATUS dropdown */}
-          <CollaboratorOrderHeader
-            status={status}
-            setStatus={(val) => {
-              setStatus(val);
-              setCurrentPage(1);
-            }}
-          />
+        </div>
+      );
+    }
 
-          {/* 2. Orders Table */}
-          <CollaboratorOrderTable
-            orders={filteredOrders}
-            onViewOrder={(ord) =>
-              navigate(
-                `/dashboard/collaborator/orders/${ord.orderId || ord.id}`,
-              )
-            }
-            currentPage={currentPage}
-            pageSize={10}
-            onPageChange={setCurrentPage}
-          />
-        </>
-      )}
+    return (
+      <div className="min-h-full space-y-6 text-slate-900">
+        <CollaboratorOrderDetailsView
+          order={currentOrder}
+          onBack={() => navigate("/dashboard/collaborator/orders")}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-full space-y-6 text-slate-900">
+      <CollaboratorOrderHeader
+        status={status}
+        setStatus={(val) => {
+          setStatus(val);
+          setCurrentPage(1);
+        }}
+      />
+
+      <CollaboratorOrderTable
+        orders={ordersList}
+        onViewOrder={(ord) =>
+          navigate(`/dashboard/collaborator/orders/${ord.orderId || ord.id}`)
+        }
+        currentPage={currentPage}
+        pageSize={10}
+        onPageChange={setCurrentPage}
+        isLoading={ordersQuery.isLoading}
+        isFetching={ordersQuery.isFetching && !ordersQuery.isLoading}
+        error={ordersQuery.isError ? ordersQuery.error : null}
+        onRetry={() => ordersQuery.refetch()}
+      />
     </div>
   );
 };

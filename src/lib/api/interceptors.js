@@ -1,8 +1,11 @@
 /**
- * Axios interceptors — auth header attach; 401 handling reserved for real JWT.
+ * Axios interceptors — auth header, normalized errors, 401/403/429 feedback.
  */
 
 import { getAccessToken } from "@/lib/auth/session";
+import { notifyUnauthorized } from "@/lib/auth/unauthorized";
+import { normalizeApiError } from "@/lib/api/errors";
+import { toastError, toastWarning } from "@/lib/feedback/toast-bus";
 
 /**
  * @param {import("axios").AxiosInstance} client
@@ -27,7 +30,17 @@ export function attachResponseInterceptor(client) {
   client.interceptors.response.use(
     (response) => response,
     (error) => {
-      // 401 redirect/logout is a follow-up once real auth tokens exist.
+      const info = normalizeApiError(error);
+      error.normalized = info;
+
+      if (info.status === 401) {
+        notifyUnauthorized();
+      } else if (info.status === 403) {
+        toastError(info.message, "Access denied");
+      } else if (info.status === 429) {
+        toastWarning(info.message, "Slow down");
+      }
+
       return Promise.reject(error);
     },
   );
