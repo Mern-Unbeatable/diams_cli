@@ -19,7 +19,7 @@
 
 import { createBrowserRouter } from "react-router";
 import { authRoutes } from "./auth/auth.routes";
-import { dashboardRoutes } from "./dash/dashboard.routes";
+import { dashboardRoutes } from "./dashboard/dashboard.routes";
 import { publicRoutes } from "./public/public.routes";
 
 export const router = createBrowserRouter([

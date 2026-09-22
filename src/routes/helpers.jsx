@@ -5,7 +5,7 @@
  */
 
 import { createElement, Suspense } from "react";
-import { RoleRoute } from "@/Components/dashboard/ProtectedRoute";
+import { RoleRoute } from "@/routes/guard/ProtectedRoute";
 import RouteFallback from "@/Components/common/RouteFallback";
 import DashboardLayout from "@/layout/DashboardLayout";
 

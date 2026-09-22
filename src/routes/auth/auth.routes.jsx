@@ -5,7 +5,7 @@
  */
 
 import { lazy } from "react";
-import { GuestRoute } from "@/Components/dashboard/ProtectedRoute";
+import { GuestRoute } from "@/routes/guard/ProtectedRoute";
 import { withSuspense } from "../helpers";
 import { ROUTES } from "../paths";
 
