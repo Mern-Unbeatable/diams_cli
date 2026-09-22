@@ -1,11 +1,11 @@
 /**
  * Why this file exists:
- * Public marketing, checkout funnel, legal pages, and the RootLayout
+ * Public marketing, checkout funnel, legal pages, and the PublicLayout
  * catch-all 404 — isolated from auth and dashboard concerns.
  */
 
 import { lazy } from "react";
-import RootLayout from "@/Components/layout/RootLayout";
+import PublicLayout from "@/Components/layout/PublicLayout";
 import { withSuspense } from "../helpers";
 import { ROUTES } from "../paths";
 
@@ -51,7 +51,7 @@ const S = ROUTES.PUBLIC.SEGMENTS;
 export const publicRoutes = [
   {
     path: ROUTES.PUBLIC.ROOT,
-    element: <RootLayout />,
+    element: <PublicLayout />,
     children: [
       { index: true, element: withSuspense(HomeView) },
       { path: S.PLANS, element: withSuspense(PlansView) },

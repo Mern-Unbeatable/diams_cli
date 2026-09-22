@@ -11,7 +11,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const SIDEBAR_COLLAPSED_KEY = "novasky_sidebar_collapsed";
 
-const DashboardLayout = () => {
+const DashLayout = () => {
   const { user } = useAuth();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -77,4 +77,4 @@ const DashboardLayout = () => {
   );
 };
 
-export default DashboardLayout;
+export default DashLayout;

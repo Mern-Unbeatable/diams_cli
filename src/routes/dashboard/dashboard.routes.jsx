@@ -8,9 +8,9 @@ import { lazy } from "react";
 import { ProtectedRoute } from "@/routes/guard/ProtectedRoute";
 import { withSuspense } from "../helpers";
 import { ROUTES } from "../paths";
-import { adminRoutes } from "../admin/admin.routes";
-import { collaboratorRoutes } from "../collaborator/collaborator.routes";
-import { userRoutes } from "../user/user.routes";
+import { adminRoutes } from "./admin/admin.routes";
+import { collaboratorRoutes } from "./collaborator/collaborator.routes";
+import { userRoutes } from "./user/user.routes";
 
 const RoleDashboardRedirect = lazy(
   () => import("@/routes/guard/RoleDashboardRedirect"),

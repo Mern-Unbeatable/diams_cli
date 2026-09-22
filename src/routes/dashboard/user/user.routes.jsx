@@ -1,13 +1,13 @@
 /**
  * Why this file exists:
  * End-user role dashboard routes only. Wrapped with RoleRoute(USER) +
- * DashboardLayout via createRoleDashboardRoutes.
+ * DashLayout via createRoleDashboardRoutes.
  */
 
 import { lazy } from "react";
 import { ROLES } from "@/config/dummyAuth";
-import { createRoleDashboardRoutes, withSuspense } from "../helpers";
-import { ROUTES } from "../paths";
+import { createRoleDashboardRoutes, withSuspense } from "../../helpers";
+import { ROUTES } from "../../paths";
 
 const OverviewView = lazy(
   () => import("@/pages/dashboard/user/overview/OverviewView"),

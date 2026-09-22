@@ -1,6 +1,6 @@
 /**
  * Why this file exists:
- * Collaborator role dashboard routes only. Same RoleRoute + DashboardLayout
+ * Collaborator role dashboard routes only. Same RoleRoute + DashLayout
  * nesting as before; list+detail pairs use detailRoutes().
  */
 
@@ -10,8 +10,8 @@ import {
   createRoleDashboardRoutes,
   detailRoutes,
   withSuspense,
-} from "../helpers";
-import { ROUTES } from "../paths";
+} from "../../helpers";
+import { ROUTES } from "../../paths";
 
 const CollaboratorOverview = lazy(
   () => import("@/pages/dashboard/collaborator/overview/CollaboratorOverview"),

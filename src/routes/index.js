@@ -7,11 +7,9 @@
  *   paths.js              — ROUTES constants + absolute() helpers
  *   helpers.jsx           — createRoleDashboardRoutes, detailRoutes, withSuspense
  *   auth.routes.jsx       — guest /login
- *   public.routes.jsx     — RootLayout marketing, checkout, legal, 404
- *   dashboard.routes.jsx  — ProtectedRoute + /dashboard redirect + role trees
- *   admin.routes.jsx      — admin dashboard children
- *   collaborator.routes.jsx
- *   user.routes.jsx
+ *   public.routes.jsx     — PublicLayout marketing, checkout, legal, 404
+ *   dashboard/            — ProtectedRoute + /dashboard redirect + role trees
+ *     admin|collaborator|user.routes.jsx
  *   index.js              — createBrowserRouter composition (this file)
  *
  * Import in the app: `import { router, ROUTES, absolute } from "@/routes"`

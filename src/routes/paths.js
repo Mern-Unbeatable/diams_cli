@@ -80,7 +80,7 @@ export const ROUTES = {
 
   PUBLIC: {
     ROOT: "/",
-    /** Relative segments under RootLayout (`path: "/"`) */
+    /** Relative segments under PublicLayout (`path: "/"`) */
     SEGMENTS: {
       PLANS: "plans",
       PLAN_DETAILS: "plans/:planId",

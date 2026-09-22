@@ -1,7 +1,7 @@
 /**
  * Why this file exists:
  * Admin role dashboard routes only. Wrapped with RoleRoute(ADMIN) +
- * DashboardLayout via createRoleDashboardRoutes.
+ * DashLayout via createRoleDashboardRoutes.
  */
 
 import { lazy } from "react";
@@ -10,8 +10,8 @@ import {
   createRoleDashboardRoutes,
   detailRoutes,
   withSuspense,
-} from "../helpers";
-import { ROUTES } from "../paths";
+} from "../../helpers";
+import { ROUTES } from "../../paths";
 
 const AdminOverview = lazy(
   () => import("@/pages/dashboard/admin/overview/AdminOverview"),

@@ -7,7 +7,7 @@
 import { createElement, Suspense } from "react";
 import { RoleRoute } from "@/routes/guard/ProtectedRoute";
 import RouteFallback from "@/Components/common/RouteFallback";
-import DashboardLayout from "@/Components/layout/DashboardLayout";
+import DashLayout from "@/Components/layout/DashLayout";
 
 /**
  * Wrap a lazy (or any) component in Suspense + RouteFallback.
@@ -38,7 +38,7 @@ export const detailRoutes = (baseSegment, element, options = {}) => {
 
 /**
  * Role-scoped dashboard branch:
- *   path → RoleRoute(role) → DashboardLayout → children
+ *   path → RoleRoute(role) → DashLayout → children
  *
  * Preserves the exact nesting used by the previous monolithic router.
  *
@@ -54,7 +54,7 @@ export const createRoleDashboardRoutes = ({ role, basePath, children }) => ({
   element: <RoleRoute role={role} />,
   children: [
     {
-      element: <DashboardLayout />,
+      element: <DashLayout />,
       children,
     },
   ],

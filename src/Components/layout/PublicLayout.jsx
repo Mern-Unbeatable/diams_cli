@@ -2,11 +2,11 @@
  * Public site shell: navbar + page outlet + footer.
  */
 import { Outlet } from "react-router";
-import Navbar from "@/Components/common/Navbar";
-import Footer from "@/Components/common/Footer";
+import Navbar from "@/Components/navigation/public/Navbar";
+import Footer from "@/Components/navigation/public/Footer";
 import ScrollToTop from "@/Components/utility/ScrollToTop";
 
-const RootLayout = () => {
+const PublicLayout = () => {
   return (
     <>
       <ScrollToTop />
@@ -23,4 +23,4 @@ const RootLayout = () => {
   );
 };
 
-export default RootLayout;
+export default PublicLayout;
