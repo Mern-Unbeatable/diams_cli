@@ -5,7 +5,7 @@
  */
 
 import { lazy } from "react";
-import RootLayout from "@/layout/RootLayout";
+import RootLayout from "@/Components/layout/RootLayout";
 import { withSuspense } from "../helpers";
 import { ROUTES } from "../paths";
 

@@ -7,7 +7,7 @@
 import { createElement, Suspense } from "react";
 import { RoleRoute } from "@/routes/guard/ProtectedRoute";
 import RouteFallback from "@/Components/common/RouteFallback";
-import DashboardLayout from "@/layout/DashboardLayout";
+import DashboardLayout from "@/Components/layout/DashboardLayout";
 
 /**
  * Wrap a lazy (or any) component in Suspense + RouteFallback.

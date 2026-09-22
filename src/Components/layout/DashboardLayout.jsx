@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router";
-import DashboardHeader from "@/Components/dashboard/DashboardHeader";
-import DashboardSidebar from "@/Components/dashboard/DashboardSidebar";
+import DashboardHeader from "@/Components/navigation/dash/DashboardHeader";
+import DashboardSidebar from "@/Components/navigation/dash/DashboardSidebar";
 import { getCurrentNavItem, getDashboardNav } from "@/config/dashboard";
 import { getRoleDashboardPath } from "@/config/dummyAuth";
 import { useAuth } from "@/context/AuthContext";
@@ -38,7 +38,7 @@ const DashboardLayout = () => {
     (item) =>
       item.path === location.pathname ||
       (item.path !== getRoleDashboardPath(user.role) &&
-        location.pathname.startsWith(item.path))
+        location.pathname.startsWith(item.path)),
   );
 
   useEffect(() => {

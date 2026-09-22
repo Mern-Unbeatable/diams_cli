@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
-import NavbarLayout from "./NavbarLayout";
-import FooterLayout from "./FooterLayout";
+import NavbarLayout from "@/Components/navigation/public/NavbarLayout";
+import FooterLayout from "@/Components/navigation/public/FooterLayout";
 import ScrollToTop from "@/Components/utility/ScrollToTop";
 
 const RootLayout = () => {
