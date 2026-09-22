@@ -1,11 +1,17 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import {
   AUTH_STORAGE_KEY,
   DUMMY_USERS,
   ROLE_LABELS,
   ROLES,
 } from "@/config/dummyAuth";
-import { queryClient } from "@/lib/queryClient";
+import { queryClient } from "@/lib/provider/queryClient";
 
 const AuthContext = createContext(null);
 
