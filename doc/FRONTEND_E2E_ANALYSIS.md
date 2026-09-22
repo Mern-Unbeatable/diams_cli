@@ -547,19 +547,187 @@ Feature-specific UI correctly lives under `pages/dashboard/...`. Shared primitiv
 
 ## 15. Error / Loading / Empty State Audit
 
-| Concern | Status |
-|---------|--------|
-| Route Suspense | `RouteFallback` — Confirmed |
-| ErrorBoundary / `errorElement` | **Absent** |
-| ApiStateGate / shared query error UI | **Absent** |
-| DataTable loading/empty | Present |
-| Network/401/403/500 UI | Not exercised by pages (static data) |
-| Mutation feedback | Often local-only; some `console.log` stubs (admin support/add-ons) |
-| Checkout validation before pay | Weak — Link navigation |
+**Verdict (Confirmed):** Route-level Suspense and table **empty** copy are solid. Almost every journey is still **static/mock UI**, so HTTP errors, refetch, retry, query loading, and mutation failure UX are **infrastructure-only** — not product behavior. There is no toast system, no ErrorBoundary / router `errorElement`, no Skeleton components, and **`DataTable` `isLoading` is never enabled by any page**.
 
-**Risk:** When features are wired, UI will need a shared loading/error pattern that does not yet exist.
+Legend for this section: **Confirmed** · **Inferred** · **Not Verified** · ✅ handled · ⚠️ partial · ❌ missing · — N/A
 
 ---
+
+### 15.1 Cross-cutting primitives
+
+| Primitive | Status | Evidence |
+|-----------|--------|----------|
+| **Route Suspense fallback** | ✅ Consistent | `Components/common/RouteFallback.jsx` — ping + “Loading…”, `role="status"` / `aria-live="polite"`; applied via `withSuspense` in `routes/helpers.jsx` on auth, public, and dashboard lazy routes |
+| **Devtools Suspense** | Not user UX | `AppQueryProvider.jsx` wraps Devtools with `fallback={null}` |
+| **React ErrorBoundary** | ❌ Absent | No `ErrorBoundary` in `src/` |
+| **Router `errorElement` / `useRouteError`** | ❌ Absent | `routes/index.js` composes routes without `errorElement` — render crashes fall to default RR/browser behavior |
+| **Toast / snackbar library** | ❌ Absent | Not in `package.json`; no sonner/notistack/react-hot-toast imports |
+| **Skeleton components** | ❌ Absent | No Skeleton; `animate-pulse` used decoratively only |
+| **Shared query error / retry UI** | ❌ Absent | No ApiStateGate (or equivalent); features return raw TanStack state with no shared error panel |
+| **FieldError** | ✅ Local form only | `Components/form/FieldError.jsx` — used by RHF screens |
+| **DataTable loading** | ⚠️ Capability unused | `DataTable.jsx` supports `isLoading` → “Loading records...” (mobile + desktop). Default `isLoading = false`. **No page passes `isLoading={true}`** (Confirmed via repo grep — only internal pass-through at L528) |
+| **DataTable empty** | ✅ Widely used | Custom `emptyMessage` on admin/collaborator tables |
+| **UpcomingPage** | ⚠️ Placeholder empty | `Components/dashboard/UpcomingPage.jsx`; only `user/notifications/NotificationsView.jsx` |
+| **Axios error handling** | ❌ Pass-through | `lib/api/interceptors.js` — response interceptor re-rejects; comment reserves 401 logout; **no status normalization, toast, or redirect** |
+| **HTTP timeout** | Infra only | `lib/api/client.js` `timeout: 30_000` — no UI for timeout failures |
+| **Query retry defaults** | Infra only | `lib/provider/query-client.js` — queries retry &lt; 2 except 401/403/404; mutations `retry: 0`; `refetchOnWindowFocus: false`. **Unused by pages** because pages do not call feature hooks |
+
+---
+
+### 15.2 Status-code / failure checklist (app-wide)
+
+| Concern | Product UX today | Classification |
+|---------|------------------|----------------|
+| **Initial loading (code-split)** | RouteFallback during lazy import | Confirmed ✅ |
+| **Initial loading (data)** | None — pages read sync config/`*Data.js` | Confirmed ❌ |
+| **Refetching / `isFetching`** | No UI | Confirmed ❌ |
+| **Mutation loading (API)** | Feature mutations exist; pages do not use them | Confirmed ❌ (API) / ⚠️ some local `setTimeout` spinners |
+| **Network failure** | No dedicated UI | Confirmed ❌ |
+| **401 (API)** | Interceptor stub only | Confirmed ❌ |
+| **401 / unauthenticated (route)** | `ProtectedRoute` → `/login` + `state.from` | Confirmed ✅ (UX gate) |
+| **403 / wrong role** | `RoleRoute` → own dashboard; `DashLayout` allowlist redirect | Confirmed ✅ (UX gate) |
+| **404 (unknown public URL)** | Branded `NotFound` under public `*` | Confirmed ✅ — `pages/error/NotFound.jsx`, `config/notFound.js` |
+| **404 (missing plan in checkout)** | `<Navigate to="/plans" replace />` on configure/personal-info/verification/payment/confirmation/activation/plan-details | Confirmed ✅ |
+| **404 (dashboard resource)** | Sparse — e.g. admin support ticket “Ticket Not Found”; most bad IDs just show empty tables or redirect home via allowlist | Confirmed ⚠️ |
+| **422 / client validation** | RHF+Zod on ~5 forms; most checkout/admin modals lack it | Confirmed ⚠️ |
+| **500 / server error** | No UI | Confirmed ❌ |
+| **Empty state** | Strong on DataTable lists; weak elsewhere | Confirmed ⚠️ |
+| **Partial failure** | N/A — no multi-query pages | Confirmed — |
+| **Slow response** | Local simulated delays only (payments, add method, register customer) | Confirmed ⚠️ |
+| **User-facing Retry** | None | Confirmed ❌ |
+
+---
+
+### 15.3 Journey-by-journey matrix
+
+Columns: Initial · Data load · Mutation load · Network · 401 · 403 · 404 · 422 · 500 · Empty · Slow · Retry
+
+#### Public marketing (Home, Plans, Business, Coverage, Help, Legal)
+
+| Item | Result | Evidence |
+|------|--------|----------|
+| Initial | ✅ RouteFallback | `withSuspense` + public lazy routes |
+| Data / HTTP statuses | ❌ Static `@/config/*` | No feature hooks on pages |
+| Empty / retry | — / ❌ | — |
+| Business contact “submit” | ⚠️ Fake emerald thank-you; no API/error | `BusinessFeaturesSection.jsx` |
+
+#### Checkout funnel (`/plans/:planId/...`)
+
+| Item | Result | Evidence |
+|------|--------|----------|
+| Invalid / missing plan | ✅ Redirect to `/plans` | Checkout + PlanDetails views |
+| Form validation (422) | ❌ Uncontrolled inputs; no RHF | e.g. `PersonalAccountForm`, `PaymentFormSection` |
+| Payment failure | ❌ “Pay Securely” is `<Link>` to confirmation — always “succeeds” | `PaymentFormSection.jsx` |
+| Mutation / network / 500 / retry / slow | ❌ | No processing state on pay CTA |
+
+#### Login / session
+
+| Item | Result | Evidence |
+|------|--------|----------|
+| Bad credentials | ✅ Inline red `authError` banner | `AuthFormSection.jsx` + `AuthContext` message |
+| Field validation | ✅ `FieldError` + Zod `loginSchema` | Same |
+| Submit pending | ⚠️ `disabled={isSubmitting}` only; label never becomes “Signing in…”; login is sync dummy so rarely visible | `AuthFormSection.jsx` |
+| Unauthed dashboard | ✅ → `/login` | `ProtectedRoute.jsx` |
+| Authed `/login` | ✅ → role home | `GuestRoute` |
+| Wrong role / disallowed path | ✅ Redirect | `RoleRoute`, `DashLayout.jsx` |
+| API 401 logout | ❌ Reserved in interceptor comment | `interceptors.js` |
+
+#### User dashboard (overview, usage, bills, esim, my-information, security, …)
+
+| Item | Result | Evidence |
+|------|--------|----------|
+| Initial | ✅ RouteFallback | Lazy user routes |
+| Data errors / loading | ❌ Sync config/`useState` seeds | e.g. `@/config/user*` |
+| Notifications | ⚠️ `UpcomingPage` “Upcoming” placeholder (also allowlist-blocked in layout) | `NotificationsView.jsx` |
+| Support ticket create | ✅ Field validation; ⚠️ success = modal close + list prepend (**no toast**); ❌ no API/network error | `NewTicketModal.jsx`, `SupportView` |
+| Support search empty | ✅ “No tickets found matching your query.” | `SupportTicketsTab` (or equivalent section) |
+| Payments “Pay Now” | ⚠️ Simulated `isProcessing` + “Processing…” + `PaymentSuccessModal`; ❌ no failure branch | `PaymentsView` / `MakePaymentTab` |
+| Add payment method | ⚠️ “Saving...” then close | `AddPaymentMethodModal.jsx` |
+| Security / my-info password | ⚠️ Zod modal vs manual modal; validation only; little success feedback | Security `ChangePasswordModal` vs my-information `ChangePasswordModal` |
+| eSIM destructive actions | ⚠️ Local `isDeleting` / `isTransferring` / `isActivating` disables | eSIM modals |
+
+#### Collaborator dashboard
+
+| Item | Result | Evidence |
+|------|--------|----------|
+| Table empty | ✅ Custom `emptyMessage`s | customers/orders/activations/commissions/invoices tables |
+| Table loading / error | ❌ Never `isLoading`; no error prop | DataTable callers |
+| Register customer | ⚠️ ~400ms `isSubmitting` on last step | `CollaboratorRegisterCustomerView.jsx` |
+| Profile / password save | ✅ FieldError + emerald success banners | `CollaboratorAccountSettingsCard`, `CollaboratorChangePasswordCard` |
+| identity / plans / support | ⚠️ Routes exist but layout redirects home — user never reaches page empty/error UI | `DashLayout` allowlist |
+
+#### Admin dashboard
+
+| Item | Result | Evidence |
+|------|--------|----------|
+| Table empty | ✅ Per-view `emptyMessage` | customers, orders, identity, esim, billing, support, notifications, users, audit, add-ons, … |
+| Table loading / error | ❌ Never enabled; some copy claims “empty, loading and error states” while DataTable call omits `isLoading` and has **no error prop** | e.g. `AdminCustomerView.jsx` |
+| Modal CRUD | ⚠️ Instant local state; most primary buttons **not** disabled; **no** success toast | Create/Edit plan, customer, addon modals |
+| Reply ticket | ❌ `console.log` then close — no confirmation UI | `AdminSupportView.jsx` (~L208–209) |
+| View add-on stub | ❌ `console.log("View add-on details:", row)` | `AdminAddOnsView.jsx` (~L93) |
+| Ticket detail 404 | ⚠️ Inline “Ticket Not Found” for bad id | `AdminSupportView.jsx` |
+| Feature query hooks | ❌ Unused by pages | `features/dash/admin/**` |
+
+#### NotFound / garbage URLs
+
+| Surface | Behavior |
+|---------|----------|
+| Public unknown path | ✅ Branded 404 + CTAs Home / Plans |
+| Dashboard unknown / blocked path | ⚠️ No branded 404 — auth/role/allowlist redirects to role home (**Inferred** UX: feels like “kick to overview,” not “page missing”) |
+
+---
+
+### 15.4 Mutation & feedback patterns (summary)
+
+| Pattern | Where | Quality |
+|---------|-------|---------|
+| RHF `FieldError` + `disabled={isSubmitting}` | Login, NewTicket, Security password, Collaborator profile/password | Best local pattern |
+| Inline success banner (emerald) | Collaborator profile/password; Business thank-you | Good for demo |
+| Simulated processing + success modal | User payments | Partial — success only |
+| Silent local list update | User support ticket create | Weak feedback |
+| Instant modal close, no toast | Most admin CRUD | Weak |
+| `console.log` as “success” | Admin reply ticket; view add-on | Swallowed / non-UX |
+
+---
+
+### 15.5 What works vs what breaks when APIs are wired
+
+**Already in good shape**
+
+- Consistent lazy-route loading (`RouteFallback`).
+- Clear unauthenticated / wrong-role redirects.
+- Checkout missing-`planId` soft-fail to `/plans`.
+- Branded public 404.
+- DataTable empty messages across list screens.
+- A few polished local success/error patterns (login banner, collaborator profile, payments success modal).
+
+**Will break or go blank without new UI work**
+
+| Gap | Impact | Recommended direction |
+|-----|--------|----------------------|
+| Pages do not consume feature hooks’ `isPending` / `isError` / `refetch` | Loading/error/retry never appear | Wire hooks; pass `isLoading={isPending}` into DataTable; add page-level error + Retry |
+| No ErrorBoundary / `errorElement` | Chunk or render crash → blank/default | Root + dashboard `errorElement` with Retry |
+| No toast / global alert | Mutations close silently | One toast provider; standardize mutation `onSuccess` / `onError` |
+| Checkout always “succeeds” | False confirmations | RHF+Zod; replace Link-pay with mutation + failure banner |
+| Interceptor 401 stub + no error normalization | Real JWT failures opaque | Normalize `{ status, message, fields }`; 401 → logout + redirect; 422 → `setError` |
+| Admin `console.log` feedback | Operators get no confirmation | Toast + disable submit while pending |
+| No skeletons / refetch indicator | Perceived freeze on slow API | Table loading + optional “Updating…” on `isFetching` |
+| Dashboard resource 404 inconsistent | Confusing redirects vs sparse not-found | Shared resource-not-found panel |
+
+---
+
+### 15.6 Confidence notes
+
+| Claim | Confidence |
+|-------|------------|
+| `isLoading` never passed as `true` from pages | **Confirmed** (grep) |
+| Feature query hooks unused by pages | **Confirmed** (only schema imports) |
+| No toast / ErrorBoundary / Skeleton | **Confirmed** |
+| Live HTTP 401/500 UX under real backend | **Not Verified** — requires backend + wiring; current interceptor behavior Confirmed as no-op |
+| Exact runtime look of RR default error UI | **Not Verified** without forcing a render crash |
+
+---
+
 
 ## 16. Performance Audit
 
