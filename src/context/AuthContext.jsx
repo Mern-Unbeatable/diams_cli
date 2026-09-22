@@ -5,7 +5,7 @@ import {
   ROLE_LABELS,
   ROLES,
 } from "@/config/dummyAuth";
-import { queryClient } from "@/lib/query/queryClient";
+import { queryClient } from "@/lib/queryClient";
 
 const AuthContext = createContext(null);
 
