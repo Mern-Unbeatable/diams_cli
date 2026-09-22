@@ -3,11 +3,11 @@
 **Product:** NovaSky (telecom / eSIM portal + multi-role dashboards)  
 **Repository:** `diams` / package folder `web/`  
 **Analysis date:** 2026-09-22 (fresh re-audit)  
-**Scope:** Frontend only â€” investigation, no application source changes  
+**Scope:** Frontend only - investigation, no application source changes  
 **Evidence basis:** Current source inspection of `package.json`, `src/**`, configs, `README.md`, `src/features/README.md`, `doc/BACKEND_INTEGRATION.md`  
-**Previous baseline:** Earlier `FRONTEND_E2E_ANALYSIS.md` (same date cycle) â€” treated as historical only; every finding re-verified
+**Previous baseline:** Earlier `FRONTEND_E2E_ANALYSIS.md` (same date cycle) - treated as historical only; every finding re-verified
 
-**Evidence legend:** **Confirmed** = observed in code Â· **Inferred** = strong structural evidence Â· **Unknown / Not Verified** = not knowable from this repo alone
+**Evidence legend:** **Confirmed** = observed in code | **Inferred** = strong structural evidence | **Unknown / Not Verified** = not knowable from this repo alone
 
 ---
 
@@ -19,7 +19,7 @@ NovaSky is a **Vite 7 + React 19 JavaScript SPA** with a polished public marketi
 
 1. **UI data is still mock/local.** Pages consume `@/config/*` and co-located `*Data.js` + `useState`. Feature query/mutation hooks are **not imported by pages** (only 3 Zod schemas are).
 2. **Auth is still demo-only** (`AuthContext` + `DUMMY_USERS` + `localStorage` key `novasky_auth`). Parallel `features/auth` login/me/logout hooks exist but are unused.
-3. **Route-level code splitting is now real** (`React.lazy` + `withSuspense` across auth/public/dashboard routes) â€” previous â€œno lazy loadingâ€ finding is **fixed**.
+3. **Route-level code splitting is now real** (`React.lazy` + `withSuspense` across auth/public/dashboard routes) - previous "no lazy loading" finding is **fixed**.
 4. **Several prior functional bugs remain:** broken public footer/CTA links (`/esim`, `/about`, `/careers`, `/press`, `/partners`); `DashLayout` nav allowlist blocks registered user notifications + collaborator identity/plans/support; checkout **Review** step still missing; payment UI still decorative.
 5. **No automated tests.** No TypeScript application source. No ErrorBoundary / router `errorElement`.
 
@@ -28,10 +28,10 @@ NovaSky is a **Vite 7 + React 19 JavaScript SPA** with a polished public marketi
 | Priority | Reality |
 |----------|---------|
 | Critical (if treated as production) | Demo auth forgeable via localStorage; payment is not a PSP |
-| High | Features scaffold unused â†’ dual mock sources will drift; broken/blocked navigation |
+| High | Features scaffold unused -> dual mock sources will drift; broken/blocked navigation |
 | Medium | Modal a11y gaps; dual form stacks; unused deps |
 
-**Production readiness (frontend alone):** **Early production / UI-complete prototype** â€” visually and navigationally rich, not production-capable for live auth, payments, or server-backed CRUD without wiring and security replacement.
+**Production readiness (frontend alone):** **Early production / UI-complete prototype** - visually and navigationally rich, not production-capable for live auth, payments, or server-backed CRUD without wiring and security replacement.
 
 ---
 
@@ -42,7 +42,7 @@ NovaSky is a **Vite 7 + React 19 JavaScript SPA** with a polished public marketi
 | App name (package) | `basic` (`package.json`) | Confirmed |
 | Product branding | NovaSky | Confirmed |
 | Module type | ES modules (`"type": "module"`) | Confirmed |
-| Entry HTML | `index.html` â†’ `/src/main.jsx` | Confirmed |
+| Entry HTML | `index.html` -> `/src/main.jsx` | Confirmed |
 | App shell | `src/App.jsx` (providers + router) | Confirmed |
 | Source language | JavaScript + JSX only (0 `.ts`/`.tsx`) | Confirmed |
 | Approx. size | ~356 `.jsx` + ~294 `.js` under `src/` (~650 total) | Confirmed |
@@ -96,7 +96,7 @@ NovaSky is a **Vite 7 + React 19 JavaScript SPA** with a polished public marketi
 | PropTypes | None |
 | Prettier | No config |
 | UI kit (MUI/Chakra/shadcn) | Custom Tailwind |
-| `src/services/`, `src/schemas/`, `src/api/`, `src/layout/` | Absent â€” roles covered by `lib/`, `features/*/validation`, `lib/api`, `Components/layout` |
+| `src/services/`, `src/schemas/`, `src/api/`, `src/layout/` | Absent - roles covered by `lib/`, `features/*/validation`, `lib/api`, `Components/layout` |
 
 ### Role of major dependencies
 
@@ -114,43 +114,43 @@ NovaSky is a **Vite 7 + React 19 JavaScript SPA** with a polished public marketi
 
 ```text
 web/
-â”œâ”€â”€ index.html
-â”œâ”€â”€ package.json / package-lock.json
-â”œâ”€â”€ vite.config.js              # React + Tailwind; alias @ â†’ ./src
-â”œâ”€â”€ jsconfig.json               # paths @/*
-â”œâ”€â”€ eslint.config.js
-â”œâ”€â”€ .env / .env.example         # VITE_API_BASE_URL, VITE_USE_API_MOCKS
-â”œâ”€â”€ README.md
-â”œâ”€â”€ doc/
-â”‚   â”œâ”€â”€ BACKEND_INTEGRATION.md
-â”‚   â”œâ”€â”€ FRONTEND_E2E_ANALYSIS.md   â† this file
-â”‚   â””â”€â”€ FRONTEND_ENGINEERING_SCORECARD.md
-â”œâ”€â”€ public/                     # logo.png, bag/gb/plane/sim*.png
-â””â”€â”€ src/
-    â”œâ”€â”€ main.jsx                # StrictMode â†’ App
-    â”œâ”€â”€ App.jsx                 # Query + Auth + RouterProvider
-    â”œâ”€â”€ index.css / App.css     # App.css empty/orphan
-    â”œâ”€â”€ assets/
-    â”œâ”€â”€ Components/             # common, dashboard, form, layout, navigation, public
-    â”œâ”€â”€ config/                 # UI copy, nav, dummyAuth
-    â”œâ”€â”€ context/AuthContext.jsx
-    â”œâ”€â”€ features/               # auth | public | dash/{admin,collaborator,user}
-    â”œâ”€â”€ hooks/index.js          # re-exports useAuth only
-    â”œâ”€â”€ lib/
-    â”‚   â”œâ”€â”€ api/                # client, endpoints, interceptors, mock
-    â”‚   â”œâ”€â”€ auth/session.js
-    â”‚   â”œâ”€â”€ config/env.js
-    â”‚   â”œâ”€â”€ provider/           # AppQueryProvider, query-client
-    â”‚   â”œâ”€â”€ storage/
-    â”‚   â”œâ”€â”€ validation/
-    â”‚   â””â”€â”€ utility/            # EMPTY
-    â”œâ”€â”€ pages/                  # auth, public, dashboard, error
-    â””â”€â”€ routes/                 # paths, helpers, guards, route modules
+|-- index.html
+|-- package.json / package-lock.json
+|-- vite.config.js              # React + Tailwind; alias @ -> ./src
+|-- jsconfig.json               # paths @/*
+|-- eslint.config.js
+|-- .env / .env.example         # VITE_API_BASE_URL, VITE_USE_API_MOCKS
+|-- README.md
+|-- doc/
+|   |-- BACKEND_INTEGRATION.md
+|   |-- FRONTEND_E2E_ANALYSIS.md   <- this file
+|   `-- FRONTEND_ENGINEERING_SCORECARD.md
+|-- public/                     # logo.png, bag/gb/plane/sim*.png
+`-- src/
+    |-- main.jsx                # StrictMode -> App
+    |-- App.jsx                 # Query + Auth + RouterProvider
+    |-- index.css / App.css     # App.css empty/orphan
+    |-- assets/
+    |-- Components/             # common, dashboard, form, layout, navigation, public
+    |-- config/                 # UI copy, nav, dummyAuth
+    |-- context/AuthContext.jsx
+    |-- features/               # auth | public | dash/{admin,collaborator,user}
+    |-- hooks/index.js          # re-exports useAuth only
+    |-- lib/
+    |   |-- api/                # client, endpoints, interceptors, mock
+    |   |-- auth/session.js
+    |   |-- config/env.js
+    |   |-- provider/           # AppQueryProvider, query-client
+    |   |-- storage/
+    |   |-- validation/
+    |   `-- utility/            # EMPTY
+    |-- pages/                  # auth, public, dashboard, error
+    `-- routes/                 # paths, helpers, guards, route modules
 ```
 
-**Alias:** `@` â†’ `./src` (`vite.config.js`, `jsconfig.json`).  
+**Alias:** `@` -> `./src` (`vite.config.js`, `jsconfig.json`).  
 **Package manager:** npm (`package-lock.json`).  
-**Scripts:** `dev`, `build`, `lint`, `preview` â€” **no `test`**.
+**Scripts:** `dev`, `build`, `lint`, `preview` - **no `test`**.
 
 ---
 
@@ -160,37 +160,37 @@ web/
 
 ```text
 Browser
-  â””â”€â”€ index.html
-        â””â”€â”€ main.jsx
-              â””â”€â”€ App.jsx
-                    â”œâ”€â”€ AppQueryProvider (QueryClient + DEV Devtools)
-                    â””â”€â”€ AuthProvider
-                          â””â”€â”€ RouterProvider (src/routes)
-                                â”œâ”€â”€ GuestRoute â†’ /login (AuthView) â† dummy AuthContext
-                                â”œâ”€â”€ ProtectedRoute
-                                â”‚     â”œâ”€â”€ /dashboard â†’ RoleDashboardRedirect
-                                â”‚     â”œâ”€â”€ RoleRoute(admin) â†’ DashLayout(allowlist) â†’ Admin pages
-                                â”‚     â”œâ”€â”€ RoleRoute(collaborator) â†’ DashLayout â†’ Collaborator pages
-                                â”‚     â””â”€â”€ RoleRoute(user) â†’ DashLayout â†’ User pages
-                                â””â”€â”€ PublicLayout
-                                      â””â”€â”€ Marketing + checkout + legal + NotFound (*)
+  `-- index.html
+        `-- main.jsx
+              `-- App.jsx
+                    |-- AppQueryProvider (QueryClient + DEV Devtools)
+                    `-- AuthProvider
+                          `-- RouterProvider (src/routes)
+                                |-- GuestRoute -> /login (AuthView) <- dummy AuthContext
+                                |-- ProtectedRoute
+                                |     |-- /dashboard -> RoleDashboardRedirect
+                                |     |-- RoleRoute(admin) -> DashLayout(allowlist) -> Admin pages
+                                |     |-- RoleRoute(collaborator) -> DashLayout -> Collaborator pages
+                                |     `-- RoleRoute(user) -> DashLayout -> User pages
+                                `-- PublicLayout
+                                      `-- Marketing + checkout + legal + NotFound (*)
 ```
 
 **Intended data flow (documented, mostly unused by UI):**
 
 ```text
-Page â†’ features/*/queries â†’ features/*/api â†’ (USE_API_MOCKS ? mocks : apiClient + ENDPOINTS)
+Page -> features/*/queries -> features/*/api -> (USE_API_MOCKS ? mocks : apiClient + ENDPOINTS)
 ```
 
 **Actual data flow (Confirmed):**
 
 ```text
-Page â†’ @/config/* | *Data.js | useState
-Page â†’ features/*/validation (3 schemas only)
-Auth UI â†’ AuthContext â†’ DUMMY_USERS â†’ localStorage
+Page -> @/config/* | *Data.js | useState
+Page -> features/*/validation (3 schemas only)
+Auth UI -> AuthContext -> DUMMY_USERS -> localStorage
 ```
 
-### Mermaid â€” bootstrap & data reality
+### Mermaid - bootstrap & data reality
 
 ```mermaid
 flowchart TD
@@ -233,7 +233,7 @@ flowchart TD
 
 ### Composition
 
-`src/routes/index.js` â†’ `createBrowserRouter([...authRoutes, ...dashboardRoutes, ...publicRoutes])`.
+`src/routes/index.js` -> `createBrowserRouter([...authRoutes, ...dashboardRoutes, ...publicRoutes])`.
 
 Helpers: `withSuspense`, `createRoleDashboardRoutes`, `detailRoutes` in `src/routes/helpers.jsx`.  
 Path constants: `src/routes/paths.js` (`ROUTES`, `absolute()`).
@@ -242,58 +242,58 @@ Path constants: `src/routes/paths.js` (`ROUTES`, `absolute()`).
 
 ```text
 /
-â”œâ”€â”€ /login                          GuestRoute â†’ AuthView (lazy)
-â”œâ”€â”€ /dashboard                      ProtectedRoute â†’ RoleDashboardRedirect
-â”œâ”€â”€ /dashboard/admin/**             Protected + Role(admin) + DashLayout
-â”‚   â”œâ”€â”€ (index) Overview
-â”‚   â”œâ”€â”€ customer, customer/:id
-â”‚   â”œâ”€â”€ orders, orders/:id
-â”‚   â”œâ”€â”€ identity, identity/:id
-â”‚   â”œâ”€â”€ plans, plans/create, plans/edit/:id, plans/:id
-â”‚   â”œâ”€â”€ add-ons, add-ons/create, add-ons/edit/:id
-â”‚   â”œâ”€â”€ esim, esim/:id
-â”‚   â”œâ”€â”€ billing
-â”‚   â”œâ”€â”€ support, support/:id
-â”‚   â”œâ”€â”€ notifications
-â”‚   â”œâ”€â”€ reports
-â”‚   â”œâ”€â”€ users
-â”‚   â”œâ”€â”€ settings
-â”‚   â””â”€â”€ audit-logs
-â”œâ”€â”€ /dashboard/collaborator/**      Protected + Role(collaborator) + DashLayout
-â”‚   â”œâ”€â”€ (index) Overview
-â”‚   â”œâ”€â”€ customers, customers/:id    (:id may be "register")
-â”‚   â”œâ”€â”€ orders, orders/:id
-â”‚   â”œâ”€â”€ activations, activations/:id
-â”‚   â”œâ”€â”€ commissions
-â”‚   â”œâ”€â”€ invoices
-â”‚   â”œâ”€â”€ notifications
-â”‚   â”œâ”€â”€ profile
-â”‚   â”œâ”€â”€ identity                    âš  registered; allowlist BLOCKS
-â”‚   â”œâ”€â”€ plans                       âš  registered; allowlist BLOCKS
-â”‚   â””â”€â”€ support                     âš  registered; allowlist BLOCKS
-â”œâ”€â”€ /dashboard/user/**              Protected + Role(user) + DashLayout
-â”‚   â”œâ”€â”€ (index) Overview
-â”‚   â”œâ”€â”€ my-line, plans-options, usage, bills, payments, esim
-â”‚   â”œâ”€â”€ my-information, security, support
-â”‚   â””â”€â”€ notifications               âš  registered + Header link; allowlist BLOCKS
-â””â”€â”€ PublicLayout (no auth guard)
-    â”œâ”€â”€ /
-    â”œâ”€â”€ /plans, /plans/:planId
-    â”œâ”€â”€ /plans/:planId/configure â†’ personal-info â†’ verification â†’ payment
-    â”‚                              â†’ confirmation â†’ activation
-    â”œâ”€â”€ /business, /coverage, /help, /account
-    â”œâ”€â”€ /legal, /privacy, /terms
-    â””â”€â”€ * â†’ NotFound
+|-- /login                          GuestRoute -> AuthView (lazy)
+|-- /dashboard                      ProtectedRoute -> RoleDashboardRedirect
+|-- /dashboard/admin/**             Protected + Role(admin) + DashLayout
+|   |-- (index) Overview
+|   |-- customer, customer/:id
+|   |-- orders, orders/:id
+|   |-- identity, identity/:id
+|   |-- plans, plans/create, plans/edit/:id, plans/:id
+|   |-- add-ons, add-ons/create, add-ons/edit/:id
+|   |-- esim, esim/:id
+|   |-- billing
+|   |-- support, support/:id
+|   |-- notifications
+|   |-- reports
+|   |-- users
+|   |-- settings
+|   `-- audit-logs
+|-- /dashboard/collaborator/**      Protected + Role(collaborator) + DashLayout
+|   |-- (index) Overview
+|   |-- customers, customers/:id    (:id may be "register")
+|   |-- orders, orders/:id
+|   |-- activations, activations/:id
+|   |-- commissions
+|   |-- invoices
+|   |-- notifications
+|   |-- profile
+|   |-- identity                    WARN registered; allowlist BLOCKS
+|   |-- plans                       WARN registered; allowlist BLOCKS
+|   `-- support                     WARN registered; allowlist BLOCKS
+|-- /dashboard/user/**              Protected + Role(user) + DashLayout
+|   |-- (index) Overview
+|   |-- my-line, plans-options, usage, bills, payments, esim
+|   |-- my-information, security, support
+|   `-- notifications               WARN registered + Header link; allowlist BLOCKS
+`-- PublicLayout (no auth guard)
+    |-- /
+    |-- /plans, /plans/:planId
+    |-- /plans/:planId/configure -> personal-info -> verification -> payment
+    |                              -> confirmation -> activation
+    |-- /business, /coverage, /help, /account
+    |-- /legal, /privacy, /terms
+    `-- * -> NotFound
 ```
 
-### Guards (Confirmed â€” real route guards, not UI-only)
+### Guards (Confirmed - real route guards, not UI-only)
 
 | Guard | Behavior | File |
 |-------|----------|------|
-| `ProtectedRoute` | Unauthed â†’ `/login` + `state.from` | `routes/guard/ProtectedRoute.jsx` |
-| `GuestRoute` | Authed â†’ role dashboard | same |
-| `RoleRoute` | Wrong role â†’ own role home | same |
-| `DashLayout` allowlist | Path must match `DASHBOARD_NAV` prefix or redirect home | `Components/layout/DashLayout.jsx` L37â€“47 |
+| `ProtectedRoute` | Unauthed -> `/login` + `state.from` | `routes/guard/ProtectedRoute.jsx` |
+| `GuestRoute` | Authed -> role dashboard | same |
+| `RoleRoute` | Wrong role -> own role home | same |
+| `DashLayout` allowlist | Path must match `DASHBOARD_NAV` prefix or redirect home | `Components/layout/DashLayout.jsx` L37-47 |
 
 **Security note:** These are **UX / client navigation restrictions**, not a security boundary. Any user can forge `novasky_auth` in localStorage. Server must enforce RBAC.
 
@@ -301,7 +301,7 @@ Path constants: `src/routes/paths.js` (`ROUTES`, `absolute()`).
 
 **Confirmed fixed vs prior audit:** all major page modules use `lazy()` + `RouteFallback` via `withSuspense`.
 
-### Missing public targets (links â†’ NotFound)
+### Missing public targets (links -> NotFound)
 
 | Link source | Path | Route? |
 |-------------|------|--------|
@@ -313,7 +313,7 @@ Path constants: `src/routes/paths.js` (`ROUTES`, `absolute()`).
 | Trigger | Destination |
 |---------|-------------|
 | Unauthed dashboard | `/login` + `from` |
-| Login success | Role dashboard â€” **`from` ignored** (`AuthFormSection`) |
+| Login success | Role dashboard - **`from` ignored** (`AuthFormSection`) |
 | Authed `/login` | Role dashboard |
 | Wrong role tree | Own role dashboard |
 | Path not in nav allowlist | Role dashboard |
@@ -325,15 +325,15 @@ Path constants: `src/routes/paths.js` (`ROUTES`, `absolute()`).
 
 ## 7. Feature Architecture Audit
 
-Conventions: `src/features/README.md`. Layout: `api/` Â· `mocks/` Â· `queries/{keys,queries,mutations}` Â· optional `validation/` Â· `index.js`.
+Conventions: `src/features/README.md`. Layout: `api/` | `mocks/` | `queries/{keys,queries,mutations}` | optional `validation/` | `index.js`.
 
 ### Feature map
 
 | Audience | Features | Pages use query hooks? |
 |----------|----------|------------------------|
 | `auth/` | login, me, logout + `loginSchema` | **No** hooks; schema **yes** |
-| `public/plans`, `public/addOns` | catalog + mutations | **No** â€” UI uses `@/config/plans` etc. |
-| `dash/admin/*` (13) | customers, orders, identity, plans, addOns, esim, billing, support, notifications, users, reports, settings, auditLogs | **No** â€” `*Data.js` |
+| `public/plans`, `public/addOns` | catalog + mutations | **No** - UI uses `@/config/plans` etc. |
+| `dash/admin/*` (13) | customers, orders, identity, plans, addOns, esim, billing, support, notifications, users, reports, settings, auditLogs | **No** - `*Data.js` |
 | `dash/collaborator/*` (10) | customers, orders, activations, commissions, invoices, notifications, profile, identity, plans, support | **No** hooks; `accountSettingsSchema` **yes** |
 | `dash/user/*` (7) | overview, usage, bills, payments, esim, support, notifications | **No** hooks; `newTicketSchema` **yes** |
 
@@ -341,18 +341,18 @@ Conventions: `src/features/README.md`. Layout: `api/` Â· `mocks/` Â· `querie
 
 ### Coupling / duplication
 
-- **Dual mock sources:** thin `features/*/mocks` vs rich page `*Data.js` / `@/config/user*` â€” **Confirmed drift risk**.
+- **Dual mock sources:** thin `features/*/mocks` vs rich page `*Data.js` / `@/config/user*` - **Confirmed drift risk**.
 - **Dual auth:** `AuthContext` vs unused `features/auth` hooks.
-- **Barrel name collision risk:** public and admin both export names like `planKeys` / `usePlans` â€” safe if imported from concrete paths; risky if star-importing both.
-- **Collaborator live endpoints (when mocks off):** some APIs reuse global/admin-style `ENDPOINTS` â€” **Inferred** scoping concern for real backend.
+- **Barrel name collision risk:** public and admin both export names like `planKeys` / `usePlans` - safe if imported from concrete paths; risky if star-importing both.
+- **Collaborator live endpoints (when mocks off):** some APIs reuse global/admin-style `ENDPOINTS` - **Inferred** scoping concern for real backend.
 
 ### Scalability assessment
 
 | Dimension | Verdict |
 |-----------|---------|
-| Folder cohesion | **Strong** â€” audience â†’ role â†’ domain |
-| Maintainability today | **Moderate** â€” scaffold good; dual data hurts |
-| Appropriateness | **Appropriate** â€” do not add more layers; wire existing ones |
+| Folder cohesion | **Strong** - audience -> role -> domain |
+| Maintainability today | **Moderate** - scaffold good; dual data hurts |
+| Appropriateness | **Appropriate** - do not add more layers; wire existing ones |
 
 ---
 
@@ -360,18 +360,18 @@ Conventions: `src/features/README.md`. Layout: `api/` Â· `mocks/` Â· `querie
 
 | Folder | Exists? | Contents / verdict |
 |--------|---------|-------------------|
-| `lib/api` | Yes | Axios client, interceptors, ENDPOINTS, mock helpers â€” **correct home** |
-| `lib/provider` | Yes | QueryClient defaults + provider â€” **correct** |
-| `lib/auth` | Yes | Session read/clear/token helpers â€” **correct** |
-| `lib/storage` | Yes | localStorage wrappers â€” **correct** |
-| `lib/config` | Yes | `env.js` â€” **correct** |
-| `lib/validation` | Yes | Shared Zod primitives + change-password + zodResolver re-export â€” **correct** |
+| `lib/api` | Yes | Axios client, interceptors, ENDPOINTS, mock helpers - **correct home** |
+| `lib/provider` | Yes | QueryClient defaults + provider - **correct** |
+| `lib/auth` | Yes | Session read/clear/token helpers - **correct** |
+| `lib/storage` | Yes | localStorage wrappers - **correct** |
+| `lib/config` | Yes | `env.js` - **correct** |
+| `lib/validation` | Yes | Shared Zod primitives + change-password + zodResolver re-export - **correct** |
 | `lib/utility` | Yes but **empty** | Placeholder; no misplaced utils found dumping here |
-| `hooks/` | Stub only | Re-exports `useAuth`; comments defer query hooks to features â€” **OK** |
-| `services/` | **No** | Feature `api/` fulfills this role â€” no need to invent |
-| `utils/` | **No** | Formatting mostly inline / config â€” acceptable at current scale |
+| `hooks/` | Stub only | Re-exports `useAuth`; comments defer query hooks to features - **OK** |
+| `services/` | **No** | Feature `api/` fulfills this role - no need to invent |
+| `utils/` | **No** | Formatting mostly inline / config - acceptable at current scale |
 
-**Misplacements:** Business/server logic still living in page `useState` + `*Data.js` rather than features â€” architectural debt, not wrong folder names.
+**Misplacements:** Business/server logic still living in page `useState` + `*Data.js` rather than features - architectural debt, not wrong folder names.
 
 ---
 
@@ -382,14 +382,14 @@ Conventions: `src/features/README.md`. Layout: `api/` Â· `mocks/` Â· `querie
 | Option | Value |
 |--------|-------|
 | `staleTime` | 60_000 |
-| `gcTime` | 5 Ã— 60_000 |
+| `gcTime` | 5 x 60_000 |
 | `refetchOnWindowFocus` | false |
 | query `retry` | &lt; 2; skip 401/403/404 |
 | mutation `retry` | 0 |
 
 ### Strengths (Confirmed)
 
-- Hierarchical key factories with role prefixes (`["dash","admin",â€¦]`, etc.).
+- Hierarchical key factories with role prefixes (`["dash","admin",...]`, etc.).
 - `queryFn` forwards AbortSignal.
 - Detail queries use `enabled: !!id`.
 - Mutations invalidate via `onSettled`.
@@ -423,18 +423,18 @@ Conventions: `src/features/README.md`. Layout: `api/` Â· `mocks/` Â· `querie
 
 ```text
 Login (AuthFormSection)
-  â†’ AuthContext.login(email, password)
-  â†’ match DUMMY_USERS
-  â†’ setUser + setJSON("novasky_auth", { email, name, role })   â† NO token
-  â†’ navigate(role dashboard)   â† ignores location.state.from
-  â†’ ProtectedRoute / RoleRoute / DashLayout
+  -> AuthContext.login(email, password)
+  -> match DUMMY_USERS
+  -> setUser + setJSON("novasky_auth", { email, name, role })   <- NO token
+  -> navigate(role dashboard)   <- ignores location.state.from
+  -> ProtectedRoute / RoleRoute / DashLayout
 Logout (Sidebar)
-  â†’ AuthContext.logout â†’ clearAuthSession + queryClient.clear â†’ /login
+  -> AuthContext.logout -> clearAuthSession + queryClient.clear -> /login
 ```
 
 ### Parallel unused path
 
-`features/auth` (`useLogin`, `useMe`, `useLogout`, mock with `demo-access-token`) â€” **not wired** to AuthView.
+`features/auth` (`useLogin`, `useMe`, `useLogout`, mock with `demo-access-token`) - **not wired** to AuthView.
 
 ### Token / API
 
@@ -477,7 +477,7 @@ Checkout funnel forms, most admin/collaborator modals, many user modals (includi
 
 ### Assessment
 
-- Shared validation architecture is **appropriately split** (common primitives + feature schemas) â€” not a giant central dump.
+- Shared validation architecture is **appropriately split** (common primitives + feature schemas) - not a giant central dump.
 - Adoption is **too thin** for checkout/payment and most CRUD modals.
 - Duplicate password UX is a consistency bug.
 
@@ -499,7 +499,7 @@ Checkout funnel forms, most admin/collaborator modals, many user modals (includi
 ### Pages
 
 - Generally **orchestration + section composition** with heavy section files.
-- Many pages **seed local state from Data/config** â€” business/data logic in UI layer.
+- Many pages **seed local state from Data/config** - business/data logic in UI layer.
 - Large files (**Confirmed**): `DataTable.jsx` (~597), `CreateAddonView` (~580), `CreatePlanView` (~474), `MakePaymentTab` (~441).
 
 ### Assessment
@@ -517,9 +517,9 @@ Feature-specific UI correctly lives under `pages/dashboard/...`. Shared primitiv
 | TanStack Query | Mounted; unused by pages | Intended server state |
 | URL / route params | Yes (`planId`, `:id`) | URL state |
 | localStorage | Auth session, sidebar collapse | Persistent client |
-| sessionStorage | No | â€” |
-| Redux / RTK | No | â€” |
-| Cookies | No client cookie auth | â€” |
+| sessionStorage | No | - |
+| Redux / RTK | No | - |
+| Cookies | No client cookie auth | - |
 
 **Problems:** server data in `useState`; derived filters often correctly memoized; auth hydration on boot via `readStoredUser`.
 
@@ -528,8 +528,8 @@ Feature-specific UI correctly lives under `pages/dashboard/...`. Shared primitiv
 ## 14. API Layer Audit
 
 ```text
-(Intended) Component â†’ feature hook â†’ feature api â†’ apiClient â†’ backend
-(Actual)   Component â†’ config/*Data.js
+(Intended) Component -> feature hook -> feature api -> apiClient -> backend
+(Actual)   Component -> config/*Data.js
 ```
 
 | Piece | Path | Notes |
@@ -549,9 +549,9 @@ Feature-specific UI correctly lives under `pages/dashboard/...`. Shared primitiv
 
 > **Remediation status (2026-09-22):** Infrastructure and major API-driven pages were wired after this audit. See implementation notes at the end of this section. Historical findings below remain as the baseline that drove the work.
 
-**Verdict (Confirmed at audit time):** Route-level Suspense and table **empty** copy were solid. Almost every journey was still **static/mock UI**, so HTTP errors, refetch, retry, query loading, and mutation failure UX were **infrastructure-only**. That gap has been substantially closed for list/CRUD screens (see Â§15.7).
+**Verdict (Confirmed at audit time):** Route-level Suspense and table **empty** copy were solid. Almost every journey was still **static/mock UI**, so HTTP errors, refetch, retry, query loading, and mutation failure UX were **infrastructure-only**. That gap has been substantially closed for list/CRUD screens (see section 15.7).
 
-Legend for this section: **Confirmed** Â· **Inferred** Â· **Not Verified** Â· âœ… handled Â· âš ï¸ partial Â· âŒ missing Â· â€” N/A
+Legend for this section: **Confirmed** | **Inferred** | **Not Verified** | [OK] handled | WARN partial | [X] missing | - N/A
 
 ---
 
@@ -559,16 +559,16 @@ Legend for this section: **Confirmed** Â· **Inferred** Â· **Not Verified** �
 
 | Primitive | Status (post-fix) | Evidence |
 |-----------|-------------------|----------|
-| **Route Suspense fallback** | âœ… Consistent | `Components/common/RouteFallback.jsx`; `withSuspense` in `routes/helpers.jsx` |
-| **App ErrorBoundary** | âœ… Added | `Components/common/AppErrorBoundary.jsx` wraps app in `App.jsx` |
-| **Router `errorElement`** | âœ… Added | `routes/index.js` + `Components/common/RouteErrorPage.jsx` |
-| **Toast / snackbar** | âœ… Minimal bus + host | `lib/feedback/toast-bus.js`, `Components/common/ToastProvider.jsx` |
-| **ErrorState / EmptyState / QueryStatus** | âœ… Shared | `Components/common/{ErrorState,EmptyState,QueryStatus}.jsx` |
-| **FieldError** | âœ… Local form | `Components/form/FieldError.jsx` |
-| **DataTable loading / error / retry / refetch** | âœ… Consumed | Props `isLoading`, `isFetching`, `error`, `onRetry` wired from feature queries on major list pages |
-| **Axios error handling** | âœ… Normalized | `lib/api/errors.js`; interceptor handles 401 logout, 403/429 toasts (`lib/api/interceptors.js`) |
-| **Query retry defaults** | âœ… Still in QueryClient | `lib/provider/query-client.js` |
-| **Mutation feedback hook** | âœ… Added | `hooks/useMutationFeedback.js` |
+| **Route Suspense fallback** | [OK] Consistent | `Components/common/RouteFallback.jsx`; `withSuspense` in `routes/helpers.jsx` |
+| **App ErrorBoundary** | [OK] Added | `Components/common/AppErrorBoundary.jsx` wraps app in `App.jsx` |
+| **Router `errorElement`** | [OK] Added | `routes/index.js` + `Components/common/RouteErrorPage.jsx` |
+| **Toast / snackbar** | [OK] Minimal bus + host | `lib/feedback/toast-bus.js`, `Components/common/ToastProvider.jsx` |
+| **ErrorState / EmptyState / QueryStatus** | [OK] Shared | `Components/common/{ErrorState,EmptyState,QueryStatus}.jsx` |
+| **FieldError** | [OK] Local form | `Components/form/FieldError.jsx` |
+| **DataTable loading / error / retry / refetch** | [OK] Consumed | Props `isLoading`, `isFetching`, `error`, `onRetry` wired from feature queries on major list pages |
+| **Axios error handling** | [OK] Normalized | `lib/api/errors.js`; interceptor handles 401 logout, 403/429 toasts (`lib/api/interceptors.js`) |
+| **Query retry defaults** | [OK] Still in QueryClient | `lib/provider/query-client.js` |
+| **Mutation feedback hook** | [OK] Added | `hooks/useMutationFeedback.js` |
 
 ---
 
@@ -576,20 +576,20 @@ Legend for this section: **Confirmed** Â· **Inferred** Â· **Not Verified** �
 
 | Concern | Product UX today | Classification |
 |---------|------------------|----------------|
-| **Initial loading (code-split)** | RouteFallback | Confirmed âœ… |
-| **Initial loading (data)** | DataTable / QueryStatus on wired pages | Confirmed âœ… (major lists) |
-| **Refetching / `isFetching`** | â€œUpdatingâ€¦â€ bar on DataTable | Confirmed âœ… |
-| **Mutation loading** | `isPending` guards + disabled submits on wired mutations | Confirmed âœ… |
-| **Network / 500** | ErrorState + Retry via normalizeApiError | Confirmed âœ… |
-| **401 (API)** | Interceptor â†’ logout + redirect `/login` | Confirmed âœ… |
-| **401 / unauthenticated (route)** | `ProtectedRoute` | Confirmed âœ… |
-| **403** | Toast â€œAccess deniedâ€ | Confirmed âœ… |
-| **404 (public URL)** | Branded `NotFound` | Confirmed âœ… |
-| **404 (resource)** | Detail not-found panels / ErrorState | Confirmed âš ï¸ (wired domains) |
-| **422** | Field errors when API returns `errors`; RHF forms | Confirmed âš ï¸ |
-| **429** | Warning toast | Confirmed âœ… |
-| **Empty state** | DataTable emptyMessage / EmptyState | Confirmed âœ… |
-| **User-facing Retry** | ErrorState / DataTable onRetry â†’ `refetch` | Confirmed âœ… |
+| **Initial loading (code-split)** | RouteFallback | Confirmed [OK] |
+| **Initial loading (data)** | DataTable / QueryStatus on wired pages | Confirmed [OK] (major lists) |
+| **Refetching / `isFetching`** | "Updating..." bar on DataTable | Confirmed [OK] |
+| **Mutation loading** | `isPending` guards + disabled submits on wired mutations | Confirmed [OK] |
+| **Network / 500** | ErrorState + Retry via normalizeApiError | Confirmed [OK] |
+| **401 (API)** | Interceptor -> logout + redirect `/login` | Confirmed [OK] |
+| **401 / unauthenticated (route)** | `ProtectedRoute` | Confirmed [OK] |
+| **403** | Toast "Access denied" | Confirmed [OK] |
+| **404 (public URL)** | Branded `NotFound` | Confirmed [OK] |
+| **404 (resource)** | Detail not-found panels / ErrorState | Confirmed WARN (wired domains) |
+| **422** | Field errors when API returns `errors`; RHF forms | Confirmed WARN |
+| **429** | Warning toast | Confirmed [OK] |
+| **Empty state** | DataTable emptyMessage / EmptyState | Confirmed [OK] |
+| **User-facing Retry** | ErrorState / DataTable onRetry -> `refetch` | Confirmed [OK] |
 
 ---
 
@@ -627,7 +627,7 @@ Checkout payment now validates card fields client-side with FieldError + toasts 
 
 | Item | Evidence-based finding |
 |------|------------------------|
-| Route code splitting | **Fixed** â€” lazy routes throughout |
+| Route code splitting | **Fixed** - lazy routes throughout |
 | Unused deps | chart.js, lucide, lenis inflate install/bundle potential |
 | SmoothScroll | Dead code path |
 | Images | Plain `<img>`; little/no `loading="lazy"` on heroes |
@@ -635,7 +635,7 @@ Checkout payment now validates card fields client-side with FieldError + toasts 
 | Query waterfalls | N/A in UI (no queries) |
 | Large view files | Editability cost more than proven runtime cost |
 
-Do **not** claim micro-render issues without profiling â€” **Not Verified**.
+Do **not** claim micro-render issues without profiling - **Not Verified**.
 
 ---
 
@@ -660,7 +660,7 @@ Do **not** claim micro-render issues without profiling â€” **Not Verified**
 | Public Navbar | Mobile hamburger + slide menu (`lg:`) |
 | Dashboard Sidebar | Off-canvas mobile; collapsible desktop; preference persisted |
 | DataTable | Mobile card layout + desktop `overflow-x-auto` |
-| Checkout | Stacked â†’ sidebar grid on large screens |
+| Checkout | Stacked -> sidebar grid on large screens |
 | Broken CTAs / blocked routes | Harm UX predictability |
 | Checkout Review skip | Stepper shows Review; flow skips it |
 
@@ -670,18 +670,18 @@ Do **not** claim micro-render issues without profiling â€” **Not Verified**
 
 | Topic | Finding | Boundary type |
 |-------|---------|---------------|
-| XSS via `dangerouslySetInnerHTML` | **None found** | â€” |
+| XSS via `dangerouslySetInnerHTML` | **None found** | - |
 | Auth storage | localStorage role session; ready for JWT fields | **UX only** today; JWT-in-LS = future XSS theft risk |
 | Client RBAC | Guards + allowlist | **UX restriction**, not security |
 | Open redirect | `from` saved but unused on login; checkout uses fixed paths | Low risk today |
 | Env | Only `VITE_*` public vars | Expected |
 | Demo passwords in UI | Confirmed | Demo hygiene |
-| Payment card fields | Uncontrolled DOM inputs; Link to confirmation | **Demo only** â€” must not be productionized as-is |
+| Payment card fields | Uncontrolled DOM inputs; Link to confirmation | **Demo only** - must not be productionized as-is |
 | PCI banner copy | Present (`PciSecurityBanner`) | Marketing; not a control |
 | Source maps / prod hardening | **Not Verified** from source alone |
 | Backend authorization | **Not Verified** | Must not be assumed |
 
-**Explicit:** Frontend cannot enforce backend authorization. Treat all dashboard â€œpermissionsâ€ as presentation.
+**Explicit:** Frontend cannot enforce backend authorization. Treat all dashboard "permissions" as presentation.
 
 ---
 
@@ -715,9 +715,9 @@ Critical journeys (auth, guards, checkout, CRUD) have **no automated coverage**.
 
 | Package | Verdict |
 |---------|---------|
-| chart.js, react-chartjs-2 | Unused â€” remove candidate |
-| lucide | Unused â€” remove candidate |
-| lenis | Only via unused SmoothScroll â€” remove or wire |
+| chart.js, react-chartjs-2 | Unused - remove candidate |
+| lucide | Unused - remove candidate |
+| lenis | Only via unused SmoothScroll - remove or wire |
 | recharts | Used |
 | lucide-react, react-icons | Used (overlap acceptable at light react-icons use) |
 | @types/react* | Optional for JS IDE; harmless |
@@ -732,10 +732,10 @@ Do not remove until import absence re-confirmed at change time (already verified
 |------|--------|
 | `SmoothScroll.jsx` + lenis | **Confirmed** dead path |
 | `App.css` | Empty, unused |
-| `features/**` query hooks | **Suspected unfinished scaffold** (intentional future use) â€” not â€œdelete,â€ but unused |
+| `features/**` query hooks | **Suspected unfinished scaffold** (intentional future use) - not "delete," but unused |
 | Dual auth / dual mocks / dual password modals | **Confirmed** duplication |
 | TODO/FIXME in `src` | **0** |
-| Collaborator identity/plans/support pages | Reachable only if allowlist fixed â€” currently blocked |
+| Collaborator identity/plans/support pages | Reachable only if allowlist fixed - currently blocked |
 
 ---
 
@@ -750,19 +750,19 @@ Do not remove until import absence re-confirmed at change time (already verified
 | Typecheck | N/A |
 | Env setup | Clear `.env.example` + README |
 | README | Largely accurate; still lists Chart.js in stack table |
-| `BACKEND_INTEGRATION.md` | May describe older `src/api/` layout â€” **Inferred drift** |
-| Onboarding | Demo accounts easy; dual data layers confuse â€œwhich source of truth?â€ |
+| `BACKEND_INTEGRATION.md` | May describe older `src/api/` layout - **Inferred drift** |
+| Onboarding | Demo accounts easy; dual data layers confuse "which source of truth?" |
 | package name `basic` | Cosmetic debt |
 
 ---
 
 ## 25. End-to-End User Journeys
 
-### Journey A â€” Public browse â†’ checkout â†’ confirmation
+### Journey A - Public browse -> checkout -> confirmation
 
 ```text
-PlansView â†’ PlanDetailsView â†’ ConfigureView â†’ PersonalInfoView
-  â†’ VerificationView â†’ PaymentView â†’ ConfirmationView â†’ (optional) ActivationView
+PlansView -> PlanDetailsView -> ConfigureView -> PersonalInfoView
+  -> VerificationView -> PaymentView -> ConfirmationView -> (optional) ActivationView
 ```
 
 | Aspect | Status |
@@ -775,34 +775,34 @@ PlansView â†’ PlanDetailsView â†’ ConfigureView â†’ PersonalInfoV
 | Authorization | Public (open) |
 | Broken entry CTAs | `/esim` from home/footer |
 
-### Journey B â€” Login admin â†’ overview
+### Journey B - Login admin -> overview
 
 ```text
-/login â†’ AuthContext dummy â†’ /dashboard/admin â†’ AdminOverview (overviewData.js)
+/login -> AuthContext dummy -> /dashboard/admin -> AdminOverview (overviewData.js)
 ```
 
 Guards enforce role. Data static. Feature admin hooks unused.
 
-### Journey C â€” User support ticket
+### Journey C - User support ticket
 
 ```text
-/dashboard/user/support â†’ NewTicketModal (RHF+Zod) â†’ prepend local tickets state
+/dashboard/user/support -> NewTicketModal (RHF+Zod) -> prepend local tickets state
 ```
 
 No feature support API call. Notifications page linked from Header but **allowlist-blocked**.
 
-### Journey D â€” Collaborator customers
+### Journey D - Collaborator customers
 
 ```text
-/dashboard/collaborator/customers â†’ local collaboratorCustomerData â†’ filters/detail/register
+/dashboard/collaborator/customers -> local collaboratorCustomerData -> filters/detail/register
 ```
 
 identity/plans/support routes exist but redirect home via allowlist.
 
-### Journey E â€” Logout
+### Journey E - Logout
 
 ```text
-Sidebar â†’ logout() â†’ clear storage + queryClient.clear â†’ /login
+Sidebar -> logout() -> clear storage + queryClient.clear -> /login
 ```
 
 Works for demo session cleanup.
@@ -817,7 +817,7 @@ Works for demo session cleanup.
 | Payment UI not real PSP / decorative card fields | **Still Valid** | `PaymentFormSection.jsx` |
 | Broken public links `/esim`, `/about`, `/careers`, `/press`, `/partners` | **Still Valid** | `footer.js`, routes lack paths |
 | Allowlist blocks collaborator identity/plans/support + user notifications | **Still Valid** | `dashboard.js` vs route modules + `DashLayout.jsx` |
-| Checkout Review missing; stepper inconsistency | **Still Valid** | `configure.js` CHECKOUT_STEPS vs paymentâ†’confirmation |
+| Checkout Review missing; stepper inconsistency | **Still Valid** | `configure.js` CHECKOUT_STEPS vs payment->confirmation |
 | No shared checkout state persistence | **Still Valid** | Checkout views local/uncontrolled |
 | API/Query unused by pages | **Still Valid** (scaffold expanded) | features exist; pages don't import hooks |
 | No automated tests | **Still Valid** | No test files/scripts |
@@ -833,11 +833,11 @@ Works for demo session cleanup.
 | `formSchemas.js` monolithic | **Partially Fixed** | Split to `lib/validation` + feature schemas; coverage still thin |
 | `ApiStateGate` ready for views | **Obsolete** | Component absent; need new shared pattern when wiring |
 | README claims Framer Motion / wrong tree | **Partially Fixed** | README mostly matches; Chart.js still listed |
-| Static route imports â†’ bundle growth | **Fixed** | Lazy routes |
+| Static route imports -> bundle growth | **Fixed** | Lazy routes |
 | Features / query key factories incomplete | **Partially Fixed** | Full feature map scaffolded; still unwired to UI |
 | SmoothScroll / App.css leftovers | **Still Valid** | Dead paths remain |
 | Console.log stubs | **Still Valid** | Admin support/add-ons areas |
-| Duplicate NeedHelpCard naming | **Unknown** | Not re-traced this pass â€” treat as low if still present |
+| Duplicate NeedHelpCard naming | **Unknown** | Not re-traced this pass - treat as low if still present |
 
 ---
 
@@ -845,29 +845,29 @@ Works for demo session cleanup.
 
 Scores are from **current evidence**, not carried forward for consistency.
 
-| Category | Score | Rationale | Strengths | Weaknesses | Toward 9â€“10 |
+| Category | Score | Rationale | Strengths | Weaknesses | Toward 9-10 |
 |----------|------:|-----------|-----------|------------|-------------|
 | Project Structure | 7.5/10 | Clear features/lib/routes/pages | Documented conventions | Dual data homes; empty utility; package name | Single data ownership story |
 | Architecture | 6.5/10 | Intended architecture solid | Audience foldering | Pages bypass features; dual auth | Wire pages to features |
 | Readability | 7/10 | Consistent feature naming | Route helpers | Very large view files | Split god views |
-| Maintainability | 5.5/10 | Scaffold helps future | â€” | Dual mocks drift | Delete page Data as features adopt |
+| Maintainability | 5.5/10 | Scaffold helps future | - | Dual mocks drift | Delete page Data as features adopt |
 | Scalability | 6/10 | Feature map scales | Key namespaces | Unwired surface area large | Incremental migration plan |
-| Code Quality | 5.5/10 | Guards, Suspense | â€” | Nav/link/stepper bugs; dual forms | Fix allowlist + links + forms |
-| Reusability | 6.5/10 | DataTable, layouts, feature hooks | â€” | Hooks unused | Consume shared hooks |
-| Separation of Concerns | 5.5/10 | Documented SoC | lib vs features | UI owns server data | Enforce pageâ†’hook rule |
+| Code Quality | 5.5/10 | Guards, Suspense | - | Nav/link/stepper bugs; dual forms | Fix allowlist + links + forms |
+| Reusability | 6.5/10 | DataTable, layouts, feature hooks | - | Hooks unused | Consume shared hooks |
+| Separation of Concerns | 5.5/10 | Documented SoC | lib vs features | UI owns server data | Enforce page->hook rule |
 | State Management | 5/10 | Auth context OK | Query defaults | Server state in useState | Migrate to Query |
 | API Architecture | 7/10 | Client/endpoints/mocks coherent | Env mock flag | Unused by UI; 401 stub | Wire + complete 401 |
 | Query Architecture | 6.5/10 | Excellent unused scaffold | Keys, invalidation, signal | Zero page usage | Adopt in screens |
 | Error Handling | 4/10 | RouteFallback only | DataTable empty | No error boundaries; console stubs | Shared query error UI + boundaries |
 | Security | 3.5/10 | No XSS sinks found | Demo labeled in places | Forgeable session; decorative payment | Real auth + PSP; never ship demo as prod |
-| Performance | 6.5/10 | Lazy routes | â€” | Dead deps; image lazy weak | Trim deps; lazy images |
-| Type Safety | 3/10 | Partial Zod | â€” | JS-only API boundary | Zod parse at API or gradual TS |
-| Testing | 1/10 | â€” | â€” | Zero tests | Vitest + Playwright smoke |
+| Performance | 6.5/10 | Lazy routes | - | Dead deps; image lazy weak | Trim deps; lazy images |
+| Type Safety | 3/10 | Partial Zod | - | JS-only API boundary | Zod parse at API or gradual TS |
+| Testing | 1/10 | - | - | Zero tests | Vitest + Playwright smoke |
 | UI/UX | 6.5/10 | Polished marketing/dash | Responsive chrome | Broken/blocked nav; checkout gaps | Fix funnel + links |
-| Accessibility | 4.5/10 | Some aria on nav | â€” | Modals weak | Dialog primitive |
-| Responsive Design | 7/10 | Mobile nav/sidebar/table | â€” | Tables still complex | Device QA |
+| Accessibility | 4.5/10 | Some aria on nav | - | Modals weak | Dialog primitive |
+| Responsive Design | 7/10 | Mobile nav/sidebar/table | - | Tables still complex | Device QA |
 | Developer Experience | 6.5/10 | Good READMEs | Env docs | Dual SoT confusion; no prettier/test | Align docs + remove dead deps |
-| Documentation | 7/10 | README + features README | Honest â€œmany screens still *Data.js*â€ note | BACKEND_INTEGRATION drift; Chart.js claim | Sync docs to paths |
+| Documentation | 7/10 | README + features README | Honest "many screens still *Data.js*" note | BACKEND_INTEGRATION drift; Chart.js claim | Sync docs to paths |
 
 **Overall (mean of 21 categories): 5.7 / 10**
 
@@ -891,7 +891,7 @@ Scores are from **current evidence**, not carried forward for consistency.
 
 ### Critical
 
-#### C1 â€” Demo auth must not be treated as production security
+#### C1 - Demo auth must not be treated as production security
 - **Problem:** Sessions are forgeable `{email,name,role}` in localStorage; passwords checked client-side.
 - **Evidence:** `src/context/AuthContext.jsx`, `src/config/dummyAuth.js`
 - **Impact:** Trivial privilege escalation if shipped as real auth.
@@ -899,7 +899,7 @@ Scores are from **current evidence**, not carried forward for consistency.
 - **Affected files:** `AuthContext.jsx`, `dummyAuth.js`, `features/auth/**`, `lib/api/interceptors.js`
 - **Priority:** Critical
 
-#### C2 â€” Payment UI is not a payment integration
+#### C2 - Payment UI is not a payment integration
 - **Problem:** Card fields are uncontrolled decorative inputs; CTA is a `Link` to confirmation.
 - **Evidence:** `pages/public/payment/sections/PaymentFormSection.jsx`
 - **Impact:** False order confirmation; PCI/compliance failure if treated as real.
@@ -909,15 +909,15 @@ Scores are from **current evidence**, not carried forward for consistency.
 
 ### High
 
-#### H1 â€” Broken public navigation targets
-- **Problem:** Footer/hero/features link to routes that do not exist â†’ NotFound.
+#### H1 - Broken public navigation targets
+- **Problem:** Footer/hero/features link to routes that do not exist -> NotFound.
 - **Evidence:** `config/footer.js`, hero/features configs vs `public.routes.jsx`
 - **Impact:** Dead CTAs on marketing surface.
 - **Recommended direction:** Add pages or retarget links (`/plans`, `/help`, etc.).
 - **Affected files:** `footer.js`, `hero.js`, `features.js`, `public.routes.jsx`
 - **Priority:** High
 
-#### H2 â€” Registered dashboard routes blocked by nav allowlist
+#### H2 - Registered dashboard routes blocked by nav allowlist
 - **Problem:** User notifications + collaborator identity/plans/support redirect to role home; Header still links to notifications.
 - **Evidence:** `config/dashboard.js`, `DashLayout.jsx`, `Header.jsx`, collaborator/user route modules
 - **Impact:** Broken in-app navigation; dead feature work.
@@ -925,7 +925,7 @@ Scores are from **current evidence**, not carried forward for consistency.
 - **Affected files:** `dashboard.js`, `DashLayout.jsx`, related views
 - **Priority:** High
 
-#### H3 â€” Checkout Review step + no funnel persistence
+#### H3 - Checkout Review step + no funnel persistence
 - **Problem:** CHECKOUT_STEPS includes Review; payment jumps to confirmation; state not shared/persisted.
 - **Evidence:** `config/configure.js`, checkout views, `PaymentFormSection` Link
 - **Impact:** Misleading stepper; lost data on refresh; skippable steps.
@@ -933,7 +933,7 @@ Scores are from **current evidence**, not carried forward for consistency.
 - **Affected files:** `configure.js`, checkout pages under `pages/public/**`
 - **Priority:** High
 
-#### H4 â€” Feature Query layer unwired; dual mock sources
+#### H4 - Feature Query layer unwired; dual mock sources
 - **Problem:** ~33 domains scaffolded; UI still on `*Data.js`/config; mocks will drift.
 - **Evidence:** `src/features/**`, page Data imports; grep shows only 3 feature schema imports from pages
 - **Impact:** Integration cost rises; false sense of backend readiness.
@@ -943,40 +943,40 @@ Scores are from **current evidence**, not carried forward for consistency.
 
 ### Medium
 
-#### M1 â€” Modal accessibility incomplete
+#### M1 - Modal accessibility incomplete
 - **Problem:** Overlays lack dialog semantics, focus trap, Escape handling.
 - **Evidence:** Modal components under dashboard pages (e.g. `NewTicketModal.jsx`)
 - **Impact:** Keyboard/SR users blocked.
 - **Recommended direction:** Shared Dialog primitive.
 - **Priority:** Medium
 
-#### M2 â€” No tests / no error boundaries
+#### M2 - No tests / no error boundaries
 - **Problem:** Zero automated tests; no router `errorElement` / ErrorBoundary.
 - **Evidence:** package.json scripts; routes/index.js
 - **Impact:** Regressions undetected; opaque runtime failures.
 - **Priority:** Medium
 
-#### M3 â€” Dual form validation strategy + duplicate password modal
+#### M3 - Dual form validation strategy + duplicate password modal
 - **Problem:** 5 RHF forms vs many manual; two change-password UIs.
 - **Evidence:** Form audit paths above
 - **Priority:** Medium
 
-#### M4 â€” Unused dependencies and SmoothScroll
+#### M4 - Unused dependencies and SmoothScroll
 - **Problem:** chart.js, lucide, lenis dead weight.
 - **Evidence:** package.json + import grep
 - **Priority:** Medium
 
-#### M5 â€” 401 handling stub; login `from` ignored; rememberMe noop
+#### M5 - 401 handling stub; login `from` ignored; rememberMe noop
 - **Problem:** Session edge cases incomplete for future real auth.
 - **Evidence:** `interceptors.js`, `AuthFormSection.jsx`
 - **Priority:** Medium
 
 ### Low
 
-#### L1 â€” Empty `App.css`, empty `lib/utility/`, package name `basic`
-#### L2 â€” README still lists Chart.js; BACKEND_INTEGRATION path drift
-#### L3 â€” Demo passwords rendered on login (fine for demo; strip for any public non-demo build)
-#### L4 â€” `console.log` stubs in some admin flows
+#### L1 - Empty `App.css`, empty `lib/utility/`, package name `basic`
+#### L2 - README still lists Chart.js; BACKEND_INTEGRATION path drift
+#### L3 - Demo passwords rendered on login (fine for demo; strip for any public non-demo build)
+#### L4 - `console.log` stubs in some admin flows
 
 ---
 
@@ -984,32 +984,32 @@ Scores are from **current evidence**, not carried forward for consistency.
 
 Prefer **incremental refactoring** over rewrite. Structure is salvageable.
 
-### Phase 1 â€” Critical correctness / security
+### Phase 1 - Critical correctness / security
 - Clarify demo vs production auth; plan real auth; do not ship forgeable sessions as security.
 - Mark/disable decorative payment or integrate PSP.
 - Fix or remove broken public links.
 
-### Phase 2 â€” Navigation & funnel stability
+### Phase 2 - Navigation & funnel stability
 - Align `DASHBOARD_NAV` with registered routes (or delete blocked routes).
 - Fix checkout Review step model; add persistence/validation gates.
 - Honor `location.state.from` on login.
 
-### Phase 3 â€” Query / API / state integration
+### Phase 3 - Query / API / state integration
 - Migrate pages onto existing feature hooks one domain at a time.
 - Converge mocks (feature mocks become SoT; remove `*Data.js`).
 - Wire `features/auth` into AuthContext; implement 401 logout/redirect.
 - Add shared query loading/error UI (replacement for absent ApiStateGate).
 
-### Phase 4 â€” UX / accessibility / performance
+### Phase 4 - UX / accessibility / performance
 - Shared accessible Dialog.
 - Expand RHF+Zod to checkout and high-risk modals.
 - Remove unused deps; lazy-load images where appropriate.
 
-### Phase 5 â€” Testing
+### Phase 5 - Testing
 - Vitest + Testing Library: guards, login schema, allowlist behavior.
 - Playwright smoke: login per role, one CRUD path, checkout navigation.
 
-### Phase 6 â€” Documentation & cleanup
+### Phase 6 - Documentation & cleanup
 - Sync `BACKEND_INTEGRATION.md` to `lib/api` + `features`.
 - Fix README Chart.js claim; rename package from `basic`.
 - Remove SmoothScroll/App.css dead weight.
@@ -1053,7 +1053,7 @@ Prefer **incremental refactoring** over rewrite. Structure is salvageable.
 
 ---
 
-## 34. Files Likely to Need Changes (later work â€” not modified in this audit)
+## 34. Files Likely to Need Changes (later work - not modified in this audit)
 
 | File / area | Reason | Priority |
 |-------------|--------|----------|
@@ -1079,10 +1079,10 @@ Prefer **incremental refactoring** over rewrite. Structure is salvageable.
 |------|--------|
 | Real backend availability / contract match to `ENDPOINTS` | **Requires backend verification** |
 | Whether live demo matches this commit | **Unknown** |
-| Exact unused asset list | **Inferred** â€” not every PNG import-traced |
+| Exact unused asset list | **Inferred** - not every PNG import-traced |
 | Visual contrast / full device QA | **Requires device verification** |
 | PCI / legal copy accuracy | **Unknown** |
-| Intended fate of collaborator identity/plans/support | **Unknown** â€” routes yes, nav no |
+| Intended fate of collaborator identity/plans/support | **Unknown** - routes yes, nav no |
 | Whether `rememberMe` deferred intentionally | **Inferred** unused |
 | Chart.js planned vs abandoned | **Inferred** abandoned (recharts used) |
 | Production source-map / CSP headers | **Not verified from the current codebase** |
@@ -1091,10 +1091,10 @@ Prefer **incremental refactoring** over rewrite. Structure is salvageable.
 
 ## 36. Closing
 
-NovaSkyâ€™s frontend has **materially improved in structure** since the prior baseline: modular routes, `lib/` infrastructure, and a complete feature Query scaffold with documented conventions and lazy-loaded pages. **Runtime behavior remains demo-driven:** pages still bind to config/`*Data.js`, auth is localStorage role switching, checkout skips Review and does not persist state, and several navigation targets remain broken or allowlist-blocked.
+NovaSky's frontend has **materially improved in structure** since the prior baseline: modular routes, `lib/` infrastructure, and a complete feature Query scaffold with documented conventions and lazy-loaded pages. **Runtime behavior remains demo-driven:** pages still bind to config/`*Data.js`, auth is localStorage role switching, checkout skips Review and does not persist state, and several navigation targets remain broken or allowlist-blocked.
 
-The authoritative next step is **not a rewrite** â€” it is **wiring, alignment, and hardening**: connect screens to existing feature hooks, fix nav/funnel consistency, replace demo auth/payment before any production claim, and add tests around the journeys that already exist in the UI.
+The authoritative next step is **not a rewrite** - it is **wiring, alignment, and hardening**: connect screens to existing feature hooks, fix nav/funnel consistency, replace demo auth/payment before any production claim, and add tests around the journeys that already exist in the UI.
 
 ---
 
-*End of fresh re-audit. Investigation only â€” application source was not modified; only this Markdown report was updated.*
+*End of fresh re-audit. Investigation only - application source was not modified; only this Markdown report was updated.*
