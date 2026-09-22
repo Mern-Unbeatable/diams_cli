@@ -5,6 +5,7 @@ import {
   ROLE_LABELS,
   ROLES,
 } from "@/config/dummyAuth";
+import { queryClient } from "@/lib/query/queryClient";
 
 const AuthContext = createContext(null);
 
@@ -57,6 +58,8 @@ export const AuthProvider = ({ children }) => {
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem(AUTH_STORAGE_KEY);
+    // Drop cached server state so the next session cannot see the previous user's data.
+    queryClient.clear();
   }, []);
 
   const value = useMemo(

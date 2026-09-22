@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router/dom";
 import { AuthProvider } from "@/context/AuthContext";
-import { AppQueryProvider } from "@/api/AppQueryProvider";
+import { AppQueryProvider } from "@/lib/query/AppQueryProvider";
 import { router } from "@/routes";
 import "@/index.css";
 

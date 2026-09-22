@@ -1,10 +1,11 @@
 /**
- * Central API endpoint map.
- * Change paths here only — CRUD helpers & hooks stay readable.
+ * Why this file exists:
+ * Central path map for the API client. Feature modules import paths from here —
+ * they must not hardcode URL strings.
  *
  * Usage:
- *   import { ENDPOINTS } from "@/api/endpoints";
- *   apiGet(ENDPOINTS.customers.list)
+ *   import { ENDPOINTS } from "@/lib/api/endpoints";
+ *   apiClient.get(ENDPOINTS.orders.list)
  */
 
 export const ENDPOINTS = {
@@ -15,7 +16,6 @@ export const ENDPOINTS = {
     refresh: "/auth/refresh",
   },
 
-  // ─── Admin ───────────────────────────────────────────────
   customers: {
     list: "/customers",
     detail: (id) => `/customers/${id}`,
@@ -106,7 +106,6 @@ export const ENDPOINTS = {
     list: "/audit-logs",
   },
 
-  // ─── Collaborator ────────────────────────────────────────
   collaborator: {
     customers: {
       list: "/collaborator/customers",
@@ -135,7 +134,6 @@ export const ENDPOINTS = {
     },
   },
 
-  // ─── User ────────────────────────────────────────────────
   user: {
     overview: "/user/overview",
     myLine: "/user/my-line",
