@@ -6,8 +6,8 @@
 
 import { lazy } from "react";
 import { ROLES } from "@/config/dummyAuth";
-import { createRoleDashboardRoutes, withSuspense } from "./helpers";
-import { ROUTES } from "./paths";
+import { createRoleDashboardRoutes, withSuspense } from "../helpers";
+import { ROUTES } from "../paths";
 
 const OverviewView = lazy(
   () => import("@/pages/dashboard/user/overview/OverviewView"),
@@ -18,12 +18,8 @@ const MyLineView = lazy(
 const PlansOptionsView = lazy(
   () => import("@/pages/dashboard/user/plans-options/PlansOptionsView"),
 );
-const UsageView = lazy(
-  () => import("@/pages/dashboard/user/usage/UsageView"),
-);
-const BillsView = lazy(
-  () => import("@/pages/dashboard/user/bills/BillsView"),
-);
+const UsageView = lazy(() => import("@/pages/dashboard/user/usage/UsageView"));
+const BillsView = lazy(() => import("@/pages/dashboard/user/bills/BillsView"));
 const PaymentsView = lazy(
   () => import("@/pages/dashboard/user/payments/PaymentsView"),
 );

@@ -10,32 +10,26 @@ import {
   createRoleDashboardRoutes,
   detailRoutes,
   withSuspense,
-} from "./helpers";
-import { ROUTES } from "./paths";
+} from "../helpers";
+import { ROUTES } from "../paths";
 
 const CollaboratorOverview = lazy(
   () => import("@/pages/dashboard/collaborator/overview/CollaboratorOverview"),
 );
 const CollaboratorCustomersView = lazy(
   () =>
-    import(
-      "@/pages/dashboard/collaborator/customers/CollaboratorCustomersView"
-    ),
+    import("@/pages/dashboard/collaborator/customers/CollaboratorCustomersView"),
 );
 const CollaboratorOrdersView = lazy(
   () => import("@/pages/dashboard/collaborator/order/CollaboratorOrdersView"),
 );
 const CollaboratorActivationsView = lazy(
   () =>
-    import(
-      "@/pages/dashboard/collaborator/activation/CollaboratorActivationsView"
-    ),
+    import("@/pages/dashboard/collaborator/activation/CollaboratorActivationsView"),
 );
 const CollaboratorCommissionsView = lazy(
   () =>
-    import(
-      "@/pages/dashboard/collaborator/commission/CollaboratorCommissionsView"
-    ),
+    import("@/pages/dashboard/collaborator/commission/CollaboratorCommissionsView"),
 );
 const CollaboratorInvoicesView = lazy(
   () =>
@@ -43,9 +37,7 @@ const CollaboratorInvoicesView = lazy(
 );
 const CollaboratorProfileSettingsView = lazy(
   () =>
-    import(
-      "@/pages/dashboard/collaborator/profile/CollaboratorProfileSettingsView"
-    ),
+    import("@/pages/dashboard/collaborator/profile/CollaboratorProfileSettingsView"),
 );
 const CollaboratorIdentityView = lazy(
   () => import("@/pages/dashboard/collaborator/CollaboratorIdentityView"),
@@ -58,9 +50,7 @@ const CollaboratorSupportView = lazy(
 );
 const CollaboratorNotificationsView = lazy(
   () =>
-    import(
-      "@/pages/dashboard/collaborator/notification/CollaboratorNotificationsView"
-    ),
+    import("@/pages/dashboard/collaborator/notification/CollaboratorNotificationsView"),
 );
 
 const S = ROUTES.COLLABORATOR.SEGMENTS;

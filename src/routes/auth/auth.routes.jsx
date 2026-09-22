@@ -6,8 +6,8 @@
 
 import { lazy } from "react";
 import { GuestRoute } from "@/Components/dashboard/ProtectedRoute";
-import { withSuspense } from "./helpers";
-import { ROUTES } from "./paths";
+import { withSuspense } from "../helpers";
+import { ROUTES } from "../paths";
 
 const AuthView = lazy(() => import("@/pages/auth/AuthView"));
 

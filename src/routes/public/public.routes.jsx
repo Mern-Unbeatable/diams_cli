@@ -6,8 +6,8 @@
 
 import { lazy } from "react";
 import RootLayout from "@/layout/RootLayout";
-import { withSuspense } from "./helpers";
-import { ROUTES } from "./paths";
+import { withSuspense } from "../helpers";
+import { ROUTES } from "../paths";
 
 const HomeView = lazy(() => import("@/pages/public/home/HomeView"));
 const PlansView = lazy(() => import("@/pages/public/plans/PlansView"));

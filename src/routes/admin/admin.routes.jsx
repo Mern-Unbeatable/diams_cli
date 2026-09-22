@@ -10,8 +10,8 @@ import {
   createRoleDashboardRoutes,
   detailRoutes,
   withSuspense,
-} from "./helpers";
-import { ROUTES } from "./paths";
+} from "../helpers";
+import { ROUTES } from "../paths";
 
 const AdminOverview = lazy(
   () => import("@/pages/dashboard/admin/overview/AdminOverview"),

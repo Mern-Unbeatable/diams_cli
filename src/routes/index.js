@@ -18,9 +18,9 @@
  */
 
 import { createBrowserRouter } from "react-router";
-import { authRoutes } from "./auth.routes";
-import { dashboardRoutes } from "./dashboard.routes";
-import { publicRoutes } from "./public.routes";
+import { authRoutes } from "./auth/auth.routes";
+import { dashboardRoutes } from "./dash/dashboard.routes";
+import { publicRoutes } from "./public/public.routes";
 
 export const router = createBrowserRouter([
   ...authRoutes,

@@ -6,14 +6,14 @@
 
 import { lazy } from "react";
 import { ProtectedRoute } from "@/Components/dashboard/ProtectedRoute";
-import { withSuspense } from "./helpers";
-import { ROUTES } from "./paths";
-import { adminRoutes } from "./admin.routes";
-import { collaboratorRoutes } from "./collaborator.routes";
-import { userRoutes } from "./user.routes";
+import { withSuspense } from "../helpers";
+import { ROUTES } from "../paths";
+import { adminRoutes } from "../admin/admin.routes";
+import { collaboratorRoutes } from "../collaborator/collaborator.routes";
+import { userRoutes } from "../user/user.routes";
 
 const RoleDashboardRedirect = lazy(
-  () => import("@/pages/dashboard/RoleDashboardRedirect"),
+  () => import("@/routes/guard/RoleDashboardRedirect"),
 );
 
 /** @type {import("react-router").RouteObject[]} */
