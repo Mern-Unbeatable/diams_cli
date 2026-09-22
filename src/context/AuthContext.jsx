@@ -13,7 +13,7 @@ import {
 } from "@/config/dummyAuth";
 import { clearAuthSession } from "@/lib/auth/session";
 import { getJSON, setJSON } from "@/lib/storage";
-import { queryClient } from "@/lib/query/query-client";
+import { queryClient } from "@/lib/provider/query-client";
 
 const AuthContext = createContext(null);
 

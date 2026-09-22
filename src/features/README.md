@@ -61,7 +61,7 @@ Feature queries
     ↓
 Feature api  →  USE_API_MOCKS ? mocks : apiClient + ENDPOINTS
     ↓
-src/lib/api  ·  src/lib/query  ·  src/lib/auth  ·  src/lib/storage  ·  src/lib/config
+src/lib/api  ·  src/lib/provider  ·  src/lib/auth  ·  src/lib/storage  ·  src/lib/config
 ```
 
 ## Feature map

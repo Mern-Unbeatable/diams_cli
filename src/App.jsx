@@ -1,7 +1,7 @@
 import React from "react";
 import { RouterProvider } from "react-router/dom";
 import { AuthProvider } from "@/context/AuthContext";
-import { AppQueryProvider } from "@/lib/query/AppQueryProvider";
+import { AppQueryProvider } from "@/lib/provider/AppQueryProvider";
 import { router } from "@/routes";
 
 function App() {
