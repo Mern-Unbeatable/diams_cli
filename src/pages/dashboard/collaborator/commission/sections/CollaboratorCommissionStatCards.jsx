@@ -16,10 +16,10 @@ const renderIcon = (type) => {
   }
 };
 
-const CollaboratorCommissionStatCards = () => {
+const CollaboratorCommissionStatCards = ({ cards = COMMISSION_STAT_CARDS }) => {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {COMMISSION_STAT_CARDS.map((card) => (
+      {cards.map((card) => (
         <div
           key={card.id}
           className="rounded-xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all hover:border-slate-200"

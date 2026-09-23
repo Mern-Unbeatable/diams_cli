@@ -1,4 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import {
+  useCollaboratorCommissionSummary,
+  useCollaboratorCommissions,
+} from "@/features/dash/collaborator/commissions";
+import { unwrapList } from "@/lib/query/unwrap";
+import { COMMISSION_STAT_CARDS } from "./sections/collaboratorCommissionData";
 import {
   CollaboratorCommissionHeader,
   CollaboratorCommissionStatCards,
@@ -10,23 +16,37 @@ import {
 const CollaboratorCommissionsView = () => {
   const [selectedCommission, setSelectedCommission] = useState(null);
 
+  const commissionsQuery = useCollaboratorCommissions();
+  const summaryQuery = useCollaboratorCommissionSummary();
+
+  const commissionItems = useMemo(() => {
+    const raw = commissionsQuery.data;
+    if (Array.isArray(raw?.list)) return raw.list;
+    return unwrapList(raw);
+  }, [commissionsQuery.data]);
+
+  const summaryCards =
+    summaryQuery.data?.cards ||
+    commissionsQuery.data?.summary?.cards ||
+    COMMISSION_STAT_CARDS;
+
   return (
     <div className="min-h-full space-y-6 text-slate-900">
-      {/* 1. Page Header */}
       <CollaboratorCommissionHeader />
 
-      {/* 2. Top 4 Metric Stat Cards */}
-      <CollaboratorCommissionStatCards />
+      <CollaboratorCommissionStatCards cards={summaryCards} />
 
-      {/* 3. Earnings Over Time Recharts Area Chart Card */}
       <CollaboratorEarningsChartCard />
 
-      {/* 4. Commission Details Table Card */}
       <CollaboratorCommissionTableCard
+        items={commissionItems}
         onViewItem={(item) => setSelectedCommission(item)}
+        isLoading={commissionsQuery.isLoading}
+        isFetching={commissionsQuery.isFetching && !commissionsQuery.isLoading}
+        error={commissionsQuery.isError ? commissionsQuery.error : null}
+        onRetry={() => commissionsQuery.refetch()}
       />
 
-      {/* 5. Commission Details Modal */}
       <CollaboratorCommissionDetailsModal
         isOpen={Boolean(selectedCommission)}
         onClose={() => setSelectedCommission(null)}

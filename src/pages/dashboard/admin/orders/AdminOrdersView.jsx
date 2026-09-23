@@ -1,10 +1,18 @@
-import { useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import DataTable from "@/Components/dashboard/DataTable";
+import ErrorState from "@/Components/common/ErrorState";
+import {
+  useOrder,
+  useOrders,
+  useUpdateOrder,
+} from "@/features/dash/admin/orders";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
+import { isNotFoundError } from "@/lib/api/errors";
 import {
   OrdersHeader,
   OrderDetailsView,
-  ORDERS_DATA,
   ORDER_COLUMNS,
   ORDER_ACTIONS,
 } from "./sections";
@@ -12,35 +20,34 @@ import {
 const AdminOrdersView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [ordersList, setOrdersList] = useState(ORDERS_DATA);
   const [selectedStatus, setSelectedStatus] = useState("All Statuses");
 
-  // Find order by ID from URL parameter (support ord-1, BK-001, and ORD-7001)
-  const currentOrder = useMemo(() => {
-    if (!id) return null;
-    return (
-      ordersList.find(
-        (o) =>
-          o.id.toLowerCase() === id.toLowerCase() ||
-          o.orderId.toLowerCase() === id.toLowerCase() ||
-          (o.orderDetailId &&
-            o.orderDetailId.toLowerCase() === id.toLowerCase()),
-      ) || null
-    );
-  }, [id, ordersList]);
+  const listFilters =
+    selectedStatus === "All Statuses" ? {} : { status: selectedStatus };
 
-  // Filtering Logic
-  const filteredOrders = useMemo(() => {
-    if (selectedStatus === "All Statuses") {
-      return ordersList;
-    }
-    return ordersList.filter(
-      (ord) => ord.status.toLowerCase() === selectedStatus.toLowerCase(),
-    );
-  }, [ordersList, selectedStatus]);
+  const ordersQuery = useOrders(listFilters);
+  const orderQuery = useOrder(id);
+  const updateOrder = useUpdateOrder();
 
-  // Handle action click from DataTable's 3-dot dropdown popover
+  useMutationFeedback(updateOrder, {
+    successMessage: "Order updated.",
+    errorTitle: "Update failed",
+  });
+
+  const ordersList = useMemo(
+    () => unwrapList(ordersQuery.data),
+    [ordersQuery.data],
+  );
+
+  const currentOrder = id ? orderQuery.data : null;
+  const detailLoading = Boolean(id) && orderQuery.isLoading;
+  const detailError = Boolean(id) && orderQuery.isError;
+  const detailMissing =
+    Boolean(id) &&
+    !orderQuery.isLoading &&
+    (isNotFoundError(orderQuery.error) ||
+      (!orderQuery.isError && !currentOrder && orderQuery.isFetched));
+
   const handleActionClick = (actionName, row) => {
     const act = String(actionName).toLowerCase();
 
@@ -66,83 +73,100 @@ const AdminOrdersView = () => {
       rejected: "Rejected",
     };
 
-    if (statusMap[act]) {
-      const newStatus = statusMap[act];
-      setOrdersList((prev) =>
-        prev.map((o) => (o.id === row.id ? { ...o, status: newStatus } : o)),
-      );
+    if (statusMap[act] && !updateOrder.isPending) {
+      updateOrder.mutate({ id: row.id, payload: { status: statusMap[act] } });
     }
   };
 
-  // Approve Order Handler
   const handleApprove = (order) => {
-    setOrdersList((prev) =>
-      prev.map((o) => (o.id === order.id ? { ...o, status: "Approved" } : o)),
-    );
+    if (updateOrder.isPending) return;
+    updateOrder.mutate({ id: order.id, payload: { status: "Approved" } });
   };
 
-  // Reject Order Handler
   const handleReject = (order) => {
-    setOrdersList((prev) =>
-      prev.map((o) => (o.id === order.id ? { ...o, status: "Rejected" } : o)),
-    );
+    if (updateOrder.isPending) return;
+    updateOrder.mutate({ id: order.id, payload: { status: "Rejected" } });
   };
 
-  // Save Internal Note Handler
   const handleSaveNote = (orderId, note) => {
-    setOrdersList((prev) =>
-      prev.map((o) => (o.id === orderId ? { ...o, internalNote: note } : o)),
-    );
+    if (updateOrder.isPending) return;
+    updateOrder.mutate({ id: orderId, payload: { internalNote: note } });
   };
+
+  if (id) {
+    if (detailLoading) {
+      return (
+        <DataTable
+          columns={ORDER_COLUMNS}
+          data={[]}
+          isLoading
+          emptyMessage="Loading order…"
+        />
+      );
+    }
+
+    if (detailError && !isNotFoundError(orderQuery.error)) {
+      return (
+        <div className="rounded-xl border border-slate-100 bg-white shadow-sm">
+          <ErrorState
+            title="Unable to load order"
+            error={orderQuery.error}
+            onRetry={() => orderQuery.refetch()}
+          />
+        </div>
+      );
+    }
+
+    if (detailMissing || !currentOrder) {
+      return (
+        <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+          <h2 className="text-lg font-bold text-slate-900">Order Not Found</h2>
+          <p className="mt-1 text-xs text-slate-500">
+            No order was found with ID &quot;{id}&quot;.
+          </p>
+          <button
+            type="button"
+            onClick={() => navigate("/dashboard/admin/orders")}
+            className="mt-4 inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-sky-700"
+          >
+            Back to Orders List
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-full space-y-6 text-slate-900">
+        <OrderDetailsView
+          order={currentOrder}
+          onBack={() => navigate("/dashboard/admin/orders")}
+          onApprove={handleApprove}
+          onReject={handleReject}
+          onSaveNote={handleSaveNote}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-full space-y-6 text-slate-900">
-      {/* If URL contains order id, render OrderDetailsView */}
-      {id ? (
-        currentOrder ? (
-          <OrderDetailsView
-            order={currentOrder}
-            onBack={() => navigate("/dashboard/admin/orders")}
-            onApprove={handleApprove}
-            onReject={handleReject}
-            onSaveNote={handleSaveNote}
-          />
-        ) : (
-          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">
-              Order Not Found
-            </h2>
-            <p className="mt-1 text-xs text-slate-500">
-              No order was found with ID &quot;{id}&quot;.
-            </p>
-            <button
-              type="button"
-              onClick={() => navigate("/dashboard/admin/orders")}
-              className="mt-4 inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-sky-700"
-            >
-              Back to Orders List
-            </button>
-          </div>
-        )
-      ) : (
-        <>
-          {/* 1. Orders Management Header with Status Filter */}
-          <OrdersHeader
-            selectedStatus={selectedStatus}
-            onSelectStatus={setSelectedStatus}
-          />
+      <OrdersHeader
+        selectedStatus={selectedStatus}
+        onSelectStatus={setSelectedStatus}
+      />
 
-          {/* 2. Common DataTable Component with Status Badges, Action Popover & Pagination */}
-          <DataTable
-            columns={ORDER_COLUMNS}
-            data={filteredOrders}
-            actions={ORDER_ACTIONS}
-            onActionClick={handleActionClick}
-            pageSize={10}
-            emptyMessage="No orders found matching the selected filter."
-          />
-        </>
-      )}
+      <DataTable
+        columns={ORDER_COLUMNS}
+        data={ordersList}
+        actions={ORDER_ACTIONS}
+        onActionClick={handleActionClick}
+        pageSize={10}
+        emptyMessage="No orders found matching the selected filter."
+        isLoading={ordersQuery.isLoading}
+        isFetching={ordersQuery.isFetching && !ordersQuery.isLoading}
+        error={ordersQuery.isError ? ordersQuery.error : null}
+        onRetry={() => ordersQuery.refetch()}
+      />
     </div>
   );
 };

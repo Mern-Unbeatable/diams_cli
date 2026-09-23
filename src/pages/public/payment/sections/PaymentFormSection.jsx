@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import {
   ChevronLeft,
   CreditCard,
@@ -10,14 +10,48 @@ import {
 import { PAYMENT_PAGE, SAVE_CARD_OPTIONS } from "@/config/payment";
 import PaymentMethodSelector from "@/Components/public/PaymentMethodSelector";
 import PciSecurityBanner from "@/Components/public/PciSecurityBanner";
+import { FieldError } from "@/Components/form/FieldError";
+import { toastError, toastSuccess } from "@/lib/feedback/toast-bus";
 
 const labelClass = "mb-1.5 block text-sm font-bold text-primary";
 const inputClass =
   "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-btnPrimary";
 
 const PaymentFormSection = ({ planId }) => {
+  const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [saveCard, setSaveCard] = useState("save");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [cardholder, setCardholder] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  const validateCardFields = () => {
+    if (paymentMethod !== "card") return true;
+
+    const next = {};
+    if (!cardNumber.trim()) next.cardNumber = "Card number is required.";
+    if (!expiry.trim()) next.expiry = "Expiry date is required.";
+    if (!cvv.trim()) next.cvv = "CVV is required.";
+    if (!cardholder.trim()) next.cardholder = "Cardholder name is required.";
+    setFieldErrors(next);
+    return Object.keys(next).length === 0;
+  };
+
+  const handlePay = () => {
+    if (isSubmitting) return;
+
+    if (!validateCardFields()) {
+      toastError("Please complete all required card fields.", "Invalid payment");
+      return;
+    }
+
+    setIsSubmitting(true);
+    toastSuccess("Payment submitted successfully.");
+    navigate(`/plans/${planId}/confirmation`);
+  };
 
   return (
     <div className="min-w-0">
@@ -63,6 +97,8 @@ const PaymentFormSection = ({ planId }) => {
                   id="cardNumber"
                   type="text"
                   placeholder="1234 5678 9012 3456"
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value)}
                   className={`${inputClass} pr-11`}
                 />
                 <CreditCard
@@ -70,6 +106,7 @@ const PaymentFormSection = ({ planId }) => {
                   className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
                 />
               </div>
+              <FieldError message={fieldErrors.cardNumber} />
             </div>
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -81,8 +118,11 @@ const PaymentFormSection = ({ planId }) => {
                   id="expiry"
                   type="text"
                   placeholder="MM / YY"
+                  value={expiry}
+                  onChange={(e) => setExpiry(e.target.value)}
                   className={inputClass}
                 />
+                <FieldError message={fieldErrors.expiry} />
               </div>
               <div>
                 <label htmlFor="cvv" className={labelClass}>
@@ -93,6 +133,8 @@ const PaymentFormSection = ({ planId }) => {
                     id="cvv"
                     type="text"
                     placeholder="123"
+                    value={cvv}
+                    onChange={(e) => setCvv(e.target.value)}
                     className={`${inputClass} pr-10`}
                   />
                   <Info
@@ -100,6 +142,7 @@ const PaymentFormSection = ({ planId }) => {
                     className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
                   />
                 </div>
+                <FieldError message={fieldErrors.cvv} />
               </div>
             </div>
 
@@ -111,8 +154,11 @@ const PaymentFormSection = ({ planId }) => {
                 id="cardholder"
                 type="text"
                 placeholder="John Doe"
+                value={cardholder}
+                onChange={(e) => setCardholder(e.target.value)}
                 className={inputClass}
               />
+              <FieldError message={fieldErrors.cardholder} />
             </div>
 
             <PciSecurityBanner />
@@ -177,13 +223,15 @@ const PaymentFormSection = ({ planId }) => {
         </Link>
 
         <div className="flex flex-col items-center gap-3 sm:items-end">
-          <Link
-            to={`/plans/${planId}/confirmation`}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-btnPrimary px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:min-w-60"
+          <button
+            type="button"
+            onClick={handlePay}
+            disabled={isSubmitting}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-btnPrimary px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 sm:min-w-60"
           >
             <Lock size={18} />
-            Pay Securely
-          </Link>
+            {isSubmitting ? "Processing…" : "Pay Securely"}
+          </button>
           <p className="flex items-center gap-1.5 text-xs text-primary/50">
             <ShieldCheck size={14} className="text-emerald-600" />
             Secure payment by Stripe

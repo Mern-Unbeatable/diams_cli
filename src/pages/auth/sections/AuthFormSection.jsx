@@ -14,6 +14,7 @@ import { useAuth } from "@/context/AuthContext";
 import { loginSchema } from "@/features/auth/validation";
 import { zodResolver } from "@/lib/validation";
 import { FieldError } from "@/Components/form/FieldError";
+import { toastSuccess } from "@/lib/feedback/toast-bus";
 
 const labelClass = "mb-2 block text-sm font-bold text-primary";
 const inputClass =
@@ -51,6 +52,7 @@ const AuthFormSection = () => {
     }
 
     setAuthError("");
+    toastSuccess("Signed in successfully.");
     navigate(getRoleDashboardPath(result.user.role), { replace: true });
   };
 

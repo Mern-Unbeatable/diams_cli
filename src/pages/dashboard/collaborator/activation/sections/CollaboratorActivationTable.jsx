@@ -30,6 +30,10 @@ const CollaboratorActivationTable = ({
   currentPage = 1,
   pageSize = 10,
   onPageChange,
+  isLoading = false,
+  isFetching = false,
+  error = null,
+  onRetry,
 }) => {
   const columns = [
     {
@@ -92,6 +96,10 @@ const CollaboratorActivationTable = ({
       pageSize={pageSize}
       onPageChange={onPageChange}
       emptyMessage="No activations found matching the filter."
+      isLoading={isLoading}
+      isFetching={isFetching}
+      error={error}
+      onRetry={onRetry}
     />
   );
 };

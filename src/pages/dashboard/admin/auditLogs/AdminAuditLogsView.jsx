@@ -1,15 +1,15 @@
 import { useState, useMemo } from "react";
 import { Eye } from "lucide-react";
 import DataTable from "@/Components/dashboard/DataTable";
+import { useAuditLogs } from "@/features/dash/admin/auditLogs";
+import { unwrapList } from "@/lib/query/unwrap";
 import {
   AuditHeader,
   AuditFilterBox,
   ActivityDetailsModal,
-  AUDIT_LOGS_DATA,
 } from "./sections";
 
 const AdminAuditLogsView = () => {
-  const [logs, setLogs] = useState(AUDIT_LOGS_DATA);
   const [selectedAdmin, setSelectedAdmin] = useState("All");
   const [selectedModule, setSelectedModule] = useState("All");
   const [selectedAction, setSelectedAction] = useState("All");
@@ -18,26 +18,22 @@ const AdminAuditLogsView = () => {
   const [selectedLog, setSelectedLog] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
-  // Filter logs based on Admin, Module, Action, and Date
-  const filteredLogs = useMemo(() => {
-    return logs.filter((log) => {
-      const matchAdmin =
-        selectedAdmin === "All" ||
-        log.admin.toLowerCase() === selectedAdmin.toLowerCase();
-      const matchModule =
-        selectedModule === "All" ||
-        log.module.toLowerCase() === selectedModule.toLowerCase();
-      const matchAction =
-        selectedAction === "All" ||
-        log.action.toLowerCase() === selectedAction.toLowerCase();
-      const matchDate =
-        !dateRange.trim() || log.dateTime.includes(dateRange.trim());
+  const listFilters = useMemo(() => {
+    const filters = {};
+    if (selectedAdmin !== "All") filters.admin = selectedAdmin;
+    if (selectedModule !== "All") filters.module = selectedModule;
+    if (selectedAction !== "All") filters.action = selectedAction;
+    if (dateRange.trim()) filters.dateRange = dateRange.trim();
+    return filters;
+  }, [selectedAdmin, selectedModule, selectedAction, dateRange]);
 
-      return matchAdmin && matchModule && matchAction && matchDate;
-    });
-  }, [logs, selectedAdmin, selectedModule, selectedAction, dateRange]);
+  const logsQuery = useAuditLogs(listFilters);
 
-  // Table Columns Definition matching screenshot
+  const logs = useMemo(
+    () => unwrapList(logsQuery.data),
+    [logsQuery.data],
+  );
+
   const columns = useMemo(
     () => [
       {
@@ -79,7 +75,9 @@ const AdminAuditLogsView = () => {
         key: "ipActivity",
         label: "IP/Activity information",
         render: (row) => (
-          <span className="text-slate-600 font-mono text-xs">{row.ipActivity}</span>
+          <span className="text-slate-600 font-mono text-xs">
+            {row.ipActivity}
+          </span>
         ),
       },
       {
@@ -119,7 +117,7 @@ const AdminAuditLogsView = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   const handleRefresh = () => {
@@ -127,14 +125,13 @@ const AdminAuditLogsView = () => {
     setSelectedModule("All");
     setSelectedAction("All");
     setDateRange("");
+    logsQuery.refetch();
   };
 
   return (
     <div className="min-h-full space-y-6 text-slate-900 font-sans pb-10">
-      {/* 1. Page Header */}
       <AuditHeader />
 
-      {/* 2. Administrator Activity Filter Card */}
       <AuditFilterBox
         selectedAdmin={selectedAdmin}
         onSelectAdmin={setSelectedAdmin}
@@ -147,15 +144,17 @@ const AdminAuditLogsView = () => {
         onRefresh={handleRefresh}
       />
 
-      {/* 3. Audit Logs Table with Common DataTable */}
       <DataTable
         columns={columns}
-        data={filteredLogs}
+        data={logs}
         pageSize={5}
         emptyMessage="No audit logs found matching the selected filters."
+        isLoading={logsQuery.isLoading}
+        isFetching={logsQuery.isFetching && !logsQuery.isLoading}
+        error={logsQuery.isError ? logsQuery.error : null}
+        onRetry={() => logsQuery.refetch()}
       />
 
-      {/* 4. Activity Details Modal */}
       <ActivityDetailsModal
         isOpen={isDetailsModalOpen}
         onClose={() => {

@@ -1,10 +1,4 @@
 /**
- * Demo data — collaborator activations.
+ * Demo records for collaborator activations (rich UI seed).
  */
-export const COLLAB_ACTIVATIONS_MOCK = [
-  {
-    "id": "ca-1",
-    "line": "+41 79 000 00 01",
-    "status": "Active"
-  }
-];
+export { COLLABORATOR_ACTIVATIONS_DATA as COLLAB_ACTIVATIONS_MOCK } from "./activations.seed";

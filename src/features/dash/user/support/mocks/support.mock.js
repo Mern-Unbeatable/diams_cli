@@ -1,7 +1,7 @@
-export const USER_SUPPORT_TICKETS_MOCK = [
-  { id: "ut-1", subject: "Roaming activate", status: "Open" },
-];
-
-export const USER_FAQ_MOCK = [
-  { id: "faq-1", q: "How do I install eSIM?", a: "Scan the QR from My eSIM." },
-];
+/**
+ * Demo records for user support (rich UI seed).
+ */
+export {
+  USER_SUPPORT_TICKETS_DATA as USER_SUPPORT_TICKETS_MOCK,
+  USER_FAQ_DATA as USER_FAQ_MOCK,
+} from "./support.seed";

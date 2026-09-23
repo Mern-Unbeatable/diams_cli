@@ -1,10 +1,18 @@
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import DataTable from "@/Components/dashboard/DataTable";
+import ErrorState from "@/Components/common/ErrorState";
+import {
+  useIdentity,
+  useIdentityList,
+  useUpdateIdentity,
+} from "@/features/dash/admin/identity";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
+import { isNotFoundError } from "@/lib/api/errors";
 import {
   IdentityHeader,
   IdentityDetailsView,
-  IDENTITY_DATA,
   IDENTITY_COLUMNS,
   IDENTITY_ACTIONS,
 } from "./sections";
@@ -13,35 +21,34 @@ const AdminIdentityView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [identityList, setIdentityList] = useState(IDENTITY_DATA);
   const [selectedStatus, setSelectedStatus] = useState("All Statuses");
 
-  // Find identity item by ID from URL parameter (support id-1, V-8841, etc.)
-  const currentItem = useMemo(() => {
-    if (!id) return null;
-    return (
-      identityList.find(
-        (item) =>
-          item.id.toLowerCase() === id.toLowerCase() ||
-          (item.verificationId &&
-            item.verificationId.toLowerCase() === id.toLowerCase()) ||
-          (item.relatedOrder &&
-            item.relatedOrder.toLowerCase() === id.toLowerCase()),
-      ) || null
-    );
-  }, [id, identityList]);
+  const listFilters =
+    selectedStatus === "All Statuses" ? {} : { status: selectedStatus };
 
-  // Filtering Logic
-  const filteredIdentityList = useMemo(() => {
-    if (selectedStatus === "All Statuses") {
-      return identityList;
-    }
-    return identityList.filter(
-      (item) => item.status.toLowerCase() === selectedStatus.toLowerCase(),
-    );
-  }, [identityList, selectedStatus]);
+  const identityListQuery = useIdentityList(listFilters);
+  const identityQuery = useIdentity(id);
+  const updateIdentity = useUpdateIdentity();
 
-  // Handle action click from DataTable's 3-dot dropdown popover
+  useMutationFeedback(updateIdentity, {
+    successMessage: "Identity record updated.",
+    errorTitle: "Update failed",
+  });
+
+  const identityList = useMemo(
+    () => unwrapList(identityListQuery.data),
+    [identityListQuery.data],
+  );
+
+  const currentItem = id ? identityQuery.data : null;
+  const detailLoading = Boolean(id) && identityQuery.isLoading;
+  const detailError = Boolean(id) && identityQuery.isError;
+  const detailMissing =
+    Boolean(id) &&
+    !identityQuery.isLoading &&
+    (isNotFoundError(identityQuery.error) ||
+      (!identityQuery.isError && !currentItem && identityQuery.isFetched));
+
   const handleActionClick = (actionName, row) => {
     const act = String(actionName).toLowerCase();
 
@@ -63,86 +70,108 @@ const AdminIdentityView = () => {
       rejected: "Rejected",
     };
 
-    if (statusMap[act]) {
-      const newStatus = statusMap[act];
-      setIdentityList((prev) =>
-        prev.map((item) =>
-          item.id === row.id ? { ...item, status: newStatus } : item,
-        ),
-      );
+    if (statusMap[act] && !updateIdentity.isPending) {
+      updateIdentity.mutate({
+        id: row.id,
+        payload: { status: statusMap[act] },
+      });
     }
   };
 
-  // Approve Handler
   const handleApprove = (item) => {
-    setIdentityList((prev) =>
-      prev.map((i) => (i.id === item.id ? { ...i, status: "Approved" } : i)),
-    );
+    if (updateIdentity.isPending) return;
+    updateIdentity.mutate({ id: item.id, payload: { status: "Approved" } });
   };
 
-  // Reject Handler
   const handleReject = (item) => {
-    setIdentityList((prev) =>
-      prev.map((i) => (i.id === item.id ? { ...i, status: "Rejected" } : i)),
-    );
+    if (updateIdentity.isPending) return;
+    updateIdentity.mutate({ id: item.id, payload: { status: "Rejected" } });
   };
 
-  // Comment Save Handler
   const handleSaveComment = (itemId, comment) => {
-    setIdentityList((prev) =>
-      prev.map((i) => (i.id === itemId ? { ...i, comment } : i)),
-    );
+    if (updateIdentity.isPending) return;
+    updateIdentity.mutate({ id: itemId, payload: { comment } });
   };
+
+  if (id) {
+    if (detailLoading) {
+      return (
+        <DataTable
+          columns={IDENTITY_COLUMNS}
+          data={[]}
+          isLoading
+          emptyMessage="Loading identity record…"
+        />
+      );
+    }
+
+    if (detailError && !isNotFoundError(identityQuery.error)) {
+      return (
+        <div className="rounded-xl border border-slate-100 bg-white shadow-sm">
+          <ErrorState
+            title="Unable to load identity record"
+            error={identityQuery.error}
+            onRetry={() => identityQuery.refetch()}
+          />
+        </div>
+      );
+    }
+
+    if (detailMissing || !currentItem) {
+      return (
+        <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+          <h2 className="text-lg font-bold text-slate-900">
+            Record Not Found
+          </h2>
+          <p className="mt-1 text-xs text-slate-500">
+            No identity verification record was found with ID &quot;{id}
+            &quot;.
+          </p>
+          <button
+            type="button"
+            onClick={() => navigate("/dashboard/admin/identity")}
+            className="mt-4 inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-sky-700"
+          >
+            Back to Identity Verification
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-full space-y-6 text-slate-900">
+        <IdentityDetailsView
+          item={currentItem}
+          onBack={() => navigate("/dashboard/admin/identity")}
+          onApprove={handleApprove}
+          onReject={handleReject}
+          onSaveComment={handleSaveComment}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-full space-y-6 text-slate-900">
-      {/* If URL contains id, render IdentityDetailsView */}
-      {id ? (
-        currentItem ? (
-          <IdentityDetailsView
-            item={currentItem}
-            onBack={() => navigate("/dashboard/admin/identity")}
-            onApprove={handleApprove}
-            onReject={handleReject}
-            onSaveComment={handleSaveComment}
-          />
-        ) : (
-          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">
-              Record Not Found
-            </h2>
-            <p className="mt-1 text-xs text-slate-500">
-              No identity verification record was found with ID &quot;{id}
-              &quot;.
-            </p>
-            <button
-              type="button"
-              onClick={() => navigate("/dashboard/admin/identity")}
-              className="mt-4 inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-sky-700"
-            >
-              Back to Identity Verification
-            </button>
-          </div>
-        )
-      ) : (
-        <>
-          {/* 1. Identity Verification Header with Status Filter */}
-          <IdentityHeader
-            selectedStatus={selectedStatus}
-            onSelectStatus={setSelectedStatus}
-          />
+      <IdentityHeader
+        selectedStatus={selectedStatus}
+        onSelectStatus={setSelectedStatus}
+      />
 
-          {/* 2. Common DataTable Component with Status Badges, Action Popover & Pagination */}
-          <DataTable
-            columns={IDENTITY_COLUMNS}
-            data={filteredIdentityList}
-            actions={IDENTITY_ACTIONS}
-            onActionClick={handleActionClick}
-            pageSize={10}
-            emptyMessage="No identity verification records found matching the selected filter."
-          />
-        </>
-      )}
+      <DataTable
+        columns={IDENTITY_COLUMNS}
+        data={identityList}
+        actions={IDENTITY_ACTIONS}
+        onActionClick={handleActionClick}
+        pageSize={10}
+        emptyMessage="No identity verification records found matching the selected filter."
+        isLoading={identityListQuery.isLoading}
+        isFetching={
+          identityListQuery.isFetching && !identityListQuery.isLoading
+        }
+        error={identityListQuery.isError ? identityListQuery.error : null}
+        onRetry={() => identityListQuery.refetch()}
+      />
     </div>
   );
 };

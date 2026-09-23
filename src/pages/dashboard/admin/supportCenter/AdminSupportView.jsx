@@ -1,13 +1,22 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router";
 import DataTable from "@/Components/dashboard/DataTable";
+import ErrorState from "@/Components/common/ErrorState";
+import {
+  useTicket,
+  useTickets,
+  useUpdateTicket,
+  useReplyTicket,
+} from "@/features/dash/admin/support";
+import { unwrapList } from "@/lib/query/unwrap";
+import { useMutationFeedback } from "@/hooks/useMutationFeedback";
+import { isNotFoundError } from "@/lib/api/errors";
 import {
   SupportHeader,
   SupportDetailsView,
   ReplyTicketModal,
   AssignTicketModal,
   CloseTicketModal,
-  SUPPORT_TICKETS_DATA,
   SUPPORT_ACTIONS,
 } from "./sections";
 
@@ -43,7 +52,6 @@ const AdminSupportView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [tickets, setTickets] = useState(SUPPORT_TICKETS_DATA);
   const [selectedPriority, setSelectedPriority] = useState("All Priority");
   const [selectedStatus, setSelectedStatus] = useState("All Statuses");
 
@@ -56,33 +64,41 @@ const AdminSupportView = () => {
   const [selectedTicketForClose, setSelectedTicketForClose] = useState(null);
   const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
 
-  // Find active ticket for details view
-  const currentTicket = useMemo(() => {
-    if (!id) return null;
-    return (
-      tickets.find(
-        (t) =>
-          t.id.toLowerCase() === id.toLowerCase() ||
-          t.ticketId.toLowerCase() === id.toLowerCase() ||
-          t.customer.toLowerCase().replace(/\s+/g, "-") === id.toLowerCase(),
-      ) || tickets[0]
-    );
-  }, [id, tickets]);
+  const listFilters = useMemo(() => {
+    const filters = {};
+    if (selectedPriority !== "All Priority") filters.priority = selectedPriority;
+    if (selectedStatus !== "All Statuses") filters.status = selectedStatus;
+    return filters;
+  }, [selectedPriority, selectedStatus]);
 
-  // Filter tickets based on Priority and Status filters
-  const filteredTickets = useMemo(() => {
-    return tickets.filter((t) => {
-      const matchPriority =
-        selectedPriority === "All Priority" ||
-        t.priority.toLowerCase() === selectedPriority.toLowerCase();
-      const matchStatus =
-        selectedStatus === "All Statuses" ||
-        t.status.toLowerCase() === selectedStatus.toLowerCase();
-      return matchPriority && matchStatus;
-    });
-  }, [tickets, selectedPriority, selectedStatus]);
+  const ticketsQuery = useTickets(listFilters);
+  const ticketQuery = useTicket(id);
+  const updateTicket = useUpdateTicket();
+  const replyTicket = useReplyTicket();
 
-  // Table Columns Definition matching the screenshot
+  useMutationFeedback(updateTicket, {
+    successMessage: "Ticket updated.",
+    errorTitle: "Update failed",
+  });
+  useMutationFeedback(replyTicket, {
+    successMessage: "Reply sent.",
+    errorTitle: "Reply failed",
+  });
+
+  const tickets = useMemo(
+    () => unwrapList(ticketsQuery.data),
+    [ticketsQuery.data],
+  );
+
+  const currentTicket = id ? ticketQuery.data : null;
+  const detailLoading = Boolean(id) && ticketQuery.isLoading;
+  const detailError = Boolean(id) && ticketQuery.isError;
+  const detailMissing =
+    Boolean(id) &&
+    !ticketQuery.isLoading &&
+    (isNotFoundError(ticketQuery.error) ||
+      (!ticketQuery.isError && !currentTicket && ticketQuery.isFetched));
+
   const columns = useMemo(
     () => [
       {
@@ -157,7 +173,11 @@ const AdminSupportView = () => {
     [],
   );
 
-  // Action Menu Click Handler
+  const mutateTicket = (ticketId, updates) => {
+    if (updateTicket.isPending) return;
+    updateTicket.mutate({ id: ticketId, payload: updates });
+  };
+
   const handleActionClick = (actionName, row) => {
     const act = String(actionName).toLowerCase();
     if (act.includes("detail") || act === "details") {
@@ -168,129 +188,146 @@ const AdminSupportView = () => {
     } else if (act.includes("assign")) {
       setSelectedTicketForAssign(row);
       setIsAssignModalOpen(true);
-    } else if (act.includes("closed")) {
+    } else if (act.includes("closed") && act.includes("status")) {
+      setSelectedTicketForClose(row);
+      setIsCloseModalOpen(true);
+    } else if (act === "closed") {
       setSelectedTicketForClose(row);
       setIsCloseModalOpen(true);
     } else if (act.includes("open")) {
-      setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, status: "Open" } : t)),
-      );
+      mutateTicket(row.id, { status: "Open" });
     } else if (act.includes("pending")) {
-      setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, status: "Pending" } : t)),
-      );
+      mutateTicket(row.id, { status: "Pending" });
     } else if (act.includes("high")) {
-      setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, priority: "High" } : t)),
-      );
+      mutateTicket(row.id, { priority: "High" });
     } else if (act.includes("low")) {
-      setTickets((prev) =>
-        prev.map((t) => (t.id === row.id ? { ...t, priority: "Low" } : t)),
-      );
+      mutateTicket(row.id, { priority: "Low" });
     }
   };
 
-  // Update ticket details (from Details view or Modal)
   const handleUpdateTicket = (ticketId, updates) => {
-    setTickets((prev) =>
-      prev.map((t) => (t.id === ticketId ? { ...t, ...updates } : t)),
-    );
+    mutateTicket(ticketId, updates);
   };
 
   const handleAssignAgent = (ticketId, newAgent) => {
-    handleUpdateTicket(ticketId, { assignedAgent: newAgent });
+    mutateTicket(ticketId, { assignedAgent: newAgent });
   };
 
   const handleConfirmClose = (ticketId) => {
-    handleUpdateTicket(ticketId, { status: "Closed" });
+    mutateTicket(ticketId, { status: "Closed" });
   };
 
   const handleSendReply = (ticketId, messageText) => {
-    console.log(`Reply sent to ticket ${ticketId}:`, messageText);
+    if (replyTicket.isPending) return;
+    replyTicket.mutate({ id: ticketId, payload: { message: messageText } });
   };
+
+  if (id) {
+    if (detailLoading) {
+      return (
+        <DataTable
+          columns={columns}
+          data={[]}
+          isLoading
+          emptyMessage="Loading ticket…"
+        />
+      );
+    }
+
+    if (detailError && !isNotFoundError(ticketQuery.error)) {
+      return (
+        <div className="rounded-xl border border-slate-100 bg-white shadow-sm">
+          <ErrorState
+            title="Unable to load ticket"
+            error={ticketQuery.error}
+            onRetry={() => ticketQuery.refetch()}
+          />
+        </div>
+      );
+    }
+
+    if (detailMissing || !currentTicket) {
+      return (
+        <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+          <h2 className="text-lg font-bold text-slate-900">
+            Ticket Not Found
+          </h2>
+          <p className="mt-1 text-xs text-slate-500">
+            No ticket found with ID &quot;{id}&quot;.
+          </p>
+          <button
+            type="button"
+            onClick={() => navigate("/dashboard/admin/support")}
+            className="mt-4 inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-sky-700"
+          >
+            Back to Support Center
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-full space-y-6 text-slate-900 font-sans">
+        <SupportDetailsView
+          ticket={currentTicket}
+          onBack={() => navigate("/dashboard/admin/support")}
+          onUpdateTicket={handleUpdateTicket}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-full space-y-6 text-slate-900 font-sans">
-      {/* 1. If URL has :id, render SupportDetailsView */}
-      {id ? (
-        currentTicket ? (
-          <SupportDetailsView
-            ticket={currentTicket}
-            onBack={() => navigate("/dashboard/admin/support")}
-            onUpdateTicket={handleUpdateTicket}
-          />
-        ) : (
-          <div className="rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900">
-              Ticket Not Found
-            </h2>
-            <p className="mt-1 text-xs text-slate-500">
-              No ticket found with ID &quot;{id}&quot;.
-            </p>
-            <button
-              type="button"
-              onClick={() => navigate("/dashboard/admin/support")}
-              className="mt-4 inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-sky-700"
-            >
-              Back to Support Center
-            </button>
-          </div>
-        )
-      ) : (
-        /* 2. Main Support Center Table View */
-        <>
-          {/* Header with Priority & Status Filter Dropdowns */}
-          <SupportHeader
-            selectedPriority={selectedPriority}
-            onSelectPriority={setSelectedPriority}
-            selectedStatus={selectedStatus}
-            onSelectStatus={setSelectedStatus}
-          />
+      <SupportHeader
+        selectedPriority={selectedPriority}
+        onSelectPriority={setSelectedPriority}
+        selectedStatus={selectedStatus}
+        onSelectStatus={setSelectedStatus}
+      />
 
-          {/* Support Tickets Table with Common DataTable */}
-          <DataTable
-            columns={columns}
-            data={filteredTickets}
-            actions={SUPPORT_ACTIONS}
-            onActionClick={handleActionClick}
-            pageSize={10}
-            emptyMessage="No support tickets found matching the selected filters."
-          />
+      <DataTable
+        columns={columns}
+        data={tickets}
+        actions={SUPPORT_ACTIONS}
+        onActionClick={handleActionClick}
+        pageSize={10}
+        emptyMessage="No support tickets found matching the selected filters."
+        isLoading={ticketsQuery.isLoading}
+        isFetching={ticketsQuery.isFetching && !ticketsQuery.isLoading}
+        error={ticketsQuery.isError ? ticketsQuery.error : null}
+        onRetry={() => ticketsQuery.refetch()}
+      />
 
-          {/* Reply Ticket Modal for Table actions */}
-          <ReplyTicketModal
-            isOpen={isReplyModalOpen}
-            onClose={() => {
-              setIsReplyModalOpen(false);
-              setSelectedTicketForReply(null);
-            }}
-            ticket={selectedTicketForReply}
-            onSendReply={handleSendReply}
-          />
+      <ReplyTicketModal
+        isOpen={isReplyModalOpen}
+        onClose={() => {
+          setIsReplyModalOpen(false);
+          setSelectedTicketForReply(null);
+        }}
+        ticket={selectedTicketForReply}
+        onSendReply={handleSendReply}
+      />
 
-          {/* Assign Ticket Modal for Table actions */}
-          <AssignTicketModal
-            isOpen={isAssignModalOpen}
-            onClose={() => {
-              setIsAssignModalOpen(false);
-              setSelectedTicketForAssign(null);
-            }}
-            ticket={selectedTicketForAssign}
-            onAssign={handleAssignAgent}
-          />
+      <AssignTicketModal
+        isOpen={isAssignModalOpen}
+        onClose={() => {
+          setIsAssignModalOpen(false);
+          setSelectedTicketForAssign(null);
+        }}
+        ticket={selectedTicketForAssign}
+        onAssign={handleAssignAgent}
+      />
 
-          {/* Close Ticket Modal for Table actions */}
-          <CloseTicketModal
-            isOpen={isCloseModalOpen}
-            onClose={() => {
-              setIsCloseModalOpen(false);
-              setSelectedTicketForClose(null);
-            }}
-            ticket={selectedTicketForClose}
-            onConfirmClose={handleConfirmClose}
-          />
-        </>
-      )}
+      <CloseTicketModal
+        isOpen={isCloseModalOpen}
+        onClose={() => {
+          setIsCloseModalOpen(false);
+          setSelectedTicketForClose(null);
+        }}
+        ticket={selectedTicketForClose}
+        onConfirmClose={handleConfirmClose}
+      />
     </div>
   );
 };

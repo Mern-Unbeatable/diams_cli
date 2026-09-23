@@ -1,3 +1,4 @@
-export const USER_PAYMENTS_MOCK = [
-  { id: "up-1", amount: 49.9, method: "Card", at: "2026-07-28" },
-];
+/**
+ * Demo records for user payment history (rich UI seed).
+ */
+export { USER_PAYMENTS_HISTORY_DATA as USER_PAYMENTS_MOCK } from "./payments.seed";

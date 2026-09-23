@@ -3,13 +3,19 @@
  */
 import { apiClient } from "@/lib/api/client";
 import { ENDPOINTS } from "@/lib/api/endpoints";
-import { USE_API_MOCKS, mockDelay, applyFilters, findById } from "@/lib/api/mock";
+import { USE_API_MOCKS, mockDelay } from "@/lib/api/mock";
+import { createMockStore } from "@/lib/api/mock-store";
 import { NOTIFICATIONS_MOCK } from "../mocks/notifications.mock";
+
+const store = createMockStore(NOTIFICATIONS_MOCK);
 
 export async function fetchNotifications(filters = {}, { signal } = {}) {
   if (USE_API_MOCKS) {
-    await mockDelay(180, signal);
-    const data = applyFilters(NOTIFICATIONS_MOCK, filters);
+    await mockDelay(280, signal);
+    const type = filters.type;
+    const data = store.list(
+      type && type !== "All Types" ? { type } : {},
+    );
     return { data, total: data.length };
   }
   const { data } = await apiClient.get(ENDPOINTS.notifications.list, {
@@ -21,8 +27,13 @@ export async function fetchNotifications(filters = {}, { signal } = {}) {
 
 export async function fetchNotification(id, { signal } = {}) {
   if (USE_API_MOCKS) {
-    await mockDelay(120, signal);
-    const row = findById(NOTIFICATIONS_MOCK, id);
+    await mockDelay(160, signal);
+    const row =
+      store.get(id) ||
+      store.list().find(
+        (n) =>
+          String(n.ntfId || "").toLowerCase() === String(id).toLowerCase(),
+      );
     if (!row) {
       const err = new Error("Not found");
       err.response = { status: 404 };
@@ -36,11 +47,28 @@ export async function fetchNotification(id, { signal } = {}) {
   return data;
 }
 
+export async function createNotification(payload) {
+  if (USE_API_MOCKS) {
+    await mockDelay(200);
+    return store.create({
+      id: `ntf-${Date.now()}`,
+      ntfId: `NTF-${Date.now().toString().slice(-4)}`,
+      status: "Sent",
+      ...payload,
+    });
+  }
+  const { data } = await apiClient.post(ENDPOINTS.notifications.list, payload);
+  return data;
+}
+
 export async function updateNotification(id, payload) {
   if (USE_API_MOCKS) {
     await mockDelay(200);
-    return { id, ...payload };
+    return store.update(id, payload);
   }
-  const { data } = await apiClient.patch(ENDPOINTS.notifications.update(id), payload);
+  const { data } = await apiClient.patch(
+    ENDPOINTS.notifications.update(id),
+    payload,
+  );
   return data;
 }

@@ -1,11 +1,4 @@
 /**
- * Demo data — collaborator invoices.
+ * Demo records for collaborator invoices (rich UI seed).
  */
-export const COLLAB_INVOICES_MOCK = [
-  {
-    "id": "ci-1",
-    "period": "2026-07",
-    "amount": 980,
-    "status": "Paid"
-  }
-];
+export { COLLABORATOR_INVOICES_DATA as COLLAB_INVOICES_MOCK } from "./invoices.seed";

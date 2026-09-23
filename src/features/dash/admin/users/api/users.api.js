@@ -3,13 +3,16 @@
  */
 import { apiClient } from "@/lib/api/client";
 import { ENDPOINTS } from "@/lib/api/endpoints";
-import { USE_API_MOCKS, mockDelay, applyFilters, findById } from "@/lib/api/mock";
+import { USE_API_MOCKS, mockDelay } from "@/lib/api/mock";
+import { createMockStore } from "@/lib/api/mock-store";
 import { USERS_MOCK } from "../mocks/users.mock";
+
+const store = createMockStore(USERS_MOCK);
 
 export async function fetchUsers(filters = {}, { signal } = {}) {
   if (USE_API_MOCKS) {
-    await mockDelay(180, signal);
-    const data = applyFilters(USERS_MOCK, filters);
+    await mockDelay(280, signal);
+    const data = store.list(filters);
     return { data, total: data.length };
   }
   const { data } = await apiClient.get(ENDPOINTS.users.list, {
@@ -21,8 +24,8 @@ export async function fetchUsers(filters = {}, { signal } = {}) {
 
 export async function fetchUser(id, { signal } = {}) {
   if (USE_API_MOCKS) {
-    await mockDelay(120, signal);
-    const row = findById(USERS_MOCK, id);
+    await mockDelay(160, signal);
+    const row = store.get(id);
     if (!row) {
       const err = new Error("Not found");
       err.response = { status: 404 };
@@ -39,7 +42,12 @@ export async function fetchUser(id, { signal } = {}) {
 export async function createUser(payload) {
   if (USE_API_MOCKS) {
     await mockDelay(200);
-    return { id: "use-new", ...payload };
+    return store.create({
+      id: `usr-${Date.now()}`,
+      status: "Active",
+      access: "Overview",
+      ...payload,
+    });
   }
   const { data } = await apiClient.post(ENDPOINTS.users.create, payload);
   return data;
@@ -48,7 +56,7 @@ export async function createUser(payload) {
 export async function updateUser(id, payload) {
   if (USE_API_MOCKS) {
     await mockDelay(200);
-    return { id, ...payload };
+    return store.update(id, payload);
   }
   const { data } = await apiClient.patch(ENDPOINTS.users.update(id), payload);
   return data;
@@ -57,7 +65,7 @@ export async function updateUser(id, payload) {
 export async function removeUser(id) {
   if (USE_API_MOCKS) {
     await mockDelay(160);
-    return { id, deleted: true };
+    return store.remove(id);
   }
   const { data } = await apiClient.delete(ENDPOINTS.users.remove(id));
   return data;
