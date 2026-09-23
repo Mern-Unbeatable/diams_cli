@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { AppQueryProvider } from "@/lib/provider/AppQueryProvider";
 import { AppErrorBoundary } from "@/Components/common/AppErrorBoundary";
 import { ToastProvider } from "@/Components/common/ToastProvider";
+import { CrispChat } from "@/Components/integrations/CrispChat";
 import { setUnauthorizedHandler } from "@/lib/auth/unauthorized";
 import { toastInfo } from "@/lib/feedback/toast-bus";
 import { router } from "@/routes";
@@ -34,6 +35,7 @@ function App() {
       <AppQueryProvider>
         <ToastProvider>
           <AuthProvider>
+            <CrispChat />
             <UnauthorizedBridge>
               <RouterProvider router={router} />
             </UnauthorizedBridge>
