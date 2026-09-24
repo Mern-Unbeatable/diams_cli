@@ -86,10 +86,10 @@ const EsimView = () => {
         errorTitle="Unable to load eSIM"
       >
         <>
-          <EsimActiveCard esimData={esimData} />
-
           <div className="grid min-w-0 gap-6 xl:grid-cols-12">
             <div className="min-w-0 space-y-6 xl:col-span-9">
+              <EsimActiveCard esimData={esimData} />
+
               <EsimInstallCard
                 installTabs={installTabs}
                 activeTab={activeTab}

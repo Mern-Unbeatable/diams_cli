@@ -9,7 +9,6 @@ import { NeedHelpCard } from "./components/NeedHelpCard";
 import { EditPersonalInfoModal } from "./components/EditPersonalInfoModal";
 import { ChangePasswordModal } from "./components/ChangePasswordModal";
 import { ChangePinModal } from "./components/ChangePinModal";
-import { UploadAvatarModal } from "./components/UploadAvatarModal";
 
 const MyInformationView = () => {
   const {
@@ -28,7 +27,6 @@ const MyInformationView = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
   const [isPinOpen, setIsPinOpen] = useState(false);
-  const [isAvatarOpen, setIsAvatarOpen] = useState(false);
 
   // Handlers
   const handleSavePersonalInfo = (updated) => {
@@ -38,11 +36,13 @@ const MyInformationView = () => {
     }));
   };
 
-  const handleSaveAvatar = (newInitials) => {
-    setPersonalInfo((prev) => ({
-      ...prev,
-      avatarInitials: newInitials,
-    }));
+  const handleAvatarChange = (avatarUrl) => {
+    setPersonalInfo((prev) => {
+      if (prev.avatarUrl?.startsWith("blob:")) {
+        URL.revokeObjectURL(prev.avatarUrl);
+      }
+      return { ...prev, avatarUrl };
+    });
   };
 
   return (
@@ -70,7 +70,7 @@ const MyInformationView = () => {
           <PersonalInfoCard
             personalInfo={personalInfo}
             onEdit={() => setIsEditOpen(true)}
-            onChangeAvatar={() => setIsAvatarOpen(true)}
+            onAvatarChange={handleAvatarChange}
           />
 
           {/* Card 2: Account Information */}
@@ -110,13 +110,6 @@ const MyInformationView = () => {
       <ChangePinModal
         isOpen={isPinOpen}
         onClose={() => setIsPinOpen(false)}
-      />
-
-      <UploadAvatarModal
-        isOpen={isAvatarOpen}
-        onClose={() => setIsAvatarOpen(false)}
-        currentInitials={personalInfo.avatarInitials}
-        onSave={handleSaveAvatar}
       />
     </div>
   );
