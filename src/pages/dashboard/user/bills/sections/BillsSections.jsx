@@ -7,10 +7,12 @@ import {
   Clock,
   CreditCard,
   Download,
+  Eye,
   FileText,
   Filter,
   Heart,
   HelpCircle,
+  Loader2,
   MessageCircle,
   Phone,
   ShieldCheck,
@@ -89,7 +91,11 @@ export const BillsAutoPaymentBanner = () => {
   );
 };
 
-export const BillsTableCard = () => {
+export const BillsTableCard = ({
+  onViewInvoice,
+  onDownloadInvoice,
+  downloadingId = null,
+}) => {
   const { billsList: fallbackBills, tabs } = USER_BILLS;
   const billsQuery = useUserBills();
   const [activeTab, setActiveTab] = useState("all");
@@ -150,7 +156,7 @@ export const BillsTableCard = () => {
               <th className="pb-3 font-bold">ISSUE DATE</th>
               <th className="pb-3 font-bold">AMOUNT</th>
               <th className="pb-3 font-bold">STATUS</th>
-              <th className="pb-3 font-bold text-center">DOWNLOAD</th>
+              <th className="pb-3 font-bold text-center">INVOICE</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -199,13 +205,31 @@ export const BillsTableCard = () => {
                     )}
                   </td>
                   <td className="py-4 text-center">
-                    <button
-                      type="button"
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-sky-50 text-btnPrimary transition-colors hover:bg-sky-100"
-                      aria-label={`Download ${bill.periodMonth} bill`}
-                    >
-                      <Download size={15} />
-                    </button>
+                    <div className="inline-flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => onViewInvoice?.(bill)}
+                        title="View invoice"
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-primary/60 transition-colors hover:text-btnPrimary"
+                        aria-label={`View ${bill.periodMonth} invoice`}
+                      >
+                        <Eye size={15} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onDownloadInvoice?.(bill)}
+                        disabled={Boolean(downloadingId)}
+                        title="Download PDF"
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-sky-50 text-btnPrimary transition-colors hover:bg-sky-100 disabled:cursor-wait"
+                        aria-label={`Download ${bill.periodMonth} bill`}
+                      >
+                        {downloadingId === bill.id ? (
+                          <Loader2 size={15} className="animate-spin" />
+                        ) : (
+                          <Download size={15} />
+                        )}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );

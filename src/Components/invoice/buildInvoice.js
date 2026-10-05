@@ -25,8 +25,10 @@ export const QR_BILL_FEATURES = [
   "Compliant with ISO 20022 Swiss Standards",
 ];
 
-const parseChf = (value) =>
+export const parseChf = (value) =>
   Number(String(value ?? "").replace(/[^\d.]/g, "")) || 0;
+
+const DAY_MS = 1000 * 60 * 60 * 24;
 
 export const formatChf = (value) => value.toFixed(2);
 
@@ -49,13 +51,18 @@ const formatServicePeriod = (date) => {
   return `${month} ${String(start.getDate()).padStart(2, "0")} – ${month} ${end.getDate()}, ${end.getFullYear()}`;
 };
 
+/**
+ * Normalizes any invoice-like record into the shape rendered by InvoiceDocument.
+ * Optional overrides: items, customerDetails, subscription, servicePeriod,
+ * customerNumber, vatRate. Missing values fall back to demo defaults.
+ */
 export const buildInvoiceDocument = (invoice) => {
   const issueDate = toDate(invoice.issueDate);
-  const dueDate = toDate(invoice.dueDate);
+  const dueDate =
+    toDate(invoice.dueDate) ||
+    (issueDate ? new Date(issueDate.getTime() + 14 * DAY_MS) : null);
   const dueInDays =
-    issueDate && dueDate
-      ? Math.round((dueDate - issueDate) / (1000 * 60 * 60 * 24))
-      : 14;
+    issueDate && dueDate ? Math.round((dueDate - issueDate) / DAY_MS) : 14;
 
   const digits = String(invoice.invoiceId ?? "").replace(/\D/g, "");
   const sequence = digits.slice(-3).padStart(3, "0");
@@ -75,7 +82,10 @@ export const buildInvoiceDocument = (invoice) => {
     (sum, item) => sum + item.quantity * item.unitPrice,
     0,
   );
-  const vat = invoice.vat ? parseChf(invoice.vat) : subtotal * 0.081;
+  const vatRate = invoice.vatRate || "7.7%";
+  const vat = invoice.vat
+    ? parseChf(invoice.vat)
+    : (subtotal * parseChf(vatRate)) / 100;
   const total = invoice.totalAmount
     ? parseChf(invoice.totalAmount)
     : subtotal + vat;
@@ -95,14 +105,17 @@ export const buildInvoiceDocument = (invoice) => {
     isPaid: invoice.status?.toLowerCase() === "paid",
     invoiceDate: issueDate ? formatLongDate(issueDate) : invoice.issueDate,
     dueDate: dueDate ? formatLongDate(dueDate) : invoice.dueDate,
-    servicePeriod: issueDate ? formatServicePeriod(issueDate) : "—",
+    servicePeriod:
+      invoice.servicePeriod ||
+      (issueDate ? formatServicePeriod(issueDate) : "—"),
     dueInDays,
-    customerNumber: `NS-1004${sequence}`,
+    customerNumber: invoice.customerNumber || `NS-1004${sequence}`,
     customer: {
       name: customerName,
       addressLines: ["Rue du Lac 25", "1003 Lausanne", "Switzerland"],
       email: `${emailHandle}@email.com`,
       phone: "+41 79 123 45 67",
+      ...invoice.customerDetails,
     },
     subscription: {
       primaryPlan: `${planName} 5G`,
@@ -110,11 +123,12 @@ export const buildInvoiceDocument = (invoice) => {
       serviceType: "eSIM • High-Speed 5G",
       networkRegion: "Switzerland + Europe",
       iccid: "8941 2345 6789 0123 4567",
+      ...invoice.subscription,
     },
     items,
     subtotal,
     vat,
-    vatRate: invoice.vatRate || "7.7%",
+    vatRate,
     total,
     reference: `00 00000 00000 00000 00${sequence} 34567`,
   };

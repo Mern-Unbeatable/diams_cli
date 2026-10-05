@@ -3,12 +3,19 @@ import {
   CheckCircle2,
   Download,
   ExternalLink,
+  Loader2,
   X,
   ShieldCheck,
 } from "lucide-react";
 import { Link } from "react-router";
 
-export const PaymentSuccessModal = ({ isOpen, onClose, paymentDetails }) => {
+export const PaymentSuccessModal = ({
+  isOpen,
+  onClose,
+  paymentDetails,
+  onDownloadReceipt,
+  isDownloading = false,
+}) => {
   if (!isOpen || !paymentDetails) return null;
 
   return (
@@ -76,11 +83,16 @@ export const PaymentSuccessModal = ({ isOpen, onClose, paymentDetails }) => {
         <div className="space-y-3 pt-2">
           <button
             type="button"
-            onClick={onClose}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-btnPrimary py-3 text-xs font-bold text-white shadow-md hover:bg-btnPrimary/90 transition-colors"
+            onClick={onDownloadReceipt}
+            disabled={isDownloading}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-btnPrimary py-3 text-xs font-bold text-white shadow-md hover:bg-btnPrimary/90 transition-colors disabled:cursor-wait disabled:opacity-70"
           >
-            <Download size={15} />
-            <span>Download Receipt</span>
+            {isDownloading ? (
+              <Loader2 size={15} className="animate-spin" />
+            ) : (
+              <Download size={15} />
+            )}
+            <span>{isDownloading ? "Generating…" : "Download Receipt"}</span>
           </button>
 
           <Link

@@ -1,4 +1,4 @@
-import { Eye, Download } from "lucide-react";
+import { Eye, Download, Loader2 } from "lucide-react";
 import DataTable from "@/Components/dashboard/DataTable";
 
 const getStatusBadge = (status) => {
@@ -20,6 +20,7 @@ const CollaboratorInvoiceTable = ({
   invoices = [],
   onViewInvoice,
   onDownloadInvoice,
+  downloadingId = null,
   currentPage = 1,
   pageSize = 10,
   onPageChange,
@@ -77,9 +78,14 @@ const CollaboratorInvoiceTable = ({
             type="button"
             title="Download PDF"
             onClick={() => onDownloadInvoice?.(row)}
-            className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-sky-600 transition-colors cursor-pointer"
+            disabled={Boolean(downloadingId)}
+            className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-sky-600 transition-colors cursor-pointer disabled:cursor-wait"
           >
-            <Download className="h-3.5 w-3.5" />
+            {downloadingId === row.id ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin text-sky-600" />
+            ) : (
+              <Download className="h-3.5 w-3.5" />
+            )}
           </button>
         </div>
       ),
