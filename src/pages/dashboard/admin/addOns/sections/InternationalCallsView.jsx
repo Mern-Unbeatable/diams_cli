@@ -109,7 +109,7 @@ const InternationalCallsView = ({ callsData, onEdit, onDelete }) => {
               </div>
             </div>
 
-            {/* Action Buttons (Edit & Delete) */}
+      
             <div className="mt-6 flex items-center gap-3 pt-2">
               <button
                 type="button"
