@@ -8,8 +8,33 @@ import {
   Phone,
   User,
 } from "lucide-react";
+import { useRef, useState } from "react";
 
-export const PersonalInfoCard = ({ personalInfo, onEdit, onChangeAvatar }) => {
+const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
+const ALLOWED_AVATAR_TYPES = ["image/jpeg", "image/png", "image/gif"];
+
+export const PersonalInfoCard = ({ personalInfo, onEdit, onAvatarChange }) => {
+  const fileInputRef = useRef(null);
+  const [avatarError, setAvatarError] = useState("");
+
+  const handleAvatarSelect = (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
+      setAvatarError("Only JPG, PNG, or GIF allowed");
+      return;
+    }
+    if (file.size > MAX_AVATAR_SIZE) {
+      setAvatarError("File must be 5 MB or less");
+      return;
+    }
+
+    setAvatarError("");
+    onAvatarChange?.(URL.createObjectURL(file), file);
+  };
+
   return (
     <section className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-6">
       {/* Card Header */}
@@ -32,26 +57,48 @@ export const PersonalInfoCard = ({ personalInfo, onEdit, onChangeAvatar }) => {
         <div className="flex flex-col items-center justify-center text-center shrink-0 mx-auto md:mx-0 pt-2">
           <div className="relative">
             {/* Avatar Circle */}
-            <div className="flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-full bg-[#1e88e5] text-2xl sm:text-3xl font-extrabold text-white shadow-md shadow-blue-500/20">
-              {personalInfo.avatarInitials || "AM"}
+            <div className="flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center overflow-hidden rounded-full bg-[#1e88e5] text-2xl sm:text-3xl font-extrabold text-white shadow-md shadow-blue-500/20">
+              {personalInfo.avatarUrl ? (
+                <img
+                  src={personalInfo.avatarUrl}
+                  alt="Profile"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                personalInfo.avatarInitials || "AM"
+              )}
             </div>
 
             {/* Camera Upload Button */}
             <button
               type="button"
-              onClick={onChangeAvatar}
+              onClick={() => fileInputRef.current?.click()}
               className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-primary/70 shadow-sm transition-all hover:bg-gray-50 hover:text-btnPrimary"
+              style={{ borderRadius: "9999px" }}
               title="Change Profile Photo"
               aria-label="Change Profile Photo"
             >
               <Camera size={15} />
             </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/gif"
+              onChange={handleAvatarSelect}
+              className="hidden"
+            />
           </div>
 
           <p className="mt-3 text-xs font-bold text-primary">Profile Photo</p>
-          <p className="mt-0.5 text-[10px] text-primary/45">
-            JPG, PNG, or GIF, Max 5 MB
-          </p>
+          {avatarError ? (
+            <p className="mt-0.5 text-[10px] font-medium text-rose-600">
+              {avatarError}
+            </p>
+          ) : (
+            <p className="mt-0.5 text-[10px] text-primary/45">
+              JPG, PNG, or GIF, Max 5 MB
+            </p>
+          )}
         </div>
 
         {/* Details List */}

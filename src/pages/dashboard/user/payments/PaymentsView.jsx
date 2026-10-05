@@ -12,8 +12,13 @@ import { AutomaticPaymentsTab } from "./sections/AutomaticPaymentsTab";
 import { PaymentHistoryTab } from "./sections/PaymentHistoryTab";
 import { PaymentsSidebar } from "./sections/PaymentsSidebar";
 import { AddPaymentMethodModal } from "./components/AddPaymentMethodModal";
-import { InvoiceDetailsModal } from "./components/InvoiceDetailsModal";
 import { PaymentSuccessModal } from "./components/PaymentSuccessModal";
+import { InvoicePage, useInvoiceDownload } from "@/Components/invoice";
+import {
+  paymentBillToInvoice,
+  paymentHistoryToInvoice,
+  toUserInvoice,
+} from "../shared/userInvoice";
 
 const PaymentsView = () => {
   const {
@@ -53,9 +58,11 @@ const PaymentsView = () => {
   const [selectedMethodId, setSelectedMethodId] = useState(initialMethods[0].id);
 
   const [isAddMethodOpen, setIsAddMethodOpen] = useState(false);
-  const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false);
+  const [viewingInvoice, setViewingInvoice] = useState(null);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [successDetails, setSuccessDetails] = useState(null);
+  const { downloadInvoice, downloadingKey, downloadError, invoiceRenderer } =
+    useInvoiceDownload();
 
   const handleAddPaymentMethod = (newMethod) => {
     setPaymentMethods((prev) => [newMethod, ...prev]);
@@ -93,6 +100,10 @@ const PaymentsView = () => {
       paymentType === "bill"
         ? `Bill - ${selectedBill?.month || "July 2024"}`
         : `Prepaid Top-Up (CHF ${topUpAmount})`;
+    const invoiceRef =
+      paymentType === "bill"
+        ? selectedBill?.invoiceNumber || "INV-2024-07-8891"
+        : `TOP-${Date.now().toString().slice(-6)}`;
 
     createPayment.mutate(
       {
@@ -100,25 +111,44 @@ const PaymentsView = () => {
         method: selectedMethod?.title || "Visa **** 4242",
         brand: selectedMethod?.brand || "visa",
         amount,
-        invoiceRef:
-          paymentType === "bill"
-            ? selectedBill?.invoiceNumber || "INV-2024-07-8891"
-            : `TOP-${Date.now().toString().slice(-6)}`,
+        invoiceRef,
       },
       {
         onSuccess: (txn) => {
+          const today = new Date().toDateString();
           setSuccessDetails({
             amount,
             itemTitle,
             methodTitle: selectedMethod?.title || "Visa **** 4242",
             transactionId: txn.id,
             date: txn.date,
+            invoice:
+              paymentType === "bill" && selectedBill
+                ? paymentBillToInvoice(selectedBill, { status: "Paid" })
+                : toUserInvoice({
+                    invoiceId: invoiceRef,
+                    issueDate: today,
+                    amount,
+                    status: "Paid",
+                    title: itemTitle,
+                    description: "Prepaid credit top-up",
+                  }),
           });
           setIsSuccessModalOpen(true);
         },
       },
     );
   };
+
+  if (viewingInvoice) {
+    return (
+      <InvoicePage
+        invoice={viewingInvoice}
+        backLabel="Payments"
+        onBack={() => setViewingInvoice(null)}
+      />
+    );
+  }
 
   return (
     <div className="min-w-0 space-y-5 sm:space-y-6">
@@ -130,6 +160,12 @@ const PaymentsView = () => {
       </div>
 
       <DashboardTabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
+
+      {downloadError ? (
+        <p className="rounded-md bg-rose-50 px-3 py-2 text-xs font-medium text-rose-600">
+          {downloadError}
+        </p>
+      ) : null}
 
       <div className="grid min-w-0 gap-6 xl:grid-cols-3">
         <div className="min-w-0 space-y-6 xl:col-span-2">
@@ -168,7 +204,16 @@ const PaymentsView = () => {
           {activeTab === "payment-history" && (
             <PaymentHistoryTab
               paymentHistory={paymentHistory}
-              onViewInvoice={() => setIsInvoiceModalOpen(true)}
+              onViewInvoice={(item) =>
+                setViewingInvoice(paymentHistoryToInvoice(item))
+              }
+              onDownloadInvoice={(item) =>
+                downloadInvoice(
+                  paymentHistoryToInvoice(item),
+                  item.id || item.invoice,
+                )
+              }
+              downloadingKey={downloadingKey}
             />
           )}
         </div>
@@ -176,7 +221,10 @@ const PaymentsView = () => {
         <div className="min-w-0 space-y-6 xl:sticky xl:top-24 xl:self-start">
           <PaymentsSidebar
             selectedBill={selectedBill}
-            onViewInvoice={() => setIsInvoiceModalOpen(true)}
+            onViewInvoice={() =>
+              selectedBill &&
+              setViewingInvoice(paymentBillToInvoice(selectedBill))
+            }
             paymentType={paymentType}
             topUpAmount={topUpAmount}
           />
@@ -189,17 +237,18 @@ const PaymentsView = () => {
         onAddMethod={handleAddPaymentMethod}
       />
 
-      <InvoiceDetailsModal
-        isOpen={isInvoiceModalOpen}
-        onClose={() => setIsInvoiceModalOpen(false)}
-        bill={selectedBill}
-      />
-
       <PaymentSuccessModal
         isOpen={isSuccessModalOpen}
         onClose={() => setIsSuccessModalOpen(false)}
         paymentDetails={successDetails}
+        onDownloadReceipt={() =>
+          successDetails?.invoice &&
+          downloadInvoice(successDetails.invoice, "receipt")
+        }
+        isDownloading={downloadingKey === "receipt"}
       />
+
+      {invoiceRenderer}
     </div>
   );
 };

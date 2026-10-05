@@ -95,12 +95,12 @@ export const EsimInstallCard = ({
   onOpenGuideModal,
 }) => {
   return (
-    <div className="min-w-0 space-y-4">
+    <section className="min-w-0 space-y-4 rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm sm:p-6">
       <div>
-        <h2 className="text-lg font-bold text-primary sm:text-xl">
+        <h2 className="text-base font-bold text-primary sm:text-lg">
           Install your eSIM
         </h2>
-        <p className="text-xs text-primary/60 sm:text-sm">
+        <p className="text-xs text-primary/60">
           Choose an installation method
         </p>
       </div>
@@ -121,64 +121,60 @@ export const EsimInstallCard = ({
       ) : activeTab === "help" ? (
         <EsimHelpTab onOpenGuideModal={onOpenGuideModal} />
       ) : (
-        <div className="space-y-6 rounded-xl border border-gray-200/90 bg-white p-5 shadow-sm sm:p-8">
-          {activeTab === "qr-code" && (
-            <div className="relative grid gap-8 lg:grid-cols-2 lg:items-center">
-              <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <div className="rounded-xl border-2 border-dashed border-sky-200 bg-sky-50/40 p-4 shadow-sm sm:p-5">
-                  <VectorQrCode />
-                </div>
+        <div className="space-y-5">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center">
+            <div className="flex flex-col items-center justify-center space-y-3 rounded-xl border border-gray-200 p-5 text-center sm:p-6">
+              <VectorQrCode />
 
-                <div className="space-y-1">
-                  <h4 className="text-sm font-bold text-[#0284c7] sm:text-base">
-                    Scan this QR Code
-                  </h4>
-                  <p className="mx-auto max-w-xs text-xs text-primary/60">
-                    Open the camera or QR code reader on your smartphone.
-                  </p>
-                </div>
-              </div>
-
-              <div className="absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 flex-col items-center lg:flex">
-                <div className="h-28 w-px bg-gray-200" />
-                <div className="my-2 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-medium text-primary/50 shadow-xs">
-                  or
-                </div>
-                <div className="h-28 w-px bg-gray-200" />
-              </div>
-
-              <div className="flex items-center justify-center gap-3 lg:hidden">
-                <div className="h-px flex-1 bg-gray-200" />
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-medium text-primary/50">
-                  or
-                </span>
-                <div className="h-px flex-1 bg-gray-200" />
-              </div>
-
-              <div className="flex flex-col items-center justify-center space-y-4 text-center lg:px-6">
-                <div className="max-w-sm space-y-2">
-                  <h4 className="text-base font-bold text-primary sm:text-lg">
-                    Do you already have an eSIM on another device?
-                  </h4>
-                  <p className="text-xs text-primary/60">
-                    Easily transfer your eSIM to your new device.
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={onOpenTransferModal}
-                  className="inline-flex items-center gap-2 rounded-xl border border-sky-300 bg-white px-5 py-2.5 text-xs font-semibold text-[#0284c7] shadow-sm transition-all hover:border-sky-400 hover:bg-sky-50 sm:text-sm"
-                >
-                  <ArrowRightLeft size={16} />
-                  <span>Transfer my eSIM</span>
-                </button>
+              <div className="space-y-1">
+                <h4 className="text-sm font-bold text-[#0284c7]">
+                  Scan this QR Code with your device
+                </h4>
+                <p className="mx-auto max-w-xs text-[11px] text-primary/60">
+                  Open the camera or QR code reader on your smartphone.
+                </p>
               </div>
             </div>
-          )}
 
-          <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-[#eef7ff] p-3 text-xs text-primary/80 sm:p-3.5">
-            <Info size={18} className="shrink-0 text-btnPrimary" />
+            <div className="hidden h-full flex-col items-center lg:flex">
+              <div className="w-px flex-1 bg-gray-200" />
+              <div className="my-2 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-medium text-primary/50 shadow-xs">
+                or
+              </div>
+              <div className="w-px flex-1 bg-gray-200" />
+            </div>
+
+            <div className="flex items-center justify-center gap-3 lg:hidden">
+              <div className="h-px flex-1 bg-gray-200" />
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-medium text-primary/50">
+                or
+              </span>
+              <div className="h-px flex-1 bg-gray-200" />
+            </div>
+
+            <div className="flex flex-col items-center justify-center space-y-4 text-center lg:items-start lg:text-left">
+              <div className="max-w-sm space-y-1.5">
+                <h4 className="text-sm font-bold text-primary sm:text-base">
+                  Do you already have an eSIM on another device?
+                </h4>
+                <p className="text-xs text-primary/60">
+                  Easily transfer your eSIM to your new device.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={onOpenTransferModal}
+                className="inline-flex items-center gap-2 rounded-lg border border-sky-300 bg-white px-4 py-2 text-xs font-semibold text-[#0284c7] shadow-sm transition-all hover:border-sky-400 hover:bg-sky-50"
+              >
+                <ArrowRightLeft size={15} />
+                <span>Transfer my eSIM</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 rounded-lg bg-[#eef7ff] p-3 text-xs text-primary/80">
+            <Info size={16} className="shrink-0 text-btnPrimary" />
             <p className="text-[11px] sm:text-xs">
               Make sure you have a stable internet connection to install your
               eSIM.
@@ -186,6 +182,6 @@ export const EsimInstallCard = ({
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };

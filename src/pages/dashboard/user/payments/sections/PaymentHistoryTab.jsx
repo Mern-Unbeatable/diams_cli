@@ -9,12 +9,15 @@ import {
   Download,
   Eye,
   FileText,
+  Loader2,
 } from "lucide-react";
 import { USER_PAYMENTS } from "@/config/userPayments";
 
 export const PaymentHistoryTab = ({
   paymentHistory: propHistory,
   onViewInvoice,
+  onDownloadInvoice,
+  downloadingKey = null,
 }) => {
   const { historyStats, paymentHistory: defaultHistory } = USER_PAYMENTS;
   const historyData = propHistory?.length ? propHistory : defaultHistory;
@@ -362,11 +365,20 @@ export const PaymentHistoryTab = ({
                         </button>
                         <button
                           type="button"
-                          className="p-1 rounded-lg hover:text-btnPrimary hover:bg-sky-50 transition-colors"
+                          onClick={() => onDownloadInvoice?.(item)}
+                          disabled={Boolean(downloadingKey)}
+                          className="p-1 rounded-lg hover:text-btnPrimary hover:bg-sky-50 transition-colors disabled:cursor-wait"
                           title="Download Receipt"
                           aria-label="Download Receipt"
                         >
-                          <Download size={15} />
+                          {downloadingKey === (item.id || item.invoice) ? (
+                            <Loader2
+                              size={15}
+                              className="animate-spin text-btnPrimary"
+                            />
+                          ) : (
+                            <Download size={15} />
+                          )}
                         </button>
                         <button
                           type="button"
