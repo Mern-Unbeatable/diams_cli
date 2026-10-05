@@ -1,0 +1,24 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "crisp-setup",
+    "main",
+    "mehedi",
+    "nayem",
+    "rakib"
+  ],
+  "parent": {
+    "crisp-setup": "main",
+    "main": null,
+    "mehedi": "main",
+    "nayem": "main",
+    "rakib": "main"
+  },
+  "order": [
+    "main",
+    "crisp-setup",
+    "mehedi",
+    "nayem",
+    "rakib"
+  ]
+}
