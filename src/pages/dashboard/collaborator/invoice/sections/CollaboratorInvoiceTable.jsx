@@ -19,6 +19,7 @@ const getStatusBadge = (status) => {
 const CollaboratorInvoiceTable = ({
   invoices = [],
   onViewInvoice,
+  onDownloadInvoice,
   currentPage = 1,
   pageSize = 10,
   onPageChange,
@@ -75,7 +76,7 @@ const CollaboratorInvoiceTable = ({
           <button
             type="button"
             title="Download PDF"
-            onClick={() => {}}
+            onClick={() => onDownloadInvoice?.(row)}
             className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-sky-600 transition-colors cursor-pointer"
           >
             <Download className="h-3.5 w-3.5" />
