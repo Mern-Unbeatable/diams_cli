@@ -7,7 +7,8 @@ export const SITE_NAME = "NovaSky";
 
 export const HOME_SEO = {
   title: "NovaSky | Next-Generation Mobile Network in Switzerland",
-  description: FOOTER_DESCRIPTION,
+  description:
+    "NovaSky is the next-generation mobile network in Switzerland. Ultra-fast 5G, nationwide coverage, unlimited calls & SMS, instant eSIM and no contract.",
   canonicalUrl: `${SITE_URL}/`,
   image: {
     url: new URL(HERO.image, SITE_URL).href,
